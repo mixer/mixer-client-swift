@@ -1,0 +1,14 @@
+PODS:
+  - BeamAPI (0.1.0)
+
+DEPENDENCIES:
+  - BeamAPI (from `../`)
+
+EXTERNAL SOURCES:
+  BeamAPI:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  BeamAPI: 859fb9153e65b4bc91aaec1e2772c8e00c7c8493
+
+COCOAPODS: 0.39.0

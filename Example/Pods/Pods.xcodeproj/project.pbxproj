@@ -1,0 +1,788 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		295EDBA5FDB54F42C50129ABA2FFF901 /* BeamAPI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 15AD5088DE15F910B1E261141DFE638E /* BeamAPI.bundle */; };
+		4C066792CB3CEFE1F37F99A38080A8C5 /* Pods-BeamAPI_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 481EBC488BB36E163D49852D5DA43071 /* Pods-BeamAPI_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		58BD526948395EB81C33DD46A4DACC18 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E4E89230EF59BC255123B67864ACF77 /* Foundation.framework */; };
+		951807C924C24C3D6CAEF2665A1341B0 /* BeamAPI-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CC3413B618CCB2E8C21E4FBF445E7ED /* BeamAPI-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B93EF2BAD7313676CBCA1B0EB6F0AA68 /* Pods-BeamAPI_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5233AF56788CA6A3424A2AD9E96847 /* Pods-BeamAPI_Tests-dummy.m */; };
+		DAC56E6564EEDBD3B78C48C497A1F225 /* BeamAPI-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 382C0175AE26F8CE917B109391D787CE /* BeamAPI-dummy.m */; };
+		EB4D5D5F8C6B506236DC1B833F18ACCC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E4E89230EF59BC255123B67864ACF77 /* Foundation.framework */; };
+		EB68AE101C4DAF8900C58D7B /* BeamAchievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68ADEB1C4DAF8800C58D7B /* BeamAchievement.swift */; };
+		EB68AE111C4DAF8900C58D7B /* BeamChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68ADEC1C4DAF8800C58D7B /* BeamChannel.swift */; };
+		EB68AE121C4DAF8900C58D7B /* BeamGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68ADED1C4DAF8800C58D7B /* BeamGroup.swift */; };
+		EB68AE131C4DAF8900C58D7B /* BeamMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68ADEE1C4DAF8800C58D7B /* BeamMessage.swift */; };
+		EB68AE141C4DAF8900C58D7B /* BeamMessageComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68ADEF1C4DAF8800C58D7B /* BeamMessageComponent.swift */; };
+		EB68AE151C4DAF8900C58D7B /* BeamMessageComponentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68ADF01C4DAF8800C58D7B /* BeamMessageComponentType.swift */; };
+		EB68AE161C4DAF8900C58D7B /* BeamShopCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68ADF11C4DAF8800C58D7B /* BeamShopCategory.swift */; };
+		EB68AE171C4DAF8900C58D7B /* BeamShopItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68ADF21C4DAF8800C58D7B /* BeamShopItem.swift */; };
+		EB68AE181C4DAF8900C58D7B /* BeamThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68ADF31C4DAF8800C58D7B /* BeamThumbnail.swift */; };
+		EB68AE191C4DAF8900C58D7B /* BeamType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68ADF41C4DAF8800C58D7B /* BeamType.swift */; };
+		EB68AE1A1C4DAF8900C58D7B /* BeamUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68ADF51C4DAF8800C58D7B /* BeamUser.swift */; };
+		EB68AE1B1C4DAF8900C58D7B /* AuthenticatePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68ADF71C4DAF8800C58D7B /* AuthenticatePacket.swift */; };
+		EB68AE1C1C4DAF8900C58D7B /* DeleteMessagePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68ADF81C4DAF8800C58D7B /* DeleteMessagePacket.swift */; };
+		EB68AE1D1C4DAF8900C58D7B /* MessagePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68ADF91C4DAF8800C58D7B /* MessagePacket.swift */; };
+		EB68AE1E1C4DAF8900C58D7B /* Packet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68ADFA1C4DAF8800C58D7B /* Packet.swift */; };
+		EB68AE1F1C4DAF8900C58D7B /* PollEndPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68ADFB1C4DAF8800C58D7B /* PollEndPacket.swift */; };
+		EB68AE201C4DAF8900C58D7B /* PollStartPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68ADFC1C4DAF8800C58D7B /* PollStartPacket.swift */; };
+		EB68AE211C4DAF8900C58D7B /* Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68ADFD1C4DAF8800C58D7B /* Sendable.swift */; };
+		EB68AE221C4DAF8900C58D7B /* UserJoinPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68ADFE1C4DAF8800C58D7B /* UserJoinPacket.swift */; };
+		EB68AE231C4DAF8900C58D7B /* UserLeavePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68ADFF1C4DAF8800C58D7B /* UserLeavePacket.swift */; };
+		EB68AE241C4DAF8900C58D7B /* UserUpdatePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68AE001C4DAF8800C58D7B /* UserUpdatePacket.swift */; };
+		EB68AE251C4DAF8900C58D7B /* VotePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68AE011C4DAF8800C58D7B /* VotePacket.swift */; };
+		EB68AE261C4DAF8900C58D7B /* BeamClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68AE031C4DAF8800C58D7B /* BeamClient.swift */; };
+		EB68AE271C4DAF8900C58D7B /* BeamSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68AE041C4DAF8800C58D7B /* BeamSession.swift */; };
+		EB68AE281C4DAF8900C58D7B /* ChatClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68AE051C4DAF8900C58D7B /* ChatClient.swift */; };
+		EB68AE291C4DAF8900C58D7B /* AchievementsRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68AE071C4DAF8900C58D7B /* AchievementsRoutes.swift */; };
+		EB68AE2A1C4DAF8900C58D7B /* ChannelsRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68AE081C4DAF8900C58D7B /* ChannelsRoutes.swift */; };
+		EB68AE2B1C4DAF8900C58D7B /* ChatRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68AE091C4DAF8900C58D7B /* ChatRoutes.swift */; };
+		EB68AE2C1C4DAF8900C58D7B /* ShopRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68AE0A1C4DAF8900C58D7B /* ShopRoutes.swift */; };
+		EB68AE2D1C4DAF8900C58D7B /* UsersRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68AE0B1C4DAF8900C58D7B /* UsersRoutes.swift */; };
+		EB68AE2E1C4DAF8900C58D7B /* BeamRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68AE0D1C4DAF8900C58D7B /* BeamRequest.swift */; };
+		EB68AE2F1C4DAF8900C58D7B /* BeamRequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68AE0E1C4DAF8900C58D7B /* BeamRequestError.swift */; };
+		EB68AE301C4DAF8900C58D7B /* NSDate+fromBeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB68AE0F1C4DAF8900C58D7B /* NSDate+fromBeam.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		45CEFAC04F3C8882F12E0AAEFE9BA850 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 58B085DEBE354E227C26A1D53C8DF9B3;
+			remoteInfo = BeamAPI;
+		};
+		A811437245BE4A3AE76DF86B9F899AEB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EE57BED4FB3A2D2FE5C38E61BC149FFC;
+			remoteInfo = "BeamAPI-BeamAPI";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		01326786B4E1F9A362C8581FE7AE07AF /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		15AD5088DE15F910B1E261141DFE638E /* BeamAPI.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BeamAPI.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		245F4A71F0E37A4BCD8AC7C6BB3DD3B3 /* Pods-BeamAPI_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-BeamAPI_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		27E900D08CF7BA42BC471330BE03658A /* Pods-BeamAPI_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-BeamAPI_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		30CB9E285D96BD7BE600139FD9CFE734 /* BeamAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BeamAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		382C0175AE26F8CE917B109391D787CE /* BeamAPI-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "BeamAPI-dummy.m"; sourceTree = "<group>"; };
+		3CC3413B618CCB2E8C21E4FBF445E7ED /* BeamAPI-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "BeamAPI-umbrella.h"; sourceTree = "<group>"; };
+		3E4E89230EF59BC255123B67864ACF77 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		481EBC488BB36E163D49852D5DA43071 /* Pods-BeamAPI_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-BeamAPI_Tests-umbrella.h"; sourceTree = "<group>"; };
+		8E5233AF56788CA6A3424A2AD9E96847 /* Pods-BeamAPI_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-BeamAPI_Tests-dummy.m"; sourceTree = "<group>"; };
+		9A840CDF8B3C45A01F78109DC3664BCE /* Pods-BeamAPI_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-BeamAPI_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
+		A032B8A5F1DF6BD8E6546140394DBA0B /* Pods-BeamAPI_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-BeamAPI_Tests-resources.sh"; sourceTree = "<group>"; };
+		AFB6414F21B582B79B3510D7347E8336 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		BCDDE34074DDE7F8C3452F5CF8AEB4F9 /* Pods-BeamAPI_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-BeamAPI_Tests-frameworks.sh"; sourceTree = "<group>"; };
+		C193D82D3258698CAD27D962D132B0A2 /* BeamAPI-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "BeamAPI-prefix.pch"; sourceTree = "<group>"; };
+		C3EA10EE7EAEAFD6C0F711C7CBA5A605 /* Pods_BeamAPI_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BeamAPI_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D625A5192D71B39330B509BF182A9912 /* BeamAPI.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = BeamAPI.xcconfig; sourceTree = "<group>"; };
+		EA1E6272260EFFF03CAF41EEB7EF2E1C /* BeamAPI.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = BeamAPI.modulemap; sourceTree = "<group>"; };
+		EB68ADEB1C4DAF8800C58D7B /* BeamAchievement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeamAchievement.swift; sourceTree = "<group>"; };
+		EB68ADEC1C4DAF8800C58D7B /* BeamChannel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeamChannel.swift; sourceTree = "<group>"; };
+		EB68ADED1C4DAF8800C58D7B /* BeamGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeamGroup.swift; sourceTree = "<group>"; };
+		EB68ADEE1C4DAF8800C58D7B /* BeamMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeamMessage.swift; sourceTree = "<group>"; };
+		EB68ADEF1C4DAF8800C58D7B /* BeamMessageComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeamMessageComponent.swift; sourceTree = "<group>"; };
+		EB68ADF01C4DAF8800C58D7B /* BeamMessageComponentType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeamMessageComponentType.swift; sourceTree = "<group>"; };
+		EB68ADF11C4DAF8800C58D7B /* BeamShopCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeamShopCategory.swift; sourceTree = "<group>"; };
+		EB68ADF21C4DAF8800C58D7B /* BeamShopItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeamShopItem.swift; sourceTree = "<group>"; };
+		EB68ADF31C4DAF8800C58D7B /* BeamThumbnail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeamThumbnail.swift; sourceTree = "<group>"; };
+		EB68ADF41C4DAF8800C58D7B /* BeamType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeamType.swift; sourceTree = "<group>"; };
+		EB68ADF51C4DAF8800C58D7B /* BeamUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeamUser.swift; sourceTree = "<group>"; };
+		EB68ADF71C4DAF8800C58D7B /* AuthenticatePacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticatePacket.swift; sourceTree = "<group>"; };
+		EB68ADF81C4DAF8800C58D7B /* DeleteMessagePacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteMessagePacket.swift; sourceTree = "<group>"; };
+		EB68ADF91C4DAF8800C58D7B /* MessagePacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagePacket.swift; sourceTree = "<group>"; };
+		EB68ADFA1C4DAF8800C58D7B /* Packet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Packet.swift; sourceTree = "<group>"; };
+		EB68ADFB1C4DAF8800C58D7B /* PollEndPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PollEndPacket.swift; sourceTree = "<group>"; };
+		EB68ADFC1C4DAF8800C58D7B /* PollStartPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PollStartPacket.swift; sourceTree = "<group>"; };
+		EB68ADFD1C4DAF8800C58D7B /* Sendable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sendable.swift; sourceTree = "<group>"; };
+		EB68ADFE1C4DAF8800C58D7B /* UserJoinPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserJoinPacket.swift; sourceTree = "<group>"; };
+		EB68ADFF1C4DAF8800C58D7B /* UserLeavePacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLeavePacket.swift; sourceTree = "<group>"; };
+		EB68AE001C4DAF8800C58D7B /* UserUpdatePacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserUpdatePacket.swift; sourceTree = "<group>"; };
+		EB68AE011C4DAF8800C58D7B /* VotePacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VotePacket.swift; sourceTree = "<group>"; };
+		EB68AE031C4DAF8800C58D7B /* BeamClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeamClient.swift; sourceTree = "<group>"; };
+		EB68AE041C4DAF8800C58D7B /* BeamSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeamSession.swift; sourceTree = "<group>"; };
+		EB68AE051C4DAF8900C58D7B /* ChatClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatClient.swift; sourceTree = "<group>"; };
+		EB68AE071C4DAF8900C58D7B /* AchievementsRoutes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AchievementsRoutes.swift; sourceTree = "<group>"; };
+		EB68AE081C4DAF8900C58D7B /* ChannelsRoutes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelsRoutes.swift; sourceTree = "<group>"; };
+		EB68AE091C4DAF8900C58D7B /* ChatRoutes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoutes.swift; sourceTree = "<group>"; };
+		EB68AE0A1C4DAF8900C58D7B /* ShopRoutes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopRoutes.swift; sourceTree = "<group>"; };
+		EB68AE0B1C4DAF8900C58D7B /* UsersRoutes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersRoutes.swift; sourceTree = "<group>"; };
+		EB68AE0D1C4DAF8900C58D7B /* BeamRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeamRequest.swift; sourceTree = "<group>"; };
+		EB68AE0E1C4DAF8900C58D7B /* BeamRequestError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeamRequestError.swift; sourceTree = "<group>"; };
+		EB68AE0F1C4DAF8900C58D7B /* NSDate+fromBeam.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+fromBeam.swift"; sourceTree = "<group>"; };
+		FA16F6EF71C8CFB398F802EA5F31A493 /* Pods-BeamAPI_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-BeamAPI_Tests.modulemap"; sourceTree = "<group>"; };
+		FB5A94D9ED2437B77FFB3CD5347D6ABB /* Pods-BeamAPI_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-BeamAPI_Tests.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8FA5F99E9013196428EBB11895A3AB33 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BCE2D6471D4FD6225B15C518075E09CC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EB4D5D5F8C6B506236DC1B833F18ACCC /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F1DF64C52AA8995B282E03663E3A20F7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				58BD526948395EB81C33DD46A4DACC18 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		13A4834BA84183F52423E99CE9EDE588 /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				DE61A220528E7B917AAC0C66AF4F3B3B /* Classes */,
+			);
+			path = Pod;
+			sourceTree = "<group>";
+		};
+		42E12DB782686BC7749D7C3EA6977754 /* Pods-BeamAPI_Tests */ = {
+			isa = PBXGroup;
+			children = (
+				AFB6414F21B582B79B3510D7347E8336 /* Info.plist */,
+				FA16F6EF71C8CFB398F802EA5F31A493 /* Pods-BeamAPI_Tests.modulemap */,
+				245F4A71F0E37A4BCD8AC7C6BB3DD3B3 /* Pods-BeamAPI_Tests-acknowledgements.markdown */,
+				9A840CDF8B3C45A01F78109DC3664BCE /* Pods-BeamAPI_Tests-acknowledgements.plist */,
+				8E5233AF56788CA6A3424A2AD9E96847 /* Pods-BeamAPI_Tests-dummy.m */,
+				BCDDE34074DDE7F8C3452F5CF8AEB4F9 /* Pods-BeamAPI_Tests-frameworks.sh */,
+				A032B8A5F1DF6BD8E6546140394DBA0B /* Pods-BeamAPI_Tests-resources.sh */,
+				481EBC488BB36E163D49852D5DA43071 /* Pods-BeamAPI_Tests-umbrella.h */,
+				27E900D08CF7BA42BC471330BE03658A /* Pods-BeamAPI_Tests.debug.xcconfig */,
+				FB5A94D9ED2437B77FFB3CD5347D6ABB /* Pods-BeamAPI_Tests.release.xcconfig */,
+			);
+			name = "Pods-BeamAPI_Tests";
+			path = "Target Support Files/Pods-BeamAPI_Tests";
+			sourceTree = "<group>";
+		};
+		5EE1B308C5CE01619580B2A52E40E94E /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				EA1E6272260EFFF03CAF41EEB7EF2E1C /* BeamAPI.modulemap */,
+				D625A5192D71B39330B509BF182A9912 /* BeamAPI.xcconfig */,
+				382C0175AE26F8CE917B109391D787CE /* BeamAPI-dummy.m */,
+				C193D82D3258698CAD27D962D132B0A2 /* BeamAPI-prefix.pch */,
+				3CC3413B618CCB2E8C21E4FBF445E7ED /* BeamAPI-umbrella.h */,
+				01326786B4E1F9A362C8581FE7AE07AF /* Info.plist */,
+			);
+			name = "Support Files";
+			path = "Example/Pods/Target Support Files/BeamAPI";
+			sourceTree = "<group>";
+		};
+		68CFE1850859B19AEF4F3F30AF4412B6 /* BeamAPI */ = {
+			isa = PBXGroup;
+			children = (
+				13A4834BA84183F52423E99CE9EDE588 /* Pod */,
+				5EE1B308C5CE01619580B2A52E40E94E /* Support Files */,
+			);
+			name = BeamAPI;
+			path = ../..;
+			sourceTree = "<group>";
+		};
+		709571AE20F024161D4E638C87B5D3C4 /* Development Pods */ = {
+			isa = PBXGroup;
+			children = (
+				68CFE1850859B19AEF4F3F30AF4412B6 /* BeamAPI */,
+			);
+			name = "Development Pods";
+			sourceTree = "<group>";
+		};
+		7DB346D0F39D3F0E887471402A8071AB = {
+			isa = PBXGroup;
+			children = (
+				BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */,
+				709571AE20F024161D4E638C87B5D3C4 /* Development Pods */,
+				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
+				AED1F57C1650C2EE445974143E495E7E /* Products */,
+				A3CC85F8EFEE8D498D14ACE5FF8373E3 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		A3CC85F8EFEE8D498D14ACE5FF8373E3 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				42E12DB782686BC7749D7C3EA6977754 /* Pods-BeamAPI_Tests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		AED1F57C1650C2EE445974143E495E7E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				15AD5088DE15F910B1E261141DFE638E /* BeamAPI.bundle */,
+				30CB9E285D96BD7BE600139FD9CFE734 /* BeamAPI.framework */,
+				C3EA10EE7EAEAFD6C0F711C7CBA5A605 /* Pods_BeamAPI_Tests.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BF6342C8B29F4CEEA088EFF7AB4DE362 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BF6342C8B29F4CEEA088EFF7AB4DE362 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				3E4E89230EF59BC255123B67864ACF77 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		DE61A220528E7B917AAC0C66AF4F3B3B /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				EB68ADEA1C4DAF8800C58D7B /* Models */,
+				EB68AE021C4DAF8800C58D7B /* Clients */,
+				EB68AE061C4DAF8900C58D7B /* Routes */,
+				EB68AE0C1C4DAF8900C58D7B /* Utilities */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		EB68ADEA1C4DAF8800C58D7B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				EB68ADEB1C4DAF8800C58D7B /* BeamAchievement.swift */,
+				EB68ADEC1C4DAF8800C58D7B /* BeamChannel.swift */,
+				EB68ADED1C4DAF8800C58D7B /* BeamGroup.swift */,
+				EB68ADEE1C4DAF8800C58D7B /* BeamMessage.swift */,
+				EB68ADEF1C4DAF8800C58D7B /* BeamMessageComponent.swift */,
+				EB68ADF01C4DAF8800C58D7B /* BeamMessageComponentType.swift */,
+				EB68ADF11C4DAF8800C58D7B /* BeamShopCategory.swift */,
+				EB68ADF21C4DAF8800C58D7B /* BeamShopItem.swift */,
+				EB68ADF31C4DAF8800C58D7B /* BeamThumbnail.swift */,
+				EB68ADF41C4DAF8800C58D7B /* BeamType.swift */,
+				EB68ADF51C4DAF8800C58D7B /* BeamUser.swift */,
+				EB68ADF61C4DAF8800C58D7B /* Chat */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		EB68ADF61C4DAF8800C58D7B /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				EB68ADF71C4DAF8800C58D7B /* AuthenticatePacket.swift */,
+				EB68ADF81C4DAF8800C58D7B /* DeleteMessagePacket.swift */,
+				EB68ADF91C4DAF8800C58D7B /* MessagePacket.swift */,
+				EB68ADFA1C4DAF8800C58D7B /* Packet.swift */,
+				EB68ADFB1C4DAF8800C58D7B /* PollEndPacket.swift */,
+				EB68ADFC1C4DAF8800C58D7B /* PollStartPacket.swift */,
+				EB68ADFD1C4DAF8800C58D7B /* Sendable.swift */,
+				EB68ADFE1C4DAF8800C58D7B /* UserJoinPacket.swift */,
+				EB68ADFF1C4DAF8800C58D7B /* UserLeavePacket.swift */,
+				EB68AE001C4DAF8800C58D7B /* UserUpdatePacket.swift */,
+				EB68AE011C4DAF8800C58D7B /* VotePacket.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		EB68AE021C4DAF8800C58D7B /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+				EB68AE031C4DAF8800C58D7B /* BeamClient.swift */,
+				EB68AE041C4DAF8800C58D7B /* BeamSession.swift */,
+				EB68AE051C4DAF8900C58D7B /* ChatClient.swift */,
+			);
+			path = Clients;
+			sourceTree = "<group>";
+		};
+		EB68AE061C4DAF8900C58D7B /* Routes */ = {
+			isa = PBXGroup;
+			children = (
+				EB68AE071C4DAF8900C58D7B /* AchievementsRoutes.swift */,
+				EB68AE081C4DAF8900C58D7B /* ChannelsRoutes.swift */,
+				EB68AE091C4DAF8900C58D7B /* ChatRoutes.swift */,
+				EB68AE0A1C4DAF8900C58D7B /* ShopRoutes.swift */,
+				EB68AE0B1C4DAF8900C58D7B /* UsersRoutes.swift */,
+			);
+			path = Routes;
+			sourceTree = "<group>";
+		};
+		EB68AE0C1C4DAF8900C58D7B /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				EB68AE0D1C4DAF8900C58D7B /* BeamRequest.swift */,
+				EB68AE0E1C4DAF8900C58D7B /* BeamRequestError.swift */,
+				EB68AE0F1C4DAF8900C58D7B /* NSDate+fromBeam.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		7477078829917B2A95EF0768D6F8EE90 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C066792CB3CEFE1F37F99A38080A8C5 /* Pods-BeamAPI_Tests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BACACAC4DDE47E5CAED46551BA0CEAE8 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				951807C924C24C3D6CAEF2665A1341B0 /* BeamAPI-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		58B085DEBE354E227C26A1D53C8DF9B3 /* BeamAPI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 61EA03DFA37239E4B676E4A186B9749E /* Build configuration list for PBXNativeTarget "BeamAPI" */;
+			buildPhases = (
+				181E3018D7E145EA507996E6021ECF2D /* Sources */,
+				BCE2D6471D4FD6225B15C518075E09CC /* Frameworks */,
+				3C9755A0A1A834D258D33598A6F43021 /* Resources */,
+				BACACAC4DDE47E5CAED46551BA0CEAE8 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EEBA9B960F2A19D890C6DCACA63F21CB /* PBXTargetDependency */,
+			);
+			name = BeamAPI;
+			productName = BeamAPI;
+			productReference = 30CB9E285D96BD7BE600139FD9CFE734 /* BeamAPI.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		C6E81F6868BEBEB5C75404322893C234 /* Pods-BeamAPI_Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 65591EF00DBE4A8B24633A5DA05443D6 /* Build configuration list for PBXNativeTarget "Pods-BeamAPI_Tests" */;
+			buildPhases = (
+				8497725B7B7D83EFFB55D687E342702F /* Sources */,
+				F1DF64C52AA8995B282E03663E3A20F7 /* Frameworks */,
+				7477078829917B2A95EF0768D6F8EE90 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FF6A30D94FE32D73CD79A40F5C92834A /* PBXTargetDependency */,
+			);
+			name = "Pods-BeamAPI_Tests";
+			productName = "Pods-BeamAPI_Tests";
+			productReference = C3EA10EE7EAEAFD6C0F711C7CBA5A605 /* Pods_BeamAPI_Tests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		EE57BED4FB3A2D2FE5C38E61BC149FFC /* BeamAPI-BeamAPI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7DB46AA250AEFC263B58E4799DC233C6 /* Build configuration list for PBXNativeTarget "BeamAPI-BeamAPI" */;
+			buildPhases = (
+				D9AD0B46B6BF2E6069B2D82FC9B7103F /* Sources */,
+				8FA5F99E9013196428EBB11895A3AB33 /* Frameworks */,
+				C55307E3BCF18DE72E50D0103A2A13A2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "BeamAPI-BeamAPI";
+			productName = "BeamAPI-BeamAPI";
+			productReference = 15AD5088DE15F910B1E261141DFE638E /* BeamAPI.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
+			};
+			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
+			productRefGroup = AED1F57C1650C2EE445974143E495E7E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				58B085DEBE354E227C26A1D53C8DF9B3 /* BeamAPI */,
+				EE57BED4FB3A2D2FE5C38E61BC149FFC /* BeamAPI-BeamAPI */,
+				C6E81F6868BEBEB5C75404322893C234 /* Pods-BeamAPI_Tests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3C9755A0A1A834D258D33598A6F43021 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				295EDBA5FDB54F42C50129ABA2FFF901 /* BeamAPI.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C55307E3BCF18DE72E50D0103A2A13A2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		181E3018D7E145EA507996E6021ECF2D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EB68AE1C1C4DAF8900C58D7B /* DeleteMessagePacket.swift in Sources */,
+				EB68AE251C4DAF8900C58D7B /* VotePacket.swift in Sources */,
+				EB68AE2B1C4DAF8900C58D7B /* ChatRoutes.swift in Sources */,
+				EB68AE1B1C4DAF8900C58D7B /* AuthenticatePacket.swift in Sources */,
+				EB68AE221C4DAF8900C58D7B /* UserJoinPacket.swift in Sources */,
+				EB68AE141C4DAF8900C58D7B /* BeamMessageComponent.swift in Sources */,
+				EB68AE121C4DAF8900C58D7B /* BeamGroup.swift in Sources */,
+				EB68AE211C4DAF8900C58D7B /* Sendable.swift in Sources */,
+				EB68AE261C4DAF8900C58D7B /* BeamClient.swift in Sources */,
+				EB68AE2F1C4DAF8900C58D7B /* BeamRequestError.swift in Sources */,
+				EB68AE111C4DAF8900C58D7B /* BeamChannel.swift in Sources */,
+				EB68AE2E1C4DAF8900C58D7B /* BeamRequest.swift in Sources */,
+				EB68AE2A1C4DAF8900C58D7B /* ChannelsRoutes.swift in Sources */,
+				EB68AE201C4DAF8900C58D7B /* PollStartPacket.swift in Sources */,
+				EB68AE101C4DAF8900C58D7B /* BeamAchievement.swift in Sources */,
+				EB68AE291C4DAF8900C58D7B /* AchievementsRoutes.swift in Sources */,
+				EB68AE151C4DAF8900C58D7B /* BeamMessageComponentType.swift in Sources */,
+				EB68AE231C4DAF8900C58D7B /* UserLeavePacket.swift in Sources */,
+				EB68AE191C4DAF8900C58D7B /* BeamType.swift in Sources */,
+				EB68AE1F1C4DAF8900C58D7B /* PollEndPacket.swift in Sources */,
+				DAC56E6564EEDBD3B78C48C497A1F225 /* BeamAPI-dummy.m in Sources */,
+				EB68AE301C4DAF8900C58D7B /* NSDate+fromBeam.swift in Sources */,
+				EB68AE161C4DAF8900C58D7B /* BeamShopCategory.swift in Sources */,
+				EB68AE171C4DAF8900C58D7B /* BeamShopItem.swift in Sources */,
+				EB68AE1A1C4DAF8900C58D7B /* BeamUser.swift in Sources */,
+				EB68AE131C4DAF8900C58D7B /* BeamMessage.swift in Sources */,
+				EB68AE281C4DAF8900C58D7B /* ChatClient.swift in Sources */,
+				EB68AE181C4DAF8900C58D7B /* BeamThumbnail.swift in Sources */,
+				EB68AE241C4DAF8900C58D7B /* UserUpdatePacket.swift in Sources */,
+				EB68AE1D1C4DAF8900C58D7B /* MessagePacket.swift in Sources */,
+				EB68AE271C4DAF8900C58D7B /* BeamSession.swift in Sources */,
+				EB68AE1E1C4DAF8900C58D7B /* Packet.swift in Sources */,
+				EB68AE2D1C4DAF8900C58D7B /* UsersRoutes.swift in Sources */,
+				EB68AE2C1C4DAF8900C58D7B /* ShopRoutes.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8497725B7B7D83EFFB55D687E342702F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B93EF2BAD7313676CBCA1B0EB6F0AA68 /* Pods-BeamAPI_Tests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9AD0B46B6BF2E6069B2D82FC9B7103F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EEBA9B960F2A19D890C6DCACA63F21CB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "BeamAPI-BeamAPI";
+			target = EE57BED4FB3A2D2FE5C38E61BC149FFC /* BeamAPI-BeamAPI */;
+			targetProxy = A811437245BE4A3AE76DF86B9F899AEB /* PBXContainerItemProxy */;
+		};
+		FF6A30D94FE32D73CD79A40F5C92834A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = BeamAPI;
+			target = 58B085DEBE354E227C26A1D53C8DF9B3 /* BeamAPI */;
+			targetProxy = 45CEFAC04F3C8882F12E0AAEFE9BA850 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		10DE1947DAC0ED28F6C0A9F9BD75D546 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = "RELEASE=1";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		552D02D5BA751AC2E8790D2811D496CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				ONLY_ACTIVE_ARCH = YES;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		61F10DA4886BFFFF5CF0E767E6124B78 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D625A5192D71B39330B509BF182A9912 /* BeamAPI.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				PRODUCT_NAME = BeamAPI;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		6F3A1E46733B5619E83C0250006B1FCD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D625A5192D71B39330B509BF182A9912 /* BeamAPI.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/BeamAPI/BeamAPI-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/BeamAPI/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/BeamAPI/BeamAPI.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = BeamAPI;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		784EF307047A4892B24CFA183A43EE18 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D625A5192D71B39330B509BF182A9912 /* BeamAPI.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				PRODUCT_NAME = BeamAPI;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+		8B26830ECE95FC6490A23180DD4F5F70 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D625A5192D71B39330B509BF182A9912 /* BeamAPI.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/BeamAPI/BeamAPI-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/BeamAPI/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/BeamAPI/BeamAPI.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = BeamAPI;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		9EA15DB3E0F9638C7E607E0D997D18E9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FB5A94D9ED2437B77FFB3CD5347D6ABB /* Pods-BeamAPI_Tests.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-BeamAPI_Tests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-BeamAPI_Tests/Pods-BeamAPI_Tests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_NAME = Pods_BeamAPI_Tests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		A1BB4A2BEC1C09ECA9362BE994BD681E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 27E900D08CF7BA42BC471330BE03658A /* Pods-BeamAPI_Tests.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-BeamAPI_Tests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-BeamAPI_Tests/Pods-BeamAPI_Tests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_NAME = Pods_BeamAPI_Tests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				552D02D5BA751AC2E8790D2811D496CA /* Debug */,
+				10DE1947DAC0ED28F6C0A9F9BD75D546 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		61EA03DFA37239E4B676E4A186B9749E /* Build configuration list for PBXNativeTarget "BeamAPI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8B26830ECE95FC6490A23180DD4F5F70 /* Debug */,
+				6F3A1E46733B5619E83C0250006B1FCD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		65591EF00DBE4A8B24633A5DA05443D6 /* Build configuration list for PBXNativeTarget "Pods-BeamAPI_Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1BB4A2BEC1C09ECA9362BE994BD681E /* Debug */,
+				9EA15DB3E0F9638C7E607E0D997D18E9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7DB46AA250AEFC263B58E4799DC233C6 /* Build configuration list for PBXNativeTarget "BeamAPI-BeamAPI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				61F10DA4886BFFFF5CF0E767E6124B78 /* Debug */,
+				784EF307047A4892B24CFA183A43EE18 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+}

@@ -1,0 +1,6 @@
+framework module BeamAPI {
+  umbrella header "BeamAPI-umbrella.h"
+
+  export *
+  module * { export * }
+}

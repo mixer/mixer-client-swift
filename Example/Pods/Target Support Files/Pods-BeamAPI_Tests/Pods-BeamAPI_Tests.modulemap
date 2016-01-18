@@ -1,0 +1,6 @@
+framework module Pods_BeamAPI_Tests {
+  umbrella header "Pods-BeamAPI_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}

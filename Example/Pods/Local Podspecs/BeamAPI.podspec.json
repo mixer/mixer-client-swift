@@ -1,0 +1,25 @@
+{
+  "name": "BeamAPI",
+  "version": "0.1.0",
+  "summary": "A short description of BeamAPI.",
+  "description": "",
+  "homepage": "https://github.com/<GITHUB_USERNAME>/BeamAPI",
+  "license": "MIT",
+  "authors": {
+    "Jack Cook": "hello@jackcook.nyc"
+  },
+  "source": {
+    "git": "https://github.com/<GITHUB_USERNAME>/BeamAPI.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "requires_arc": true,
+  "source_files": "Pod/Classes/**/*",
+  "resource_bundles": {
+    "BeamAPI": [
+      "Pod/Assets/*.png"
+    ]
+  }
+}
