@@ -32,13 +32,26 @@ public class BeamSession {
     }
     
     public static func authenticate(username: String, password: String, completion: (user: BeamUser?, error: BeamRequestError?) -> Void) {
-        self.authenticate(username, password: password, code: nil, completion: completion)
+        self.authenticate(username, password: password, code: nil, deviceToken: nil, completion: completion)
+    }
+    
+    public static func authenticate(username: String, password: String, deviceToken: String?, completion: (user: BeamUser?, error: BeamRequestError?) -> Void) {
+        self.authenticate(username, password: password, code: nil, deviceToken: deviceToken, completion: completion)
     }
     
     public static func authenticate(username: String, password: String, code: Int?, completion: (user: BeamUser?, error: BeamRequestError?) -> Void) {
+        self.authenticate(username, password: password, code: code, deviceToken: nil, completion: completion)
+    }
+    
+    public static func authenticate(username: String, password: String, code: Int?, deviceToken: String?, completion: (user: BeamUser?, error: BeamRequestError?) -> Void) {
         let body = "username=\(username)&password=\(password)" + (code == nil ? "" : "&code=\(code!)")
+        var headers = [String: String]()
         
-        BeamRequest.request("/users/login", requestType: "POST", body: body) { (json, error) -> Void in
+        if let token = deviceToken {
+            headers["X-Device-Token"] = token
+        }
+        
+        BeamRequest.request("/users/login", requestType: "POST", headers: headers, params: [String: String](), body: body) { (json, error) -> Void in
             guard error == nil,
                 let json = json else {
                     completion(user: nil, error: error)

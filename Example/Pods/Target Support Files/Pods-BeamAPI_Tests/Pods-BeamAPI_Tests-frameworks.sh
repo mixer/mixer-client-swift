@@ -85,7 +85,11 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-BeamAPI_Tests/BeamAPI.framework"
+  install_framework "Pods-BeamAPI_Tests/Starscream.framework"
+  install_framework "Pods-BeamAPI_Tests/SwiftyJSON.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-BeamAPI_Tests/BeamAPI.framework"
+  install_framework "Pods-BeamAPI_Tests/Starscream.framework"
+  install_framework "Pods-BeamAPI_Tests/SwiftyJSON.framework"
 fi

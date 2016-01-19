@@ -1,25 +1,26 @@
 {
   "name": "BeamAPI",
-  "version": "0.1.0",
-  "summary": "A short description of BeamAPI.",
-  "description": "",
-  "homepage": "https://github.com/<GITHUB_USERNAME>/BeamAPI",
+  "version": "0.1.2",
+  "summary": "An interface to communicate with Beam's backend.",
+  "homepage": "https://github.com/WatchBeam/beam-client-swift",
   "license": "MIT",
   "authors": {
-    "Jack Cook": "hello@jackcook.nyc"
-  },
-  "source": {
-    "git": "https://github.com/<GITHUB_USERNAME>/BeamAPI.git",
-    "tag": "0.1.0"
-  },
-  "platforms": {
-    "ios": "8.0"
+    "Jack Cook": "jack@mcprohosting.com"
   },
   "requires_arc": true,
+  "platforms": {
+    "ios": "8.2"
+  },
+  "source": {
+    "git": "https://github.com/WatchBeam/beam-client-swift.git"
+  },
   "source_files": "Pod/Classes/**/*",
-  "resource_bundles": {
-    "BeamAPI": [
-      "Pod/Assets/*.png"
+  "dependencies": {
+    "Starscream": [
+      "~> 1.1"
+    ],
+    "SwiftyJSON": [
+      "~> 2.3"
     ]
   }
 }

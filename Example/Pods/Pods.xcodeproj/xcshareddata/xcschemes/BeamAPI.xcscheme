@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '49DDB5E8DFF834F865CFC323'
+               BlueprintIdentifier = '13ECFEFAC378564C95574AC7'
                BlueprintName = 'BeamAPI'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'BeamAPI.framework'>

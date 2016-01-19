@@ -13,6 +13,8 @@ public class BeamRequest {
     
     public static var imageCache = [String: UIImage]()
     
+    public static var version = 0.1
+    
     public class func request(endpoint: String, requestType: String) {
         BeamRequest.request("https://beam.pro/api/v1\(endpoint)", requestType: requestType) { (data, error) -> Void in }
     }
@@ -84,6 +86,8 @@ public class BeamRequest {
         request.HTTPMethod = requestType
         request.HTTPBody = body.dataUsingEncoding(NSUTF8StringEncoding)
         
+        request.addValue("BeamApp/\(version) (\(deviceName()); iOS)", forHTTPHeaderField: "User-Agent")
+        
         for (header, val) in headers {
             request.addValue(val, forHTTPHeaderField: header)
         }
@@ -134,6 +138,21 @@ public class BeamRequest {
         })
         
         task.resume()
+    }
+    
+    private class func deviceName() -> String {
+        var systemInfo = utsname()
+        uname(&systemInfo)
+        let machineMirror = Mirror(reflecting: systemInfo.machine)
+        let identifier = machineMirror.children.reduce("") { identifier, element in
+            guard let value = element.value as? Int8 where value != 0 else {
+                return identifier
+            }
+            
+            return identifier + String(UnicodeScalar(UInt8(value)))
+        }
+        
+        return identifier
     }
     
     private class func stringFromQueryParameters(queryParameters: [String: String]) -> String {
