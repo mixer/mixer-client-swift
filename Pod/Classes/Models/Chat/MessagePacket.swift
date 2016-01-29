@@ -16,7 +16,7 @@ public class MessagePacket: Packet, Sendable {
     }
     
     public init(message: String) {
-        messageText = message
+        messageText = message.stringByReplacingOccurrencesOfString("\"", withString: "\\\"")
     }
     
     public var identifier: String {
