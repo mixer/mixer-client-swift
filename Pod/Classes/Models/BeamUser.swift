@@ -19,6 +19,7 @@ public struct BeamUser {
     public let bio: String?
     
     public let groups: [BeamGroup]?
+    public let preferences: [String: AnyObject]?
     
     public var twitter: String?
     public var facebook: String?
@@ -50,6 +51,13 @@ public struct BeamUser {
                 if let group = retrieved_group {
                     self.groups!.append(group)
                 }
+            }
+        }
+        
+        preferences = [String: AnyObject]()
+        if let preferences = json["preferences"].dictionaryObject {
+            for (key, val) in preferences {
+                self.preferences![key] = val
             }
         }
     }
