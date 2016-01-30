@@ -8,7 +8,7 @@
 
 public class DeleteMessagePacket: Packet {
     
-    public var id: String!
+    public var id: String
     
     public init(id: String) {
         self.id = id

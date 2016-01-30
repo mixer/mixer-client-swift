@@ -20,19 +20,20 @@ public struct BeamMessage {
     public init(json: JSON) {
         components = [BeamMessageComponent]()
         
-        if let message = json["message"].dictionary {
-            var me = false
-            
-            if let flag = message["meta"]!.dictionary!["me"]?.bool {
-                me = flag
-            }
-            
-            if let components = message["message"]!.array {
-                for component in components {
-                    let message_component = BeamMessageComponent(json: component, me: me)
-                    self.components.append(message_component)
+        if let message = json["message"].dictionary,
+            meta = message["meta"]?.dictionary {
+                var me = false
+                
+                if let flag = meta["me"]?.bool {
+                    me = flag
                 }
-            }
+                
+                if let components = message["message"]?.array {
+                    for component in components {
+                        let message_component = BeamMessageComponent(json: component, me: me)
+                        self.components.append(message_component)
+                    }
+                }
         }
         
         channel = json["channel"].int
@@ -43,10 +44,12 @@ public struct BeamMessage {
         userRoles = [BeamGroup]()
         if let roles = json["user_roles"].array {
             for role in roles {
-                if let user_role = BeamGroup(rawValue: role.string!) {
-                    userRoles!.append(user_role)
-                } else {
-                    userRoles!.append(BeamGroup.User)
+                if let roleString = role.string {
+                    if let user_role = BeamGroup(rawValue: roleString) {
+                        userRoles!.append(user_role)
+                    } else {
+                        userRoles!.append(BeamGroup.User)
+                    }
                 }
             }
         }

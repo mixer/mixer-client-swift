@@ -45,11 +45,12 @@ public struct BeamUser {
         groups = [BeamGroup]()
         if let groups = json["groups"].array {
             for group in groups {
-                let name = group["name"].string!
-                let retrieved_group = BeamGroup(rawValue: name)
-                
-                if let group = retrieved_group {
-                    self.groups!.append(group)
+                if let name = group["name"].string {
+                    let retrieved_group = BeamGroup(rawValue: name)
+                    
+                    if let group = retrieved_group {
+                        self.groups!.append(group)
+                    }
                 }
             }
         }

@@ -21,9 +21,10 @@ public struct BeamThumbnail {
     public var size: CGSize?
     
     public init(json: JSON) {
-        if let size = json["meta"]["size"].array {
-            let width = CGFloat(size[0].int!)
-            let height = CGFloat(size[1].int!)
+        if let size = json["meta"]["size"].array,
+            w = size[0].int, h = size[1].int {
+            let width = CGFloat(w)
+            let height = CGFloat(h)
             self.size = CGSizeMake(width, height)
         }
         
