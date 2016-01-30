@@ -47,11 +47,7 @@ public class BeamSession {
         let body = "username=\(username)&password=\(password)" + (code == nil ? "" : "&code=\(code!)")
         var headers = [String: String]()
         
-        if let token = deviceToken {
-            headers["X-Device-Token"] = token
-        }
-        
-        BeamRequest.request("/users/login", requestType: "POST", headers: headers, params: [String: String](), body: body) { (json, error) -> Void in
+        BeamRequest.request("/users/login", requestType: "POST", body: body) { (json, error) -> Void in
             guard error == nil,
                 let json = json else {
                     completion(user: nil, error: error)

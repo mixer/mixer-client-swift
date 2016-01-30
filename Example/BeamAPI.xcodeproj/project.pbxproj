@@ -13,6 +13,8 @@
 		EB4A0ED91C5D1CEE0012693F /* ChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4A0ED81C5D1CEE0012693F /* ChatTests.swift */; };
 		EB4A0EDB1C5D239A0012693F /* ShopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4A0EDA1C5D239A0012693F /* ShopTests.swift */; };
 		EB4A0EDD1C5D25B40012693F /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4A0EDC1C5D25B40012693F /* UserTests.swift */; };
+		EB4A0EE21C5D33AB0012693F /* ChatClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4A0EE11C5D33AB0012693F /* ChatClientTests.swift */; };
+		EBF068781C5D3684007ACCF9 /* SessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF068771C5D3684007ACCF9 /* SessionTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +31,8 @@
 		EB4A0ED81C5D1CEE0012693F /* ChatTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTests.swift; sourceTree = "<group>"; };
 		EB4A0EDA1C5D239A0012693F /* ShopTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopTests.swift; sourceTree = "<group>"; };
 		EB4A0EDC1C5D25B40012693F /* UserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTests.swift; sourceTree = "<group>"; };
+		EB4A0EE11C5D33AB0012693F /* ChatClientTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatClientTests.swift; sourceTree = "<group>"; };
+		EBF068771C5D3684007ACCF9 /* SessionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +69,7 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				EB4A0EDE1C5D338F0012693F /* Clients */,
 				EB4A0ED31C5D1A510012693F /* Models */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
@@ -116,6 +121,15 @@
 				EB4A0EDC1C5D25B40012693F /* UserTests.swift */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		EB4A0EDE1C5D338F0012693F /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+				EB4A0EE11C5D33AB0012693F /* ChatClientTests.swift */,
+				EBF068771C5D3684007ACCF9 /* SessionTests.swift */,
+			);
+			name = Clients;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -238,7 +252,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB4A0EE21C5D33AB0012693F /* ChatClientTests.swift in Sources */,
 				EB4A0ED71C5D1B310012693F /* ChannelTests.swift in Sources */,
+				EBF068781C5D3684007ACCF9 /* SessionTests.swift in Sources */,
 				EB4A0ED91C5D1CEE0012693F /* ChatTests.swift in Sources */,
 				EB4A0EDD1C5D25B40012693F /* UserTests.swift in Sources */,
 				EB4A0ED51C5D1A5C0012693F /* AchievementTests.swift in Sources */,

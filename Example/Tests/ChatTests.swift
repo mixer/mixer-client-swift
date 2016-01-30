@@ -26,8 +26,9 @@ class ChatTests: XCTestCase {
                 return
             }
             
-            channels.sortInPlace({ $0.viewersCurrent > $1.viewersCurrent })
+            XCTAssert(error == nil)
             
+            channels.sortInPlace({ $0.viewersCurrent > $1.viewersCurrent })
             self.channel = channels[0]
             
             dispatch_semaphore_signal(semaphore)

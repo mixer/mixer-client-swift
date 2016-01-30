@@ -162,19 +162,19 @@ public class ChatRoutes {
         let imageUrl = "https://images.beam.pro/64x64/https://uploads.beam.pro/avatar/\(userId).jpg"
         
         BeamRequest.imageRequest(imageUrl) { (image, error) -> Void in
-            guard let image = image else {
-                completion(spacesuit: nil, error: error)
-                return
-            }
-            
-            UIGraphicsBeginImageContextWithOptions(CGSizeMake(20, 20), false, 0)
-            image.drawInRect(CGRectMake(3, 4, 14, 14))
-            UIImage(named: "Space Suit")?.drawInRect(CGRectMake(0, 0, 20, 20))
-            let fullsuit = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-            
+            let fullsuit = self.getSpaceSuitWithAvatar(image)
             completion(spacesuit: fullsuit, error: nil)
         }
+    }
+    
+    private func getSpaceSuitWithAvatar(avatar: UIImage?) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(20, 20), false, 0)
+        avatar?.drawInRect(CGRectMake(3, 4, 14, 14))
+        UIImage(named: "Space Suit")?.drawInRect(CGRectMake(0, 0, 20, 20))
+        let fullsuit = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return fullsuit
     }
 }
 
