@@ -45,7 +45,6 @@ public class BeamSession {
     
     public static func authenticate(username: String, password: String, code: Int?, deviceToken: String?, completion: (user: BeamUser?, error: BeamRequestError?) -> Void) {
         let body = "username=\(username)&password=\(password)" + (code == nil ? "" : "&code=\(code!)")
-        var headers = [String: String]()
         
         BeamRequest.request("/users/login", requestType: "POST", body: body) { (json, error) -> Void in
             guard error == nil,
