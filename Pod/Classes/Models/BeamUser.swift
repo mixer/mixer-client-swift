@@ -27,6 +27,8 @@ public struct BeamUser {
     public var player: String?
     
     public init(json: JSON) {
+        print(json)
+        
         if let social = json["social"].dictionary {
             twitter = social["twitter"]?.string
             facebook = social["facebook"]?.string
