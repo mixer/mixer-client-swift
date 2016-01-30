@@ -10,13 +10,13 @@ import SwiftyJSON
 
 public struct BeamType {
     
-    public let id: Int?
-    public let name: String?
+    public let id: Int
+    public let name: String
     public let parent: String?
     public let desc: String?
     public let source: String?
-    public let viewersCurrent: Int?
-    public let online: Int?
+    public let viewersCurrent: Int
+    public let online: Int
     
     public init() {
         id = 0
@@ -29,12 +29,12 @@ public struct BeamType {
     }
     
     public init(json: JSON) {
-        id = json["id"].int
-        name = json["name"].string
+        id = json["id"].int ?? 0
+        name = json["name"].string ?? ""
         parent = json["parent"].string
         desc = json["description"].string
         source = json["source"].string
-        viewersCurrent = json["viewersCurrent"].int
-        online = json["online"].int
+        viewersCurrent = json["viewersCurrent"].int ?? 0
+        online = json["online"].int ?? 0
     }
 }

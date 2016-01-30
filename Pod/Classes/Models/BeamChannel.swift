@@ -28,8 +28,8 @@ public struct BeamChannel {
     public let ftl: Int
     public let subscribers: Int?
     public let userId: Int?
-    public let thumbnail: BeamThumbnail
-    public let type: BeamType
+    public let thumbnail: BeamThumbnail?
+    public let type: BeamType?
     
     public var shareText: String?
     public var costreamAllow: String?
@@ -75,22 +75,22 @@ public struct BeamChannel {
     }
     
     public init(json: JSON) {
-        id = json["id"].int!
-        token = json["token"].string!
-        online = json["online"].bool == nil ? json["online"].int! == 1 : json["online"].bool!
-        featured = json["featured"].bool == nil ? json["featured"].int! == 1 : json["featured"].bool!
-        partnered = json["partnered"].bool == nil ? json["partnered"].int! == 1 : json["partnered"].bool!
-        transcodingEnabled = json["transcodingEnabled"].bool == nil ? json["transcodingEnabled"].int! == 1 : json["transcodingEnabled"].bool!
-        suspended = json["suspended"].bool == nil ? json["suspended"].int! == 1 : json["suspended"].bool!
-        name = json["name"].string!
-        audience = json["audience"].string!
-        viewersTotal = json["viewersTotal"].int!
-        viewersCurrent = json["viewersCurrent"].int!
-        followers = json["numFollowers"].int!
+        id = json["id"].int ?? 0
+        token = json["token"].string ?? ""
+        online = json["online"].bool ?? (json["online"].int ?? 0) == 1
+        featured = json["featured"].bool ?? (json["featured"].int ?? 0) == 1
+        partnered = json["partnered"].bool ?? (json["partnered"].int ?? 0) == 1
+        transcodingEnabled = json["transcodingEnabled"].bool ?? (json["transcodingEnabled"].int ?? 0) == 1
+        suspended = json["suspended"].bool ?? (json["suspended"].int ?? 0) == 1
+        name = json["name"].string ?? ""
+        audience = json["audience"].string ?? ""
+        viewersTotal = json["viewersTotal"].int ?? 0
+        viewersCurrent = json["viewersCurrent"].int ?? 0
+        followers = json["numFollowers"].int ?? 0
         desc = json["description"].string
         typeId = json["typeId"].int
-        interactive = json["interactive"].bool == nil ? json["interactive"].int! == 1 : json["interactive"].bool!
-        ftl = json["ftl"].int!
+        interactive = json["interactive"].bool ?? (json["interactive"].int ?? 0) == 1
+        ftl = json["ftl"].int ?? 0
         subscribers = json["numSubscribers"].int
         userId = json["userId"].int
         

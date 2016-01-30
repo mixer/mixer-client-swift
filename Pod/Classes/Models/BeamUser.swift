@@ -27,8 +27,6 @@ public struct BeamUser {
     public var player: String?
     
     public init(json: JSON) {
-        print(json)
-        
         if let social = json["social"].dictionary {
             twitter = social["twitter"]?.string
             facebook = social["facebook"]?.string
@@ -36,12 +34,12 @@ public struct BeamUser {
             player = social["player"]?.string
         }
         
-        id = json["id"].int!
-        username = json["username"].string!
-        verified = json["verified"].bool!
-        experience = json["experience"].int!
-        sparks = json["sparks"].int!
-        avatarUrl = json["avatarUrl"].string == nil ? "https://beam.pro/_latest/img/app/avatars/default.jpg" : json["avatarUrl"].string!
+        id = json["id"].int ?? 0
+        username = json["username"].string ?? ""
+        verified = json["verified"].bool ?? false
+        experience = json["experience"].int ?? 0
+        sparks = json["sparks"].int ?? 0
+        avatarUrl = json["avatarUrl"].string ?? "https://beam.pro/_latest/img/app/avatars/default.jpg"
         bio = json["bio"].string
         
         groups = [BeamGroup]()
