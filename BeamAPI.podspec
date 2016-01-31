@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name       = "BeamAPI"
-  s.version    = "0.1.8"
+  s.version    = "0.1.9"
   s.summary    = "An interface to communicate with Beam's backend."
   s.homepage   = "https://github.com/WatchBeam/beam-client-swift"
   s.license    = "MIT"
@@ -13,5 +13,5 @@ Pod::Spec.new do |s|
   s.source_files           = "Pod/Classes/**/*"
 
   s.dependency "Starscream", "~> 1.1"
-  s.dependency "SwiftyJSON', '~> 2.3"
+  s.dependency "SwiftyJSON", "~> 2.3"
 end
