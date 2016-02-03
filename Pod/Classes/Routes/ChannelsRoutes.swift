@@ -51,8 +51,6 @@ public class ChannelsRoutes {
         }
     }
     
-    
-    
     // MARK: Retrieving Channels
     
     public func getChannelWithId(id: Int, completion: (channel: BeamChannel?, error: BeamRequestError?) -> Void) {
@@ -76,47 +74,20 @@ public class ChannelsRoutes {
     }
     
     public func getDefaultChannels(completion: (channels: [BeamChannel]?, error: BeamRequestError?) -> Void) {
-        let params = ["order": "online:desc,viewersCurrent:desc,viewersTotal:desc", "where": "suspended.eq.0"]
-        BeamRequest.request("/channels", requestType: "GET", params: params) { (json, error) -> Void in
-            guard let json = json,
-                let channels = json.array else {
-                    completion(channels: nil, error: error)
-                    return
-            }
-            
-            var retrievedChannels = [BeamChannel]()
-            
-            for channel in channels {
-                let retrievedChannel = BeamChannel(json: channel)
-                retrievedChannels.append(retrievedChannel)
-            }
-            
-            completion(channels: retrievedChannels, error: error)
-        }
+        getChannelsByEndpoint("/channels", completion: completion)
     }
     
     public func getChannelsByQuery(query: String, completion: (channels: [BeamChannel]?, error: BeamRequestError?) -> Void) {
-        BeamRequest.request("/channels", requestType: "GET", params: ["scope": "all", "sort": "viewers_total:asc", "q": query]) { (json, error) -> Void in
-            guard let json = json,
-                let channels = json.array else {
-                    completion(channels: nil, error: error)
-                    return
-            }
-            
-            var retrievedChannels = [BeamChannel]()
-            
-            for channel in channels {
-                let retrievedChannel = BeamChannel(json: channel)
-                retrievedChannels.append(retrievedChannel)
-            }
-            
-            completion(channels: retrievedChannels, error: error)
-        }
+        getChannelsByEndpoint("/channels", params: ["scope": "all", "sort": "viewers_total:asc", "q": query], completion: completion)
     }
     
     public func getChannelsByType(typeId: Int, completion: (channels: [BeamChannel]?, error: BeamRequestError?) -> Void) {
-        // where=online.neq.0 should not be used, combine with getChannelsWithQuery when the "sort" parameter works with this request
-        BeamRequest.request("/types/\(typeId)/channels", requestType: "GET", params: ["where": "online.neq.0"]) { (json, error) -> Void in
+        getChannelsByEndpoint("/types/\(typeId)/channels", completion: completion)
+    }
+    
+    private func getChannelsByEndpoint(endpoint: String, params: [String: String]? = [String: String](), completion: (channels: [BeamChannel]?, error: BeamRequestError?) -> Void) {
+        let defaultParams = ["order": "online:desc,viewersCurrent:desc,viewersTotal:desc", "where": "suspended.eq.0"]
+        BeamRequest.request(endpoint, requestType: "GET", params: params ?? defaultParams) { (json, error) -> Void in
             guard let json = json,
                 let channels = json.array else {
                     completion(channels: nil, error: error)
