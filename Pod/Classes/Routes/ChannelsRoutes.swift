@@ -76,7 +76,8 @@ public class ChannelsRoutes {
     }
     
     public func getDefaultChannels(completion: (channels: [BeamChannel]?, error: BeamRequestError?) -> Void) {
-        BeamRequest.request("/channels", requestType: "GET") { (json, error) -> Void in
+        let params = ["order": "online:desc,viewersCurrent:desc,viewersTotal:desc", "where": "suspended.eq.0"]
+        BeamRequest.request("/channels", requestType: "GET", params: params) { (json, error) -> Void in
             guard let json = json,
                 let channels = json.array else {
                     completion(channels: nil, error: error)
