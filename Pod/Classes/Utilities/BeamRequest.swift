@@ -121,9 +121,9 @@ public class BeamRequest {
                                 } else {
                                     if let username = jsonData["username"].array?[0].string {
                                         requestError = username.containsString("taken") ? BeamRequestError.TakenUsername : .InvalidUsername
-                                    } else if let password = jsonData["password"].string {
+                                    } else if let _ = jsonData["password"].string {
                                         requestError = BeamRequestError.WeakPassword
-                                    } else if let email = jsonData["email"].array {
+                                    } else if let _ = jsonData["email"].array {
                                         requestError = BeamRequestError.TakenEmail
                                     } else {
                                         requestError = BeamRequestError.Unknown
