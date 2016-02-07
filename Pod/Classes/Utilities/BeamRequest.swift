@@ -112,8 +112,32 @@ public class BeamRequest {
             } else if response.statusCode != 200 {
                 switch response.statusCode {
                 case 400:
-                    print(NSString(data: data!, encoding: NSUTF8StringEncoding))
-                    requestError = BeamRequestError.BadRequest
+                    if let component = url.lastPathComponent {
+                        if requestType == "POST" && component == "users" {
+                            if let data = data {
+                                let jsonData = JSON(data: data)
+                                if let _ = jsonData.array {
+                                    requestError = BeamRequestError.InvalidEmail
+                                } else {
+                                    if let username = jsonData["username"].array?[0].string {
+                                        requestError = username.containsString("taken") ? BeamRequestError.TakenUsername : .InvalidUsername
+                                    } else if let password = jsonData["password"].string {
+                                        requestError = BeamRequestError.WeakPassword
+                                    } else if let email = jsonData["email"].array {
+                                        requestError = BeamRequestError.TakenEmail
+                                    } else {
+                                        requestError = BeamRequestError.Unknown
+                                    }
+                                }
+                            } else {
+                                requestError = BeamRequestError.Unknown
+                            }
+                        } else {
+                            requestError = BeamRequestError.BadRequest
+                        }
+                    } else {
+                        requestError = BeamRequestError.BadRequest
+                    }
                 case 401:
                     requestError = BeamRequestError.InvalidCredentials
                 case 403:

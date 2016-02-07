@@ -14,9 +14,18 @@ public enum BeamRequestError: ErrorType {
     NotFound
     
     // Beam Errors
-    case InvalidCredentials,
-    NotAuthenticated,
+    case NotAuthenticated,
     Offline,
-    Requires2FA,
     Unknown
+    
+    // Login Errors
+    case InvalidCredentials,
+    Requires2FA
+    
+    // Registration Errors
+    case InvalidUsername,
+    TakenUsername,
+    WeakPassword,
+    InvalidEmail,
+    TakenEmail
 }
