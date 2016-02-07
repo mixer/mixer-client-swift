@@ -123,4 +123,32 @@ public class BeamSession {
             }
         }
     }
+    
+    public static func registerAccount(username: String, password: String, email: String, completion: (user: BeamUser?, error: BeamRequestError?) -> Void) {
+        let body = "username=\(username)&password=\(password)&email=\(email)"
+        
+        BeamRequest.request("/users", requestType: "POST", body: body) { (json, error) -> Void in
+            guard error == nil,
+                let json = json else {
+                    completion(user: nil, error: error)
+                    return
+            }
+            
+            let user = BeamUser(json: json)
+            
+            BeamClient.sharedClient.channels.getChannelWithToken(user.username, completion: { (channel, error) -> Void in
+                guard let channel = channel else {
+                    completion(user: nil, error: error)
+                    return
+                }
+                
+                let session = BeamSession(sessionChannel: channel, sessionUser: user)
+                
+                BeamSession.sharedSession = session
+                completion(user: user, error: error)
+                
+                NSNotificationCenter.defaultCenter().postNotificationName(BeamAuthenticatedNotification, object: nil)
+            })
+        }
+    }
 }

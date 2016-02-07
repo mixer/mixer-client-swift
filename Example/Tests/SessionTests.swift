@@ -57,4 +57,15 @@ class SessionTests: XCTestCase {
         
         waitForExpectationsWithTimeout(10, handler: nil)
     }
+    
+    func testRegister() {
+        let expectation = expectationWithDescription("tests the registration endpoint")
+        
+        BeamSession.registerAccount("beamtest", password: "NYCjack123", email: "test@email.com") { (user, error) -> Void in
+            XCTAssert(error == .BadRequest)
+            expectation.fulfill()
+        }
+        
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
 }
