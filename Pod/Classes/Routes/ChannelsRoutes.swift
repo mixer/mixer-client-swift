@@ -74,7 +74,7 @@ public class ChannelsRoutes {
     }
     
     public func getDefaultChannels(completion: (channels: [BeamChannel]?, error: BeamRequestError?) -> Void) {
-        getChannelsByEndpoint("/channels", completion: completion)
+        getChannelsByEndpoint("/channels", params: nil, completion: completion)
     }
     
     public func getChannelsByQuery(query: String, completion: (channels: [BeamChannel]?, error: BeamRequestError?) -> Void) {
@@ -82,10 +82,10 @@ public class ChannelsRoutes {
     }
     
     public func getChannelsByType(typeId: Int, completion: (channels: [BeamChannel]?, error: BeamRequestError?) -> Void) {
-        getChannelsByEndpoint("/types/\(typeId)/channels", completion: completion)
+        getChannelsByEndpoint("/types/\(typeId)/channels", params: nil, completion: completion)
     }
     
-    private func getChannelsByEndpoint(endpoint: String, params: [String: String]? = [String: String](), completion: (channels: [BeamChannel]?, error: BeamRequestError?) -> Void) {
+    private func getChannelsByEndpoint(endpoint: String, params: [String: String]?, completion: (channels: [BeamChannel]?, error: BeamRequestError?) -> Void) {
         let defaultParams = ["order": "online:desc,viewersCurrent:desc,viewersTotal:desc", "where": "suspended.eq.0"]
         BeamRequest.request(endpoint, requestType: "GET", params: params ?? defaultParams) { (json, error) -> Void in
             guard let json = json,
