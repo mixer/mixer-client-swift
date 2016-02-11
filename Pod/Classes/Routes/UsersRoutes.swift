@@ -6,18 +6,59 @@
 //  Copyright © 2016 MCProHosting. All rights reserved.
 //
 
+import SwiftyJSON
+
 public class UsersRoutes {
     
     // MARK: Acting on User Data
     
     public func forgotPassword(email: String, completion: (error: BeamRequestError?) -> Void) {
         BeamRequest.request("/users/reset", requestType: "POST", body: "email=\(email)") { (json, error) -> Void in
-            guard error == nil else {
-                completion(error: error)
-                return
+            completion(error: error)
+        }
+    }
+    
+    public func updatePreferences(id: Int, preferences: String, completion: (error: BeamRequestError?) -> Void) {
+        BeamRequest.request("/users/\(id)/preferences", requestType: "POST", body: preferences) { (json, error) -> Void in
+            completion(error: error)
+            print(json)
+        }
+    }
+    
+    public func updateNotificationPreferences(id: Int, enable: Bool, completion: (error: BeamRequestError?) -> Void) {
+        getPreferences(id) { (preferences, error) -> Void in
+            guard let preferences = preferences,
+                transports = preferences["channel:notifications"]?["transports"] as? [String] else {
+                    completion(error: error)
+                    return
             }
             
-            completion(error: nil)
+            var transportString = "channel:notifications={\"transports\":["
+            
+            if enable {
+                for transport in transports {
+                    transportString += "\"\(transport)\","
+                }
+                
+                transportString.removeAtIndex(transportString.endIndex.predecessor())
+                
+                if !transports.contains("push") {
+                    transportString += ",\"push\""
+                }
+            } else {
+                for transport in transports where transport != "push" {
+                    transportString += "\"\(transport)\","
+                }
+                
+                transportString.removeAtIndex(transportString.endIndex.predecessor())
+            }
+            
+            transportString += "]}"
+            print(transportString)
+            
+            self.updatePreferences(id, preferences: transportString, completion: { (error) -> Void in
+                completion(error: error)
+            })
         }
     }
     
@@ -39,6 +80,18 @@ public class UsersRoutes {
             }
             
             completion(channels: retrievedChannels, error: error)
+        }
+    }
+    
+    public func getPreferences(id: Int, completion: (preferences: [String: AnyObject]?, error: BeamRequestError?) -> Void) {
+        BeamRequest.request("/users/\(id)/preferences", requestType: "GET") { (json, error) -> Void in
+            guard let json = json,
+                preferences = json.dictionaryObject else {
+                completion(preferences: nil, error: error)
+                return
+            }
+            
+            completion(preferences: preferences, error: error)
         }
     }
     
