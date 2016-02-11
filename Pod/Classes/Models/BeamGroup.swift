@@ -9,8 +9,8 @@
 import UIKit
 
 public enum BeamGroup: String {
-    case Admin = "Admin"
-    case Developer = "Developer"
+    case Founder = "Founder"
+    case Staff = "Staff"
     case GlobalMod = "GlobalMod"
     case Owner = "Owner"
     case Moderator = "Mod"
@@ -19,9 +19,9 @@ public enum BeamGroup: String {
     
     public func getValue() -> Int {
         switch self {
-        case .Admin:
+        case .Founder:
             return 6
-        case .Developer:
+        case .Staff:
             return 5
         case .GlobalMod:
             return 4
@@ -44,16 +44,16 @@ public func chatColorForGroups(groups: [BeamGroup]) -> UIColor {
         return UIColor(red: 1, green: 1, blue: 1, alpha: 1)
     }
     
-    if groups.contains(.Admin) {
+    if groups.contains(.Founder) {
         return UIColor(red: 181/255, green: 37/255, blue: 53/255, alpha: 1)
     }
     
-    if groups.contains(.Developer) {
+    if groups.contains(.Staff) {
         return UIColor(red: 236/255, green: 191/255, blue: 55/255, alpha: 1)
     }
     
     if groups.contains(.GlobalMod) {
-        return UIColor(red: 36/255, green: 198/255, blue: 40/255, alpha: 1)
+        return UIColor(red: 7/255, green: 253/255, blue: 198/255, alpha: 1)
     }
     
     if groups.contains(.Moderator) {
