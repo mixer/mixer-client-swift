@@ -21,7 +21,6 @@ public class UsersRoutes {
     public func updatePreferences(id: Int, preferences: String, completion: (error: BeamRequestError?) -> Void) {
         BeamRequest.request("/users/\(id)/preferences", requestType: "POST", body: preferences) { (json, error) -> Void in
             completion(error: error)
-            print(json)
         }
     }
     
@@ -54,7 +53,6 @@ public class UsersRoutes {
             }
             
             transportString += "]}"
-            print(transportString)
             
             self.updatePreferences(id, preferences: transportString, completion: { (error) -> Void in
                 completion(error: error)
