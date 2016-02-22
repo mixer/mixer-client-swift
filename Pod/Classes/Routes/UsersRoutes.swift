@@ -60,6 +60,12 @@ public class UsersRoutes {
         }
     }
     
+    public func updateProfile(id: Int, settings: String, completion: (error: BeamRequestError?) -> Void) {
+        BeamRequest.request("/users/\(id)", requestType: "PUT", body: settings) { (json, error) -> Void in
+            completion(error: error)
+        }
+    }
+    
     // MARK: Retrieving User Data
     
     public func getFollowedChannelsByUser(id: Int, completion: (channels: [BeamChannel]?, error: BeamRequestError?) -> Void) {
