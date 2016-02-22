@@ -60,8 +60,13 @@ public class UsersRoutes {
         }
     }
     
-    public func updateProfile(id: Int, settings: String, completion: (error: BeamRequestError?) -> Void) {
+    public func updateProfile(id: Int, settings: String, completion: (user: BeamUser?, error: BeamRequestError?) -> Void) {
         BeamRequest.request("/users/\(id)", requestType: "PUT", body: settings) { (json, error) -> Void in
+            guard let json = json else {
+                completion(user: nil, error: error)
+                return
+            }
+            
             completion(error: error)
         }
     }
@@ -91,8 +96,8 @@ public class UsersRoutes {
         BeamRequest.request("/users/\(id)/preferences", requestType: "GET") { (json, error) -> Void in
             guard let json = json,
                 preferences = json.dictionaryObject else {
-                completion(preferences: nil, error: error)
-                return
+                    completion(preferences: nil, error: error)
+                    return
             }
             
             completion(preferences: preferences, error: error)
