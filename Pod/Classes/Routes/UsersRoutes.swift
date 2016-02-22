@@ -67,7 +67,8 @@ public class UsersRoutes {
                 return
             }
             
-            completion(error: error)
+            let user = BeamUser(json: json)
+            completion(user: user, error: error)
         }
     }
     
