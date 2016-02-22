@@ -12,6 +12,7 @@ public struct BeamUser {
     
     public let id: Int
     public let username: String
+    public let email: String?
     public let verified: Bool
     public let experience: Int
     public let sparks: Int
@@ -36,6 +37,7 @@ public struct BeamUser {
         
         id = json["id"].int ?? 0
         username = json["username"].string ?? ""
+        email = json["email"].string
         verified = json["verified"].bool ?? false
         experience = json["experience"].int ?? 0
         sparks = json["sparks"].int ?? 0
