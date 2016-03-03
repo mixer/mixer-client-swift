@@ -19,6 +19,7 @@ public class BeamClient {
     public var channels: ChannelsRoutes!
     public var chat: ChatRoutes!
     public var shop: ShopRoutes!
+    public var tetris: TetrisRoutes!
     public var users: UsersRoutes!
     
     public init() {
@@ -26,6 +27,7 @@ public class BeamClient {
         channels = ChannelsRoutes()
         chat = ChatRoutes()
         shop = ShopRoutes()
+        tetris = TetrisRoutes()
         users = UsersRoutes()
     }
 }

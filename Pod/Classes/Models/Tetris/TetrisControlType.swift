@@ -12,7 +12,7 @@ public enum TetrisControlType: String {
     
     public init(value: String?) {
         if let value = value {
-            if value == "tactile" {
+            if value == "tactiles" {
                 self = .Button
             } else {
                 self = .Unknown

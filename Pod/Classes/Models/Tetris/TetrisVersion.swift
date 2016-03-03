@@ -30,10 +30,12 @@ public struct TetrisVersion {
         
         controls = [TetrisControl]()
         
-        if let controls = json["controls"].array {
-            for controlData in controls {
-                let control = TetrisControl(json: controlData)
-                self.controls.append(control)
+        if let controls = json["controls"].dictionary {
+            if let tactiles = controls["tactiles"]?.array {
+                for controlData in tactiles {
+                    let control = TetrisControl(json: controlData)
+                    self.controls.append(control)
+                }
             }
         }
         

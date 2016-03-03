@@ -11,5 +11,10 @@ import SwiftyJSON
 public struct TetrisData {
     
     public let address: String?
+    public let version: TetrisVersion?
     
+    public init(json: JSON) {
+        address = json["address"].string
+        version = json["version"].dictionary == nil ? nil : TetrisVersion(json: json["version"])
+    }
 }
