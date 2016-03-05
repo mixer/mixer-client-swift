@@ -45,9 +45,9 @@ class TetrisClientTests: XCTestCase, TetrisClientDelegate {
         waitForExpectationsWithTimeout(10, handler: nil)
     }
     
-    func didConnect() {
+    func tetrisDidConnect() {
         expectation.fulfill()
     }
     
-    func receivedPacket(packet: TetrisPacket) {}
+    func tetrisReceivedPacket(packet: TetrisPacket) {}
 }

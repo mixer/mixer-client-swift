@@ -45,10 +45,10 @@ class ChatClientTests: XCTestCase, ChatClientDelegate {
         waitForExpectationsWithTimeout(10, handler: nil)
     }
     
-    func didConnect() {
+    func chatDidConnect() {
         expectation.fulfill()
     }
     
-    func receivedPacket(packet: Packet) {}
+    func chatReceivedPacket(packet: Packet) {}
     func updateWithViewers(viewers: Int) {}
 }

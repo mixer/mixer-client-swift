@@ -35,11 +35,8 @@ public class TetrisPacket {
             dataString = dataString.substringToIndex(dataString.endIndex.predecessor())
             
             let packetString = "\(method){\(dataString)}"
-            print(packetString)
-            
             return packetString
         } else {
-            print("\(method){}")
             return "\(dataString){}"
         }
     }
