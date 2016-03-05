@@ -17,6 +17,7 @@ public class TetrisClient: WebSocketDelegate {
     
     private var authKey: String?
     private var channelId: Int!
+    private var userId: Int?
     
     private var socket: WebSocket?
     
@@ -26,9 +27,10 @@ public class TetrisClient: WebSocketDelegate {
     
     // MARK: Public Methods
     
-    public func connectToChannel(url baseUrl: String, key: String, channelId: Int) {
+    public func connect(url baseUrl: String, channelId: Int, key: String? = nil, userId: Int? = nil) {
         authKey = key
         self.channelId = channelId
+        self.userId = userId ?? BeamSession.sharedSession?.user.id
         
         guard let url = NSURL(string: "\(baseUrl)/play/\(channelId)") else {
             return
@@ -43,48 +45,40 @@ public class TetrisClient: WebSocketDelegate {
         self.socket?.disconnect()
     }
     
-    public func sendPacket(packet: Sendable) {
+    public func sendPacket(packet: TetrisSendable) {
         guard let socket = socket else {
             return
         }
         
-        let packetData = Packet.prepareToSend(packet)
+        let packetData = TetrisPacket.prepareToSend(packet)
         socket.writeString(packetData)
     }
     
     // MARK: WebSocketDelegate
     
     public func websocketDidConnect(socket: WebSocket) {
-        guard let authKey = authKey else {
-            print("no auth key")
-            return
+        delegate?.didConnect()
+        
+        guard let authKey = authKey,
+            userId = userId else {
+                let packet = HandshakePacket()
+                sendPacket(packet)
+                
+                return
         }
         
-        let key = "fqyyctjl9tp0kknh"
-        let packet = "hshk{\"id\":5386,\"key\":\"\(key)\"}"
-        print(packet)
-        
-        socket.writeString(packet)
+        let packet = HandshakePacket(id: userId, key: authKey)
+        sendPacket(packet)
     }
     
     public func websocketDidDisconnect(socket: WebSocket, error: NSError?) {
     }
     
     public func websocketDidReceiveMessage(socket: WebSocket, text: String) {
-        guard let data = text.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) else {
-            print("unknown error parsing tetris packet")
-            return
-        }
-        
         print(text)
-        
         do {
-            if let jsonObject = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSDictionary {
-                let json = JSON(jsonObject)
-                
-//                if let packet = Packet.receivePacket(json) {
-//                    self.delegate?.receivedPacket(packet)
-//                }
+            if let packet = TetrisPacket.receivePacket(text) {
+                delegate?.receivedPacket(packet)
             }
         } catch { }
     }
@@ -95,7 +89,6 @@ public class TetrisClient: WebSocketDelegate {
 }
 
 public protocol TetrisClientDelegate: class {
-//    func didConnect()
-//    func receivedPacket(packet: Packet)
-//    func updateWithViewers(viewers: Int)
+    func didConnect()
+    func receivedPacket(packet: TetrisPacket)
 }

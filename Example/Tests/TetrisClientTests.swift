@@ -40,7 +40,7 @@ class TetrisClientTests: XCTestCase, TetrisClientDelegate {
         expectation = expectationWithDescription("test joining a channel through tetris")
         
         let tetrisClient = TetrisClient(delegate: self)
-        tetrisClient.connectToChannel(url: "wss://tetris1-dal.beam.pro", key: "h9h4mb6drw7u04j2", channelId: 50772)
+        tetrisClient.connect(url: "wss://tetris1-dal.beam.pro", channelId: 50772)
         
         waitForExpectationsWithTimeout(10, handler: nil)
     }
@@ -49,6 +49,5 @@ class TetrisClientTests: XCTestCase, TetrisClientDelegate {
         expectation.fulfill()
     }
     
-    func receivedPacket(packet: Packet) {}
-    func updateWithViewers(viewers: Int) {}
+    func receivedPacket(packet: TetrisPacket) {}
 }
