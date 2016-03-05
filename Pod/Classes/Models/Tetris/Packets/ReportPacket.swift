@@ -18,7 +18,7 @@ public class ReportPacket: TetrisPacket, TetrisSendable {
         return "data"
     }
     
-    public func data() -> [String: AnyObject?] {
+    public func data() -> [String: AnyObject] {
         var data = [String: AnyObject]()
         
         var joysticks = [String]()

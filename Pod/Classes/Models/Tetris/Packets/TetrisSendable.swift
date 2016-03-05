@@ -7,6 +7,6 @@
 //
 
 public protocol TetrisSendable {
-    func data() -> [String: AnyObject?]
+    func data() -> [String: AnyObject]
     var identifier: String { get }
 }

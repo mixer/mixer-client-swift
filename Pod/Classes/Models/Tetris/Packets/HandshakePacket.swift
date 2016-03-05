@@ -25,8 +25,8 @@ public class HandshakePacket: TetrisPacket, TetrisSendable {
         return "hshk"
     }
     
-    public func data() -> [String: AnyObject?] {
-        var data = [String: AnyObject?]()
+    public func data() -> [String: AnyObject] {
+        var data = [String: AnyObject]()
         
         data["id"] = id ?? NSNull()
         data["key"] = key ?? NSNull()
