@@ -57,7 +57,7 @@ public class TetrisClient: WebSocketDelegate {
     // MARK: WebSocketDelegate
     
     public func websocketDidConnect(socket: WebSocket) {
-        delegate?.didConnect()
+        delegate?.tetrisDidConnect()
         
         guard let authKey = authKey,
             userId = userId else {
@@ -76,7 +76,7 @@ public class TetrisClient: WebSocketDelegate {
     
     public func websocketDidReceiveMessage(socket: WebSocket, text: String) {
         if let packet = TetrisPacket.receivePacket(text) {
-            delegate?.receivedPacket(packet)
+            delegate?.tetrisReceivedPacket(packet)
         }
     }
     
@@ -86,6 +86,6 @@ public class TetrisClient: WebSocketDelegate {
 }
 
 public protocol TetrisClientDelegate: class {
-    func didConnect()
-    func receivedPacket(packet: TetrisPacket)
+    func tetrisDidConnect()
+    func tetrisReceivedPacket(packet: TetrisPacket)
 }

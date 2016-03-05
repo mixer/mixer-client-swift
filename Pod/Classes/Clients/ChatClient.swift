@@ -85,12 +85,12 @@ public class ChatClient: WebSocketDelegate {
                 let packet = AuthenticatePacket(channelId: channelId)
                 sendPacket(packet)
                 
-                delegate?.didConnect()
+                delegate?.chatDidConnect()
                 
                 return
         }
         
-        delegate?.didConnect()
+        delegate?.chatDidConnect()
         
         let packet = AuthenticatePacket(channelId: channelId, userId: userId, authKey: authKey)
         sendPacket(packet)
@@ -110,7 +110,7 @@ public class ChatClient: WebSocketDelegate {
                 let json = JSON(jsonObject)
                 
                 if let packet = Packet.receivePacket(json) {
-                    self.delegate?.receivedPacket(packet)
+                    self.delegate?.chatReceivedPacket(packet)
                 }
             }
         } catch { }
@@ -121,7 +121,7 @@ public class ChatClient: WebSocketDelegate {
 }
 
 public protocol ChatClientDelegate: class {
-    func didConnect()
-    func receivedPacket(packet: Packet)
+    func chatDidConnect()
+    func chatReceivedPacket(packet: Packet)
     func updateWithViewers(viewers: Int)
 }
