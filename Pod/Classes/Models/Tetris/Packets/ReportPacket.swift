@@ -50,6 +50,6 @@ public class ReportPacketControl: CustomStringConvertible {
     }
     
     public var description: String {
-        return "{\"down\": \(down ? 1 : 0), \"id\": \(id)}"
+        return "{\"\(down ? "down" : "up")\": 1, \"id\": \(id)}"
     }
 }
