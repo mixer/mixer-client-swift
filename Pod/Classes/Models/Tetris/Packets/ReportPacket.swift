@@ -22,7 +22,7 @@ public class ReportPacket: TetrisPacket, TetrisSendable {
         var data = [String: AnyObject]()
         
         var joysticks = [String]()
-        var tactiles = [String]()
+        let tactiles = [String]()
         
         for control in controls {
             if control.type == .Button {

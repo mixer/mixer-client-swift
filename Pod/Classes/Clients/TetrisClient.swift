@@ -75,12 +75,9 @@ public class TetrisClient: WebSocketDelegate {
     }
     
     public func websocketDidReceiveMessage(socket: WebSocket, text: String) {
-        print(text)
-        do {
-            if let packet = TetrisPacket.receivePacket(text) {
-                delegate?.receivedPacket(packet)
-            }
-        } catch { }
+        if let packet = TetrisPacket.receivePacket(text) {
+            delegate?.receivedPacket(packet)
+        }
     }
     
     public func websocketDidReceiveData(socket: WebSocket, data: NSData) {
