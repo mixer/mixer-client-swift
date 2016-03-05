@@ -23,6 +23,9 @@ public class TetrisPacket {
                 dataString += "\"\(datum.0)\":\"\(datum.1)\","
             } else if datum.1 is NSNull {
                 dataString += "\"\(datum.0)\":null,"
+            } else if datum.1 is [String] {
+                let array = datum.1 as! [String]
+                dataString += "\"\(datum.0)\":[\(array.joinWithSeparator(","))],"
             } else {
                 dataString += "\"\(datum.0)\":\(datum.1),"
             }
@@ -32,6 +35,8 @@ public class TetrisPacket {
             dataString = dataString.substringToIndex(dataString.endIndex.predecessor())
             
             let packetString = "\(method){\(dataString)}"
+            print(packetString)
+            
             return packetString
         } else {
             print("\(method){}")
