@@ -15,6 +15,7 @@
 		EB4A0EDD1C5D25B40012693F /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4A0EDC1C5D25B40012693F /* UserTests.swift */; };
 		EB4A0EE21C5D33AB0012693F /* ChatClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4A0EE11C5D33AB0012693F /* ChatClientTests.swift */; };
 		EB9890B41C88F9FB0080A4E9 /* TetrisTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9890B31C88F9FB0080A4E9 /* TetrisTests.swift */; };
+		EBA92A8B1C8B53B3008F3A7F /* TetrisClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA92A8A1C8B53B3008F3A7F /* TetrisClientTests.swift */; };
 		EBF068781C5D3684007ACCF9 /* SessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF068771C5D3684007ACCF9 /* SessionTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -34,6 +35,7 @@
 		EB4A0EDC1C5D25B40012693F /* UserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTests.swift; sourceTree = "<group>"; };
 		EB4A0EE11C5D33AB0012693F /* ChatClientTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatClientTests.swift; sourceTree = "<group>"; };
 		EB9890B31C88F9FB0080A4E9 /* TetrisTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TetrisTests.swift; sourceTree = "<group>"; };
+		EBA92A8A1C8B53B3008F3A7F /* TetrisClientTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TetrisClientTests.swift; sourceTree = "<group>"; };
 		EBF068771C5D3684007ACCF9 /* SessionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -131,6 +133,7 @@
 			children = (
 				EB4A0EE11C5D33AB0012693F /* ChatClientTests.swift */,
 				EBF068771C5D3684007ACCF9 /* SessionTests.swift */,
+				EBA92A8A1C8B53B3008F3A7F /* TetrisClientTests.swift */,
 			);
 			name = Clients;
 			sourceTree = "<group>";
@@ -255,6 +258,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBA92A8B1C8B53B3008F3A7F /* TetrisClientTests.swift in Sources */,
 				EB4A0EE21C5D33AB0012693F /* ChatClientTests.swift in Sources */,
 				EB4A0ED71C5D1B310012693F /* ChannelTests.swift in Sources */,
 				EB9890B41C88F9FB0080A4E9 /* TetrisTests.swift in Sources */,
