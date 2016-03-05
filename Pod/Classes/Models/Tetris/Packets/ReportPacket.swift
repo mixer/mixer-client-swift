@@ -21,12 +21,12 @@ public class ReportPacket: TetrisPacket, TetrisSendable {
     public func data() -> [String: AnyObject] {
         var data = [String: AnyObject]()
         
-        var joysticks = [String]()
-        let tactiles = [String]()
+        let joysticks = [String]()
+        var tactiles = [String]()
         
         for control in controls {
             if control.type == .Button {
-                joysticks.append(control.description)
+                tactiles.append(control.description)
             }
         }
         
