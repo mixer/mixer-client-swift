@@ -54,22 +54,6 @@ class ChatTests: XCTestCase {
         waitForExpectationsWithTimeout(10, handler: nil)
     }
     
-    func testChatMessages() {
-        let expectation = expectationWithDescription("tests retrieving cached messages")
-        
-        BeamClient.sharedClient.chat.getMessagesByChannel(channel.id) { (messages, error) -> Void in
-            guard let _ = messages else {
-                XCTFail()
-                return
-            }
-            
-            XCTAssert(error == nil)
-            expectation.fulfill()
-        }
-        
-        waitForExpectationsWithTimeout(10, handler: nil)
-    }
-    
     func testChatViewers() {
         let expectation = expectationWithDescription("tests retrieving viewers of a channel")
         

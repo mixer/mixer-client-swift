@@ -58,25 +58,6 @@ public class ChatRoutes {
         }
     }
     
-    public func getMessagesByChannel(channelId: Int, completion: (messages: [BeamMessage]?, error: BeamRequestError?) -> Void) {
-        BeamRequest.request("/chats/\(channelId)/message", requestType: "GET") { (json, error) -> Void in
-            guard let json = json,
-                let messages = json.array else {
-                    completion(messages: nil, error: error)
-                    return
-            }
-            
-            var retrievedMessages = [BeamMessage]()
-            
-            for message in messages {
-                let retrievedMessage = BeamMessage(json: message)
-                retrievedMessages.append(retrievedMessage)
-            }
-            
-            completion(messages: retrievedMessages, error: error)
-        }
-    }
-    
     public func getViewersByChannel(channelId: Int, completion: (users: [ChannelViewer]?, error: BeamRequestError?) -> Void) {
         self.getViewersByEndpoint("/chats/\(channelId)/users", params: [String: String](), completion: completion)
     }
