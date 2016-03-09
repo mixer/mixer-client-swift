@@ -69,20 +69,32 @@ public class TetrisPacket {
                 packet = ErrorPacket(message: message)
             }
         case "prog": // 4
+            var controls = [ProgressPacketControl]()
+            
             if let tactiles = data["tactile"].array {
                 for tactile in tactiles {
-                    var controls = [ProgressPacketControl]()
                     if let fired = tactile["fired"].bool,
                         id = tactile["id"].int,
                         cooldown = tactile["cooldown"].int,
                         progress = tactile["progress"].int {
-                            let control = ProgressPacketControl(fired: fired, id: id, cooldown: cooldown, progress: progress)
+                            let control = ProgressPacketTactile(id: id, fired: fired, cooldown: cooldown, progress: progress)
                             controls.append(control)
                     }
-                    
-                    packet = ProgressPacket(controls: controls)
                 }
             }
+            
+            if let joysticks = data["joystick"].array {
+                for joystick in joysticks {
+                    if let id = joystick["id"].int,
+                        angle = joystick["angle"].float,
+                        intensity = joystick["intensity"].float {
+                            let control = ProgressPacketJoystick(id: id, angle: angle, intensity: intensity)
+                            controls.append(control)
+                    }
+                }
+            }
+            
+            packet = ProgressPacket(controls: controls)
         default:
             print("Unrecognized packet received: \(event) with data \(dataString)")
         }

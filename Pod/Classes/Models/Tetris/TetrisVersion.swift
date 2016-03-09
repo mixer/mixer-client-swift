@@ -32,8 +32,15 @@ public struct TetrisVersion {
         
         if let controls = json["controls"].dictionary {
             if let tactiles = controls["tactiles"]?.array {
-                for controlData in tactiles {
-                    let control = TetrisControl(json: controlData)
+                for tactile in tactiles {
+                    let control = TetrisTactile(json: tactile)
+                    self.controls.append(control)
+                }
+            }
+            
+            if let joysticks = controls["joysticks"]?.array {
+                for joystick in joysticks {
+                    let control = TetrisJoystick(json: joystick)
                     self.controls.append(control)
                 }
             }

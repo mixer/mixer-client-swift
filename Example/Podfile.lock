@@ -1,5 +1,5 @@
 PODS:
-  - BeamAPI (0.2.13):
+  - BeamAPI (0.2.16):
     - Starscream (~> 1.1)
     - SwiftyJSON (~> 2.3)
   - Starscream (1.1.2)
@@ -13,7 +13,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  BeamAPI: 825ff410d67fd5deb725960282ad076faf5173c4
+  BeamAPI: 86121e74363bf84b67c841c840caa90ea82a31fc
   Starscream: 58a12fd35a3cb6aaa105716c2d42765f7c1c732f
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
 

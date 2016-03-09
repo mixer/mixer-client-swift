@@ -21,12 +21,14 @@ public class ReportPacket: TetrisPacket, TetrisSendable {
     public func data() -> [String: AnyObject] {
         var data = [String: AnyObject]()
         
-        let joysticks = [String]()
         var tactiles = [String]()
+        var joysticks = [String]()
         
         for control in controls {
-            if control.type == .Button {
+            if control is ReportPacketTactile {
                 tactiles.append(control.description)
+            } else if control is ReportPacketJoystick {
+                joysticks.append(control.description)
             }
         }
         
@@ -39,17 +41,45 @@ public class ReportPacket: TetrisPacket, TetrisSendable {
 
 public class ReportPacketControl: CustomStringConvertible {
     
-    public let down: Bool
     public let id: Int
-    public let type: TetrisControlType
     
-    public init(down: Bool, id: Int, type: TetrisControlType) {
-        self.down = down
+    public init(id: Int) {
         self.id = id
-        self.type = type
     }
     
     public var description: String {
+        return ""
+    }
+}
+
+public class ReportPacketTactile: ReportPacketControl {
+    
+    public let down: Bool
+    
+    public init(id: Int, down: Bool) {
+        self.down = down
+        
+        super.init(id: id)
+    }
+    
+    public override var description: String {
         return "{\"\(down ? "down" : "up")\": 1, \"id\": \(id)}"
+    }
+}
+
+public class ReportPacketJoystick: ReportPacketControl {
+    
+    public let x: Float
+    public let y: Float
+    
+    public init(id: Int, x: Float, y: Float) {
+        self.x = x
+        self.y = y
+        
+        super.init(id: id)
+    }
+    
+    public override var description: String {
+        return "{\"x\": \(x), \"y\": \(y), \"id\": \(id)}"
     }
 }
