@@ -89,6 +89,25 @@ public class Packet {
                     print("Unrecognized packet received: \(event) with parameters \(data)")
                 }
             }
+        } else if let type = json["type"].string {
+            switch type {
+            case "reply":
+                if let data = json["data"].arrayObject {
+                    var packets = [MessagePacket]()
+                    for datum in data {
+                        let message = BeamMessage(json: JSON(data))
+                        let messagePacket = MessagePacket(message: message)
+                        packets.append(messagePacket)
+                    }
+                    
+                    let packet = MessagesPacket(packets: packets)
+                    return packet
+                }
+            default:
+                print("Unknown packet received: \(json)")
+            }
+        } else {
+            print("Unknown packet received: \(json)")
         }
         
         return packet
