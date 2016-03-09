@@ -95,7 +95,7 @@ public class Packet {
                 if let data = json["data"].arrayObject {
                     var packets = [MessagePacket]()
                     for datum in data {
-                        let message = BeamMessage(json: JSON(data))
+                        let message = BeamMessage(json: JSON(datum))
                         let messagePacket = MessagePacket(message: message)
                         packets.append(messagePacket)
                     }
