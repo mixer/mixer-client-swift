@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name       = "BeamAPI"
-  s.version    = "0.2.17"
+  s.version    = "0.2.18"
   s.summary    = "An interface to communicate with Beam's backend."
   s.homepage   = "https://github.com/WatchBeam/beam-client-swift"
   s.license    = "MIT"

@@ -41,7 +41,7 @@ public class TetrisPacket {
         }
     }
     
-    class func receivePacket(string: String) -> TetrisPacket? {
+    class func receivePacket(string: String) -> (packet: TetrisPacket?, state: String?)? {
         var packet: TetrisPacket?
         
         let event = (string as NSString).substringToIndex(4)
@@ -99,6 +99,10 @@ public class TetrisPacket {
             print("Unrecognized packet received: \(event) with data \(dataString)")
         }
         
-        return packet
+        if let state = data["state"].string {
+            return (packet, state)
+        } else {
+            return (packet, nil)
+        }
     }
 }

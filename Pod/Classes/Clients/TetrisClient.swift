@@ -19,6 +19,8 @@ public class TetrisClient: WebSocketDelegate {
     private var channelId: Int!
     private var userId: Int?
     
+    private var state: String?
+    
     private var socket: WebSocket?
     
     public init(delegate tetrisDelegate: TetrisClientDelegate) {
@@ -54,6 +56,15 @@ public class TetrisClient: WebSocketDelegate {
         socket.writeString(packetData)
     }
     
+    // MARK: Private Methods
+    
+    private func updateState(state: String) {
+        if state != self.state {
+            self.state = state
+            delegate?.tetrisChangedState(state)
+        }
+    }
+    
     // MARK: WebSocketDelegate
     
     public func websocketDidConnect(socket: WebSocket) {
@@ -75,8 +86,14 @@ public class TetrisClient: WebSocketDelegate {
     }
     
     public func websocketDidReceiveMessage(socket: WebSocket, text: String) {
-        if let packet = TetrisPacket.receivePacket(text) {
-            delegate?.tetrisReceivedPacket(packet)
+        if let (packet, state) = TetrisPacket.receivePacket(text) {
+            if let packet = packet {
+                delegate?.tetrisReceivedPacket(packet)
+            }
+            
+            if let state = state {
+                updateState(state)
+            }
         }
     }
     
@@ -86,5 +103,6 @@ public class TetrisClient: WebSocketDelegate {
 
 public protocol TetrisClientDelegate: class {
     func tetrisDidConnect()
+    func tetrisChangedState(state: String)
     func tetrisReceivedPacket(packet: TetrisPacket)
 }
