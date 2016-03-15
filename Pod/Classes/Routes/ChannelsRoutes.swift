@@ -77,6 +77,11 @@ public class ChannelsRoutes {
         getChannelsByEndpoint("/channels", params: nil, completion: completion)
     }
     
+    public func getDefaultChannels(offset: Int, completion: (channels: [BeamChannel]?, error: BeamRequestError?) -> Void) {
+        let params = ["order": "online:desc,viewersCurrent:desc,viewersTotal:desc", "where": "suspended.eq.0", "page": "\(offset / 50)"]
+        getChannelsByEndpoint("/channels", params: params, completion: completion)
+    }
+    
     public func getChannelsByQuery(query: String, completion: (channels: [BeamChannel]?, error: BeamRequestError?) -> Void) {
         getChannelsByEndpoint("/channels", params: ["scope": "all", "sort": "viewers_total:asc", "q": query], completion: completion)
     }
