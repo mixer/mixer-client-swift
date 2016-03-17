@@ -12,7 +12,7 @@ public class Packet {
     
     private var packetString: String?
     
-    class func prepareToSend(packet: Sendable) -> String {
+    class func prepareToSend(packet: Sendable, count: Int) -> String {
         let method = packet.identifier
         let arguments = packet.arguments()
         
@@ -28,7 +28,7 @@ public class Packet {
         
         argumentString = argumentString.substringToIndex(argumentString.endIndex.predecessor())
         
-        let packetString = "{\"type\":\"method\",\"method\":\"\(method)\",\"arguments\":[\(argumentString)],\"id\":1}"
+        let packetString = "{\"type\":\"method\",\"method\":\"\(method)\",\"arguments\":[\(argumentString)],\"id\":\(count)}"
         
         return packetString
     }

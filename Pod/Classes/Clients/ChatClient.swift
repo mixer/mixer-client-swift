@@ -17,6 +17,7 @@ public class ChatClient: WebSocketDelegate {
     
     private var authKey: String?
     private var channelId: Int!
+    private var packetCount = 0
     
     private var socket: WebSocket?
     private var timer: NSTimer!
@@ -57,11 +58,13 @@ public class ChatClient: WebSocketDelegate {
     }
     
     public func sendPacket(packet: Sendable) {
+        packetCount += 1
+        
         guard let socket = socket else {
             return
         }
         
-        let packetData = Packet.prepareToSend(packet)
+        let packetData = Packet.prepareToSend(packet, count: packetCount)
         socket.writeString(packetData)
     }
     
