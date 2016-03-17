@@ -29,11 +29,13 @@ public class ProgressPacketTactile: ProgressPacketControl {
     public let fired: Bool
     public let cooldown: Int
     public let progress: Int
+    public let disabled: Bool?
     
-    public init(id: Int, fired: Bool, cooldown: Int, progress: Int) {
+    public init(id: Int, fired: Bool, cooldown: Int, progress: Int, disabled: Bool?) {
         self.fired = fired
         self.cooldown = cooldown
         self.progress = progress
+        self.disabled = disabled
         
         super.init(id: id)
     }

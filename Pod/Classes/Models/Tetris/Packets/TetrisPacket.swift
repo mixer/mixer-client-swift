@@ -77,7 +77,7 @@ public class TetrisPacket {
                         id = tactile["id"].int,
                         cooldown = tactile["cooldown"].int,
                         progress = tactile["progress"].int {
-                            let control = ProgressPacketTactile(id: id, fired: fired, cooldown: cooldown, progress: progress)
+                            let control = ProgressPacketTactile(id: id, fired: fired, cooldown: cooldown, progress: progress, disabled: tactile["disabled"].bool)
                             controls.append(control)
                     }
                 }
