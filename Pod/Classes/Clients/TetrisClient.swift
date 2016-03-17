@@ -83,6 +83,7 @@ public class TetrisClient: WebSocketDelegate {
     }
     
     public func websocketDidDisconnect(socket: WebSocket, error: NSError?) {
+        delegate?.tetrisDidDisconnect()
     }
     
     public func websocketDidReceiveMessage(socket: WebSocket, text: String) {
@@ -103,6 +104,7 @@ public class TetrisClient: WebSocketDelegate {
 
 public protocol TetrisClientDelegate: class {
     func tetrisDidConnect()
+    func tetrisDidDisconnect()
     func tetrisChangedState(state: String)
     func tetrisReceivedPacket(packet: TetrisPacket)
 }
