@@ -9,25 +9,41 @@
 import Starscream
 import SwiftyJSON
 
+/// Used to connect to and communicate with a Beam chat server. There is no shared session, meaning several chat connections can be made at once.
 public class ChatClient: WebSocketDelegate {
     
     // MARK: Properties
     
+    /// The client's delegate, through which updates and chat messages are relayed to your app.
     private weak var delegate: ChatClientDelegate?
     
+    /// The stored authentication key. Will only be generated if BeamSession.sharedSession != nil, and is needed to send chat messages.
     private var authKey: String?
+    
+    /// The id of the channel being connected to.
     private var channelId: Int!
+    
+    /// The number of the packet being sent.
     private var packetCount = 0
     
+    /// The websocket through which chat data is received and sent.
     private var socket: WebSocket?
+    
+    /// The timer used to update channel data, currently used for viewer count. Needs to be removed.
     private var timer: NSTimer!
     
+    /// Initializes a chat connection, which needs to be stored by your own class.
     public init(delegate chatDelegate: ChatClientDelegate) {
         delegate = chatDelegate
     }
     
     // MARK: Public Methods
     
+    /**
+     Requests chat details and uses them to connect to a channel.
+    
+     :param: channelId The id of the channel being connected to.
+     */
     public func joinChannel(channelId: Int) {
         self.channelId = channelId
         
@@ -52,11 +68,17 @@ public class ChatClient: WebSocketDelegate {
         NSRunLoop.mainRunLoop().addTimer(timer!, forMode: NSRunLoopCommonModes)
     }
     
+    /// Disconnects from the chat server.
     public func disconnect() {
         self.socket?.disconnect()
         self.timer?.invalidate()
     }
     
+    /**
+     Sends a packet to the chat server.
+     
+     :param: packet The packet being sent.
+     */
     public func sendPacket(packet: Sendable) {
         packetCount += 1
         
@@ -70,6 +92,7 @@ public class ChatClient: WebSocketDelegate {
     
     // MARK: Private Methods
     
+    /// Called by the update timer in order to retrieve updated viewer counts.
     @objc private func updateData() {
         BeamClient.sharedClient.channels.getChannelWithId(self.channelId, completion: { (channel, error) -> Void in
             guard let channel = channel else {
@@ -123,8 +146,15 @@ public class ChatClient: WebSocketDelegate {
     }
 }
 
+/// The chat client's delegate, through which information is relayed to your app.
 public protocol ChatClientDelegate: class {
+    
+    /// Called when a connection is made to the chat server.
     func chatDidConnect()
+    
+    /// Called when a packet is received and interpreted.
     func chatReceivedPacket(packet: Packet)
+    
+    /// Called when a new viewer count has been received.
     func updateWithViewers(viewers: Int)
 }

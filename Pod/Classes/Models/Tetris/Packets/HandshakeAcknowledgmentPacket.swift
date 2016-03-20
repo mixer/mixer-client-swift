@@ -6,11 +6,18 @@
 //
 //
 
+/// A packet received when a handshake has been acknowledged by the tetris servers.
 public class HandshakeAcknowledgmentPacket: TetrisPacket {
     
+    /// The current control state.
     public let state: String
     
-    public init(state: String) {
+    /**
+     Used to initialize a handshake acknowledgment packet.
+     
+     :param: state The current control state.
+     */
+    init(state: String) {
         self.state = state
     }
 }

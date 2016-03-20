@@ -8,11 +8,14 @@
 
 import SwiftyJSON
 
+/// A tetris joystick control.
 public class TetrisJoystick: TetrisControl {
     
+    /// Help text that can be displayed on hover.
     public let help: String?
     
-    public init(json: JSON) {
+    /// Used to initialize a tetris joystick given JSON data.
+    init(json: JSON) {
         help = json["help"].string
         
         let id = json["id"].int ?? 0

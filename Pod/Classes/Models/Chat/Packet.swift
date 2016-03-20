@@ -8,10 +8,19 @@
 
 import SwiftyJSON
 
+/// The base packet class. Also has methods used to receive and send packets.
 public class Packet {
     
+    /// The string of the packet's raw data.
     private var packetString: String?
     
+    /**
+     Creates a raw packet string from a packet object.
+     
+     :param: packet The packet being sent by the app.
+     :param: count The nth packet sent by the app.
+     :returns: The raw packet string to be sent to the chat servers.
+     */
     class func prepareToSend(packet: Sendable, count: Int) -> String {
         let method = packet.identifier
         let arguments = packet.arguments()
@@ -33,6 +42,12 @@ public class Packet {
         return packetString
     }
     
+    /**
+     Interprets JSON packets received from the chat servers.
+     
+     :param: json The JSON object being interpreted.
+     :returns: The packet object to be used by the app.
+     */
     class func receivePacket(json: JSON) -> Packet? {
         var packet: Packet?
         

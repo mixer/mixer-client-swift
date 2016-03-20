@@ -8,26 +8,53 @@
 
 import SwiftyJSON
 
+/// A user object.
 public struct BeamUser {
     
+    /// The user's identifier.
     public let id: Int
+    
+    /// The user's username.
     public let username: String
+    
+    /// The user's email address. Only returned if this is the authenticated user's object.
     public let email: String?
+    
+    /// True if the user has verified their email address.
     public let verified: Bool
+    
+    /// The number of experience points earned by the user.
     public let experience: Int
+    
+    /// The number of sparks that the user has.
     public let sparks: Int
+    
+    /// A url of the user's avatar.
     public let avatarUrl: String
+    
+    /// A biography written by the user.
     public let bio: String?
     
+    /// The groups held by the user.
     public let groups: [BeamGroup]?
+    
+    /// The user's preferences. Only retrieved if this is the authenticated user's object.
     public let preferences: [String: AnyObject]?
     
+    /// The user's Twitter profile URL.
     public var twitter: String?
+    
+    /// The user's Facebook profile URL.
     public var facebook: String?
+    
+    /// The user's YouTube channel URL.
     public var youtube: String?
+    
+    /// The user's player.me profile URL.
     public var player: String?
     
-    public init(json: JSON) {
+    /// Used to initialize a user object given JSON data.
+    init(json: JSON) {
         if let social = json["social"].dictionary {
             twitter = social["twitter"]?.string
             facebook = social["facebook"]?.string

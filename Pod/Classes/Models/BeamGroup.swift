@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// The group/role held by a given user.
 public enum BeamGroup: String {
     case Founder = "Founder"
     case Staff = "Staff"
@@ -39,6 +40,12 @@ public enum BeamGroup: String {
 
 // TODO: Find somewhere to move these functions
 
+/**
+ Returns a color that should be given to a user in chat given their groups.
+
+ :param: groups The user's held groups.
+ :returns: The color that should be given to the user.
+ */
 public func chatColorForGroups(groups: [BeamGroup]) -> UIColor {
     if groups.contains(.Owner) {
         return UIColor(red: 1, green: 1, blue: 1, alpha: 1)
@@ -67,6 +74,12 @@ public func chatColorForGroups(groups: [BeamGroup]) -> UIColor {
     return UIColor(red: 55/255, green: 170/255, blue: 213/255, alpha: 1)
 }
 
+/**
+ Returns the highest group held by a user.
+ 
+ :param: groups The user's held groups.
+ :returns: The highest group held by the user.
+ */
 public func getHighestGroup(groups: [BeamGroup]) -> BeamGroup {
     var highestGroup = BeamGroup.User
     for group in groups {

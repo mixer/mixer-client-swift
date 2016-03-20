@@ -6,13 +6,15 @@
 //
 //
 
+/// The size of the control grid being used.
 public enum TetrisGrid {
     case Small
     case Medium
     case Large
     case Unknown
     
-    public init(value: String?) {
+    /// Used to initialize a tetris grid value from its string counterpart.
+    init(value: String?) {
         if let value = value {
             if value == "small" {
                 self = .Small

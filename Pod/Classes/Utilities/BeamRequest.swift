@@ -9,12 +9,25 @@
 import Foundation
 import SwiftyJSON
 
+/// The most low-level class used to make requests to the Beam servers.
 public class BeamRequest {
     
+    /// Used to store images such as user avatars.
     public static var imageCache = [String: UIImage]()
     
+    /// The version of the app, to be used in request user agents.
     public static var version = 0.1
     
+    /**
+     Makes a request to Beam's servers.
+     
+     :param: endpoint The endpoint of the request being made.
+     :param: requestType The type of request to be made.
+     :param: headers The HTTP headers to be used in the request.
+     :param: params The URL parameters to be used in the request.
+     :param: body The request body.
+     :param: completion An optional completion block with retrieved JSON data.
+     */
     public class func request(endpoint: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: String = "", completion: ((json: JSON?, error: BeamRequestError?) -> Void)?) {
         BeamRequest.dataRequest("https://beam.pro/api/v1\(endpoint)", requestType: requestType, headers: headers, params: params, body: body) { (data, error) -> Void in
             guard let data = data else {
@@ -27,6 +40,13 @@ public class BeamRequest {
         }
     }
     
+    /**
+     Retrieves an image from Beam's servers.
+     
+     :param: url The URL of the image being retrieved.
+     :param: fromCache True if the image should be retrieved from a cache.
+     :param: completion An optional completion block with the retrieved image.
+     */
     public class func imageRequest(url: String, fromCache: Bool = true, completion: ((image: UIImage?, error: BeamRequestError?) -> Void)?) {
         if fromCache {
             if let img = imageCache[url] {
@@ -47,6 +67,16 @@ public class BeamRequest {
         }
     }
     
+    /**
+     Retrieves NSData from Beam's servers.
+     
+     :param: url The URL of the data being retrieved.
+     :param: requestType The type of the request being made.
+     :param: headers The HTTP headers to be used in the request.
+     :param: params The URL parameters to be used in the request.
+     :param: body The request body.
+     :param: completion An optional completion block with retrieved data.
+     */
     public class func dataRequest(url: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: String = "", completion: ((data: NSData?, error: BeamRequestError?) -> Void)?) {
         let sessionConfig = NSURLSessionConfiguration.defaultSessionConfiguration()
         let session = NSURLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
@@ -136,6 +166,11 @@ public class BeamRequest {
         task.resume()
     }
     
+    /**
+     Retrieves the name of the device being used.
+     
+     :returns: The name of the device being used.
+     */
     private class func deviceName() -> String {
         var systemInfo = utsname()
         uname(&systemInfo)
@@ -151,6 +186,12 @@ public class BeamRequest {
         return identifier
     }
     
+    /**
+     Creates a parameter string from URL parameters.
+     
+     :param: queryParameters The keys and values of the URL parameters.
+     :returns: The string of the parameters to be appended to the URL.
+     */
     private class func stringFromQueryParameters(queryParameters: [String: String]) -> String {
         var parts: [String] = []
         for (name, value) in queryParameters {
@@ -162,6 +203,13 @@ public class BeamRequest {
         return parts.joinWithSeparator("&")
     }
     
+    /**
+     Creates a URL from a base URL and URL parameters.
+     
+     :param: url The base URL.
+     :param: queryParameters. The keys and values of the URL parameters.
+     :returns: The complete URL.
+     */
     private class func NSURLByAppendingQueryParameters(url: NSURL!, queryParameters: [String: String]) -> NSURL {
         let URLString = NSString(format: "%@?%@", url.absoluteString, self.stringFromQueryParameters(queryParameters))
         return NSURL(string: URLString as String)!

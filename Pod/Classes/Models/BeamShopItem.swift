@@ -8,12 +8,14 @@
 
 import SwiftyJSON
 
+/// An item in Beam's shop. More will be implemented when items are added to the shop.
 public struct BeamShopItem {
     
-    // more will be implemented when some items actually show up in the shop
+    /// The title of the shop item.
     public let title: String?
     
-    public init(json: JSON) {
+    /// Used to initialize a shop item given JSON data.
+    init(json: JSON) {
         title = json["title"].string
     }
 }

@@ -8,15 +8,26 @@
 
 import SwiftyJSON
 
+/// A tetris tactile control.
 public class TetrisTactile: TetrisControl {
     
+    /// The unicode number of the key the tactile would bind to on a keyboard.
     public let key: Int
+    
+    /// The text that should be displayed on the tactile.
     public let text: String?
+    
+    /// Help text that can be displayed on hover.
     public let help: String?
+    
+    /// The cost of pressing the tactile.
     public let cost: Int?
+    
+    /// The number of seconds a button cannot be pressed for after pressing it once.
     public let cooldown: Int?
     
-    public init(json: JSON) {
+    /// Used to initialize a tetris tactile given JSON data.
+    init(json: JSON) {
         key = json["key"].int ?? 0
         text = json["text"].string
         help = json["help"].string

@@ -6,10 +6,17 @@
 //
 //
 
+/// Routes that can be used to interact with and receive tetris data.
 public class TetrisRoutes {
     
     // MARK: Retrieving Tetris Data
     
+    /**
+     Retrieves details used to connect to a channel's tetris socket.
+    
+     :param: channelId The id of the channel being connected to.
+     :param: completion An optional completion block with retrieved tetris details.
+     */
     public func getTetrisDataByChannel(channelId: Int, completion: ((data: TetrisData?, error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/tetris/\(channelId)", requestType: "GET") { (json, error) -> Void in
             guard let json = json else {

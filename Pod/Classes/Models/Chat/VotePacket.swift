@@ -6,10 +6,17 @@
 //  Copyright (c) 2015 MCProHosting. All rights reserved.
 //
 
+/// A packet sent to vote in a poll.
 public class VotePacket: Packet, Sendable {
     
-    public let option: Int?
+    /// The option chosen by the user.
+    public let option: Int
     
+    /**
+     Used to initialize a vote packet.
+     
+     :param: option The option chosen by the user.
+     */
     public init(option: Int) {
         self.option = option
     }
@@ -21,9 +28,7 @@ public class VotePacket: Packet, Sendable {
     public func arguments() -> [AnyObject] {
         var objects = [AnyObject]()
         
-        if let option = option {
-            objects.append(option)
-        }
+        objects.append(option)
         
         return objects
     }

@@ -6,7 +6,12 @@
 //
 //
 
+/// The protocol inherited by tetris packets that are being sent.
 public protocol TetrisSendable {
+    
+    /// The packet's data.
     func data() -> [String: AnyObject]
+    
+    /// The packet's identifier.
     var identifier: String { get }
 }

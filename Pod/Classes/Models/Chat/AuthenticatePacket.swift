@@ -6,16 +6,34 @@
 //  Copyright (c) 2015 MCProHosting. All rights reserved.
 //
 
+/// A packet sent to tell the chat servers about the user's session. Needs to be used regardless of whether or not there is a locally authenticated user.
 public class AuthenticatePacket: Packet, Sendable {
     
-    public let channelId: Int?
+    /// The id of the channel being connected to.
+    public let channelId: Int
+    
+    /// The id of the user being authenticated.
     public var userId: Int?
+    
+    /// The authentication key required by the chat servers.
     public var authKey: String?
     
+    /**
+     Used when there is no locally authenticated user.
+     
+     :param: channelId The id of the channel being connected to.
+     */
     public init(channelId: Int) {
         self.channelId = channelId
     }
     
+    /**
+     Used when there is a locally authenticated user.
+     
+     :param: channelId The id of the channel being connected to.
+     :param: userId The id of the locally authenticated user.
+     :param: authKey The authentication key returned by ChatRoutes.getChatDetailsById.
+     */
     public init(channelId: Int, userId: Int, authKey: String) {
         self.channelId = channelId
         self.userId = userId
@@ -29,9 +47,7 @@ public class AuthenticatePacket: Packet, Sendable {
     public func arguments() -> [AnyObject] {
         var objects = [AnyObject]()
         
-        if let channelId = channelId {
-            objects.append(channelId)
-        }
+        objects.append(channelId)
         
         if let userId = userId {
             objects.append(userId)

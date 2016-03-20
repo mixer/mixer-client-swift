@@ -8,10 +8,12 @@
 
 public let BeamAuthenticatedNotification = "BeamAuthenticatedNotification"
 
+/// Stores data about an authenticated user session.
 public class BeamSession {
     
-    // sharedSession will be nil if nobody is authenticated
     private static var storedSharedSession: BeamSession?
+    
+    /// The session's shared instance. This will be nil if nobody is authenticated.
     public static var sharedSession: BeamSession? {
         get {
             return storedSharedSession
@@ -23,132 +25,126 @@ public class BeamSession {
         }
     }
     
-    public var channel: BeamChannel!
+    /// The authenticated user's data.
     public var user: BeamUser!
     
-    public init(sessionChannel: BeamChannel, sessionUser: BeamUser) {
-        channel = sessionChannel
-        user = sessionUser
+    /// Initializes a session given a user. Won't do anything on its own unless BeamSession.sharedSession is set to it.
+    public init(user: BeamUser) {
+        self.user = user
     }
     
-    public static func authenticate(username: String, password: String, completion: (user: BeamUser?, error: BeamRequestError?) -> Void) {
-        self.authenticate(username, password: password, code: nil, deviceToken: nil, completion: completion)
-    }
-    
-    public static func authenticate(username: String, password: String, deviceToken: String?, completion: (user: BeamUser?, error: BeamRequestError?) -> Void) {
-        self.authenticate(username, password: password, code: nil, deviceToken: deviceToken, completion: completion)
-    }
-    
-    public static func authenticate(username: String, password: String, code: Int?, completion: (user: BeamUser?, error: BeamRequestError?) -> Void) {
-        self.authenticate(username, password: password, code: code, deviceToken: nil, completion: completion)
-    }
-    
-    public static func authenticate(username: String, password: String, code: Int?, deviceToken: String?, completion: (user: BeamUser?, error: BeamRequestError?) -> Void) {
+    /**
+     Authenticates a user given a username, password, and optional 2FA code.
+     
+     :param: username The username of the authenticating user.
+     :param: password The password of the authenticating user.
+     :param: code An optional 2FA code of the authenticating user.
+     :param: completion An optional completion block, called when authentication completes.
+     */
+    public static func authenticate(username: String, password: String, code: Int? = nil, completion: ((user: BeamUser?, error: BeamRequestError?) -> Void)?) {
         let body = "username=\(username)&password=\(password)" + (code == nil ? "" : "&code=\(code!)")
         
         BeamRequest.request("/users/login", requestType: "POST", body: body) { (json, error) -> Void in
             guard error == nil,
                 let json = json else {
-                    completion(user: nil, error: error)
+                    completion?(user: nil, error: error)
                     return
             }
             
             if let error = json["error"].string {
                 switch error {
                     case "2fa":
-                        completion(user: nil, error: .Requires2FA)
+                        completion?(user: nil, error: .Requires2FA)
                     case "credentials":
-                        completion(user: nil, error: .InvalidCredentials)
+                        completion?(user: nil, error: .InvalidCredentials)
                     default:
                         print("Auth error from server: \(error)")
-                        completion(user: nil, error: .Unknown)
+                        completion?(user: nil, error: .Unknown)
                 }
             } else {
                 let user = BeamUser(json: json)
                 
-                BeamClient.sharedClient.channels.getChannelWithToken(user.username, completion: { (channel, error) -> Void in
-                    guard let channel = channel else {
-                        completion(user: nil, error: error)
-                        return
-                    }
-                    
-                    let session = BeamSession(sessionChannel: channel, sessionUser: user)
-                    
-                    BeamSession.sharedSession = session
-                    completion(user: user, error: error)
-                    
-                    NSNotificationCenter.defaultCenter().postNotificationName(BeamAuthenticatedNotification, object: nil)
-                })
+                let session = BeamSession(user: user)
+                BeamSession.sharedSession = session
+                
+                NSNotificationCenter.defaultCenter().postNotificationName(BeamAuthenticatedNotification, object: nil)
+                
+                completion?(user: user, error: error)
             }
         }
     }
     
-    public static func logout(completion: (error: BeamRequestError?) -> Void) {
+    /**
+     Logs out a user by deleting their stored session locally and on the Beam servers.
+     
+     :param: completion An optional completion block, called when logging out completes.
+     */
+    public static func logout(completion: ((error: BeamRequestError?) -> Void)?) {
         BeamSession.sharedSession = nil
         
         BeamRequest.request("/users/current", requestType: "DELETE") { (json, error) -> Void in
-            completion(error: error)
+            completion?(error: error)
         }
     }
     
-    public static func refreshPreviousSession(completion: (user: BeamUser?, error: BeamRequestError?) -> Void) {
+    
+    /**
+     Refreshes any previous sessions that could be found on the device. Useful for persisting sessions between app launches.
+     
+     :param: completion An optional completion block with the authenticated user's data.
+     */
+    public static func refreshPreviousSession(completion: ((user: BeamUser?, error: BeamRequestError?) -> Void)?) {
         guard NSUserDefaults.standardUserDefaults().boolForKey("BeamSessionExists") else {
             print("no session exists")
-            completion(user: nil, error: nil)
+            completion?(user: nil, error: nil)
             return
         }
         
         BeamRequest.request("/users/current/refresh", requestType: "POST") { (json, error) -> Void in
             guard let json = json else {
-                completion(user: nil, error: error)
+                completion?(user: nil, error: error)
                 return
             }
             
             if let _ = json["username"].string {
                 let user = BeamUser(json: json)
                 
-                BeamClient.sharedClient.channels.getChannelWithToken(user.username, completion: { (channel, error) -> Void in
-                    guard let channel = channel else {
-                        completion(user: nil, error: error)
-                        return
-                    }
-                    
-                    let session = BeamSession(sessionChannel: channel, sessionUser: user)
-                    
-                    BeamSession.sharedSession = session
-                    completion(user: user, error: error)
-                })
+                let session = BeamSession(user: user)
+                BeamSession.sharedSession = session
+                
+                completion?(user: user, error: error)
             } else {
-                completion(user: nil, error: nil)
+                completion?(user: nil, error: nil)
             }
         }
     }
     
-    public static func registerAccount(username: String, password: String, email: String, completion: (user: BeamUser?, error: BeamRequestError?) -> Void) {
+    /**
+     Registers a new Beam user. Keep in mind that the user will have to verify their email address.
+     
+     :param: username The registering user's username.
+     :param: password The registering user's password.
+     :param: email The registering user's email address.
+     :param: completion An optional completion block with the new user's data.
+     */
+    public static func registerAccount(username: String, password: String, email: String, completion: ((user: BeamUser?, error: BeamRequestError?) -> Void)?) {
         let body = "username=\(username)&password=\(password)&email=\(email)"
         
         BeamRequest.request("/users", requestType: "POST", body: body) { (json, error) -> Void in
             guard error == nil,
                 let json = json else {
-                    completion(user: nil, error: error)
+                    completion?(user: nil, error: error)
                     return
             }
             
             let user = BeamUser(json: json)
             
-            BeamClient.sharedClient.channels.getChannelWithToken(user.username, completion: { (channel, error) -> Void in
-                guard let channel = channel else {
-                    completion(user: nil, error: error)
-                    return
-                }
-                
-                let session = BeamSession(sessionChannel: channel, sessionUser: user)
-                
-                BeamSession.sharedSession = session
-                completion(user: user, error: error)
-                
-                NSNotificationCenter.defaultCenter().postNotificationName(BeamAuthenticatedNotification, object: nil)
-            })
+            let session = BeamSession(user: user)
+            BeamSession.sharedSession = session
+            
+            NSNotificationCenter.defaultCenter().postNotificationName(BeamAuthenticatedNotification, object: nil)
+            
+            completion?(user: user, error: error)
         }
     }
 }

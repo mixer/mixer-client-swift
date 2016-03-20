@@ -6,6 +6,7 @@
 //  Copyright © 2015 MCProHosting. All rights reserved.
 //
 
+/// The type of a request error encountered by the app.
 public enum BeamRequestError: ErrorType {
     
     // HTTP Errors

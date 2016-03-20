@@ -6,11 +6,18 @@
 //
 //
 
+/// A packet received when an error has occurred with tetris.
 public class ErrorPacket: TetrisPacket {
     
+    /// The error message.
     public let message: String
     
-    public init(message: String) {
+    /**
+     Used to initialize an error packet.
+     
+     :param: message The error message.
+     */
+    init(message: String) {
         self.message = message
     }
 }

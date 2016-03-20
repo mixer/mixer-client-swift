@@ -8,10 +8,18 @@
 
 import SwiftyJSON
 
+/// The base tetris packet class. Also has methods used to send and receive tetris packets.
 public class TetrisPacket {
     
+    /// The string of the packet's raw data.
     private var packetString: String?
     
+    /**
+     Creates a raw packet string from a tetris packet object.
+     
+     :param: packet The packet being sent by the app.
+     :returns: The raw packet string to be sent to the tetris servers.
+     */
     class func prepareToSend(packet: TetrisSendable) -> String {
         let method = packet.identifier
         let data = packet.data()
@@ -41,6 +49,12 @@ public class TetrisPacket {
         }
     }
     
+    /**
+     Interprets JSON packets received from the tetris servers.
+     
+     :param: string The string being interpreted.
+     :returns: A tuple with the tetris packet and the current control state, if it has been updated.
+     */
     class func receivePacket(string: String) -> (packet: TetrisPacket?, state: String?)? {
         var packet: TetrisPacket?
         

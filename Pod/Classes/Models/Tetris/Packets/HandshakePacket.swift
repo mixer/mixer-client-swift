@@ -6,16 +6,27 @@
 //
 //
 
+/// A packet sent to initialize a handshake with tetris.
 public class HandshakePacket: TetrisPacket, TetrisSendable {
     
+    /// The id of the user being authenticated.
     public let id: Int?
+    
+    /// The authentication key required by tetris for authentication.
     public let key: String?
     
+    /// Used when there is no locally authenticated user.
     public override init() {
         id = nil
         key = nil
     }
     
+    /**
+     Used when there is a locally authenticated user.
+     
+     :param: id The id of the user being authenticated.
+     :param: key The authentication key required by tetris for authentication.
+     */
     public init(id: Int, key: String) {
         self.id = id
         self.key = key

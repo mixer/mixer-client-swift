@@ -6,10 +6,17 @@
 //
 //
 
+/// A packet sent with local control data.
 public class ReportPacket: TetrisPacket, TetrisSendable {
     
+    /// Data on the state of all of the controls in the stream.
     public let controls: [ReportPacketControl]
     
+    /**
+     Used to initialize a report packet.
+     
+     :param: controls The data on all of the stream's controls.
+     */
     public init(controls: [ReportPacketControl]) {
         self.controls = controls
     }
@@ -39,10 +46,17 @@ public class ReportPacket: TetrisPacket, TetrisSendable {
     }
 }
 
+/// A representation of a base control's data.
 public class ReportPacketControl: CustomStringConvertible {
     
+    /// The id of the control.
     public let id: Int
     
+    /**
+     Used to initialize a base control's data.
+     
+     :param: id The id of the control.
+     */
     public init(id: Int) {
         self.id = id
     }
@@ -52,10 +66,18 @@ public class ReportPacketControl: CustomStringConvertible {
     }
 }
 
+/// A representation of a tactile's control data.
 public class ReportPacketTactile: ReportPacketControl {
     
+    /// True if the tactile is being pressed.
     public let down: Bool
     
+    /**
+     Used to initialize a tactile's control data.
+     
+     :param: id The id of the tactile.
+     :param: down True if the tactile is being pressed.
+     */
     public init(id: Int, down: Bool) {
         self.down = down
         
@@ -67,11 +89,22 @@ public class ReportPacketTactile: ReportPacketControl {
     }
 }
 
+/// A representation of a joystick's control data.
 public class ReportPacketJoystick: ReportPacketControl {
     
+    /// The x coordinate of the nipple's position in the joystick, -1.0 < x < 1.0.
     public let x: Float
+    
+    /// The y coordinate of the nipple's position in the joystick, -1.0 < y < 1.0.
     public let y: Float
     
+    /**
+     Used to initialize a joystick's control data.
+     
+     :param: id The id of the joystick.
+     :param: x The x coordinate of the nipple's position in the joystick, -1.0 < x < 1.0.
+     :param: y The y coordinate of the nipple's position in the joystick, -1.0 < y < 1.0.
+     */
     public init(id: Int, x: Float, y: Float) {
         self.x = x
         self.y = y

@@ -8,27 +8,32 @@
 
 import SwiftyJSON
 
+/// The object of a game being played by a channel.
 public struct BeamType {
     
+    /// The type's identifier.
     public let id: Int
+    
+    /// The name of the type.
     public let name: String
+    
+    /// The type's parent (e.g. game)
     public let parent: String?
+    
+    /// A short description of the type.
     public let desc: String?
+    
+    /// Where the type was initially found (e.g. player.me)
     public let source: String?
+    
+    /// The number of viewers currently watching channels playing this game.
     public let viewersCurrent: Int
+    
+    /// The number of channels currently playing this game.
     public let online: Int
     
-    public init() {
-        id = 0
-        name = "All"
-        parent = "All"
-        desc = ""
-        source = "app"
-        viewersCurrent = 999999999
-        online = 999999999
-    }
-    
-    public init(json: JSON) {
+    /// Used to initialize a type given JSON data.
+    init(json: JSON) {
         id = json["id"].int ?? 0
         name = json["name"].string ?? ""
         parent = json["parent"].string

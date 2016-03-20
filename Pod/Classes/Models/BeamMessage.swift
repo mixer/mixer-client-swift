@@ -8,16 +8,29 @@
 
 import SwiftyJSON
 
+/// A chat message object.
 public struct BeamMessage {
     
+    /// The components that make up the chat message.
     public let components: [BeamMessageComponent]!
+    
+    /// The id of the channel that the message was sent to.
     public let channel: Int?
+    
+    /// The message's identifier.
     public let id: String?
+    
+    /// The id of the user who sent the message.
     public let userId: Int?
+    
+    /// The name of the user who sent the message.
     public let userName: String?
+    
+    /// The roles held by the user who sent the message.
     public let userRoles: [BeamGroup]?
     
-    public init(json: JSON) {
+    /// Used to initialize a chat message given JSON data.
+    init(json: JSON) {
         components = [BeamMessageComponent]()
         
         if let message = json["message"].dictionary,

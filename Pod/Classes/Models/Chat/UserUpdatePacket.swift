@@ -6,14 +6,30 @@
 //  Copyright (c) 2015 MCProHosting. All rights reserved.
 //
 
+/// A packet received when a user's roles have been changed.
 public class UserUpdatePacket: Packet {
     
-    public let permissions: [String]?
-    public let userId: Int?
-    public let username: String?
-    public let roles: [String]?
+    /// The new permissions held by the user.
+    public let permissions: [String]
     
-    public init(permissions: [String], userId: Int, username: String, roles: [String]) {
+    /// The user's identifier.
+    public let userId: Int
+    
+    /// The user's username.
+    public let username: String
+    
+    /// The user's new roles.
+    public let roles: [String]
+    
+    /**
+     Used to initialize a user update packet.
+     
+     :param: The new permissions held by the user.
+     :param: userId The user's identifier.
+     :param: username The user's username.
+     :param: roles The user's new roles.
+     */
+    init(permissions: [String], userId: Int, username: String, roles: [String]) {
         self.permissions = permissions
         self.userId = userId
         self.username = username

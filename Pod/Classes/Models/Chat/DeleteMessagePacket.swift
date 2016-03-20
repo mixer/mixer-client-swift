@@ -6,11 +6,18 @@
 //  Copyright (c) 2015 MCProHosting. All rights reserved.
 //
 
+/// A packet telling the app to remove a message from the visible chat.
 public class DeleteMessagePacket: Packet {
     
+    /// The id of the message to be deleted.
     public var id: String
     
-    public init(id: String) {
+    /**
+     Used to initialize a delete message packet.
+     
+     :param: id The id of the message to be deleted.
+     */
+    init(id: String) {
         self.id = id
     }
 }

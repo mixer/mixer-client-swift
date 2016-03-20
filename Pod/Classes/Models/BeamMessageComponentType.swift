@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 MCProHosting. All rights reserved.
 //
 
+/// The type of a chat message component.
 public enum BeamMessageComponentType: String {
     case Emoticon = "emoticon"
     case Link = "link"

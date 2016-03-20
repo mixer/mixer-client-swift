@@ -8,11 +8,14 @@
 
 import SwiftyJSON
 
+/// A control's set of configurations for certain states and grid sizes.
 public struct TetrisBlueprint {
     
+    /// The possible configurations in the control's blueprint.
     public var configurations: [TetrisBlueprintConfiguration]
     
-    public init(json: JSON) {
+    /// Used to initialize a blueprint given JSON data.
+    init(json: JSON) {
         self.configurations = [TetrisBlueprintConfiguration]()
         
         if let configurations = json.array {

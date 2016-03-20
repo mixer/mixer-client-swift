@@ -8,18 +8,29 @@
 
 import SwiftyJSON
 
+/// A chat message component object.
 public struct BeamMessageComponent {
     
+    /// The type of message component.
     public var type: BeamMessageComponentType?
+    
+    /// The text that can be appended to the chat message in place of less rich content.
     public var text: String?
     
+    /// The source of an emoticon, if applicable.
     public var source: String?
+    
+    /// The pack that the emoticon is from, if applicable.
     public var pack: String?
+    
+    /// The coordinates of the emoticon in the pack's spritesheet, if applicable.
     public var coordinates: CGPoint?
     
+    /// The id of the user in a spacesuit, if applicable.
     public var userId: Int?
     
-    public init(json: JSON, me: Bool) {
+    /// Used to initialize a chat message component given JSON data.
+    init(json: JSON, me: Bool) {
         if let type = json["type"].string {
             switch type {
             case "emoticon":

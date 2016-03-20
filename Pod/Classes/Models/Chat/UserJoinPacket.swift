@@ -6,13 +6,26 @@
 //  Copyright (c) 2015 MCProHosting. All rights reserved.
 //
 
+/// A packet received when a user has joined the channel.
 public class UserJoinPacket: Packet {
     
-    public let username: String?
-    public let roles: [String]?
-    public let userId: Int?
+    /// The username of the user who joined.
+    public let username: String
     
-    public init(username: String, roles: [String], userId: Int) {
+    /// The roles held by the user who joined.
+    public let roles: [String]
+    
+    /// The id of the user who joined.
+    public let userId: Int
+    
+    /**
+     Used to initialize a user join packet.
+     
+     :param: username The username of the user who joined.
+     :param: roles The roles held by the user who joined.
+     :param: userId The id of the user who joined.
+     */
+    init(username: String, roles: [String], userId: Int) {
         self.username = username
         self.roles = roles
         self.userId = userId
