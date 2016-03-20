@@ -49,5 +49,7 @@ class TetrisClientTests: XCTestCase, TetrisClientDelegate {
         expectation.fulfill()
     }
     
+    func tetrisChangedState(state: String) {}
+    func tetrisDidDisconnect() {}
     func tetrisReceivedPacket(packet: TetrisPacket) {}
 }

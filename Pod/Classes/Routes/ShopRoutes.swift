@@ -10,11 +10,11 @@ public class ShopRoutes {
     
     // MARK: Retrieving Shop Data
     
-    public func getCategories(completion: (categories: [BeamShopCategory]?, error: BeamRequestError?) -> Void) {
+    public func getCategories(completion: ((categories: [BeamShopCategory]?, error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/shop/categories", requestType: "GET") { (json, error) -> Void in
             guard let json = json,
                 categories = json.array else {
-                    completion(categories: nil, error: error)
+                    completion?(categories: nil, error: error)
                     return
             }
             
@@ -25,27 +25,27 @@ public class ShopRoutes {
                 retrievedCategories.append(retrievedCategory)
             }
             
-            completion(categories: retrievedCategories, error: error)
+            completion?(categories: retrievedCategories, error: error)
         }
     }
     
-    public func getItemWithId(itemId: Int, completion: (item: BeamShopItem?, error: BeamRequestError?) -> Void) {
+    public func getItemWithId(itemId: Int, completion: ((item: BeamShopItem?, error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/shop/items/\(itemId)", requestType: "GET") { (json, error) -> Void in
             guard let json = json else {
-                completion(item: nil, error: error)
+                completion?(item: nil, error: error)
                 return
             }
             
             let item = BeamShopItem(json: json)
-            completion(item: item, error: error)
+            completion?(item: item, error: error)
         }
     }
     
-    public func getItemsByCategory(categoryId: Int, completion: (items: [BeamShopItem]?, error: BeamRequestError?) -> Void) {
+    public func getItemsByCategory(categoryId: Int, completion: ((items: [BeamShopItem]?, error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/shop/categories/\(categoryId)/items", requestType: "GET") { (json, error) -> Void in
             guard let json = json,
                 items = json.array else {
-                    completion(items: nil, error: error)
+                    completion?(items: nil, error: error)
                     return
             }
             
@@ -56,7 +56,7 @@ public class ShopRoutes {
                 retrievedItems.append(retrievedItem)
             }
             
-            completion(items: retrievedItems, error: error)
+            completion?(items: retrievedItems, error: error)
         }
     }
 }

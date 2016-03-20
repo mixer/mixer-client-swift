@@ -10,9 +10,9 @@ import Foundation
 
 public extension NSDate {
     
-    public class func fromBeam(dateString: String?) -> NSDate {
+    public class func fromBeam(dateString: String?) -> NSDate? {
         guard let string = dateString else {
-            return NSDate(timeIntervalSince1970: 0)
+            return nil
         }
         
         let formatter = NSDateFormatter()
@@ -21,7 +21,7 @@ public extension NSDate {
         if let date = formatter.dateFromString(string) {
             return date
         } else {
-            return NSDate(timeIntervalSince1970: 0)
+            return nil
         }
     }
 }

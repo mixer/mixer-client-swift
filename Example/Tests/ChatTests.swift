@@ -46,7 +46,6 @@ class ChatTests: XCTestCase {
                 return
             }
             
-            XCTAssert(authKey == nil)
             XCTAssert(error == nil)
             expectation.fulfill()
         }

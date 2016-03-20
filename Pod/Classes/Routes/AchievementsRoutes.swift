@@ -10,19 +10,19 @@ public class AchievementsRoutes {
     
     // MARK: Retrieving Achievements
     
-    public func getAchievements(completion: (achievements: [BeamAchievement]?, error: BeamRequestError?) -> Void) {
+    public func getAchievements(completion: ((achievements: [BeamAchievement]?, error: BeamRequestError?) -> Void)?) {
         self.getAchievementsByEndpoint("/achievements", completion: completion)
     }
     
-    public func getAchievementsByUser(userId: Int, completion: (achievements: [BeamAchievement]?, error: BeamRequestError?) -> Void) {
+    public func getAchievementsByUser(userId: Int, completion: ((achievements: [BeamAchievement]?, error: BeamRequestError?) -> Void)?) {
         self.getAchievementsByEndpoint("/users/\(userId)/achievements", completion: completion)
     }
     
-    private func getAchievementsByEndpoint(endpoint: String, completion: (achievements: [BeamAchievement]?, error: BeamRequestError?) -> Void) {
+    private func getAchievementsByEndpoint(endpoint: String, completion: ((achievements: [BeamAchievement]?, error: BeamRequestError?) -> Void)?) {
         BeamRequest.request(endpoint, requestType: "GET") { (json, error) -> Void in
             guard let json = json,
                 let achievements = json.array else {
-                    completion(achievements: nil, error: error)
+                    completion?(achievements: nil, error: error)
                     return
             }
             
@@ -33,7 +33,7 @@ public class AchievementsRoutes {
                 retrievedAchievements.append(retrievedAchievement)
             }
             
-            completion(achievements: retrievedAchievements, error: error)
+            completion?(achievements: retrievedAchievements, error: error)
         }
     }
 }

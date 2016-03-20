@@ -12,23 +12,23 @@ public class UsersRoutes {
     
     // MARK: Acting on User Data
     
-    public func forgotPassword(email: String, completion: (error: BeamRequestError?) -> Void) {
+    public func forgotPassword(email: String, completion: ((error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/users/reset", requestType: "POST", body: "email=\(email)") { (json, error) -> Void in
-            completion(error: error)
+            completion?(error: error)
         }
     }
     
-    public func updatePreferences(id: Int, preferences: String, completion: (error: BeamRequestError?) -> Void) {
+    public func updatePreferences(id: Int, preferences: String, completion: ((error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/users/\(id)/preferences", requestType: "POST", body: preferences) { (json, error) -> Void in
-            completion(error: error)
+            completion?(error: error)
         }
     }
     
-    public func updateNotificationPreferences(id: Int, enable: Bool, completion: (error: BeamRequestError?) -> Void) {
+    public func updateNotificationPreferences(id: Int, enable: Bool, completion: ((error: BeamRequestError?) -> Void)?) {
         getPreferences(id) { (preferences, error) -> Void in
             guard let preferences = preferences,
                 transports = preferences["channel:notifications"]?["transports"] as? [String] else {
-                    completion(error: error)
+                    completion?(error: error)
                     return
             }
             
@@ -55,30 +55,30 @@ public class UsersRoutes {
             transportString += "]}"
             
             self.updatePreferences(id, preferences: transportString, completion: { (error) -> Void in
-                completion(error: error)
+                completion?(error: error)
             })
         }
     }
     
-    public func updateProfile(id: Int, settings: String, completion: (user: BeamUser?, error: BeamRequestError?) -> Void) {
+    public func updateProfile(id: Int, settings: String, completion: ((user: BeamUser?, error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/users/\(id)", requestType: "PUT", body: settings) { (json, error) -> Void in
             guard let json = json else {
-                completion(user: nil, error: error)
+                completion?(user: nil, error: error)
                 return
             }
             
             let user = BeamUser(json: json)
-            completion(user: user, error: error)
+            completion?(user: user, error: error)
         }
     }
     
     // MARK: Retrieving User Data
     
-    public func getFollowedChannelsByUser(id: Int, completion: (channels: [BeamChannel]?, error: BeamRequestError?) -> Void) {
+    public func getFollowedChannelsByUser(id: Int, completion: ((channels: [BeamChannel]?, error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/users/\(id)/follows", requestType: "GET") { (json, error) -> Void in
             guard let json = json,
                 channels = json.array else {
-                    completion(channels: nil, error: error)
+                    completion?(channels: nil, error: error)
                     return
             }
             
@@ -89,41 +89,41 @@ public class UsersRoutes {
                 retrievedChannels.append(retrievedChannel)
             }
             
-            completion(channels: retrievedChannels, error: error)
+            completion?(channels: retrievedChannels, error: error)
         }
     }
     
-    public func getPreferences(id: Int, completion: (preferences: [String: AnyObject]?, error: BeamRequestError?) -> Void) {
+    public func getPreferences(id: Int, completion: ((preferences: [String: AnyObject]?, error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/users/\(id)/preferences", requestType: "GET") { (json, error) -> Void in
             guard let json = json,
                 preferences = json.dictionaryObject else {
-                    completion(preferences: nil, error: error)
+                    completion?(preferences: nil, error: error)
                     return
             }
             
-            completion(preferences: preferences, error: error)
+            completion?(preferences: preferences, error: error)
         }
     }
     
     // MARK: Retrieving Users
     
-    public func getUserWithId(id: Int, completion: (user: BeamUser?, error: BeamRequestError?) -> Void) {
+    public func getUserWithId(id: Int, completion: ((user: BeamUser?, error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/users/\(id)", requestType: "GET") { (json, error) -> Void in
             guard let json = json else {
-                completion(user: nil, error: error)
+                completion?(user: nil, error: error)
                 return
             }
             
             let user = BeamUser(json: json)
-            completion(user: user, error: error)
+            completion?(user: user, error: error)
         }
     }
     
-    public func getUsersByQuery(query: String, completion: (users: [BeamUser]?, error: BeamRequestError?) -> Void) {
+    public func getUsersByQuery(query: String, completion: ((users: [BeamUser]?, error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/users/search", requestType: "GET") { (json, error) -> Void in
             guard let json = json,
                 let users = json.array else {
-                    completion(users: nil, error: error)
+                    completion?(users: nil, error: error)
                     return
             }
             
@@ -134,7 +134,7 @@ public class UsersRoutes {
                 retrievedUsers.append(retrievedUser)
             }
             
-            completion(users: retrievedUsers, error: error)
+            completion?(users: retrievedUsers, error: error)
         }
     }
 }
