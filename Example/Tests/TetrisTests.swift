@@ -19,27 +19,21 @@ class TetrisTests: XCTestCase {
         
         let semaphore = dispatch_semaphore_create(0)
         
-        BeamRequest.request("/channels", requestType: "GET", params: ["where": "interactive.eq.1"]) { (json, error) -> Void in
-            guard let json = json,
-                let channels = json.array else {
-                    XCTFail()
-                    return
-            }
-            
-            var retrievedChannels = [BeamChannel]()
-            
-            for channel in channels {
-                let retrievedChannel = BeamChannel(json: channel)
-                retrievedChannels.append(retrievedChannel)
-            }
-            
-            guard retrievedChannels.count > 0 else {
+        BeamClient.sharedClient.channels.getDefaultChannels { (channels, error) in
+            guard let channels = channels else {
                 XCTFail()
                 return
             }
             
-            XCTAssert(error == nil)
-            self.channel = retrievedChannels[0]
+            for channel in channels where channel.interactive {
+                self.channel = channel
+                break
+            }
+            
+            guard self.channel != nil else {
+                XCTFail()
+                return
+            }
             
             dispatch_semaphore_signal(semaphore)
         }

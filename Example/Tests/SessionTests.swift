@@ -59,7 +59,7 @@ class SessionTests: XCTestCase {
     func testRegisterWeakPassword() {
         let expectation = expectationWithDescription("tests the registration endpoint for the weak password error")
         
-        BeamSession.registerAccount("xozicvioxzcv", password: "a", email: "beam@email.com") { (user, error) -> Void in
+        BeamSession.registerAccount("xozicvioxzcv", password: "aaaaa", email: "beam@email.com") { (user, error) -> Void in
             XCTAssert(error == .WeakPassword)
             expectation.fulfill()
         }

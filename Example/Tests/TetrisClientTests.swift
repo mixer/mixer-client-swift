@@ -40,7 +40,7 @@ class TetrisClientTests: XCTestCase, TetrisClientDelegate {
         expectation = expectationWithDescription("test joining a channel through tetris")
         
         let tetrisClient = TetrisClient(delegate: self)
-        tetrisClient.connect(url: "wss://tetris1-dal.beam.pro", channelId: 50772)
+        tetrisClient.connect(url: "wss://tetris1-dal.beam.pro", channelId: channel.id)
         
         waitForExpectationsWithTimeout(10, handler: nil)
     }

@@ -100,14 +100,14 @@ public class BeamRequest {
                 return
             }
             
-            var requestError: BeamRequestError? = nil
+            var requestError: BeamRequestError? = BeamRequestError.Unknown
             
             if let error = error {
                 switch error.code {
                 case -1009:
                     requestError = BeamRequestError.Offline
                 default:
-                    requestError = BeamRequestError.Unknown
+                    break
                 }
                 
                 completion?(data: nil, error: requestError)
@@ -118,21 +118,31 @@ public class BeamRequest {
                         if requestType == "POST" && component == "users" {
                             if let data = data {
                                 let jsonData = JSON(data: data)
-                                if let _ = jsonData.array {
-                                    requestError = BeamRequestError.InvalidEmail
-                                } else {
-                                    if let username = jsonData["username"].array?[0].string {
-                                        requestError = username.containsString("taken") ? BeamRequestError.TakenUsername : .InvalidUsername
-                                    } else if let _ = jsonData["password"].string {
-                                        requestError = BeamRequestError.WeakPassword
-                                    } else if let _ = jsonData["email"].array {
-                                        requestError = BeamRequestError.TakenEmail
-                                    } else {
-                                        requestError = BeamRequestError.Unknown
+                                if let name = jsonData["name"].string {
+                                    if name == "ValidationError" {
+                                        if let details = jsonData["details"].array?[0] {
+                                            if let path = details["path"].string, type = details["type"].string {
+                                                if path == "payload.email" {
+                                                    if type == "string.email" {
+                                                        requestError = BeamRequestError.InvalidEmail
+                                                    } else if type == "unique" {
+                                                        requestError = BeamRequestError.TakenEmail
+                                                    }
+                                                } else if path == "payload.username" {
+                                                    if type == "string.min" {
+                                                        requestError = BeamRequestError.InvalidUsername
+                                                    } else if type == "unique" {
+                                                        requestError = BeamRequestError.TakenUsername
+                                                    }
+                                                } else if path == "payload.password" {
+                                                    if type == "string.min" || type == "string.password" {
+                                                        requestError = BeamRequestError.WeakPassword
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                 }
-                            } else {
-                                requestError = BeamRequestError.Unknown
                             }
                         } else {
                             requestError = BeamRequestError.BadRequest

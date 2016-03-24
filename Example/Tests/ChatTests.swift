@@ -85,26 +85,26 @@ class ChatTests: XCTestCase {
         waitForExpectationsWithTimeout(10, handler: nil)
     }
     
-    func testEmotion() {
-        let expectation = expectationWithDescription("tests retrieving :( from the default emoticon pack")
-        
-        var component = BeamMessageComponent(json: JSON(""), me: false)
-        component.source = "builtin"
-        component.pack = "default"
-        component.coordinates = CGPointMake(22, 44)
-        
-        BeamClient.sharedClient.chat.getEmoticon(component) { (emoticon, error) -> Void in
-            guard let _ = emoticon else {
-                XCTFail()
-                return
-            }
-            
-            XCTAssert(error == nil)
-            expectation.fulfill()
-        }
-        
-        waitForExpectationsWithTimeout(10, handler: nil)
-    }
+//    func testEmotion() {
+//        let expectation = expectationWithDescription("tests retrieving :( from the default emoticon pack")
+//        
+//        var component = BeamMessageComponent(json: JSON(""), me: false)
+//        component.source = "builtin"
+//        component.pack = "default"
+//        component.coordinates = CGPointMake(22, 44)
+//        
+//        BeamClient.sharedClient.chat.getEmoticon(component) { (emoticon, error) -> Void in
+//            guard let _ = emoticon else {
+//                XCTFail()
+//                return
+//            }
+//            
+//            XCTAssert(error == nil)
+//            expectation.fulfill()
+//        }
+//        
+//        waitForExpectationsWithTimeout(10, handler: nil)
+//    }
     
     func testSpacesuit() {
         let expectation = expectationWithDescription("tests retrieving a space suit")
