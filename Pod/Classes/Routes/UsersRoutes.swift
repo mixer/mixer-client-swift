@@ -48,11 +48,13 @@ public class UsersRoutes {
     public func updateNotificationPreferences(id: Int, enable: Bool, completion: ((error: BeamRequestError?) -> Void)?) {
         getPreferences(id) { (preferences, error) -> Void in
             guard let preferences = preferences,
-                transports = preferences["channel:notifications"]?["transports"] as? [String] else {
+                transports = preferences["channel:notifications"]?["transports"] as? [String],
+                ids = preferences["channel:notifications"]?["ids"] as? [String] else {
                     completion?(error: error)
                     return
             }
             
+            let idsString = "\"ids\":[\"\(ids.joinWithSeparator("\",\""))\"]"
             var transportString = "channel:notifications={\"transports\":["
             
             if enable {
@@ -73,7 +75,7 @@ public class UsersRoutes {
                 transportString.removeAtIndex(transportString.endIndex.predecessor())
             }
             
-            transportString += "]}"
+            transportString += "],\(idsString)}"
             
             self.updatePreferences(id, preferences: transportString, completion: { (error) -> Void in
                 completion?(error: error)

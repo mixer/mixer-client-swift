@@ -54,7 +54,7 @@ public struct BeamUser {
     public var player: String?
     
     /// Used to initialize a user object given JSON data.
-    init(json: JSON) {
+    public init(json: JSON) {
         if let social = json["social"].dictionary {
             twitter = social["twitter"]?.string
             facebook = social["facebook"]?.string
