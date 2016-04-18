@@ -59,6 +59,9 @@ public struct BeamChannel {
     /// FTL is enabled if this value is > 0.
     public let ftl: Int
     
+    /// True if the channel has a stored video on demand.
+    public let hasVod: Bool
+    
     /// The number of subscribers to the channel. nil if this is not the authenticated user's channel.
     public let subscribers: Int?
     
@@ -151,6 +154,7 @@ public struct BeamChannel {
         typeId = json["typeId"].int
         interactive = json["interactive"].bool ?? (json["interactive"].int ?? 0) == 1
         ftl = json["ftl"].int ?? 0
+        hasVod = json["hasVod"].bool ?? false
         subscribers = json["numSubscribers"].int
         userId = json["userId"].int
         
