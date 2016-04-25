@@ -126,21 +126,24 @@ public class ChannelsRoutes {
     }
     
     /**
-     Retrieves channels to be browsed with default parameters.
-     
-     :param: completion An optional completion block with the retrieved channels' data.
-     */
-    public func getDefaultChannels(completion: ((channels: [BeamChannel]?, error: BeamRequestError?) -> Void)?) {
-        getChannelsByEndpoint("/channels", params: nil, completion: completion)
-    }
-    
-    /**
      Retrieves channels to be browsed with default parameters and pagination.
      
      :param: completion An optional completion block with the retrieved channels' data.
      */
-    public func getDefaultChannels(offset: Int, completion: ((channels: [BeamChannel]?, error: BeamRequestError?) -> Void)?) {
-        let params = ["order": "online:desc,viewersCurrent:desc,viewersTotal:desc", "where": "suspended.eq.0", "page": "\(offset / 50)"]
+    public func getChannels(requestType: ChannelsRequestType = .All, offset: Int = 0, completion: ((channels: [BeamChannel]?, error: BeamRequestError?) -> Void)?) {
+        var params = ["order": "online:desc,viewersCurrent:desc,viewersTotal:desc", "where": "suspended.eq.0,online.eq.1", "page": "\(offset / 50)"]
+        
+        switch requestType {
+        case .Interactive:
+            params["where"] = "suspended.eq.0,online.eq.1,interactive.eq.1"
+        case .Rising:
+            params["order"] = "online:desc,rising"
+        case .Fresh:
+            params["order"] = "online:desc,fresh"
+        default:
+            break
+        }
+        
         getChannelsByEndpoint("/channels", params: params, completion: completion)
     }
     
@@ -152,16 +155,6 @@ public class ChannelsRoutes {
      */
     public func getChannelsByQuery(query: String, completion: ((channels: [BeamChannel]?, error: BeamRequestError?) -> Void)?) {
         getChannelsByEndpoint("/channels", params: ["scope": "all", "sort": "viewers_total:asc", "q": query], completion: completion)
-    }
-    
-    /**
-     Retrieves channels currently playing a given game.
-     
-     :param: typeId The identifier of the type being played.
-     :param: completion An optional completion block with the retrieved channels' data.
-     */
-    public func getChannelsByType(typeId: Int, completion: ((channels: [BeamChannel]?, error: BeamRequestError?) -> Void)?) {
-        getChannelsByEndpoint("/types/\(typeId)/channels", params: nil, completion: completion)
     }
     
     /**
@@ -213,5 +206,10 @@ public class ChannelsRoutes {
             
             completion?(types: retrievedTypes, error: error)
         }
+    }
+    
+    /// The type of channels being requested.
+    public enum ChannelsRequestType {
+        case All, Interactive, Rising, Fresh
     }
 }

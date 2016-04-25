@@ -64,7 +64,7 @@ public class ChatClient: WebSocketDelegate {
             }
         }
         
-        timer = NSTimer(timeInterval: 10, target: self, selector: "updateData", userInfo: nil, repeats: true)
+        timer = NSTimer(timeInterval: 10, target: self, selector: #selector(updateData), userInfo: nil, repeats: true)
         NSRunLoop.mainRunLoop().addTimer(timer!, forMode: NSRunLoopCommonModes)
     }
     
