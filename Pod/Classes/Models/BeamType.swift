@@ -29,6 +29,9 @@ public struct BeamType {
     /// The number of viewers currently watching channels playing this game.
     public let viewersCurrent: Int
     
+    /// The URL of the type's thumbnail image.
+    public let coverURL: NSURL?
+    
     /// The number of channels currently playing this game.
     public let online: Int
     
@@ -40,6 +43,13 @@ public struct BeamType {
         desc = json["description"].string
         source = json["source"].string
         viewersCurrent = json["viewersCurrent"].int ?? 0
+        
+        if let cover = json["coverURL"].string {
+            coverURL = NSURL(string: cover)
+        } else {
+            coverURL = nil
+        }
+        
         online = json["online"].int ?? 0
     }
 }
