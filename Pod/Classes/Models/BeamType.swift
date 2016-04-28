@@ -44,7 +44,7 @@ public struct BeamType {
         source = json["source"].string
         viewersCurrent = json["viewersCurrent"].int ?? 0
         
-        if let cover = json["coverURL"].string {
+        if let cover = json["coverUrl"].string {
             coverURL = NSURL(string: cover)
         } else {
             coverURL = nil
