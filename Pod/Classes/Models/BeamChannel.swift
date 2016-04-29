@@ -62,6 +62,12 @@ public struct BeamChannel {
     /// True if the channel has a stored video on demand.
     public let hasVod: Bool
     
+    /// The date, in UTC, on which the channel was created.
+    public let createdAt: NSDate?
+    
+    /// The date, in UTC, on which channel was last updated.
+    public let updatedAt: NSDate?
+    
     /// The number of subscribers to the channel. nil if this is not the authenticated user's channel.
     public let subscribers: Int?
     
@@ -155,6 +161,8 @@ public struct BeamChannel {
         interactive = json["interactive"].bool ?? (json["interactive"].int ?? 0) == 1
         ftl = json["ftl"].int ?? 0
         hasVod = json["hasVod"].bool ?? false
+        createdAt = NSDate.fromBeam(json["createdAt"].string)
+        updatedAt = NSDate.fromBeam(json["updatedAt"].string)
         subscribers = json["numSubscribers"].int
         userId = json["userId"].int
         
