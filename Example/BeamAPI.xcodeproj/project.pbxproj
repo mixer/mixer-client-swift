@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E532A11EFC02064E3857F0E0 /* Pods_BeamAPI_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78F1AD8DFAF9B19D92C5A4B9 /* Pods_BeamAPI_Tests.framework */; };
+		CD69B84355E5FD291AFD803A /* Pods_BeamAPI_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 240F481F34E5804A03FE2609 /* Pods_BeamAPI_Tests.framework */; };
 		EB4A0ED51C5D1A5C0012693F /* AchievementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4A0ED41C5D1A5C0012693F /* AchievementTests.swift */; };
 		EB4A0ED71C5D1B310012693F /* ChannelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4A0ED61C5D1B310012693F /* ChannelTests.swift */; };
 		EB4A0ED91C5D1CEE0012693F /* ChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4A0ED81C5D1CEE0012693F /* ChatTests.swift */; };
@@ -20,14 +20,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		14DB08B346B582A90AA20B8C /* Pods-BeamAPI_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeamAPI_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BeamAPI_Tests/Pods-BeamAPI_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		245C5237E926046864FE0989 /* Pods-BeamAPI_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeamAPI_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BeamAPI_Tests/Pods-BeamAPI_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		240F481F34E5804A03FE2609 /* Pods_BeamAPI_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BeamAPI_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E7801D99FB8A22697ED20F4 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		5110D7E62BB7BCB2D648BB8A /* BeamAPI.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = BeamAPI.podspec; path = ../BeamAPI.podspec; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* BeamAPI_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BeamAPI_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		78F1AD8DFAF9B19D92C5A4B9 /* Pods_BeamAPI_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BeamAPI_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DF9655806BF1EAA6E237AC7 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		A0C967F7D78FD680D95ABA9C /* Pods-BeamAPI_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeamAPI_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BeamAPI_Tests/Pods-BeamAPI_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		E85179B6D5D6B487B946E6B4 /* Pods-BeamAPI_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeamAPI_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BeamAPI_Tests/Pods-BeamAPI_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		EB4A0ED41C5D1A5C0012693F /* AchievementTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AchievementTests.swift; sourceTree = "<group>"; };
 		EB4A0ED61C5D1B310012693F /* ChannelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelTests.swift; sourceTree = "<group>"; };
 		EB4A0ED81C5D1CEE0012693F /* ChatTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTests.swift; sourceTree = "<group>"; };
@@ -44,21 +44,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E532A11EFC02064E3857F0E0 /* Pods_BeamAPI_Tests.framework in Frameworks */,
+				CD69B84355E5FD291AFD803A /* Pods_BeamAPI_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		573D4568210C75887576E3C2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				240F481F34E5804A03FE2609 /* Pods_BeamAPI_Tests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACE81AFB9204008FA782 /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
-				B0B2448D27C3E441371A1D2E /* Pods */,
-				8601F93254C3ADF3F4572C2A /* Frameworks */,
+				AD2F4A6004A174E11B6CF30C /* Pods */,
+				573D4568210C75887576E3C2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -98,19 +106,11 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
-		8601F93254C3ADF3F4572C2A /* Frameworks */ = {
+		AD2F4A6004A174E11B6CF30C /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				78F1AD8DFAF9B19D92C5A4B9 /* Pods_BeamAPI_Tests.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		B0B2448D27C3E441371A1D2E /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				14DB08B346B582A90AA20B8C /* Pods-BeamAPI_Tests.debug.xcconfig */,
-				245C5237E926046864FE0989 /* Pods-BeamAPI_Tests.release.xcconfig */,
+				E85179B6D5D6B487B946E6B4 /* Pods-BeamAPI_Tests.debug.xcconfig */,
+				A0C967F7D78FD680D95ABA9C /* Pods-BeamAPI_Tests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -145,12 +145,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "BeamAPI_Tests" */;
 			buildPhases = (
-				6466EAFA72D0124157E59562 /* Check Pods Manifest.lock */,
+				B31C3F6A64FB23FB40E28F14 /* 📦 Check Pods Manifest.lock */,
 				607FACE11AFB9204008FA782 /* Sources */,
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
-				5D9CA1E4EF0DB4C875D6F253 /* Embed Pods Frameworks */,
-				0E7EA69EFC3E10F81544D39E /* Copy Pods Resources */,
+				51F53B2DEAC49B29AA58B5FD /* 📦 Embed Pods Frameworks */,
+				B2378A0AE2F6B94C9CA4F84E /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -206,29 +206,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0E7EA69EFC3E10F81544D39E /* Copy Pods Resources */ = {
+		51F53B2DEAC49B29AA58B5FD /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BeamAPI_Tests/Pods-BeamAPI_Tests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5D9CA1E4EF0DB4C875D6F253 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -236,14 +221,29 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BeamAPI_Tests/Pods-BeamAPI_Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6466EAFA72D0124157E59562 /* Check Pods Manifest.lock */ = {
+		B2378A0AE2F6B94C9CA4F84E /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BeamAPI_Tests/Pods-BeamAPI_Tests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B31C3F6A64FB23FB40E28F14 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -357,7 +357,7 @@
 		};
 		607FACF31AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 14DB08B346B582A90AA20B8C /* Pods-BeamAPI_Tests.debug.xcconfig */;
+			baseConfigurationReference = E85179B6D5D6B487B946E6B4 /* Pods-BeamAPI_Tests.debug.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -377,7 +377,7 @@
 		};
 		607FACF41AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 245C5237E926046864FE0989 /* Pods-BeamAPI_Tests.release.xcconfig */;
+			baseConfigurationReference = A0C967F7D78FD680D95ABA9C /* Pods-BeamAPI_Tests.release.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
