@@ -154,7 +154,7 @@ public class ChannelsRoutes {
      :param: completion An optional completion block with the retrieved channels' data.
      */
     public func getChannelsByQuery(query: String, completion: ((channels: [BeamChannel]?, error: BeamRequestError?) -> Void)?) {
-        getChannelsByEndpoint("/channels", params: ["scope": "all", "sort": "viewers_total:asc", "q": query], completion: completion)
+        getChannelsByEndpoint("/channels", params: ["scope": "all", "order": "viewersTotal:desc", "where": "suspended.eq.0", "q": query], completion: completion)
     }
     
     /**
