@@ -51,7 +51,7 @@ public class ProgressPacketTactile: ProgressPacketControl {
     public let progress: Int
     
     /// True if the tactile is disabled.
-    public let disabled: Bool?
+    public let disabled: Bool
     
     /**
      Used to initialize a tactile's control data.
@@ -62,7 +62,7 @@ public class ProgressPacketTactile: ProgressPacketControl {
      :param: progress The progress made on pressing this tactile.
      :param: disabled True if the tactile is disabled.
      */
-    init(id: Int, fired: Bool, cooldown: Int, progress: Int, disabled: Bool?) {
+    init(id: Int, fired: Bool, cooldown: Int, progress: Int, disabled: Bool) {
         self.fired = fired
         self.cooldown = cooldown
         self.progress = progress

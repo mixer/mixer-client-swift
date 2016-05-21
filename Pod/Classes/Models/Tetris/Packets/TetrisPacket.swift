@@ -87,11 +87,11 @@ public class TetrisPacket {
             
             if let tactiles = data["tactile"].array {
                 for tactile in tactiles {
-                    if let fired = tactile["fired"].bool,
-                        id = tactile["id"].int,
+                    if let id = tactile["id"].int,
                         cooldown = tactile["cooldown"].int,
-                        progress = tactile["progress"].int {
-                            let control = ProgressPacketTactile(id: id, fired: fired, cooldown: cooldown, progress: progress, disabled: tactile["disabled"].bool)
+                        progress = tactile["progress"].int,
+                        disabled = tactile["disabled"].bool {
+                            let control = ProgressPacketTactile(id: id, fired: tactile["fired"].bool ?? false, cooldown: cooldown, progress: progress, disabled: disabled)
                             controls.append(control)
                     }
                 }
