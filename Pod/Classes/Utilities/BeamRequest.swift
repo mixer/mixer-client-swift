@@ -111,7 +111,7 @@ public class BeamRequest {
                 }
                 
                 completion?(data: nil, error: requestError)
-            } else if response.statusCode != 200 {
+            } else if response.statusCode != 200 && response.statusCode != 204 {
                 switch response.statusCode {
                 case 400:
                     if let component = url.lastPathComponent {
