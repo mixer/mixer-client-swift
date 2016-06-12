@@ -19,7 +19,7 @@ class TetrisTests: XCTestCase {
         
         let semaphore = dispatch_semaphore_create(0)
         
-        BeamClient.sharedClient.channels.getDefaultChannels { (channels, error) in
+        BeamClient.sharedClient.channels.getChannels(.All, offset: 0) { (channels, error) in
             guard let channels = channels else {
                 XCTFail()
                 return

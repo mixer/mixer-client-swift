@@ -20,7 +20,7 @@ class ChatTests: XCTestCase {
         
         let semaphore = dispatch_semaphore_create(0)
         
-        BeamClient.sharedClient.channels.getDefaultChannels { (channels, error) -> Void in
+        BeamClient.sharedClient.channels.getChannels(.All, offset: 0) { (channels, error) in
             guard var channels = channels else {
                 XCTFail()
                 return

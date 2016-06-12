@@ -19,7 +19,7 @@ class ChannelTests: XCTestCase {
     func testDefaultChannels() {
         let expectation = expectationWithDescription("tests the default channels endpoint")
         
-        BeamClient.sharedClient.channels.getDefaultChannels { (channels, error) -> Void in
+        BeamClient.sharedClient.channels.getChannels(.All, offset: 0) { (channels, error) in
             guard let _ = channels else {
                 XCTFail()
                 return
@@ -68,22 +68,6 @@ class ChannelTests: XCTestCase {
         let expectation = expectationWithDescription("tests searching for channels")
         
         BeamClient.sharedClient.channels.getChannelsByQuery("aaa") { (channels, error) -> Void in
-            guard let _ = channels else {
-                XCTFail()
-                return
-            }
-            
-            XCTAssert(error == nil)
-            expectation.fulfill()
-        }
-        
-        waitForExpectationsWithTimeout(10, handler: nil)
-    }
-    
-    func testChannelsByType() {
-        let expectation = expectationWithDescription("tests retrieving channels by game")
-        
-        BeamClient.sharedClient.channels.getChannelsByType(typeId) { (channels, error) -> Void in
             guard let _ = channels else {
                 XCTFail()
                 return
