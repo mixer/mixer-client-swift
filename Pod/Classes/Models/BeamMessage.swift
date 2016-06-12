@@ -126,6 +126,8 @@ public struct BeamMessage {
                         messageString.insertAttributedString(spacesuit, atIndex: position)
                     }
                 })
+            case .Tag:
+                string = NSAttributedString(string: component.text!)
             case .Text:
                 string = NSAttributedString(string: component.text!)
             case .Unknown:
