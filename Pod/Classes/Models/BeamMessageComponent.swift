@@ -12,7 +12,7 @@ import SwiftyJSON
 public struct BeamMessageComponent {
     
     /// The type of message component.
-    public var type: BeamMessageComponentType?
+    public let type: BeamMessageComponentType
     
     /// The text that can be appended to the chat message in place of less rich content.
     public var text: String?
@@ -26,8 +26,11 @@ public struct BeamMessageComponent {
     /// The coordinates of the emoticon in the pack's spritesheet, if applicable.
     public var coordinates: CGPoint?
     
-    /// The id of the user in a spacesuit, if applicable.
+    /// The id of the user in a spacesuit or user being tagged, if applicable.
     public var userId: Int?
+    
+    /// The name of the user being tagged, if applicable.
+    public var username: String?
     
     /// Used to initialize a chat message component given JSON data.
     init(json: JSON, me: Bool) {
@@ -52,6 +55,11 @@ public struct BeamMessageComponent {
             case "link":
                 self.type = .Link
                 text = json["text"].string
+            case "tag":
+                self.type = .Tag
+                text = json["text"].string
+                userId = json["id"].int
+                username = json["username"].string
             case "text":
                 self.type = me ? .Me : .Text
                 text = json["data"].string
@@ -60,6 +68,8 @@ public struct BeamMessageComponent {
                 text = json["text"].string
                 print("Error beam message component: \(json)")
             }
+        } else {
+            type = .Unknown
         }
     }
 }

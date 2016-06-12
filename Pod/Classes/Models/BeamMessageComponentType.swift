@@ -12,6 +12,7 @@ public enum BeamMessageComponentType: String {
     case Link = "link"
     case Me = "me"
     case SpaceSuit = "inaspacesuit"
+    case Tag = "tag"
     case Text = "text"
     case Unknown
 }

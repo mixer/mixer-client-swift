@@ -28,7 +28,13 @@ public extension NSDate {
         if let date = formatter.dateFromString(string) {
             return date
         } else {
-            return nil
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+            
+            if let date = formatter.dateFromString(string) {
+                return date
+            }
         }
+        
+        return nil
     }
 }
