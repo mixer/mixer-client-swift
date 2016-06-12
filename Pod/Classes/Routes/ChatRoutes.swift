@@ -181,7 +181,7 @@ public class ChatRoutes {
                 return
             }
             
-            let frame = CGRectMake(coordinates.x, coordinates.y, 22, 22)
+            let frame = CGRectMake(coordinates.x, coordinates.y, 24, 24)
             if let cropped = CGImageCreateWithImageInRect(image.CGImage, frame) {
                 let emoticon = UIImage(CGImage: cropped)
                 completion?(emoticon: emoticon, error: nil)
