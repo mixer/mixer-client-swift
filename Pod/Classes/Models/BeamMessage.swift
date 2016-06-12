@@ -89,7 +89,7 @@ public struct BeamMessage {
         for component in components {
             var string = NSAttributedString()
             
-            switch component.type! {
+            switch component.type {
             case .Emoticon:
                 BeamClient.sharedClient.chat.getEmoticon(component, completion: { (emoticon, error) -> Void in
                     if let emoticon = emoticon {
