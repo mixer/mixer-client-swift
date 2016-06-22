@@ -26,6 +26,9 @@ public class BeamClient {
     /// The property through which all chat methods are accessed.
     public var chat: ChatRoutes
     
+    /// The property through which all recording methods are accessed.
+    public var recordings: RecordingsRoutes
+    
     /// The property through which all shop methods are accessed.
     public var shop: ShopRoutes
     
@@ -40,6 +43,7 @@ public class BeamClient {
         achievements = AchievementsRoutes()
         channels = ChannelsRoutes()
         chat = ChatRoutes()
+        recordings = RecordingsRoutes()
         shop = ShopRoutes()
         tetris = TetrisRoutes()
         users = UsersRoutes()
