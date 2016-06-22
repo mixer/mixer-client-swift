@@ -38,6 +38,24 @@ public class RecordingsRoutes {
         }
     }
     
+    public func getRecordingsByChannel(channelId: Int, completion: ((recordings: [BeamRecording]?, error: BeamRequestError?) -> Void)?) {
+        BeamRequest.request("/recordings?where=channelId.eq.\(channelId)") { (json, error) in
+            guard let json = json, let recordings = json.array else {
+                completion?(recordings: nil, error: error)
+                return
+            }
+            
+            var retrievedRecordings = [BeamRecording]()
+            
+            for recording in recordings {
+                let retrievedRecording = BeamRecording(json: recording)
+                retrievedRecordings.append(retrievedRecording)
+            }
+            
+            completion?(recordings: retrievedRecordings, error: error)
+        }
+    }
+    
     public func markRecordingSeen(id: Int, completion: ((error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/recordings/\(id)/seen", requestType: "POST") { (json, error) in
             completion?(error: error)
