@@ -12,7 +12,7 @@ import SwiftyJSON
 public struct BeamMessageComponent {
     
     /// The type of message component.
-    public let type: BeamMessageComponentType
+    public var type: BeamMessageComponentType?
     
     /// The text that can be appended to the chat message in place of less rich content.
     public var text: String?
@@ -68,8 +68,6 @@ public struct BeamMessageComponent {
                 text = json["text"].string
                 print("Error beam message component: \(json)")
             }
-        } else {
-            type = .Unknown
         }
     }
 }
