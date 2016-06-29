@@ -18,6 +18,10 @@ public struct BeamVOD {
     public let updatedAt: NSDate?
     public let recordingId: Int
     
+    public var url: NSURL {
+        return NSURL(string: "https://\(storageNode)/\(id)/\(mainUrl)")!
+    }
+    
     init(json: JSON) {
         id = json["id"].int ?? 0
         storageNode = json["storageNode"].string ?? ""
