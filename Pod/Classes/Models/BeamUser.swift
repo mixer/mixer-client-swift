@@ -56,8 +56,13 @@ public struct BeamUser {
     /// The user's player.me profile URL.
     public var player: String?
     
+    /// Stored as JSON to avoid using a recursive value type.
+    private var channelData: JSON
+    
     /// The user's associated channel object.
-    public var channel: BeamChannel?
+    public var channel: BeamChannel? {
+        return channelData.dictionary == nil ? nil : BeamChannel(json: channelData)
+    }
     
     /// Used to initialize a user object given JSON data.
     public init(json: JSON) {
@@ -98,6 +103,6 @@ public struct BeamUser {
             }
         }
         
-        channel = json["channel"].dictionary == nil ? nil : BeamChannel(json: json["channel"])
+        channelData = json["channel"]
     }
 }
