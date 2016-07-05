@@ -230,6 +230,26 @@ public class ChannelsRoutes {
         }
     }
     
+    // MARK: Updating Channels
+    
+    /**
+     Updates data on a specified channel.
+     
+     :param: channelId The id of the channel being modified.
+     :param: body The request body, containing the channel data to update.
+     */
+    public func updateData(channelId: Int, body: String, completion: ((channel: BeamChannel?, error: BeamRequestError?) -> Void)?) {
+        BeamRequest.request("/channels/\(channelId)", body: body) { (json, error) in
+            guard let json = json else {
+                completion?(channel: nil, error: error)
+                return
+            }
+            
+            let channel = BeamChannel(json: json)
+            completion?(channel: channel, error: error)
+        }
+    }
+    
     /// The type of channels being requested.
     public enum ChannelsRequestType {
         case All, Interactive, Rising, Fresh
