@@ -167,10 +167,9 @@ public class ChannelsRoutes {
     private func getChannelsByEndpoint(endpoint: String, params: [String: String]?, completion: ((channels: [BeamChannel]?, error: BeamRequestError?) -> Void)?) {
         let defaultParams = ["order": "online:desc,viewersCurrent:desc,viewersTotal:desc", "where": "suspended.eq.0"]
         BeamRequest.request(endpoint, requestType: "GET", params: params ?? defaultParams) { (json, error) -> Void in
-            guard let json = json,
-                let channels = json.array else {
-                    completion?(channels: nil, error: error)
-                    return
+            guard let json = json, channels = json.array else {
+                completion?(channels: nil, error: error)
+                return
             }
             
             var retrievedChannels = [BeamChannel]()
@@ -191,10 +190,33 @@ public class ChannelsRoutes {
      */
     public func getTypes(completion: ((types: [BeamType]?, error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/types", requestType: "GET", params: ["where": "online.neq.0"]) { (json, error) -> Void in
-            guard let json = json,
-                types = json.array else {
-                    completion?(types: nil, error: error)
-                    return
+            guard let json = json, types = json.array else {
+                completion?(types: nil, error: error)
+                return
+            }
+            
+            var retrievedTypes = [BeamType]()
+            
+            for type in types {
+                let retrievedType = BeamType(json: type)
+                retrievedTypes.append(retrievedType)
+            }
+            
+            completion?(types: retrievedTypes, error: error)
+        }
+    }
+    
+    /**
+     Searches for types with a specified query.
+     
+     :param: query The query being used to search for types.
+     :param: completion An optional completion block with the retrieved types' data.
+     */
+    public func getTypesByQuery(query: String, completion: ((types: [BeamType]?, error: BeamRequestError?) -> Void)?) {
+        BeamRequest.request("/types", requestType: "GET", params: ["query": query]) { (json, error) in
+            guard let json = json, types = json.array else {
+                completion?(types: nil, error: error)
+                return
             }
             
             var retrievedTypes = [BeamType]()
