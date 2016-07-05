@@ -26,6 +26,9 @@ public struct BeamUser {
     /// The number of experience points earned by the user.
     public let experience: Int
     
+    /// The user's spark level.
+    public let level: Int
+    
     /// The number of sparks that the user has.
     public let sparks: Int
     
@@ -53,6 +56,9 @@ public struct BeamUser {
     /// The user's player.me profile URL.
     public var player: String?
     
+    /// The user's associated channel object.
+    public var channel: BeamChannel?
+    
     /// Used to initialize a user object given JSON data.
     public init(json: JSON) {
         if let social = json["social"].dictionary {
@@ -67,6 +73,7 @@ public struct BeamUser {
         email = json["email"].string
         verified = json["verified"].bool ?? false
         experience = json["experience"].int ?? 0
+        level = json["level"].int ?? 0
         sparks = json["sparks"].int ?? 0
         avatarUrl = json["avatarUrl"].string ?? "https://beam.pro/_latest/img/app/avatars/default.jpg"
         bio = json["bio"].string
@@ -90,5 +97,7 @@ public struct BeamUser {
                 self.preferences![key] = val
             }
         }
+        
+        channel = json["channel"].dictionary == nil ? nil : BeamChannel(json: json["channel"])
     }
 }

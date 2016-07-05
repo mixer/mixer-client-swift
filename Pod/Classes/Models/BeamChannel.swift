@@ -14,6 +14,9 @@ public struct BeamChannel {
     /// The channel's identifier.
     public let id: Int
     
+    /// The identifier of the channel's user.
+    public let userId: Int
+    
     /// The channel's token/username.
     public let token: String
     
@@ -56,6 +59,9 @@ public struct BeamChannel {
     /// True if the channel's content is interactive.
     public let interactive: Bool
     
+    /// The id of the tetris game being used by the channel.
+    public let tetrisGameId: Int?
+    
     /// FTL is enabled if this value is > 0.
     public let ftl: Int
     
@@ -70,9 +76,6 @@ public struct BeamChannel {
     
     /// The number of subscribers to the channel. nil if this is not the authenticated user's channel.
     public let subscribers: Int?
-    
-    /// The id of the channel's user.
-    public let userId: Int?
     
     /// The channel's thumbnail.
     public let thumbnail: BeamThumbnail?
@@ -145,6 +148,7 @@ public struct BeamChannel {
     /// Used to initialize a channel given JSON data.
     init(json: JSON) {
         id = json["id"].int ?? 0
+        userId = json["userId"].int ?? 0
         token = json["token"].string ?? ""
         online = json["online"].bool ?? (json["online"].int ?? 0) == 1
         featured = json["featured"].bool ?? (json["featured"].int ?? 0) == 1
@@ -159,12 +163,12 @@ public struct BeamChannel {
         desc = json["description"].string
         typeId = json["typeId"].int
         interactive = json["interactive"].bool ?? (json["interactive"].int ?? 0) == 1
+        tetrisGameId = json["tetrisGameId"].int
         ftl = json["ftl"].int ?? 0
         hasVod = json["hasVod"].bool ?? false
         createdAt = NSDate.fromBeam(json["createdAt"].string)
         updatedAt = NSDate.fromBeam(json["updatedAt"].string)
         subscribers = json["numSubscribers"].int
-        userId = json["userId"].int
         
         thumbnail = BeamThumbnail(json: json["thumbnail"])
         type = BeamType(json: json["type"])
