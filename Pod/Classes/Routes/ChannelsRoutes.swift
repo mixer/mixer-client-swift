@@ -239,7 +239,7 @@ public class ChannelsRoutes {
      :param: body The request body, containing the channel data to update.
      */
     public func updateData(channelId: Int, body: String, completion: ((channel: BeamChannel?, error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request("/channels/\(channelId)", body: body) { (json, error) in
+        BeamRequest.request("/channels/\(channelId)", requestType: "PUT", body: body) { (json, error) in
             guard let json = json else {
                 completion?(channel: nil, error: error)
                 return
