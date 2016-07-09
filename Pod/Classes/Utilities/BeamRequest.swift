@@ -12,9 +12,6 @@ import SwiftyJSON
 /// The most low-level class used to make requests to the Beam servers.
 public class BeamRequest {
     
-    /// Used to store images such as user avatars.
-    public static var imageCache = [String: UIImage]()
-    
     /// The version of the app, to be used in request user agents.
     public static var version = 0.1
     
@@ -28,7 +25,7 @@ public class BeamRequest {
      :param: body The request body.
      :param: completion An optional completion block with retrieved JSON data.
      */
-    public class func request(endpoint: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: String = "", completion: ((json: JSON?, error: BeamRequestError?) -> Void)?) {
+    public class func request(endpoint: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: AnyObject? = nil, completion: ((json: JSON?, error: BeamRequestError?) -> Void)?) {
         BeamRequest.dataRequest("https://beam.pro/api/v1\(endpoint)", requestType: requestType, headers: headers, params: params, body: body) { (data, error) -> Void in
             guard let data = data else {
                 completion?(json: nil, error: error)
@@ -44,17 +41,9 @@ public class BeamRequest {
      Retrieves an image from Beam's servers.
      
      :param: url The URL of the image being retrieved.
-     :param: fromCache True if the image should be retrieved from a cache.
      :param: completion An optional completion block with the retrieved image.
      */
-    public class func imageRequest(url: String, fromCache: Bool = true, completion: ((image: UIImage?, error: BeamRequestError?) -> Void)?) {
-        if fromCache {
-            if let img = imageCache[url] {
-                completion?(image: img, error: nil)
-                return
-            }
-        }
-        
+    public class func imageRequest(url: String, completion: ((image: UIImage?, error: BeamRequestError?) -> Void)?) {
         BeamRequest.dataRequest(url, requestType: "GET") { (data, error) -> Void in
             guard let data = data,
                 image = UIImage(data: data) else {
@@ -62,7 +51,6 @@ public class BeamRequest {
                     return
             }
             
-            imageCache[url] = image
             completion?(image: image, error: error)
         }
     }
@@ -77,16 +65,25 @@ public class BeamRequest {
      :param: body The request body.
      :param: completion An optional completion block with retrieved data.
      */
-    public class func dataRequest(url: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: String = "", completion: ((data: NSData?, error: BeamRequestError?) -> Void)?) {
+    public class func dataRequest(url: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: AnyObject? = nil, completion: ((data: NSData?, error: BeamRequestError?) -> Void)?) {
         let sessionConfig = NSURLSessionConfiguration.defaultSessionConfiguration()
         let session = NSURLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
         
         var url = NSURL(string: url)!
-        url = self.NSURLByAppendingQueryParameters(url, queryParameters: params)
+        url = NSURLByAppendingQueryParameters(url, queryParameters: params)
         
         let request = NSMutableURLRequest(URL: url)
         request.HTTPMethod = requestType
-        request.HTTPBody = body.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        if let body = body {
+            do {
+                request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+                request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(body, options: [])
+            } catch {
+                completion?(data: nil, error: .BadRequest)
+                return
+            }
+        }
         
         request.addValue("BeamApp/\(version) (\(deviceName()); iOS)", forHTTPHeaderField: "User-Agent")
         

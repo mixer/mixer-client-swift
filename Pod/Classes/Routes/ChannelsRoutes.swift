@@ -23,7 +23,9 @@ public class ChannelsRoutes {
             return
         }
         
-        BeamRequest.request("/channels/\(channelId)/follow", requestType: "PUT", body: "{\"user\": \"\(session.user.id)\"}") { (json, error) -> Void in
+        let body = ["user": String(session.user.id)]
+        
+        BeamRequest.request("/channels/\(channelId)/follow", requestType: "PUT", body: body) { (json, error) -> Void in
             completion?(error: error)
         }
     }
@@ -40,7 +42,9 @@ public class ChannelsRoutes {
             return
         }
         
-        BeamRequest.request("/channels/\(channelId)/follow", requestType: "DELETE", body: "{\"user\": \"\(session.user.id)\"}") { (json, error) -> Void in
+        let body = ["user": String(session.user.id)]
+        
+        BeamRequest.request("/channels/\(channelId)/follow", requestType: "DELETE", body: body) { (json, error) -> Void in
             completion?(error: error)
         }
     }
@@ -53,7 +57,9 @@ public class ChannelsRoutes {
      :param: completion An optional completion block that fires when the ban has been completed.
      */
     public func banUser(channelId: Int, userId: Int, completion: ((error: BeamRequestError?) -> Void)?) {
-        updateUserRoles(channelId, userId: userId, requestBody: "{\"add\": [\"Banned\"]}", completion: completion)
+        let body = ["add": ["Banned"]]
+        
+        updateUserRoles(channelId, userId: userId, requestBody: body, completion: completion)
     }
     
     /**
@@ -64,7 +70,9 @@ public class ChannelsRoutes {
      :param: completion An optional completion block that fires when the unban has been completed.
      */
     public func unbanUser(channelId: Int, userId: Int, completion: ((error: BeamRequestError?) -> Void)?) {
-        updateUserRoles(channelId, userId: userId, requestBody: "{\"remove\": [\"Banned\"]}", completion: completion)
+        let body = ["remove": ["Banned"]]
+        
+        updateUserRoles(channelId, userId: userId, requestBody: body, completion: completion)
     }
     
     /**
@@ -74,7 +82,7 @@ public class ChannelsRoutes {
      :param: userId The id of the user whose roles are being updated.
      :param: completion An optional completion block that fires when the update has been completed.
      */
-    public func updateUserRoles(channelId: Int, userId: Int, requestBody: String, completion: ((error: BeamRequestError?) -> Void)?) {
+    public func updateUserRoles(channelId: Int, userId: Int, requestBody: AnyObject? = nil, completion: ((error: BeamRequestError?) -> Void)?) {
         guard let _ = BeamSession.sharedSession else {
             completion?(error: .NotAuthenticated)
             return
@@ -238,7 +246,7 @@ public class ChannelsRoutes {
      :param: channelId The id of the channel being modified.
      :param: body The request body, containing the channel data to update.
      */
-    public func updateData(channelId: Int, body: String, completion: ((channel: BeamChannel?, error: BeamRequestError?) -> Void)?) {
+    public func updateData(channelId: Int, body: AnyObject, completion: ((channel: BeamChannel?, error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/channels/\(channelId)", requestType: "PUT", body: body) { (json, error) in
             guard let json = json else {
                 completion?(channel: nil, error: error)

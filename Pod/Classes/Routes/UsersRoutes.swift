@@ -20,7 +20,9 @@ public class UsersRoutes {
      :param: completion An optional completion block that fires when the email has been sent.
      */
     public func forgotPassword(email: String, completion: ((error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request("/users/reset", requestType: "POST", body: "email=\(email)") { (json, error) -> Void in
+        let body = ["email": email]
+        
+        BeamRequest.request("/users/reset", requestType: "POST", body: body) { (json, error) -> Void in
             completion?(error: error)
         }
     }
@@ -32,7 +34,7 @@ public class UsersRoutes {
      :param: preferences The preference data string to be interpreted by Beam's servers.
      :param: completion An optional completion block that fires when the preferences have been updated.
      */
-    public func updatePreferences(id: Int, preferences: String, completion: ((error: BeamRequestError?) -> Void)?) {
+    public func updatePreferences(id: Int, preferences: AnyObject, completion: ((error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/users/\(id)/preferences", requestType: "POST", body: preferences) { (json, error) -> Void in
             completion?(error: error)
         }
@@ -90,7 +92,7 @@ public class UsersRoutes {
      :param: settings The string of profile data to be interpreted by the Beam servers.
      :param: completion An optional completion block that fires when the profile has been updated.
      */
-    public func updateProfile(id: Int, settings: String, completion: ((user: BeamUser?, error: BeamRequestError?) -> Void)?) {
+    public func updateProfile(id: Int, settings: AnyObject, completion: ((user: BeamUser?, error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/users/\(id)", requestType: "PUT", body: settings) { (json, error) -> Void in
             guard let json = json else {
                 completion?(user: nil, error: error)

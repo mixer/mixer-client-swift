@@ -42,7 +42,14 @@ public class BeamSession {
      :param: completion An optional completion block, called when authentication completes.
      */
     public static func authenticate(username: String, password: String, code: Int? = nil, completion: ((user: BeamUser?, error: BeamRequestError?) -> Void)?) {
-        let body = "username=\(username)&password=\(password)" + (code == nil ? "" : "&code=\(code!)")
+        var body = [
+            "username": username,
+            "password": password
+        ]
+        
+        if let code = code {
+            body["code"] = String(code)
+        }
         
         BeamRequest.request("/users/login", requestType: "POST", body: body) { (json, error) -> Void in
             guard error == nil,
@@ -128,7 +135,11 @@ public class BeamSession {
      :param: completion An optional completion block with the new user's data.
      */
     public static func registerAccount(username: String, password: String, email: String, completion: ((user: BeamUser?, error: BeamRequestError?) -> Void)?) {
-        let body = "username=\(username)&password=\(password)&email=\(email)"
+        let body = [
+            "username": username,
+            "password": password,
+            "email": email
+        ]
         
         BeamRequest.request("/users", requestType: "POST", body: body) { (json, error) -> Void in
             guard error == nil,
