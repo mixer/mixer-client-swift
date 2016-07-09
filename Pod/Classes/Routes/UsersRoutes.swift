@@ -50,36 +50,30 @@ public class UsersRoutes {
     public func updateNotificationPreferences(id: Int, enable: Bool, completion: ((error: BeamRequestError?) -> Void)?) {
         getPreferences(id) { (preferences, error) -> Void in
             guard let preferences = preferences,
-                transports = preferences["channel:notifications"]?["transports"] as? [String],
-                ids = preferences["channel:notifications"]?["ids"] as? [String] else {
+                var transports = preferences["channel:notifications"]?["transports"] as? [String],
+                let ids = preferences["channel:notifications"]?["ids"] as? [String] else {
                     completion?(error: error)
                     return
             }
             
-            let idsString = "\"ids\":[\"\(ids.joinWithSeparator("\",\""))\"]"
-            var transportString = "channel:notifications={\"transports\":["
-            
             if enable {
-                for transport in transports {
-                    transportString += "\"\(transport)\","
-                }
-                
-                transportString.removeAtIndex(transportString.endIndex.predecessor())
-                
                 if !transports.contains("push") {
-                    transportString += ",\"push\""
+                    transports.append("push")
                 }
             } else {
-                for transport in transports where transport != "push" {
-                    transportString += "\"\(transport)\","
+                if let idx = transports.indexOf("push") {
+                    transports.removeAtIndex(idx)
                 }
-                
-                transportString.removeAtIndex(transportString.endIndex.predecessor())
             }
             
-            transportString += "],\(idsString)}"
+            let body = [
+                "channel:notifications": [
+                    "transports": transports,
+                    "ids": ids
+                ]
+            ]
             
-            self.updatePreferences(id, preferences: transportString, completion: { (error) -> Void in
+            self.updatePreferences(id, preferences: body, completion: { (error) -> Void in
                 completion?(error: error)
             })
         }
