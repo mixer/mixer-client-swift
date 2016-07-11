@@ -192,6 +192,24 @@ public class ChannelsRoutes {
     }
     
     /**
+     Retrieves a type with the specified identifier.
+     
+     :param: id The identifier of the type being retrieved.
+     :param: completion An optional completion block with retrieved channel data.
+     */
+    public func getTypeWithId(id: Int, completion: ((type: BeamType?, error: BeamRequestError?) -> Void)?) {
+        BeamRequest.request("/types?where=id.eq.\(id)", requestType: "GET") { (json, error) -> Void in
+            guard let json = json?[0] else {
+                completion?(type: nil, error: error)
+                return
+            }
+            
+            let type = BeamType(json: json)
+            completion?(type: type, error: error)
+        }
+    }
+    
+    /**
      Retrieves games that are being played by at least one channel.
      
      :param: completion An optional completion block with the retrieved channels' data.
