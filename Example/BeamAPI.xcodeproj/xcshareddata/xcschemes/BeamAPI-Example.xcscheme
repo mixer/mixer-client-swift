@@ -51,6 +51,11 @@
                BlueprintName = "BeamAPI_Tests"
                ReferencedContainer = "container:BeamAPI.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "ShopTests">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
       <MacroExpansion>

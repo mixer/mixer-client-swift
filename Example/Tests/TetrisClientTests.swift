@@ -11,6 +11,7 @@ import XCTest
 
 class TetrisClientTests: XCTestCase, TetrisClientDelegate {
     
+    var address: String!
     var channel: BeamChannel!
     var expectation: XCTestExpectation!
     
@@ -19,18 +20,26 @@ class TetrisClientTests: XCTestCase, TetrisClientDelegate {
         
         let semaphore = dispatch_semaphore_create(0)
         
-        BeamClient.sharedClient.channels.getChannels(.All, offset: 0) { (channels, error) in
-            guard var channels = channels else {
+        BeamClient.sharedClient.channels.getChannels(.Interactive) { (channels, error) in
+            guard let channels = channels else {
                 XCTFail()
                 return
             }
             
             XCTAssert(error == nil)
             
-            channels.sortInPlace({ $0.0.interactive })
             self.channel = channels[0]
             
-            dispatch_semaphore_signal(semaphore)
+            BeamClient.sharedClient.tetris.getTetrisDataByChannel(self.channel.id) { (data, error) in
+                guard let address = data?.address else {
+                    XCTFail()
+                    return
+                }
+                
+                self.address = address
+                
+                dispatch_semaphore_signal(semaphore)
+            }
         }
         
         dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
@@ -40,7 +49,7 @@ class TetrisClientTests: XCTestCase, TetrisClientDelegate {
         expectation = expectationWithDescription("test joining a channel through tetris")
         
         let tetrisClient = TetrisClient(delegate: self)
-        tetrisClient.connect(url: "wss://tetris1-dal.beam.pro", channelId: channel.id)
+        tetrisClient.connect(url: address, channelId: channel.id)
         
         waitForExpectationsWithTimeout(10, handler: nil)
     }
