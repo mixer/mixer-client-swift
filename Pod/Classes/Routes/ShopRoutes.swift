@@ -18,10 +18,9 @@ public class ShopRoutes {
      */
     public func getCategories(completion: ((categories: [BeamShopCategory]?, error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/shop/categories", requestType: "GET") { (json, error) -> Void in
-            guard let json = json,
-                categories = json.array else {
-                    completion?(categories: nil, error: error)
-                    return
+            guard let json = json, categories = json.array else {
+                completion?(categories: nil, error: error)
+                return
             }
             
             var retrievedCategories = [BeamShopCategory]()
@@ -61,10 +60,9 @@ public class ShopRoutes {
      */
     public func getItemsByCategory(categoryId: Int, completion: ((items: [BeamShopItem]?, error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/shop/categories/\(categoryId)/items", requestType: "GET") { (json, error) -> Void in
-            guard let json = json,
-                items = json.array else {
-                    completion?(items: nil, error: error)
-                    return
+            guard let json = json, items = json.array else {
+                completion?(items: nil, error: error)
+                return
             }
             
             var retrievedItems = [BeamShopItem]()

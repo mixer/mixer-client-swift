@@ -114,10 +114,9 @@ public class ChatRoutes {
      */
     private func getViewersByEndpoint(endpoint: String, params: [String: String], completion: ((viewers: [ChannelViewer]?, error: BeamRequestError?) -> Void)?) {
         BeamRequest.request(endpoint, requestType: "GET", params: params) { (json, error) -> Void in
-            guard let json = json,
-                let users = json.array else {
-                    completion?(viewers: nil, error: error)
-                    return
+            guard let json = json, users = json.array else {
+                completion?(viewers: nil, error: error)
+                return
             }
             
             var retrievedUsers = [ChannelViewer]()
@@ -156,11 +155,9 @@ public class ChatRoutes {
      :param: completion An optional completion block with the retrieved emoticon.
      */
     public func getEmoticon(component: BeamMessageComponent, completion: ((emoticon: UIImage?, error: BeamRequestError?) -> Void)?) {
-        guard let source = component.source,
-            pack = component.pack,
-            coordinates = component.coordinates else {
-                completion?(emoticon: nil, error: .Unknown)
-                return
+        guard let source = component.source, pack = component.pack, coordinates = component.coordinates else {
+            completion?(emoticon: nil, error: .Unknown)
+            return
         }
         
         var imageUrl = ""

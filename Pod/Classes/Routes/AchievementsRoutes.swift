@@ -13,35 +13,14 @@ public class AchievementsRoutes {
     
     /**
      Retrieves all achievements.
-    
+     
      :param: completion An optional completion block with retrieved achievement data.
      */
     public func getAchievements(completion: ((achievements: [BeamAchievement]?, error: BeamRequestError?) -> Void)?) {
-        self.getAchievementsByEndpoint("/achievements", completion: completion)
-    }
-    
-    /**
-     Retrieves all achievements that have been earned by a user.
-     
-     :param: userId The id of the user whose achievements are being retrieved.
-     :param: completion An optional completion block with retrieved achievement data.
-     */
-    public func getAchievementsByUser(userId: Int, completion: ((achievements: [BeamAchievement]?, error: BeamRequestError?) -> Void)?) {
-        self.getAchievementsByEndpoint("/users/\(userId)/achievements", completion: completion)
-    }
-    
-    /**
-     Retrieves all achievements that are returned by a given endpoint.
-     
-     :param: endpoint The endpoint that achievements are being retrieved from.
-     :param: completion An optional completion block with retrieved achievement data.
-     */
-    private func getAchievementsByEndpoint(endpoint: String, completion: ((achievements: [BeamAchievement]?, error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request(endpoint, requestType: "GET") { (json, error) -> Void in
-            guard let json = json,
-                let achievements = json.array else {
-                    completion?(achievements: nil, error: error)
-                    return
+        BeamRequest.request("/achievements", requestType: "GET") { (json, error) -> Void in
+            guard let json = json, achievements = json.array else {
+                completion?(achievements: nil, error: error)
+                return
             }
             
             var retrievedAchievements = [BeamAchievement]()

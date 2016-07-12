@@ -101,6 +101,30 @@ public class UsersRoutes {
     // MARK: Retrieving User Data
     
     /**
+     Retrieves all achievements that have been earned by a user.
+     
+     :param: userId The id of the user whose achievements are being retrieved.
+     :param: completion An optional completion block with retrieved achievement data.
+     */
+    public func getAchievementsByUser(userId: Int, completion: ((achievements: [BeamUserAchievement]?, error: BeamRequestError?) -> Void)?) {
+        BeamRequest.request("/users/\(userId)/achievements", requestType: "GET") { (json, error) -> Void in
+            guard let json = json, achievements = json.array else {
+                completion?(achievements: nil, error: error)
+                return
+            }
+            
+            var retrievedAchievements = [BeamUserAchievement]()
+            
+            for achievement in achievements {
+                let retrievedAchievement = BeamUserAchievement(json: achievement)
+                retrievedAchievements.append(retrievedAchievement)
+            }
+            
+            completion?(achievements: retrievedAchievements, error: error)
+        }
+    }
+    
+    /**
      Retrieves the channels that a given user is following.
     
      :param: id The id of the user whose followed channels are being retrieved.
@@ -108,10 +132,9 @@ public class UsersRoutes {
      */
     public func getFollowedChannelsByUser(id: Int, completion: ((channels: [BeamChannel]?, error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/users/\(id)/follows", requestType: "GET") { (json, error) -> Void in
-            guard let json = json,
-                channels = json.array else {
-                    completion?(channels: nil, error: error)
-                    return
+            guard let json = json, channels = json.array else {
+                completion?(channels: nil, error: error)
+                return
             }
             
             var retrievedChannels = [BeamChannel]()
@@ -133,10 +156,9 @@ public class UsersRoutes {
      */
     public func getPreferences(id: Int, completion: ((preferences: [String: AnyObject]?, error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/users/\(id)/preferences", requestType: "GET") { (json, error) -> Void in
-            guard let json = json,
-                preferences = json.dictionaryObject else {
-                    completion?(preferences: nil, error: error)
-                    return
+            guard let json = json, preferences = json.dictionaryObject else {
+                completion?(preferences: nil, error: error)
+                return
             }
             
             completion?(preferences: preferences, error: error)
@@ -171,10 +193,9 @@ public class UsersRoutes {
      */
     public func getUsersByQuery(query: String, completion: ((users: [BeamUser]?, error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/users/search", requestType: "GET") { (json, error) -> Void in
-            guard let json = json,
-                let users = json.array else {
-                    completion?(users: nil, error: error)
-                    return
+            guard let json = json, users = json.array else {
+                completion?(users: nil, error: error)
+                return
             }
             
             var retrievedUsers = [BeamUser]()
