@@ -11,6 +11,12 @@ import XCTest
 
 class SessionTests: XCTestCase {
     
+    override func tearDown() {
+        super.tearDown()
+        
+        BeamSession.logout(nil)
+    }
+    
     func testRefresh() {
         let expectation = expectationWithDescription("tests the refresh endpoint")
         

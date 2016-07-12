@@ -7,109 +7,80 @@
 //
 
 import BeamAPI
-import SwiftyJSON
 import XCTest
 
 class ChatTests: XCTestCase {
     
-    var channel: BeamChannel!
+    let channelId = 252
+    let messageId = "aaaa"
+    let query = "aaaa"
     let userId = 278
     
-    override func setUp() {
-        super.setUp()
+    func testDeleteAllChatMessages() {
+        let expectation = expectationWithDescription("tests deleting all chat messages from a channel")
         
-        let semaphore = dispatch_semaphore_create(0)
-        
-        BeamClient.sharedClient.channels.getChannels(.All, offset: 0) { (channels, error) in
-            guard var channels = channels else {
-                XCTFail()
-                return
-            }
-            
-            XCTAssert(error == nil)
-            
-            channels.sortInPlace({ $0.viewersCurrent > $1.viewersCurrent })
-            self.channel = channels[0]
-            
-            dispatch_semaphore_signal(semaphore)
+        BeamClient.sharedClient.chat.deleteAllChatMessages(channelId) { (success, error) in
+            XCTAssertFalse(success)
+            XCTAssert(error == .NotAuthenticated)
+            expectation.fulfill()
         }
         
-        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+        waitForExpectationsWithTimeout(10, handler: nil)
     }
     
-    func testChatDetails() {
+    func testDeleteChatMessage() {
+        let expectation = expectationWithDescription("tests deleting a chat message by id")
+        
+        BeamClient.sharedClient.chat.deleteChatMessage(channelId, messageId: messageId) { (success, error) in
+            XCTAssertFalse(success)
+            XCTAssert(error == .NotAuthenticated)
+            expectation.fulfill()
+        }
+        
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
+    
+    func testChatDetailsById() {
         let expectation = expectationWithDescription("tests retrieving chat details")
         
-        BeamClient.sharedClient.chat.getChatDetailsById(channel.id) { (endpoints, authKey, error) -> Void in
-            guard let _ = endpoints else {
-                XCTFail()
-                return
-            }
-            
-            XCTAssert(error == nil)
+        BeamClient.sharedClient.chat.getChatDetailsById(channelId) { (endpoints, authKey, error) in
+            XCTAssertNotNil(endpoints)
+            XCTAssertNotNil(authKey)
+            XCTAssertNil(error)
             expectation.fulfill()
         }
         
         waitForExpectationsWithTimeout(10, handler: nil)
     }
     
-    func testChatViewers() {
+    func testViewersByChannel() {
         let expectation = expectationWithDescription("tests retrieving viewers of a channel")
         
-        BeamClient.sharedClient.chat.getViewersByChannel(channel.id) { (users, error) -> Void in
-            guard let _ = users else {
-                XCTFail()
-                return
-            }
-            
-            XCTAssert(error == nil)
+        BeamClient.sharedClient.chat.getViewersByChannel(channelId) { (users, error) in
+            XCTAssertNotNil(users)
+            XCTAssertNil(error)
             expectation.fulfill()
         }
         
         waitForExpectationsWithTimeout(10, handler: nil)
     }
     
-    func testChatViewersByQuery() {
+    func testViewersByChannelWithQuery() {
         let expectation = expectationWithDescription("tests retrieving viewers of a channel by query")
         
-        BeamClient.sharedClient.chat.getViewersByChannelWithQuery(channel.id, query: "aaa") { (users, error) -> Void in
-            guard let _ = users else {
-                XCTFail()
-                return
-            }
-            
-            XCTAssert(error == nil)
+        BeamClient.sharedClient.chat.getViewersByChannelWithQuery(channelId, query: query) { (users, error) in
+            XCTAssertNotNil(users)
+            XCTAssertNil(error)
             expectation.fulfill()
         }
         
         waitForExpectationsWithTimeout(10, handler: nil)
     }
-    
-//    func testEmotion() {
-//        let expectation = expectationWithDescription("tests retrieving :( from the default emoticon pack")
-//        
-//        var component = BeamMessageComponent(json: JSON(""), me: false)
-//        component.source = "builtin"
-//        component.pack = "default"
-//        component.coordinates = CGPointMake(22, 44)
-//        
-//        BeamClient.sharedClient.chat.getEmoticon(component) { (emoticon, error) -> Void in
-//            guard let _ = emoticon else {
-//                XCTFail()
-//                return
-//            }
-//            
-//            XCTAssert(error == nil)
-//            expectation.fulfill()
-//        }
-//        
-//        waitForExpectationsWithTimeout(10, handler: nil)
-//    }
     
     func testSpacesuit() {
         let expectation = expectationWithDescription("tests retrieving a space suit")
         
-        BeamClient.sharedClient.chat.getSpaceSuit(userId) { (spacesuit, error) -> Void in
+        BeamClient.sharedClient.chat.getSpaceSuit(userId) { (spacesuit, error) in
             guard let _ = spacesuit else {
                 XCTFail()
                 return

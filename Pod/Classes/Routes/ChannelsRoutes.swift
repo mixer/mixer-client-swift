@@ -82,7 +82,7 @@ public class ChannelsRoutes {
      :param: userId The id of the user whose roles are being updated.
      :param: completion An optional completion block that fires when the update has been completed.
      */
-    public func updateUserRoles(channelId: Int, userId: Int, requestBody: AnyObject? = nil, completion: ((error: BeamRequestError?) -> Void)?) {
+    public func updateUserRoles(channelId: Int, userId: Int, requestBody: AnyObject, completion: ((error: BeamRequestError?) -> Void)?) {
         guard let _ = BeamSession.sharedSession else {
             completion?(error: .NotAuthenticated)
             return
@@ -102,7 +102,7 @@ public class ChannelsRoutes {
      :param: completion An optional completion block with retrieved channel data.
      */
     public func getChannelWithId(id: Int, completion: ((channel: BeamChannel?, error: BeamRequestError?) -> Void)?) {
-        self.getChannelWithEndpoint(String(id), completion: completion)
+        getChannelWithEndpoint(String(id), completion: completion)
     }
     
     /**
@@ -112,7 +112,7 @@ public class ChannelsRoutes {
      :param: completion An optional completion block with retrieved channel data.
      */
     public func getChannelWithToken(token: String, completion: ((channel: BeamChannel?, error: BeamRequestError?) -> Void)?) {
-        self.getChannelWithEndpoint(token, completion: completion)
+        getChannelWithEndpoint(token, completion: completion)
     }
     
     /**
@@ -265,6 +265,11 @@ public class ChannelsRoutes {
      :param: body The request body, containing the channel data to update.
      */
     public func updateData(channelId: Int, body: AnyObject, completion: ((channel: BeamChannel?, error: BeamRequestError?) -> Void)?) {
+        guard let _ = BeamSession.sharedSession else {
+            completion?(channel: nil, error: .NotAuthenticated)
+            return
+        }
+        
         BeamRequest.request("/channels/\(channelId)", requestType: "PUT", body: body) { (json, error) in
             guard let json = json else {
                 completion?(channel: nil, error: error)

@@ -21,14 +21,14 @@ class TetrisClientTests: XCTestCase, TetrisClientDelegate {
         let semaphore = dispatch_semaphore_create(0)
         
         BeamClient.sharedClient.channels.getChannels(.Interactive) { (channels, error) in
-            guard let channels = channels else {
+            guard let channel = channels?[0] else {
                 XCTFail()
                 return
             }
             
-            XCTAssert(error == nil)
+            XCTAssertNil(error)
             
-            self.channel = channels[0]
+            self.channel = channel
             
             BeamClient.sharedClient.tetris.getTetrisDataByChannel(self.channel.id) { (data, error) in
                 guard let address = data?.address else {
@@ -37,7 +37,7 @@ class TetrisClientTests: XCTestCase, TetrisClientDelegate {
                 }
                 
                 self.address = address
-                
+
                 dispatch_semaphore_signal(semaphore)
             }
         }

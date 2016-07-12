@@ -18,7 +18,7 @@ public class ChatRoutes {
      :param: completion An optional completion block that fires when the deletion has been completed.
      */
     public func deleteAllChatMessages(channelId: Int, completion: ((success: Bool, error: BeamRequestError?) -> Void)?) {
-        self.deleteMessagesByEndpoint("/chats/\(channelId)/message", completion: completion)
+        deleteMessagesByEndpoint("/chats/\(channelId)/message", completion: completion)
     }
     
     /**
@@ -29,7 +29,7 @@ public class ChatRoutes {
      :completion: An optional completion block that fires when the deletion has been completed.
      */
     public func deleteChatMessage(channelId: Int, messageId: String, completion: ((success: Bool, error: BeamRequestError?) -> Void)?) {
-        self.deleteMessagesByEndpoint("/chats/\(channelId)/message/\(messageId)", completion: completion)
+        deleteMessagesByEndpoint("/chats/\(channelId)/message/\(messageId)", completion: completion)
     }
     
     /**
@@ -39,6 +39,11 @@ public class ChatRoutes {
      :completion: An optional completion block that fires when the deletion has been completed.
      */
     private func deleteMessagesByEndpoint(endpoint: String, completion: ((success: Bool, error: BeamRequestError?) -> Void)?) {
+        guard let _ = BeamSession.sharedSession else {
+            completion?(success: false, error: .NotAuthenticated)
+            return
+        }
+        
         BeamRequest.request(endpoint, requestType: "DELETE") { (json, error) -> Void in
             guard let _ = json else {
                 completion?(success: false, error: error)
@@ -91,7 +96,7 @@ public class ChatRoutes {
      :param: completion An optional completion block with retrieved viewer data.
      */
     public func getViewersByChannel(channelId: Int, completion: ((viewers: [ChannelViewer]?, error: BeamRequestError?) -> Void)?) {
-        self.getViewersByEndpoint("/chats/\(channelId)/users", params: [String: String](), completion: completion)
+        getViewersByEndpoint("/chats/\(channelId)/users", params: [String: String](), completion: completion)
     }
     
     /**
@@ -102,7 +107,7 @@ public class ChatRoutes {
      :param: completion An optional completion block with retrieved viewer data.
      */
     public func getViewersByChannelWithQuery(channelId: Int, query: String, completion: ((viewers: [ChannelViewer]?, error: BeamRequestError?) -> Void)?) {
-        self.getViewersByEndpoint("/chats/\(channelId)/users/search", params: ["username": query], completion: completion)
+        getViewersByEndpoint("/chats/\(channelId)/users/search", params: ["username": query], completion: completion)
     }
     
     /**
@@ -149,7 +154,7 @@ public class ChatRoutes {
     // MARK: Retrieving Emoticons
     
     /**
-     Retrieves an emoticon image using a chat message component.
+     Retrieves an emoticon image using a chat message component. Currently is missing a unit test.
     
      :param: component The message component being used to retrieve the emoticon.
      :param: completion An optional completion block with the retrieved emoticon.

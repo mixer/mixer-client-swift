@@ -35,47 +35,13 @@ public class UsersRoutes {
      :param: completion An optional completion block that fires when the preferences have been updated.
      */
     public func updatePreferences(id: Int, preferences: AnyObject, completion: ((error: BeamRequestError?) -> Void)?) {
+        guard let _ = BeamSession.sharedSession else {
+            completion?(error: .NotAuthenticated)
+            return
+        }
+        
         BeamRequest.request("/users/\(id)/preferences", requestType: "POST", body: preferences) { (json, error) -> Void in
             completion?(error: error)
-        }
-    }
-    
-    /**
-     Updates a user's push notification preferences.
-     
-     :param: id The id of the user whose notification preferences are being updated.
-     :param: enable True if push notifications should be enabled.
-     :param: completion An optional completion block that fires when the preference has been updated.
-     */
-    public func updateNotificationPreferences(id: Int, enable: Bool, completion: ((error: BeamRequestError?) -> Void)?) {
-        getPreferences(id) { (preferences, error) -> Void in
-            guard let preferences = preferences,
-                var transports = preferences["channel:notifications"]?["transports"] as? [String],
-                let ids = preferences["channel:notifications"]?["ids"] as? [String] else {
-                    completion?(error: error)
-                    return
-            }
-            
-            if enable {
-                if !transports.contains("push") {
-                    transports.append("push")
-                }
-            } else {
-                if let idx = transports.indexOf("push") {
-                    transports.removeAtIndex(idx)
-                }
-            }
-            
-            let body = [
-                "channel:notifications": [
-                    "transports": transports,
-                    "ids": ids
-                ]
-            ]
-            
-            self.updatePreferences(id, preferences: body, completion: { (error) -> Void in
-                completion?(error: error)
-            })
         }
     }
     
@@ -87,6 +53,11 @@ public class UsersRoutes {
      :param: completion An optional completion block that fires when the profile has been updated.
      */
     public func updateProfile(id: Int, settings: AnyObject, completion: ((user: BeamUser?, error: BeamRequestError?) -> Void)?) {
+        guard let _ = BeamSession.sharedSession else {
+            completion?(user: nil, error: .NotAuthenticated)
+            return
+        }
+        
         BeamRequest.request("/users/\(id)", requestType: "PUT", body: settings) { (json, error) -> Void in
             guard let json = json else {
                 completion?(user: nil, error: error)

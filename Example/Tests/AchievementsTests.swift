@@ -7,10 +7,9 @@
 //
 
 import BeamAPI
-import UIKit
 import XCTest
 
-class AchievementTests: XCTestCase {
+class AchievementsTests: XCTestCase {
     
     let userId = 278
     
@@ -18,12 +17,8 @@ class AchievementTests: XCTestCase {
         let expectation = expectationWithDescription("tests the achievements endpoint")
         
         BeamClient.sharedClient.achievements.getAchievements { (achievements, error) -> Void in
-            guard let _ = achievements else {
-                XCTFail()
-                return
-            }
-            
-            XCTAssert(error == nil)
+            XCTAssertNotNil(achievements)
+            XCTAssertNil(error)
             expectation.fulfill()
         }
         

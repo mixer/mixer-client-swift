@@ -18,6 +18,11 @@ public class RecordingsRoutes {
      :param: completion An optional completion block that fires when the action has been completed.
      */
     public func markRecordingSeen(id: Int, completion: ((error: BeamRequestError?) -> Void)?) {
+        guard let _ = BeamSession.sharedSession else {
+            completion?(error: .NotAuthenticated)
+            return
+        }
+        
         BeamRequest.request("/recordings/\(id)/seen", requestType: "POST") { (json, error) in
             completion?(error: error)
         }

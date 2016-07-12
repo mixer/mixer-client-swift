@@ -8,15 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		CD69B84355E5FD291AFD803A /* Pods_BeamAPI_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 240F481F34E5804A03FE2609 /* Pods_BeamAPI_Tests.framework */; };
-		EB4A0ED51C5D1A5C0012693F /* AchievementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4A0ED41C5D1A5C0012693F /* AchievementTests.swift */; };
-		EB4A0ED71C5D1B310012693F /* ChannelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4A0ED61C5D1B310012693F /* ChannelTests.swift */; };
+		EB4A0ED51C5D1A5C0012693F /* AchievementsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4A0ED41C5D1A5C0012693F /* AchievementsTests.swift */; };
+		EB4A0ED71C5D1B310012693F /* ChannelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4A0ED61C5D1B310012693F /* ChannelsTests.swift */; };
 		EB4A0ED91C5D1CEE0012693F /* ChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4A0ED81C5D1CEE0012693F /* ChatTests.swift */; };
 		EB4A0EDB1C5D239A0012693F /* ShopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4A0EDA1C5D239A0012693F /* ShopTests.swift */; };
-		EB4A0EDD1C5D25B40012693F /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4A0EDC1C5D25B40012693F /* UserTests.swift */; };
+		EB4A0EDD1C5D25B40012693F /* UsersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4A0EDC1C5D25B40012693F /* UsersTests.swift */; };
 		EB4A0EE21C5D33AB0012693F /* ChatClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4A0EE11C5D33AB0012693F /* ChatClientTests.swift */; };
 		EB9890B41C88F9FB0080A4E9 /* TetrisTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9890B31C88F9FB0080A4E9 /* TetrisTests.swift */; };
 		EBA92A8B1C8B53B3008F3A7F /* TetrisClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA92A8A1C8B53B3008F3A7F /* TetrisClientTests.swift */; };
 		EBF068781C5D3684007ACCF9 /* SessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF068771C5D3684007ACCF9 /* SessionTests.swift */; };
+		EBF865771D35A725001EE937 /* IngestsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF865761D35A725001EE937 /* IngestsTests.swift */; };
+		EBF865791D35A77E001EE937 /* RecordingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF865781D35A77E001EE937 /* RecordingsTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,15 +30,17 @@
 		8DF9655806BF1EAA6E237AC7 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		A0C967F7D78FD680D95ABA9C /* Pods-BeamAPI_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeamAPI_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BeamAPI_Tests/Pods-BeamAPI_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		E85179B6D5D6B487B946E6B4 /* Pods-BeamAPI_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeamAPI_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BeamAPI_Tests/Pods-BeamAPI_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		EB4A0ED41C5D1A5C0012693F /* AchievementTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AchievementTests.swift; sourceTree = "<group>"; };
-		EB4A0ED61C5D1B310012693F /* ChannelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelTests.swift; sourceTree = "<group>"; };
+		EB4A0ED41C5D1A5C0012693F /* AchievementsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AchievementsTests.swift; sourceTree = "<group>"; };
+		EB4A0ED61C5D1B310012693F /* ChannelsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelsTests.swift; sourceTree = "<group>"; };
 		EB4A0ED81C5D1CEE0012693F /* ChatTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTests.swift; sourceTree = "<group>"; };
 		EB4A0EDA1C5D239A0012693F /* ShopTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopTests.swift; sourceTree = "<group>"; };
-		EB4A0EDC1C5D25B40012693F /* UserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTests.swift; sourceTree = "<group>"; };
+		EB4A0EDC1C5D25B40012693F /* UsersTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersTests.swift; sourceTree = "<group>"; };
 		EB4A0EE11C5D33AB0012693F /* ChatClientTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatClientTests.swift; sourceTree = "<group>"; };
 		EB9890B31C88F9FB0080A4E9 /* TetrisTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TetrisTests.swift; sourceTree = "<group>"; };
 		EBA92A8A1C8B53B3008F3A7F /* TetrisClientTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TetrisClientTests.swift; sourceTree = "<group>"; };
 		EBF068771C5D3684007ACCF9 /* SessionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionTests.swift; sourceTree = "<group>"; };
+		EBF865761D35A725001EE937 /* IngestsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IngestsTests.swift; sourceTree = "<group>"; };
+		EBF865781D35A77E001EE937 /* RecordingsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordingsTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,7 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				EB4A0EDE1C5D338F0012693F /* Clients */,
-				EB4A0ED31C5D1A510012693F /* Models */,
+				EB4A0ED31C5D1A510012693F /* Routes */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -115,17 +119,19 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		EB4A0ED31C5D1A510012693F /* Models */ = {
+		EB4A0ED31C5D1A510012693F /* Routes */ = {
 			isa = PBXGroup;
 			children = (
-				EB4A0ED41C5D1A5C0012693F /* AchievementTests.swift */,
-				EB4A0ED61C5D1B310012693F /* ChannelTests.swift */,
+				EB4A0ED41C5D1A5C0012693F /* AchievementsTests.swift */,
+				EB4A0ED61C5D1B310012693F /* ChannelsTests.swift */,
 				EB4A0ED81C5D1CEE0012693F /* ChatTests.swift */,
+				EBF865761D35A725001EE937 /* IngestsTests.swift */,
+				EBF865781D35A77E001EE937 /* RecordingsTests.swift */,
 				EB4A0EDA1C5D239A0012693F /* ShopTests.swift */,
 				EB9890B31C88F9FB0080A4E9 /* TetrisTests.swift */,
-				EB4A0EDC1C5D25B40012693F /* UserTests.swift */,
+				EB4A0EDC1C5D25B40012693F /* UsersTests.swift */,
 			);
-			name = Models;
+			name = Routes;
 			sourceTree = "<group>";
 		};
 		EB4A0EDE1C5D338F0012693F /* Clients */ = {
@@ -260,12 +266,14 @@
 			files = (
 				EBA92A8B1C8B53B3008F3A7F /* TetrisClientTests.swift in Sources */,
 				EB4A0EE21C5D33AB0012693F /* ChatClientTests.swift in Sources */,
-				EB4A0ED71C5D1B310012693F /* ChannelTests.swift in Sources */,
+				EB4A0ED71C5D1B310012693F /* ChannelsTests.swift in Sources */,
+				EBF865771D35A725001EE937 /* IngestsTests.swift in Sources */,
 				EB9890B41C88F9FB0080A4E9 /* TetrisTests.swift in Sources */,
 				EBF068781C5D3684007ACCF9 /* SessionTests.swift in Sources */,
 				EB4A0ED91C5D1CEE0012693F /* ChatTests.swift in Sources */,
-				EB4A0EDD1C5D25B40012693F /* UserTests.swift in Sources */,
-				EB4A0ED51C5D1A5C0012693F /* AchievementTests.swift in Sources */,
+				EB4A0EDD1C5D25B40012693F /* UsersTests.swift in Sources */,
+				EBF865791D35A77E001EE937 /* RecordingsTests.swift in Sources */,
+				EB4A0ED51C5D1A5C0012693F /* AchievementsTests.swift in Sources */,
 				EB4A0EDB1C5D239A0012693F /* ShopTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

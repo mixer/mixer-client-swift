@@ -11,16 +11,15 @@ import XCTest
 
 class ShopTests: XCTestCase {
     
+    let categoryId = 1
+    let itemId = 1
+    
     func testCategories() {
         let expectation = expectationWithDescription("tests the categories endpoint")
         
-        BeamClient.sharedClient.shop.getCategories { (categories, error) -> Void in
-            guard let _ = categories else {
-                XCTFail()
-                return
-            }
-            
-            XCTAssert(error == nil)
+        BeamClient.sharedClient.shop.getCategories { (categories, error) in
+            XCTAssertNotNil(categories)
+            XCTAssertNil(error)
             expectation.fulfill()
         }
         
@@ -28,35 +27,26 @@ class ShopTests: XCTestCase {
     }
     
     func testItemsByCategory() {
-        let expectation = expectationWithDescription("tests retrieving items by a category")
+        let expectation = expectationWithDescription("tests retrieving items from a category")
         
-        BeamClient.sharedClient.shop.getItemsByCategory(1) { (items, error) -> Void in
-            guard let _ = items else {
-                XCTFail()
-                return
-            }
-            
-            XCTAssert(error == nil)
+        BeamClient.sharedClient.shop.getItemsByCategory(categoryId) { (items, error) in
+            XCTAssertNotNil(items)
+            XCTAssertNil(error)
             expectation.fulfill()
         }
         
         waitForExpectationsWithTimeout(10, handler: nil)
     }
-
-//    there currently are no shop items
-//    func testItemWithId() {
-//        let expectation = expectationWithDescription("tests retrieving an item by id")
-//        
-//        BeamClient.sharedClient.shop.getItemWithId(1) { (item, error) -> Void in
-//            guard let _ = item else {
-//                XCTFail()
-//                return
-//            }
-//            
-//            XCTAssert(error == nil)
-//            expectation.fulfill()
-//        }
-//        
-//        waitForExpectationsWithTimeout(10, handler: nil)
-//    }
+    
+    func testItemWithId() {
+        let expectation = expectationWithDescription("tests retrieving an item by id")
+        
+        BeamClient.sharedClient.shop.getItemWithId(itemId) { (item, error) in
+            XCTAssertNotNil(item)
+            XCTAssertNil(error)
+            expectation.fulfill()
+        }
+        
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
 }
