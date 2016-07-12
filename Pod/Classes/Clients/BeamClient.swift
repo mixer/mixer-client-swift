@@ -18,31 +18,35 @@ public class BeamClient {
     }
     
     /// The property through which all achievement methods are accessed.
-    public var achievements: AchievementsRoutes
+    public let achievements: AchievementsRoutes
     
     /// The property through which all channel methods are accessed.
-    public var channels: ChannelsRoutes
+    public let channels: ChannelsRoutes
     
     /// The property through which all chat methods are accessed.
-    public var chat: ChatRoutes
+    public let chat: ChatRoutes
+    
+    /// The property through which all ingest methods are accessed.
+    public let ingests: IngestsRoutes
     
     /// The property through which all recording methods are accessed.
-    public var recordings: RecordingsRoutes
+    public let recordings: RecordingsRoutes
     
     /// The property through which all shop methods are accessed.
-    public var shop: ShopRoutes
+    public let shop: ShopRoutes
     
     /// The property through which all tetris methods are accessed.
-    public var tetris: TetrisRoutes
+    public let tetris: TetrisRoutes
     
     /// The property through which all user methods are accessed.
-    public var users: UsersRoutes
+    public let users: UsersRoutes
     
     /// The client's initializer. You will never have to call this yourself.
     private init() {
         achievements = AchievementsRoutes()
         channels = ChannelsRoutes()
         chat = ChatRoutes()
+        ingests = IngestsRoutes()
         recordings = RecordingsRoutes()
         shop = ShopRoutes()
         tetris = TetrisRoutes()

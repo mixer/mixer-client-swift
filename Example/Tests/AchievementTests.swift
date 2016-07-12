@@ -29,20 +29,4 @@ class AchievementTests: XCTestCase {
         
         waitForExpectationsWithTimeout(10, handler: nil)
     }
-    
-    func testUserAchievements() {
-        let expectation = expectationWithDescription("tests the user achievements endpoint")
-        
-        BeamClient.sharedClient.achievements.getAchievementsByUser(userId) { (achievements, error) -> Void in
-            guard let _ = achievements else {
-                XCTFail()
-                return
-            }
-            
-            XCTAssert(error == nil)
-            expectation.fulfill()
-        }
-        
-        waitForExpectationsWithTimeout(10, handler: nil)
-    }
 }
