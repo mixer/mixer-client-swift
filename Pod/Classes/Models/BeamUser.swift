@@ -45,19 +45,19 @@ public struct BeamUser {
     public let preferences: [String: AnyObject]?
     
     /// The user's Twitter profile URL.
-    public var twitter: String?
+    public let twitter: String?
     
     /// The user's Facebook profile URL.
-    public var facebook: String?
+    public let facebook: String?
     
     /// The user's YouTube channel URL.
-    public var youtube: String?
+    public let youtube: String?
     
     /// The user's player.me profile URL.
-    public var player: String?
+    public let player: String?
     
     /// Stored as JSON to avoid using a recursive value type.
-    private var channelData: JSON
+    private let channelData: JSON
     
     /// The user's associated channel object.
     public var channel: BeamChannel? {
@@ -66,13 +66,6 @@ public struct BeamUser {
     
     /// Used to initialize a user object given JSON data.
     public init(json: JSON) {
-        if let social = json["social"].dictionary {
-            twitter = social["twitter"]?.string
-            facebook = social["facebook"]?.string
-            youtube = social["youtube"]?.string
-            player = social["player"]?.string
-        }
-        
         id = json["id"].int ?? 0
         username = json["username"].string ?? ""
         email = json["email"].string
@@ -90,7 +83,7 @@ public struct BeamUser {
                     let retrieved_group = BeamGroup(rawValue: name)
                     
                     if let group = retrieved_group {
-                        self.groups!.append(group)
+                        self.groups?.append(group)
                     }
                 }
             }
@@ -99,8 +92,20 @@ public struct BeamUser {
         preferences = [String: AnyObject]()
         if let preferences = json["preferences"].dictionaryObject {
             for (key, val) in preferences {
-                self.preferences![key] = val
+                self.preferences?[key] = val
             }
+        }
+        
+        if let social = json["social"].dictionary {
+            twitter = social["twitter"]?.string
+            facebook = social["facebook"]?.string
+            youtube = social["youtube"]?.string
+            player = social["player"]?.string
+        } else {
+            twitter = nil
+            facebook = nil
+            youtube = nil
+            player = nil
         }
         
         channelData = json["channel"]

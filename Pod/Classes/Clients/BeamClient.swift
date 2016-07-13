@@ -35,6 +35,9 @@ public class BeamClient {
     /// The property through which all shop methods are accessed.
     public let shop: ShopRoutes
     
+    /// The property through which all teams methods are accessed.
+    public let teams: TeamsRoutes
+    
     /// The property through which all tetris methods are accessed.
     public let tetris: TetrisRoutes
     
@@ -49,6 +52,7 @@ public class BeamClient {
         ingests = IngestsRoutes()
         recordings = RecordingsRoutes()
         shop = ShopRoutes()
+        teams = TeamsRoutes()
         tetris = TetrisRoutes()
         users = UsersRoutes()
     }

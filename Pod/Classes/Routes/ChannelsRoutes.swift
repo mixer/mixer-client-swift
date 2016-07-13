@@ -102,7 +102,7 @@ public class ChannelsRoutes {
      :param: completion An optional completion block with retrieved channel data.
      */
     public func getChannelWithId(id: Int, completion: ((channel: BeamChannel?, error: BeamRequestError?) -> Void)?) {
-        getChannelWithEndpoint(String(id), completion: completion)
+        getChannelWithEndpoint("/channels/\(id)", completion: completion)
     }
     
     /**
@@ -112,7 +112,7 @@ public class ChannelsRoutes {
      :param: completion An optional completion block with retrieved channel data.
      */
     public func getChannelWithToken(token: String, completion: ((channel: BeamChannel?, error: BeamRequestError?) -> Void)?) {
-        getChannelWithEndpoint(token, completion: completion)
+        getChannelWithEndpoint("/channels/\(token)", completion: completion)
     }
     
     /**
@@ -122,7 +122,7 @@ public class ChannelsRoutes {
      :param: completion An optional completion block with retrieved channel data.
      */
     private func getChannelWithEndpoint(endpoint: String, completion: ((channel: BeamChannel?, error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request("/channels/\(endpoint)", requestType: "GET") { (json, error) in
+        BeamRequest.request(endpoint, requestType: "GET") { (json, error) in
             guard let json = json else {
                 completion?(channel: nil, error: error)
                 return
@@ -136,10 +136,12 @@ public class ChannelsRoutes {
     /**
      Retrieves channels to be browsed with default parameters and pagination.
      
+     :param: requestType The type of channels to be requested.
+     :param: page The page of channels to be requested.
      :param: completion An optional completion block with the retrieved channels' data.
      */
-    public func getChannels(requestType: ChannelsRequestType = .All, offset: Int = 0, completion: ((channels: [BeamChannel]?, error: BeamRequestError?) -> Void)?) {
-        var params = ["order": "online:desc,viewersCurrent:desc,viewersTotal:desc", "where": "suspended.eq.0,online.eq.1", "page": "\(offset / 50)"]
+    public func getChannels(requestType: ChannelsRequestType = .All, page: Int = 0, completion: ((channels: [BeamChannel]?, error: BeamRequestError?) -> Void)?) {
+        var params = ["order": "online:desc,viewersCurrent:desc,viewersTotal:desc", "where": "suspended.eq.0,online.eq.1", "page": "\(page)"]
         
         switch requestType {
         case .Interactive:
