@@ -47,28 +47,4 @@ public class RecordingsRoutes {
             completion?(recording: recording, error: error)
         }
     }
-    
-    /**
-     Retrieves all recordings on a specified channel.
-     
-     :param: channelId The id of the channel recordings are being retrieved from.
-     :param: completion An optional completion block with the retrieved recordings' data.
-     */
-    public func getRecordingsByChannel(channelId: Int, completion: ((recordings: [BeamRecording]?, error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request("/recordings?where=channelId.eq.\(channelId)") { (json, error) in
-            guard let json = json, let recordings = json.array else {
-                completion?(recordings: nil, error: error)
-                return
-            }
-            
-            var retrievedRecordings = [BeamRecording]()
-            
-            for recording in recordings {
-                let retrievedRecording = BeamRecording(json: recording)
-                retrievedRecordings.append(retrievedRecording)
-            }
-            
-            completion?(recordings: retrievedRecordings, error: error)
-        }
-    }
 }

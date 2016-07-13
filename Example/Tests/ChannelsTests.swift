@@ -11,7 +11,7 @@ import XCTest
 
 class ChannelsTests: XCTestCase {
     
-    let channelId = 252
+    let channelId = 3181
     let channelToken = "jack"
     let query = "aaaa"
     let typeId = 33217
@@ -147,6 +147,43 @@ class ChannelsTests: XCTestCase {
         
         BeamClient.sharedClient.channels.getTypesByQuery(query) { (types, error) in
             XCTAssertNotNil(types)
+            XCTAssertNil(error)
+            expectation.fulfill()
+        }
+        
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
+    
+    func testFollowersOfChannel() {
+        let expectation = expectationWithDescription("tests retrieving a channel's followers")
+        
+        BeamClient.sharedClient.channels.getFollowersOfChannel(channelId) { (users, error) in
+            XCTAssertNotNil(users)
+            XCTAssertNil(error)
+            expectation.fulfill()
+        }
+        
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
+    
+    func testEmoticonsOfChannel() {
+        let expectation = expectationWithDescription("tests retrieving a channel's emoticons")
+        
+        BeamClient.sharedClient.channels.getEmoticonsOfChannel(channelId) { (spritesheetUrl, emoticons, error) in
+            XCTAssertNotNil(spritesheetUrl)
+            XCTAssertNotNil(emoticons)
+            XCTAssertNil(error)
+            expectation.fulfill()
+        }
+        
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
+    
+    func testsRecordingsOfChannel() {
+        let expectation = expectationWithDescription("tests retrieving recordings from a channel")
+        
+        BeamClient.sharedClient.channels.getRecordingsOfChannel(channelId) { (recordings, error) in
+            XCTAssertNotNil(recordings)
             XCTAssertNil(error)
             expectation.fulfill()
         }

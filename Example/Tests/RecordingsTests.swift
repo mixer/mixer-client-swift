@@ -19,7 +19,7 @@ class RecordingsTests: XCTestCase {
         
         let semaphore = dispatch_semaphore_create(0)
         
-        BeamClient.sharedClient.recordings.getRecordingsByChannel(channelId) { (recordings, error) in
+        BeamClient.sharedClient.channels.getRecordingsOfChannel(channelId) { (recordings, error) in
             guard let id = recordings?[0].id else {
                 XCTFail()
                 return
@@ -51,18 +51,6 @@ class RecordingsTests: XCTestCase {
         
         BeamClient.sharedClient.recordings.getRecording(recordingId) { (recording, error) in
             XCTAssertNotNil(recording)
-            XCTAssertNil(error)
-            expectation.fulfill()
-        }
-        
-        waitForExpectationsWithTimeout(10, handler: nil)
-    }
-    
-    func testsRecordingsByChannel() {
-        let expectation = expectationWithDescription("tests retrieving recordings from a channel")
-        
-        BeamClient.sharedClient.recordings.getRecordingsByChannel(channelId) { (recordings, error) in
-            XCTAssertNotNil(recordings)
             XCTAssertNil(error)
             expectation.fulfill()
         }

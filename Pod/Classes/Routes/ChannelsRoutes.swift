@@ -256,6 +256,91 @@ public class ChannelsRoutes {
         }
     }
     
+    // MARK: Retrieving Channel Data
+    
+    /**
+     Retrieves a channel's emoticons.
+     
+     :param: id The id of the channel followers are being retrieved from.
+     :param: completion An optional completion block with the retrieved emoticons' data.
+     */
+    public func getEmoticonsOfChannel(id: Int, completion: ((spritesheetUrl: NSURL?, emoticons: [BeamEmoticon]?, error: BeamRequestError?) -> Void)?) {
+        BeamRequest.request("/channels/\(id)/emoticons") { (json, error) in
+            guard let json = json else {
+                completion?(spritesheetUrl: nil, emoticons: nil, error: error)
+                return
+            }
+            
+            var spritesheet: NSURL?
+            
+            if let spritesheetUrl = json["url"].string {
+                spritesheet = NSURL(string: spritesheetUrl)
+            }
+            
+            var retrievedEmoticons: [BeamEmoticon]?
+            
+            if let emoticons = json["emoticons"].dictionary {
+                retrievedEmoticons = [BeamEmoticon]()
+                
+                for (name, data) in emoticons {
+                    let retrievedEmoticon = BeamEmoticon(name: name, json: data)
+                    retrievedEmoticons?.append(retrievedEmoticon)
+                }
+            }
+            
+            completion?(spritesheetUrl: spritesheet, emoticons: retrievedEmoticons, error: error)
+        }
+    }
+    
+    /**
+     Retrieves the followers of a channel, paginated.
+     
+     :param: id The id of the channel emoticons are being retrieved from.
+     :param: page The page in the range [0, ∞] of followers being requested. Defaults to 0.
+     :param: completion An optional copmletion block with the retrieved followers' data.
+     */
+    public func getFollowersOfChannel(id: Int, page: Int = 0, completion: ((users: [BeamUser]?, error: BeamRequestError?) -> Void)?) {
+        BeamRequest.request("/channels/\(id)/follow") { (json, error) in
+            guard let json = json, users = json.array else {
+                completion?(users: nil, error: error)
+                return
+            }
+            
+            var retrievedUsers = [BeamUser]()
+            
+            for user in users {
+                let retrievedUser = BeamUser(json: user)
+                retrievedUsers.append(retrievedUser)
+            }
+            
+            completion?(users: retrievedUsers, error: error)
+        }
+    }
+    
+    /**
+     Retrieves the recordings of a channel.
+     
+     :param: channelId The id of the channel recordings are being retrieved from.
+     :param: completion An optional completion block with the retrieved recordings' data.
+     */
+    public func getRecordingsOfChannel(id: Int, completion: ((recordings: [BeamRecording]?, error: BeamRequestError?) -> Void)?) {
+        BeamRequest.request("/channels/\(id)/recordings") { (json, error) in
+            guard let json = json, recordings = json.array else {
+                completion?(recordings: nil, error: error)
+                return
+            }
+            
+            var retrievedRecordings = [BeamRecording]()
+            
+            for recording in recordings {
+                let retrievedRecording = BeamRecording(json: recording)
+                retrievedRecordings.append(retrievedRecording)
+            }
+            
+            completion?(recordings: retrievedRecordings, error: error)
+        }
+    }
+    
     // MARK: Updating Channels
     
     /**
