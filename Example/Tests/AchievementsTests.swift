@@ -16,7 +16,7 @@ class AchievementsTests: XCTestCase {
     func testAchievements() {
         let expectation = expectationWithDescription("tests the achievements endpoint")
         
-        BeamClient.sharedClient.achievements.getAchievements { (achievements, error) -> Void in
+        BeamClient.sharedClient.achievements.getAchievements { (achievements, error) in
             XCTAssertNotNil(achievements)
             XCTAssertNil(error)
             expectation.fulfill()

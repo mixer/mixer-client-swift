@@ -44,7 +44,7 @@ public class ChatRoutes {
             return
         }
         
-        BeamRequest.request(endpoint, requestType: "DELETE") { (json, error) -> Void in
+        BeamRequest.request(endpoint, requestType: "DELETE") { (json, error) in
             guard let _ = json else {
                 completion?(success: false, error: error)
                 return
@@ -65,7 +65,7 @@ public class ChatRoutes {
     public func getChatDetailsById(channelId: Int, completion: ((endpoints: [String]?, authKey: String?, error: BeamRequestError?) -> Void)?) {
         // TODO: Create a helper class to store all details retrieved with this method
         
-        BeamRequest.request("/chats/\(channelId)", requestType: "GET") { (json, error) -> Void in
+        BeamRequest.request("/chats/\(channelId)", requestType: "GET") { (json, error) in
             guard let json = json else {
                 completion?(endpoints: nil, authKey: nil, error: error)
                 return
@@ -118,7 +118,7 @@ public class ChatRoutes {
      :param: completion An optional completion block with retrieved viewer data.
      */
     private func getViewersByEndpoint(endpoint: String, params: [String: String], completion: ((viewers: [ChannelViewer]?, error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request(endpoint, requestType: "GET", params: params) { (json, error) -> Void in
+        BeamRequest.request(endpoint, requestType: "GET", params: params) { (json, error) in
             guard let json = json, users = json.array else {
                 completion?(viewers: nil, error: error)
                 return
@@ -177,7 +177,7 @@ public class ChatRoutes {
             return
         }
         
-        BeamRequest.imageRequest(imageUrl) { (image, error) -> Void in
+        BeamRequest.imageRequest(imageUrl) { (image, error) in
             guard let image = image else {
                 completion?(emoticon: nil, error: error)
                 return
@@ -202,7 +202,7 @@ public class ChatRoutes {
     public func getSpaceSuit(userId: Int, completion: ((spacesuit: UIImage?, error: BeamRequestError?) -> Void)?) {
         let imageUrl = "https://images.beam.pro/64x64/https://uploads.beam.pro/avatar/\(userId).jpg"
         
-        BeamRequest.imageRequest(imageUrl) { (image, error) -> Void in
+        BeamRequest.imageRequest(imageUrl) { (image, error) in
             let fullsuit = self.getSpaceSuitWithAvatar(image)
             completion?(spacesuit: fullsuit, error: nil)
         }

@@ -26,7 +26,7 @@ public class BeamRequest {
      :param: completion An optional completion block with retrieved JSON data.
      */
     public class func request(endpoint: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: AnyObject? = nil, completion: ((json: JSON?, error: BeamRequestError?) -> Void)?) {
-        BeamRequest.dataRequest("https://beam.pro/api/v1\(endpoint)", requestType: requestType, headers: headers, params: params, body: body) { (data, error) -> Void in
+        BeamRequest.dataRequest("https://beam.pro/api/v1\(endpoint)", requestType: requestType, headers: headers, params: params, body: body) { (data, error) in
             guard let data = data else {
                 completion?(json: nil, error: error)
                 return
@@ -44,7 +44,7 @@ public class BeamRequest {
      :param: completion An optional completion block with the retrieved image.
      */
     public class func imageRequest(url: String, completion: ((image: UIImage?, error: BeamRequestError?) -> Void)?) {
-        BeamRequest.dataRequest(url, requestType: "GET") { (data, error) -> Void in
+        BeamRequest.dataRequest(url, requestType: "GET") { (data, error) in
             guard let data = data,
                 image = UIImage(data: data) else {
                     completion?(image: nil, error: error)
@@ -91,18 +91,18 @@ public class BeamRequest {
             request.addValue(val, forHTTPHeaderField: header)
         }
         
-        let task = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
+        let task = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) in
             guard let response = response as? NSHTTPURLResponse else {
                 completion?(data: nil, error: .Unknown)
                 return
             }
             
-            var requestError: BeamRequestError? = BeamRequestError.Unknown
+            var requestError: BeamRequestError? = .Unknown
             
             if let error = error {
                 switch error.code {
                 case -1009:
-                    requestError = BeamRequestError.Offline
+                    requestError = .Offline
                 default:
                     break
                 }
@@ -121,19 +121,19 @@ public class BeamRequest {
                                             if let path = details["path"].string, type = details["type"].string {
                                                 if path == "payload.email" {
                                                     if type == "string.email" {
-                                                        requestError = BeamRequestError.InvalidEmail
+                                                        requestError = .InvalidEmail
                                                     } else if type == "unique" {
-                                                        requestError = BeamRequestError.TakenEmail
+                                                        requestError = .TakenEmail
                                                     }
                                                 } else if path == "payload.username" {
                                                     if type == "string.min" {
-                                                        requestError = BeamRequestError.InvalidUsername
+                                                        requestError = .InvalidUsername
                                                     } else if type == "unique" {
-                                                        requestError = BeamRequestError.TakenUsername
+                                                        requestError = .TakenUsername
                                                     }
                                                 } else if path == "payload.password" {
                                                     if type == "string.min" || type == "string.password" {
-                                                        requestError = BeamRequestError.WeakPassword
+                                                        requestError = .WeakPassword
                                                     }
                                                 }
                                             }
@@ -142,22 +142,22 @@ public class BeamRequest {
                                 }
                             }
                         } else {
-                            requestError = BeamRequestError.BadRequest
+                            requestError = .BadRequest
                         }
                     } else {
-                        requestError = BeamRequestError.BadRequest
+                        requestError = .BadRequest
                     }
                 case 401:
-                    requestError = BeamRequestError.InvalidCredentials
+                    requestError = .InvalidCredentials
                 case 403:
-                    requestError = BeamRequestError.AccessDenied
+                    requestError = .AccessDenied
                 case 404:
-                    requestError = BeamRequestError.NotFound
+                    requestError = .NotFound
                 case 499:
-                    requestError = BeamRequestError.Requires2FA
+                    requestError = .Requires2FA
                 default:
                     print("Unknown status code: \(response.statusCode)")
-                    requestError = BeamRequestError.Unknown
+                    requestError = .Unknown
                 }
                 
                 completion?(data: data, error: requestError)

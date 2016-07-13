@@ -91,7 +91,7 @@ public struct BeamMessage {
             
             switch component.type ?? .Unknown {
             case .Emoticon:
-                BeamClient.sharedClient.chat.getEmoticon(component, completion: { (emoticon, error) -> Void in
+                BeamClient.sharedClient.chat.getEmoticon(component, completion: { (emoticon, error) in
                     if let emoticon = emoticon {
                         let attachment = EmoticonTextAttachment()
                         attachment.image = emoticon
@@ -113,7 +113,7 @@ public struct BeamMessage {
             case .SpaceSuit:
                 let position = messageString.length
                 
-                BeamClient.sharedClient.chat.getSpaceSuit(component.userId!, completion: { (spacesuit, error) -> Void in
+                BeamClient.sharedClient.chat.getSpaceSuit(component.userId!, completion: { (spacesuit, error) in
                     if let spacesuit = spacesuit {
                         let attachment = EmoticonTextAttachment()
                         attachment.image = spacesuit

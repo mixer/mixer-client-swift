@@ -13,6 +13,7 @@ class TetrisClientTests: XCTestCase, TetrisClientDelegate {
     
     var address: String!
     var channel: BeamChannel!
+    var client: TetrisClient!
     var expectation: XCTestExpectation!
     
     override func setUp() {
@@ -48,17 +49,20 @@ class TetrisClientTests: XCTestCase, TetrisClientDelegate {
     func testConnect() {
         expectation = expectationWithDescription("test joining a channel through tetris")
         
-        let tetrisClient = TetrisClient(delegate: self)
-        tetrisClient.connect(url: address, channelId: channel.id)
+        client = TetrisClient(delegate: self)
+        client.connect(url: address, channelId: channel.id)
         
         waitForExpectationsWithTimeout(10, handler: nil)
     }
     
     func tetrisDidConnect() {
+        client.disconnect()
+    }
+    
+    func tetrisDidDisconnect() {
         expectation.fulfill()
     }
     
     func tetrisChangedState(state: String) {}
-    func tetrisDidDisconnect() {}
     func tetrisReceivedPacket(packet: TetrisPacket) {}
 }

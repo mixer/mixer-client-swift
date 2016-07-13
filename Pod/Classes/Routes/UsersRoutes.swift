@@ -22,7 +22,7 @@ public class UsersRoutes {
     public func forgotPassword(email: String, completion: ((error: BeamRequestError?) -> Void)?) {
         let body = ["email": email]
         
-        BeamRequest.request("/users/reset", requestType: "POST", body: body) { (json, error) -> Void in
+        BeamRequest.request("/users/reset", requestType: "POST", body: body) { (json, error) in
             completion?(error: error)
         }
     }
@@ -40,7 +40,7 @@ public class UsersRoutes {
             return
         }
         
-        BeamRequest.request("/users/\(id)/preferences", requestType: "POST", body: preferences) { (json, error) -> Void in
+        BeamRequest.request("/users/\(id)/preferences", requestType: "POST", body: preferences) { (json, error) in
             completion?(error: error)
         }
     }
@@ -58,7 +58,7 @@ public class UsersRoutes {
             return
         }
         
-        BeamRequest.request("/users/\(id)", requestType: "PUT", body: settings) { (json, error) -> Void in
+        BeamRequest.request("/users/\(id)", requestType: "PUT", body: settings) { (json, error) in
             guard let json = json else {
                 completion?(user: nil, error: error)
                 return
@@ -78,7 +78,7 @@ public class UsersRoutes {
      :param: completion An optional completion block with retrieved achievement data.
      */
     public func getAchievementsByUser(userId: Int, completion: ((achievements: [BeamUserAchievement]?, error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request("/users/\(userId)/achievements", requestType: "GET") { (json, error) -> Void in
+        BeamRequest.request("/users/\(userId)/achievements", requestType: "GET") { (json, error) in
             guard let json = json, achievements = json.array else {
                 completion?(achievements: nil, error: error)
                 return
@@ -102,7 +102,7 @@ public class UsersRoutes {
      :param: completion An optional completion block with retrieved channels' data.
      */
     public func getFollowedChannelsByUser(id: Int, completion: ((channels: [BeamChannel]?, error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request("/users/\(id)/follows", requestType: "GET") { (json, error) -> Void in
+        BeamRequest.request("/users/\(id)/follows", requestType: "GET") { (json, error) in
             guard let json = json, channels = json.array else {
                 completion?(channels: nil, error: error)
                 return
@@ -126,7 +126,7 @@ public class UsersRoutes {
      :param: completion An optional completion block with retrieved preferences data.
      */
     public func getPreferences(id: Int, completion: ((preferences: [String: AnyObject]?, error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request("/users/\(id)/preferences", requestType: "GET") { (json, error) -> Void in
+        BeamRequest.request("/users/\(id)/preferences", requestType: "GET") { (json, error) in
             guard let json = json, preferences = json.dictionaryObject else {
                 completion?(preferences: nil, error: error)
                 return
@@ -145,7 +145,7 @@ public class UsersRoutes {
      :param: completion An optional completion block with retrieved user data.
      */
     public func getUserWithId(id: Int, completion: ((user: BeamUser?, error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request("/users/\(id)", requestType: "GET") { (json, error) -> Void in
+        BeamRequest.request("/users/\(id)", requestType: "GET") { (json, error) in
             guard let json = json else {
                 completion?(user: nil, error: error)
                 return
@@ -163,7 +163,7 @@ public class UsersRoutes {
      :param: completion An optional completion block with the retrieved users' data.
      */
     public func getUsersByQuery(query: String, completion: ((users: [BeamUser]?, error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request("/users/search", requestType: "GET") { (json, error) -> Void in
+        BeamRequest.request("/users/search", requestType: "GET") { (json, error) in
             guard let json = json, users = json.array else {
                 completion?(users: nil, error: error)
                 return

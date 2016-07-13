@@ -45,7 +45,7 @@ class ChatTests: XCTestCase {
         
         BeamClient.sharedClient.chat.getChatDetailsById(channelId) { (endpoints, authKey, error) in
             XCTAssertNotNil(endpoints)
-            XCTAssertNotNil(authKey)
+            XCTAssertNil(authKey)
             XCTAssertNil(error)
             expectation.fulfill()
         }

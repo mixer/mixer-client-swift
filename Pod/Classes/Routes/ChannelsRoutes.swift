@@ -25,7 +25,7 @@ public class ChannelsRoutes {
         
         let body = ["user": String(session.user.id)]
         
-        BeamRequest.request("/channels/\(channelId)/follow", requestType: "PUT", body: body) { (json, error) -> Void in
+        BeamRequest.request("/channels/\(channelId)/follow", requestType: "PUT", body: body) { (json, error) in
             completion?(error: error)
         }
     }
@@ -44,7 +44,7 @@ public class ChannelsRoutes {
         
         let body = ["user": String(session.user.id)]
         
-        BeamRequest.request("/channels/\(channelId)/follow", requestType: "DELETE", body: body) { (json, error) -> Void in
+        BeamRequest.request("/channels/\(channelId)/follow", requestType: "DELETE", body: body) { (json, error) in
             completion?(error: error)
         }
     }
@@ -88,7 +88,7 @@ public class ChannelsRoutes {
             return
         }
         
-        BeamRequest.request("/channels/\(channelId)/users/\(userId)", requestType: "PATCH", body: requestBody) { (json, error) -> Void in
+        BeamRequest.request("/channels/\(channelId)/users/\(userId)", requestType: "PATCH", body: requestBody) { (json, error) in
             completion?(error: error)
         }
     }
@@ -122,7 +122,7 @@ public class ChannelsRoutes {
      :param: completion An optional completion block with retrieved channel data.
      */
     private func getChannelWithEndpoint(endpoint: String, completion: ((channel: BeamChannel?, error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request("/channels/\(endpoint)", requestType: "GET") { (json, error) -> Void in
+        BeamRequest.request("/channels/\(endpoint)", requestType: "GET") { (json, error) in
             guard let json = json else {
                 completion?(channel: nil, error: error)
                 return
@@ -174,7 +174,7 @@ public class ChannelsRoutes {
      */
     private func getChannelsByEndpoint(endpoint: String, params: [String: String]?, completion: ((channels: [BeamChannel]?, error: BeamRequestError?) -> Void)?) {
         let defaultParams = ["order": "online:desc,viewersCurrent:desc,viewersTotal:desc", "where": "suspended.eq.0"]
-        BeamRequest.request(endpoint, requestType: "GET", params: params ?? defaultParams) { (json, error) -> Void in
+        BeamRequest.request(endpoint, requestType: "GET", params: params ?? defaultParams) { (json, error) in
             guard let json = json, channels = json.array else {
                 completion?(channels: nil, error: error)
                 return
@@ -198,7 +198,7 @@ public class ChannelsRoutes {
      :param: completion An optional completion block with retrieved channel data.
      */
     public func getTypeWithId(id: Int, completion: ((type: BeamType?, error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request("/types?where=id.eq.\(id)", requestType: "GET") { (json, error) -> Void in
+        BeamRequest.request("/types?where=id.eq.\(id)", requestType: "GET") { (json, error) in
             guard let json = json?[0] else {
                 completion?(type: nil, error: error)
                 return
@@ -215,7 +215,7 @@ public class ChannelsRoutes {
      :param: completion An optional completion block with the retrieved channels' data.
      */
     public func getTypes(completion: ((types: [BeamType]?, error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request("/types", requestType: "GET", params: ["where": "online.neq.0"]) { (json, error) -> Void in
+        BeamRequest.request("/types", requestType: "GET", params: ["where": "online.neq.0"]) { (json, error) in
             guard let json = json, types = json.array else {
                 completion?(types: nil, error: error)
                 return

@@ -47,7 +47,7 @@ public class ChatClient: WebSocketDelegate {
     public func joinChannel(channelId: Int) {
         self.channelId = channelId
         
-        BeamClient.sharedClient.chat.getChatDetailsById(channelId) { (endpoints, authKey, error) -> Void in
+        BeamClient.sharedClient.chat.getChatDetailsById(channelId) { (endpoints, authKey, error) in
             guard let endpoints = endpoints else {
                 print("channel details did not return endpoints or authkey")
                 return
@@ -94,7 +94,7 @@ public class ChatClient: WebSocketDelegate {
     
     /// Called by the update timer in order to retrieve updated viewer counts.
     @objc private func updateData() {
-        BeamClient.sharedClient.channels.getChannelWithId(self.channelId, completion: { (channel, error) -> Void in
+        BeamClient.sharedClient.channels.getChannelWithId(self.channelId, completion: { (channel, error) in
             guard let channel = channel else {
                 return
             }

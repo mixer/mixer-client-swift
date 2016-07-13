@@ -14,7 +14,7 @@ class IngestsTests: XCTestCase {
     func testsIngests() {
         let expectation = expectationWithDescription("tests the ingests endpoint")
         
-        BeamClient.sharedClient.ingests.getIngests { (ingests, error) -> Void in
+        BeamClient.sharedClient.ingests.getIngests { (ingests, error) in
             XCTAssertNotNil(ingests)
             XCTAssertNil(error)
             expectation.fulfill()

@@ -51,7 +51,7 @@ public class BeamSession {
             body["code"] = String(code)
         }
         
-        BeamRequest.request("/users/login", requestType: "POST", body: body) { (json, error) -> Void in
+        BeamRequest.request("/users/login", requestType: "POST", body: body) { (json, error) in
             guard error == nil,
                 let json = json else {
                     completion?(user: nil, error: error)
@@ -89,7 +89,7 @@ public class BeamSession {
     public static func logout(completion: ((error: BeamRequestError?) -> Void)?) {
         BeamSession.sharedSession = nil
         
-        BeamRequest.request("/users/current", requestType: "DELETE") { (json, error) -> Void in
+        BeamRequest.request("/users/current", requestType: "DELETE") { (json, error) in
             completion?(error: error)
         }
     }
@@ -103,11 +103,11 @@ public class BeamSession {
     public static func refreshPreviousSession(completion: ((user: BeamUser?, error: BeamRequestError?) -> Void)?) {
         guard NSUserDefaults.standardUserDefaults().boolForKey("BeamSessionExists") else {
             print("no session exists")
-            completion?(user: nil, error: nil)
+            completion?(user: nil, error: .NotAuthenticated)
             return
         }
         
-        BeamRequest.request("/users/current/refresh", requestType: "POST") { (json, error) -> Void in
+        BeamRequest.request("/users/current/refresh", requestType: "POST") { (json, error) in
             guard let json = json else {
                 completion?(user: nil, error: error)
                 return
@@ -141,7 +141,7 @@ public class BeamSession {
             "email": email
         ]
         
-        BeamRequest.request("/users", requestType: "POST", body: body) { (json, error) -> Void in
+        BeamRequest.request("/users", requestType: "POST", body: body) { (json, error) in
             guard error == nil,
                 let json = json else {
                     completion?(user: nil, error: error)

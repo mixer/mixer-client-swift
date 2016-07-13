@@ -11,36 +11,14 @@ import XCTest
 
 class ChatClientTests: XCTestCase, ChatClientDelegate {
     
-    var channel: BeamChannel!
+    let channelId = 252
     var expectation: XCTestExpectation!
-    
-    override func setUp() {
-        super.setUp()
-        
-        let semaphore = dispatch_semaphore_create(0)
-        
-        BeamClient.sharedClient.channels.getChannels(.All, offset: 0) { (channels, error) in
-            guard var channels = channels else {
-                XCTFail()
-                return
-            }
-            
-            XCTAssert(error == nil)
-            
-            channels.sortInPlace({ $0.viewersCurrent > $1.viewersCurrent })
-            self.channel = channels[0]
-            
-            dispatch_semaphore_signal(semaphore)
-        }
-        
-        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
-    }
     
     func testChatConnect() {
         expectation = expectationWithDescription("test joining a channel's chat")
         
         let chatClient = ChatClient(delegate: self)
-        chatClient.joinChannel(channel.id)
+        chatClient.joinChannel(channelId)
         
         waitForExpectationsWithTimeout(10, handler: nil)
     }
