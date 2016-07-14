@@ -9,6 +9,11 @@
 /// Routes that can be used to interact with and retrieve channel data.
 public class ChannelsRoutes {
     
+    /// The type of channels being requested.
+    public enum ChannelsRequestType {
+        case All, Interactive, Rising, Fresh
+    }
+    
     // MARK: Acting on Channels
     
     /**
@@ -366,10 +371,5 @@ public class ChannelsRoutes {
             let channel = BeamChannel(json: json)
             completion?(channel: channel, error: error)
         }
-    }
-    
-    /// The type of channels being requested.
-    public enum ChannelsRequestType {
-        case All, Interactive, Rising, Fresh
     }
 }

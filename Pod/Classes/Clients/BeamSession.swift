@@ -57,24 +57,13 @@ public class BeamSession {
                 return
             }
             
-            if let error = json["error"].string {
-                switch error {
-                    case "2fa": completion?(user: nil, error: .Requires2FA)
-                    case "credentials": completion?(user: nil, error: .InvalidCredentials)
-                    default:
-                        print("Auth error from server: \(error)")
-                        completion?(user: nil, error: .Unknown(data: json))
-                }
-            } else {
-                let user = BeamUser(json: json)
-                
-                let session = BeamSession(user: user)
-                BeamSession.sharedSession = session
-                
-                NSNotificationCenter.defaultCenter().postNotificationName(BeamAuthenticatedNotification, object: nil)
-                
-                completion?(user: user, error: error)
-            }
+            let user = BeamUser(json: json)
+            let session = BeamSession(user: user)
+            BeamSession.sharedSession = session
+            
+            NSNotificationCenter.defaultCenter().postNotificationName(BeamAuthenticatedNotification, object: nil)
+            
+            completion?(user: user, error: error)
         }
     }
     
