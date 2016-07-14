@@ -18,7 +18,7 @@ public class TetrisRoutes {
      :param: completion An optional completion block with retrieved tetris details.
      */
     public func getTetrisDataByChannel(channelId: Int, completion: ((data: TetrisData?, error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request("/tetris/\(channelId)", requestType: "GET") { (json, error) in
+        BeamRequest.request("/tetris/\(channelId)") { (json, error) in
             guard let json = json else {
                 completion?(data: nil, error: error)
                 return

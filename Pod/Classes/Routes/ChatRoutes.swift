@@ -17,7 +17,7 @@ public class ChatRoutes {
      :param: channelId The identifier of the channel with messages that are being deleted.
      :param: completion An optional completion block that fires when the deletion has been completed.
      */
-    public func deleteAllChatMessages(channelId: Int, completion: ((success: Bool, error: BeamRequestError?) -> Void)?) {
+    public func deleteAllChatMessages(channelId: Int, completion: ((error: BeamRequestError?) -> Void)?) {
         deleteMessagesByEndpoint("/chats/\(channelId)/message", completion: completion)
     }
     
@@ -28,7 +28,7 @@ public class ChatRoutes {
      :param: messageId The identifier of the message that is being deleted.
      :completion: An optional completion block that fires when the deletion has been completed.
      */
-    public func deleteChatMessage(channelId: Int, messageId: String, completion: ((success: Bool, error: BeamRequestError?) -> Void)?) {
+    public func deleteChatMessage(channelId: Int, messageId: String, completion: ((error: BeamRequestError?) -> Void)?) {
         deleteMessagesByEndpoint("/chats/\(channelId)/message/\(messageId)", completion: completion)
     }
     
@@ -38,19 +38,14 @@ public class ChatRoutes {
      :param: endpoint The endpoint being used to delete chat messages.
      :completion: An optional completion block that fires when the deletion has been completed.
      */
-    private func deleteMessagesByEndpoint(endpoint: String, completion: ((success: Bool, error: BeamRequestError?) -> Void)?) {
+    private func deleteMessagesByEndpoint(endpoint: String, completion: ((error: BeamRequestError?) -> Void)?) {
         guard let _ = BeamSession.sharedSession else {
-            completion?(success: false, error: .NotAuthenticated)
+            completion?(error: .NotAuthenticated)
             return
         }
         
         BeamRequest.request(endpoint, requestType: "DELETE") { (json, error) in
-            guard let _ = json else {
-                completion?(success: false, error: error)
-                return
-            }
-            
-            completion?(success: error == nil, error: error)
+            completion?(error: error)
         }
     }
     
@@ -65,7 +60,7 @@ public class ChatRoutes {
     public func getChatDetailsById(channelId: Int, completion: ((endpoints: [String]?, authKey: String?, error: BeamRequestError?) -> Void)?) {
         // TODO: Create a helper class to store all details retrieved with this method
         
-        BeamRequest.request("/chats/\(channelId)", requestType: "GET") { (json, error) in
+        BeamRequest.request("/chats/\(channelId)") { (json, error) in
             guard let json = json else {
                 completion?(endpoints: nil, authKey: nil, error: error)
                 return
@@ -119,7 +114,7 @@ public class ChatRoutes {
      */
     private func getViewersByEndpoint(endpoint: String, params: [String: String], completion: ((viewers: [ChannelViewer]?, error: BeamRequestError?) -> Void)?) {
         BeamRequest.request(endpoint, requestType: "GET", params: params) { (json, error) in
-            guard let json = json, users = json.array else {
+            guard let users = json?.array else {
                 completion?(viewers: nil, error: error)
                 return
             }

@@ -19,8 +19,7 @@ class ChatTests: XCTestCase {
     func testDeleteAllChatMessages() {
         let expectation = expectationWithDescription("tests deleting all chat messages from a channel")
         
-        BeamClient.sharedClient.chat.deleteAllChatMessages(channelId) { (success, error) in
-            XCTAssertFalse(success)
+        BeamClient.sharedClient.chat.deleteAllChatMessages(channelId) { (error) in
             XCTAssert(error == .NotAuthenticated)
             expectation.fulfill()
         }
@@ -31,8 +30,7 @@ class ChatTests: XCTestCase {
     func testDeleteChatMessage() {
         let expectation = expectationWithDescription("tests deleting a chat message by id")
         
-        BeamClient.sharedClient.chat.deleteChatMessage(channelId, messageId: messageId) { (success, error) in
-            XCTAssertFalse(success)
+        BeamClient.sharedClient.chat.deleteChatMessage(channelId, messageId: messageId) { (error) in
             XCTAssert(error == .NotAuthenticated)
             expectation.fulfill()
         }

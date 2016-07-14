@@ -44,11 +44,10 @@ public class BeamRequest {
      :param: completion An optional completion block with the retrieved image.
      */
     public class func imageRequest(url: String, completion: ((image: UIImage?, error: BeamRequestError?) -> Void)?) {
-        BeamRequest.dataRequest(url, requestType: "GET") { (data, error) in
-            guard let data = data,
-                image = UIImage(data: data) else {
-                    completion?(image: nil, error: error)
-                    return
+        BeamRequest.dataRequest(url) { (data, error) in
+            guard let data = data, image = UIImage(data: data) else {
+                completion?(image: nil, error: error)
+                return
             }
             
             completion?(image: image, error: error)
@@ -91,7 +90,7 @@ public class BeamRequest {
             request.addValue(val, forHTTPHeaderField: header)
         }
         
-        let task = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) in
+        let task = session.dataTaskWithRequest(request) { (data, response, error) in
             guard let response = response as? NSHTTPURLResponse else {
                 completion?(data: nil, error: .Unknown)
                 return
@@ -168,7 +167,7 @@ public class BeamRequest {
                     completion?(data: nil, error: nil)
                 }
             }
-        })
+        }
         
         task.resume()
     }

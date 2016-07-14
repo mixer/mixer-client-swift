@@ -18,7 +18,7 @@ public class IngestsRoutes {
      */
     public func getIngests(completion: ((ingests: [BeamIngest]?, error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/ingests") { (json, error) in
-            guard let json = json, ingests = json.array else {
+            guard let ingests = json?.array else {
                 completion?(ingests: nil, error: error)
                 return
             }
