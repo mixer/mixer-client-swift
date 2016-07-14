@@ -36,19 +36,19 @@ public enum BeamRequestError: Equatable, ErrorType {
 /// Workaround for the fact that enums with associated values can't have raw types.
 public func ==(lhs: BeamRequestError, rhs: BeamRequestError) -> Bool {
     switch (lhs, rhs) {
-    case (let .BadRequest(_), let .BadRequest(_)): return true
-    case (let .AccessDenied, let .AccessDenied): return true
-    case (let .NotFound, let .NotFound): return true
-    case (let .NotAuthenticated, let .NotAuthenticated): return true
-    case (let .Offline, let .Offline): return true
-    case (let .Unknown(_), let .Unknown(_)): return true
-    case (let .InvalidCredentials, let .InvalidCredentials): return true
-    case (let .Requires2FA, let .Requires2FA): return true
-    case (let .InvalidUsername, let .InvalidUsername): return true
-    case (let .TakenUsername, let .TakenUsername): return true
-    case (let .WeakPassword, let .WeakPassword): return true
-    case (let .InvalidEmail, let .InvalidEmail): return true
-    case (let .TakenEmail, let .TakenEmail): return true
+    case (.BadRequest(_), .BadRequest(_)): return true
+    case (.AccessDenied, .AccessDenied): return true
+    case (.NotFound, .NotFound): return true
+    case (.NotAuthenticated, .NotAuthenticated): return true
+    case (.Offline, .Offline): return true
+    case (.Unknown(_), .Unknown(_)): return true
+    case (.InvalidCredentials, .InvalidCredentials): return true
+    case (.Requires2FA, .Requires2FA): return true
+    case (.InvalidUsername, .InvalidUsername): return true
+    case (.TakenUsername, .TakenUsername): return true
+    case (.WeakPassword, .WeakPassword): return true
+    case (.InvalidEmail, .InvalidEmail): return true
+    case (.TakenEmail, .TakenEmail): return true
     default: return false
     }
 }
