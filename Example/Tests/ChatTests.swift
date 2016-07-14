@@ -78,18 +78,7 @@ class ChatTests: XCTestCase {
     }
     
     func testSpacesuit() {
-        let expectation = expectationWithDescription("tests retrieving a space suit")
-        
-        BeamClient.sharedClient.chat.getSpaceSuit(userId) { (spacesuit, error) in
-            guard let _ = spacesuit else {
-                XCTFail()
-                return
-            }
-            
-            XCTAssert(error == nil)
-            expectation.fulfill()
-        }
-        
-        waitForExpectationsWithTimeout(10, handler: nil)
+        let spacesuit = BeamClient.sharedClient.chat.getSpaceSuit(userId)
+        XCTAssertNotNil(spacesuit)
     }
 }

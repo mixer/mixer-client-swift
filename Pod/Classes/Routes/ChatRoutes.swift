@@ -157,12 +157,11 @@ public class ChatRoutes {
      Retrieves an emoticon image using a chat message component. Currently is missing a unit test.
     
      :param: component The message component being used to retrieve the emoticon.
-     :param: completion An optional completion block with the retrieved emoticon.
+     :returns: The emoticon image.
      */
-    public func getEmoticon(component: BeamMessageComponent, completion: ((emoticon: UIImage?, error: BeamRequestError?) -> Void)?) {
+    public func getEmoticon(component: BeamMessageComponent) -> UIImage? {
         guard let source = component.source, pack = component.pack, coordinates = component.coordinates else {
-            completion?(emoticon: nil, error: .Unknown)
-            return
+            return nil
         }
         
         var imageUrl = ""
@@ -173,39 +172,42 @@ public class ChatRoutes {
             imageUrl = pack
         } else {
             print("unknown emoticon pack source: \(source)")
-            completion?(emoticon: nil, error: .Unknown)
-            return
         }
         
-        BeamRequest.imageRequest(imageUrl) { (image, error) in
-            guard let image = image else {
-                completion?(emoticon: nil, error: error)
-                return
-            }
-            
+        guard let url = NSURL(string: imageUrl) else {
+            return nil
+        }
+        
+        if let data = NSData(contentsOfURL: url), image = UIImage(data: data) {
             let frame = CGRectMake(coordinates.x, coordinates.y, 24, 24)
             if let cropped = CGImageCreateWithImageInRect(image.CGImage, frame) {
                 let emoticon = UIImage(CGImage: cropped)
-                completion?(emoticon: emoticon, error: nil)
-            } else {
-                completion?(emoticon: nil, error: .Unknown)
+                return emoticon
             }
         }
+        
+        return nil
     }
     
     /**
      Retrieves a spacesuit image given a specific user identifier.
      
      :param: userId The identifier of the user being placed in a spacesuit.
-     :param: completion An optional completion block with the retrieved spacesuit.
+     :returns: The finished spacesuit image.
      */
-    public func getSpaceSuit(userId: Int, completion: ((spacesuit: UIImage?, error: BeamRequestError?) -> Void)?) {
-        let imageUrl = "https://images.beam.pro/64x64/https://uploads.beam.pro/avatar/\(userId).jpg"
+    public func getSpaceSuit(userId: Int) -> UIImage? {
+        let imageUrl = "https://beam.pro/api/v1/users/\(userId)/avatar?w=64&h=64"
         
-        BeamRequest.imageRequest(imageUrl) { (image, error) in
-            let fullsuit = self.getSpaceSuitWithAvatar(image)
-            completion?(spacesuit: fullsuit, error: nil)
+        guard let url = NSURL(string: imageUrl) else {
+            return nil
         }
+        
+        if let data = NSData(contentsOfURL: url), image = UIImage(data: data) {
+            let fullsuit = getSpaceSuitWithAvatar(image)
+            return fullsuit
+        }
+        
+        return nil
     }
     
     /**

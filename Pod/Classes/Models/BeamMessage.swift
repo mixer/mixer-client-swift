@@ -91,41 +91,33 @@ public struct BeamMessage {
             
             switch component.type ?? .Unknown {
             case .Emoticon:
-                BeamClient.sharedClient.chat.getEmoticon(component, completion: { (emoticon, error) in
-                    if let emoticon = emoticon {
-                        let attachment = EmoticonTextAttachment()
-                        attachment.image = emoticon
-                        
-                        let position = messageString.length
-                        
-                        let emoticon = NSMutableAttributedString()
-                        emoticon.appendAttributedString(NSAttributedString(string: " "))
-                        emoticon.appendAttributedString(NSAttributedString(attachment: attachment))
-                        emoticon.appendAttributedString(NSAttributedString(string: " "))
-                        messageString.insertAttributedString(emoticon, atIndex: position)
-                    }
-                })
+                if let emoticon = BeamClient.sharedClient.chat.getEmoticon(component) {
+                    let attachment = EmoticonTextAttachment()
+                    attachment.image = emoticon
+                    
+                    let emoticon = NSMutableAttributedString()
+                    emoticon.appendAttributedString(NSAttributedString(string: " "))
+                    emoticon.appendAttributedString(NSAttributedString(attachment: attachment))
+                    emoticon.appendAttributedString(NSAttributedString(string: " "))
+                    messageString.appendAttributedString(emoticon)
+                }
             case .Link:
                 string = NSAttributedString(string: component.text!, attributes: [NSLinkAttributeName: NSMakeRange(0, component.text!.characters.count)])
             case .Me:
                 string = NSAttributedString(string: component.text!)
                 me = true
             case .SpaceSuit:
-                let position = messageString.length
-                
-                BeamClient.sharedClient.chat.getSpaceSuit(component.userId!, completion: { (spacesuit, error) in
-                    if let spacesuit = spacesuit {
-                        let attachment = EmoticonTextAttachment()
-                        attachment.image = spacesuit
-                        
-                        let spacesuit = NSMutableAttributedString()
-                        spacesuit.appendAttributedString(NSAttributedString(string: " "))
-                        spacesuit.appendAttributedString(NSAttributedString(attachment: attachment))
-                        spacesuit.appendAttributedString(NSAttributedString(string: " "))
-                        
-                        messageString.insertAttributedString(spacesuit, atIndex: position)
-                    }
-                })
+                if let spacesuit = BeamClient.sharedClient.chat.getSpaceSuit(component.userId!) {
+                    let attachment = EmoticonTextAttachment()
+                    attachment.image = spacesuit
+                    
+                    let spacesuit = NSMutableAttributedString()
+                    spacesuit.appendAttributedString(NSAttributedString(string: " "))
+                    spacesuit.appendAttributedString(NSAttributedString(attachment: attachment))
+                    spacesuit.appendAttributedString(NSAttributedString(string: " "))
+                    
+                    messageString.appendAttributedString(spacesuit)
+                }
             case .Tag:
                 string = NSAttributedString(string: component.text!)
             case .Text:
