@@ -84,7 +84,7 @@ public class BeamRequest {
             }
         }
         
-        request.addValue("BeamApp/\(version) (\(deviceName()); iOS)", forHTTPHeaderField: "User-Agent")
+        request.addValue("BeamApp/\(version) (iOS; \(deviceName()))", forHTTPHeaderField: "User-Agent")
         
         for (header, val) in headers {
             request.addValue(val, forHTTPHeaderField: header)

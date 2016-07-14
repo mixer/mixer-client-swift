@@ -58,7 +58,7 @@ public class TeamsRoutes {
     public func getTeams(page: Int = 0, completion: ((teams: [BeamTeam]?, error: BeamRequestError?) -> Void)?) {
         var params = ["order": "totalViewersCurrent:desc"]
         
-        BeamRequest.request("/teams") { (json, error) in
+        BeamRequest.request("/teams", params: params) { (json, error) in
             guard let teams = json?.array else {
                 completion?(teams: nil, error: error)
                 return
