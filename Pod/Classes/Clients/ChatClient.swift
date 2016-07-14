@@ -94,13 +94,13 @@ public class ChatClient: WebSocketDelegate {
     
     /// Called by the update timer in order to retrieve updated viewer counts.
     @objc private func updateData() {
-        BeamClient.sharedClient.channels.getChannelWithId(self.channelId, completion: { (channel, error) in
-            guard let channel = channel else {
+        BeamClient.sharedClient.channels.getChannelWithId(self.channelId) { (channel, error) in
+            guard let viewers = channel?.viewersCurrent else {
                 return
             }
             
-            self.delegate?.updateWithViewers(channel.viewersCurrent)
-        })
+            self.delegate?.updateWithViewers(viewers)
+        }
     }
     
     // MARK: WebSocketDelegate

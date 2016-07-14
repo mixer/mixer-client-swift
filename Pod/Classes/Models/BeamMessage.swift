@@ -78,7 +78,7 @@ public struct BeamMessage {
             color = chatColorForGroups(roles)
         }
         
-        let font = UIFont(name: "AvenirNext-Regular", size: 15)!
+        let font = UIFont.systemFontOfSize(15)
         let name = NSMutableAttributedString(string: userName!)
         name.addAttribute(NSForegroundColorAttributeName, value: color, range: NSMakeRange(0, name.length))
         name.addAttribute(NSFontAttributeName, value: font, range: NSMakeRange(0, name.length))
@@ -140,7 +140,7 @@ public struct BeamMessage {
         messageString.addAttribute(NSFontAttributeName, value: font, range: NSMakeRange(0, messageString.length))
         
         if me {
-            let meFont = UIFont(name: "AvenirNext-Italic", size: 15)!
+            let meFont = UIFont.italicSystemFontOfSize(15)
             messageString.addAttribute(NSFontAttributeName, value: meFont, range: NSMakeRange(0, messageString.length))
             
             let color = UIColor(red: 102/255, green: 102/255, blue: 102/255, alpha: 1)
