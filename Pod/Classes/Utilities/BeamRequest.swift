@@ -79,7 +79,7 @@ public class BeamRequest {
                 request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
                 request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(body, options: [])
             } catch {
-                completion?(data: nil, error: .BadRequest)
+                completion?(data: nil, error: .BadRequest(data: nil))
                 return
             }
         }
@@ -91,81 +91,64 @@ public class BeamRequest {
         }
         
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
-            guard let response = response as? NSHTTPURLResponse else {
-                completion?(data: nil, error: .Unknown)
+            guard let response = response as? NSHTTPURLResponse, data = data else {
+                completion?(data: nil, error: .Unknown(data: nil))
                 return
             }
             
-            var requestError: BeamRequestError? = .Unknown
+            let json = JSON(data: data)
+            var requestError: BeamRequestError = .Unknown(data: json)
             
             if let error = error {
                 switch error.code {
-                case -1009:
-                    requestError = .Offline
-                default:
-                    break
+                case -1009: requestError = .Offline
+                default: break
                 }
                 
                 completion?(data: nil, error: requestError)
             } else if response.statusCode != 200 && response.statusCode != 204 {
                 switch response.statusCode {
                 case 400:
+                    requestError = .BadRequest(data: json)
+                    
                     if let component = url.lastPathComponent {
                         if requestType == "POST" && component == "users" {
-                            if let data = data {
-                                let jsonData = JSON(data: data)
-                                if let name = jsonData["name"].string {
-                                    if name == "ValidationError" {
-                                        if let details = jsonData["details"].array?[0] {
-                                            if let path = details["path"].string, type = details["type"].string {
-                                                if path == "payload.email" {
-                                                    if type == "string.email" {
-                                                        requestError = .InvalidEmail
-                                                    } else if type == "unique" {
-                                                        requestError = .TakenEmail
-                                                    }
-                                                } else if path == "payload.username" {
-                                                    if type == "string.min" {
-                                                        requestError = .InvalidUsername
-                                                    } else if type == "unique" {
-                                                        requestError = .TakenUsername
-                                                    }
-                                                } else if path == "payload.password" {
-                                                    if type == "string.min" || type == "string.password" {
-                                                        requestError = .WeakPassword
-                                                    }
-                                                }
-                                            }
-                                        }
+                            if let name = json["name"].string, details = json["details"].array?[0], path = details["path"].string, type = details["type"].string where name == "ValidationError" {
+                                switch path {
+                                case "payload.email":
+                                    switch type {
+                                    case "string.email": requestError = .InvalidEmail
+                                    case "unique": requestError = .TakenEmail
+                                    default: requestError = .Unknown(data: json)
                                     }
+                                case "payload.username":
+                                    switch type {
+                                    case "string.min": requestError = .InvalidUsername
+                                    case "unique": requestError = .TakenUsername
+                                    default: requestError = .Unknown(data: json)
+                                    }
+                                case "payload.password":
+                                    switch type {
+                                    case "string.min", "string.password": requestError = .WeakPassword
+                                    default: requestError = .Unknown(data: json)
+                                    }
+                                default: requestError = .Unknown(data: json)
                                 }
                             }
-                        } else {
-                            requestError = .BadRequest
                         }
-                    } else {
-                        requestError = .BadRequest
                     }
-                case 401:
-                    requestError = .InvalidCredentials
-                case 403:
-                    requestError = .AccessDenied
-                case 404:
-                    requestError = .NotFound
-                case 499:
-                    requestError = .Requires2FA
+                case 401: requestError = .InvalidCredentials
+                case 403: requestError = .AccessDenied
+                case 404: requestError = .NotFound
+                case 499: requestError = .Requires2FA
                 default:
                     print("Unknown status code: \(response.statusCode)")
-                    requestError = .Unknown
+                    requestError = .Unknown(data: json)
                 }
                 
                 completion?(data: data, error: requestError)
             } else {
-                if let data = data {
-                    completion?(data: data, error: nil)
-                } else {
-                    completion?(data: nil, error: nil)
-                }
+                completion?(data: data, error: nil)
             }
         }
         

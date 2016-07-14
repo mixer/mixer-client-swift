@@ -52,21 +52,18 @@ public class BeamSession {
         }
         
         BeamRequest.request("/users/login", requestType: "POST", body: body) { (json, error) in
-            guard error == nil,
-                let json = json else {
-                    completion?(user: nil, error: error)
-                    return
+            guard let json = json where error == nil else {
+                completion?(user: nil, error: error)
+                return
             }
             
             if let error = json["error"].string {
                 switch error {
-                    case "2fa":
-                        completion?(user: nil, error: .Requires2FA)
-                    case "credentials":
-                        completion?(user: nil, error: .InvalidCredentials)
+                    case "2fa": completion?(user: nil, error: .Requires2FA)
+                    case "credentials": completion?(user: nil, error: .InvalidCredentials)
                     default:
                         print("Auth error from server: \(error)")
-                        completion?(user: nil, error: .Unknown)
+                        completion?(user: nil, error: .Unknown(data: json))
                 }
             } else {
                 let user = BeamUser(json: json)
