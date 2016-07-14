@@ -29,9 +29,6 @@ public struct BeamMessage {
     /// The roles held by the user who sent the message.
     public let userRoles: [BeamGroup]?
     
-    /// An attributed string containing all of the message's contents.
-    public let attributedString: NSAttributedString
-    
     /// Used to initialize a chat message given JSON data.
     init(json: JSON) {
         components = [BeamMessageComponent]()
@@ -69,86 +66,5 @@ public struct BeamMessage {
                 }
             }
         }
-        
-        // create attributed string
-        
-        var color = chatColorForGroups([BeamGroup.User])
-        
-        if let roles = userRoles {
-            color = chatColorForGroups(roles)
-        }
-        
-        let font = UIFont.systemFontOfSize(15)
-        let name = NSMutableAttributedString(string: userName!)
-        name.addAttribute(NSForegroundColorAttributeName, value: color, range: NSMakeRange(0, name.length))
-        name.addAttribute(NSFontAttributeName, value: font, range: NSMakeRange(0, name.length))
-        
-        var me = false
-        var messageString = NSMutableAttributedString()
-        
-        for component in components {
-            var string = NSAttributedString()
-            
-            switch component.type ?? .Unknown {
-            case .Emoticon:
-                if let emoticon = BeamClient.sharedClient.chat.getEmoticon(component) {
-                    let attachment = EmoticonTextAttachment()
-                    attachment.image = emoticon
-                    
-                    let emoticon = NSMutableAttributedString()
-                    emoticon.appendAttributedString(NSAttributedString(string: " "))
-                    emoticon.appendAttributedString(NSAttributedString(attachment: attachment))
-                    emoticon.appendAttributedString(NSAttributedString(string: " "))
-                    messageString.appendAttributedString(emoticon)
-                }
-            case .Link:
-                string = NSAttributedString(string: component.text!, attributes: [NSLinkAttributeName: NSMakeRange(0, component.text!.characters.count)])
-            case .Me:
-                string = NSAttributedString(string: component.text!)
-                me = true
-            case .SpaceSuit:
-                if let spacesuit = BeamClient.sharedClient.chat.getSpaceSuit(component.userId!) {
-                    let attachment = EmoticonTextAttachment()
-                    attachment.image = spacesuit
-                    
-                    let spacesuit = NSMutableAttributedString()
-                    spacesuit.appendAttributedString(NSAttributedString(string: " "))
-                    spacesuit.appendAttributedString(NSAttributedString(attachment: attachment))
-                    spacesuit.appendAttributedString(NSAttributedString(string: " "))
-                    
-                    messageString.appendAttributedString(spacesuit)
-                }
-            case .Tag:
-                string = NSAttributedString(string: component.text!)
-            case .Text:
-                string = NSAttributedString(string: component.text!)
-            case .Unknown:
-                if let text = component.text {
-                    string = NSAttributedString(string: text)
-                }
-            }
-            
-            messageString.appendAttributedString(string)
-        }
-        
-        let tmp = messageString
-        
-        messageString = NSMutableAttributedString(string: "   ")
-        messageString.appendAttributedString(tmp)
-        
-        messageString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSMakeRange(0, messageString.length))
-        messageString.addAttribute(NSFontAttributeName, value: font, range: NSMakeRange(0, messageString.length))
-        
-        if me {
-            let meFont = UIFont.italicSystemFontOfSize(15)
-            messageString.addAttribute(NSFontAttributeName, value: meFont, range: NSMakeRange(0, messageString.length))
-            
-            let color = UIColor(red: 102/255, green: 102/255, blue: 102/255, alpha: 1)
-            messageString.addAttribute(NSForegroundColorAttributeName, value: color, range: NSMakeRange(0, messageString.length))
-        }
-        
-        name.appendAttributedString(messageString)
-        
-        attributedString = name
     }
 }
