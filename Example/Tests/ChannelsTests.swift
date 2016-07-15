@@ -144,11 +144,23 @@ class ChannelsTests: XCTestCase {
         waitForExpectationsWithTimeout(10, handler: nil)
     }
     
-    func testsRecordingsOfChannel() {
+    func testRecordingsOfChannel() {
         let expectation = expectationWithDescription("tests retrieving recordings from a channel")
         
         BeamClient.sharedClient.channels.getRecordingsOfChannel(channelId) { (recordings, error) in
             XCTAssertNotNil(recordings)
+            XCTAssertNil(error)
+            expectation.fulfill()
+        }
+        
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
+    
+    func testDefaultEmoticons() {
+        let expectation = expectationWithDescription("tests retrieving the default Beam emoticons")
+        
+        BeamClient.sharedClient.channels.getDefaultEmoticons { (packs, error) in
+            XCTAssertNotNil(packs)
             XCTAssertNil(error)
             expectation.fulfill()
         }

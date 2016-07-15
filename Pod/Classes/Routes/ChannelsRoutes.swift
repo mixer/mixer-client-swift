@@ -6,6 +6,8 @@
 //  Copyright © 2016 MCProHosting. All rights reserved.
 //
 
+import SwiftyJSON
+
 /// Routes that can be used to interact with and retrieve channel data.
 public class ChannelsRoutes {
     
@@ -280,6 +282,31 @@ public class ChannelsRoutes {
             }
             
             completion?(recordings: retrievedRecordings, error: error)
+        }
+    }
+    
+    // MARK: Retrieving Emoticons
+    
+    /**
+     Retrieves all default Beam emoticon packs. Will eventually be removed by a new emoticon endpoint.
+     
+     :param: completion An optional completion block with the retrieved emoticon packs' data.
+     */
+    public func getDefaultEmoticons(completion: ((packs: [BeamEmoticonPack]?, error: BeamRequestError?) -> Void)?) {
+        BeamRequest.dataRequest("https://beam.pro/_latest/emoticons/manifest.json") { (data, error) in
+            guard let data = data, packs = JSON(data: data).dictionary else {
+                completion?(packs: nil, error: error)
+                return
+            }
+            
+            var retrievedPacks = [BeamEmoticonPack]()
+            
+            for (slug, retrievedPack) in packs {
+                let pack = BeamEmoticonPack(slug: slug, json: retrievedPack)
+                retrievedPacks.append(pack)
+            }
+            
+            completion?(packs: retrievedPacks, error: error)
         }
     }
     
