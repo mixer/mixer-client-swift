@@ -10,6 +10,7 @@
 		CD69B84355E5FD291AFD803A /* Pods_BeamAPI_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 240F481F34E5804A03FE2609 /* Pods_BeamAPI_Tests.framework */; };
 		EB06F6B61D36DA410019024F /* TeamsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB06F6B51D36DA410019024F /* TeamsTests.swift */; };
 		EB1207571D381A1C00365126 /* OAuthTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1207561D381A1C00365126 /* OAuthTests.swift */; };
+		EB3FD0381D394EC000964ECA /* TypesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3FD0371D394EC000964ECA /* TypesTests.swift */; };
 		EB4A0ED51C5D1A5C0012693F /* AchievementsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4A0ED41C5D1A5C0012693F /* AchievementsTests.swift */; };
 		EB4A0ED71C5D1B310012693F /* ChannelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4A0ED61C5D1B310012693F /* ChannelsTests.swift */; };
 		EB4A0ED91C5D1CEE0012693F /* ChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4A0ED81C5D1CEE0012693F /* ChatTests.swift */; };
@@ -34,6 +35,7 @@
 		E85179B6D5D6B487B946E6B4 /* Pods-BeamAPI_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeamAPI_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BeamAPI_Tests/Pods-BeamAPI_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		EB06F6B51D36DA410019024F /* TeamsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamsTests.swift; sourceTree = "<group>"; };
 		EB1207561D381A1C00365126 /* OAuthTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthTests.swift; sourceTree = "<group>"; };
+		EB3FD0371D394EC000964ECA /* TypesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypesTests.swift; sourceTree = "<group>"; };
 		EB4A0ED41C5D1A5C0012693F /* AchievementsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AchievementsTests.swift; sourceTree = "<group>"; };
 		EB4A0ED61C5D1B310012693F /* ChannelsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelsTests.swift; sourceTree = "<group>"; };
 		EB4A0ED81C5D1CEE0012693F /* ChatTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTests.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				EB4A0EDA1C5D239A0012693F /* ShopTests.swift */,
 				EB06F6B51D36DA410019024F /* TeamsTests.swift */,
 				EB9890B31C88F9FB0080A4E9 /* TetrisTests.swift */,
+				EB3FD0371D394EC000964ECA /* TypesTests.swift */,
 				EB4A0EDC1C5D25B40012693F /* UsersTests.swift */,
 			);
 			name = Routes;
@@ -279,6 +282,7 @@
 				EB9890B41C88F9FB0080A4E9 /* TetrisTests.swift in Sources */,
 				EBF068781C5D3684007ACCF9 /* SessionTests.swift in Sources */,
 				EB4A0ED91C5D1CEE0012693F /* ChatTests.swift in Sources */,
+				EB3FD0381D394EC000964ECA /* TypesTests.swift in Sources */,
 				EB4A0EDD1C5D25B40012693F /* UsersTests.swift in Sources */,
 				EBF865791D35A77E001EE937 /* RecordingsTests.swift in Sources */,
 				EB4A0ED51C5D1A5C0012693F /* AchievementsTests.swift in Sources */,

@@ -38,11 +38,14 @@ public class BeamClient {
     /// The property through which all shop methods are accessed.
     public let shop: ShopRoutes
     
-    /// The property through which all teams methods are accessed.
+    /// The property through which all team methods are accessed.
     public let teams: TeamsRoutes
     
     /// The property through which all tetris methods are accessed.
     public let tetris: TetrisRoutes
+    
+    /// The property through which all type methods are accessed.
+    public let types: TypesRoutes
     
     /// The property through which all user methods are accessed.
     public let users: UsersRoutes
@@ -58,6 +61,7 @@ public class BeamClient {
         shop = ShopRoutes()
         teams = TeamsRoutes()
         tetris = TetrisRoutes()
+        types = TypesRoutes()
         users = UsersRoutes()
     }
 }

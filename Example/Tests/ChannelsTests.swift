@@ -14,7 +14,6 @@ class ChannelsTests: XCTestCase {
     let channelId = 3181
     let channelToken = "jack"
     let query = "aaaa"
-    let typeId = 33217
     let userId = 278
     
     func testFollowChannel() {
@@ -113,42 +112,6 @@ class ChannelsTests: XCTestCase {
         
         BeamClient.sharedClient.channels.getChannelsByQuery(query) { (channels, error) in
             XCTAssertNotNil(channels)
-            XCTAssertNil(error)
-            expectation.fulfill()
-        }
-        
-        waitForExpectationsWithTimeout(10, handler: nil)
-    }
-    
-    func testTypeWithId() {
-        let expectation = expectationWithDescription("tests retrieving a type by id")
-        
-        BeamClient.sharedClient.channels.getTypeWithId(typeId) { (type, error) in
-            XCTAssertNotNil(type)
-            XCTAssertNil(error)
-            expectation.fulfill()
-        }
-        
-        waitForExpectationsWithTimeout(10, handler: nil)
-    }
-    
-    func testTypes() {
-        let expectation = expectationWithDescription("tests retrieving types")
-        
-        BeamClient.sharedClient.channels.getTypes { (types, error) in
-            XCTAssertNotNil(types)
-            XCTAssertNil(error)
-            expectation.fulfill()
-        }
-        
-        waitForExpectationsWithTimeout(10, handler: nil)
-    }
-    
-    func testTypesByQuery() {
-        let expectation = expectationWithDescription("tests searching for types")
-        
-        BeamClient.sharedClient.channels.getTypesByQuery(query) { (types, error) in
-            XCTAssertNotNil(types)
             XCTAssertNil(error)
             expectation.fulfill()
         }
