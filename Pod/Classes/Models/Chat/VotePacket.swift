@@ -22,7 +22,7 @@ public class VotePacket: Packet, Sendable {
     }
     
     public var identifier: String {
-        return "vote"
+        return "vote:choose"
     }
     
     public func arguments() -> [AnyObject] {

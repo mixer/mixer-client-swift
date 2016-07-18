@@ -56,7 +56,7 @@ public class TeamsRoutes {
      :param: completion An optional completion block with the retrieved teams' data.
      */
     public func getTeams(page: Int = 0, completion: ((teams: [BeamTeam]?, error: BeamRequestError?) -> Void)?) {
-        var params = ["order": "totalViewersCurrent:desc"]
+        let params = ["order": "totalViewersCurrent:desc"]
         
         BeamRequest.request("/teams", params: params) { (json, error) in
             guard let teams = json?.array else {
