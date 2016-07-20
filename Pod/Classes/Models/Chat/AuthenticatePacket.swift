@@ -3,7 +3,7 @@
 //  Beam API
 //
 //  Created by Jack Cook on 5/26/15.
-//  Copyright (c) 2015 MCProHosting. All rights reserved.
+//  Copyright (c) 2016 Beam Interactive, Inc. All rights reserved.
 //
 
 /// A packet sent to tell the chat servers about the user's session. Needs to be used regardless of whether or not there is a locally authenticated user.
