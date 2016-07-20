@@ -5,5 +5,5 @@ before_install:
 - pod install --project-directory=Example
 script:
 - set -eo pipefail
-- xcodebuild test -workspace Example/BeamAPI.xcworkspace -scheme BeamAPI-Example -sdk iphonesimulator | xcpretty
+- xcodebuild test -workspace Example/BeamAPI.xcworkspace -scheme BeamAPI-Example -sdk iphonesimulator
 - pod lib lint --allow-warnings
