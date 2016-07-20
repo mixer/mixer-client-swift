@@ -55,6 +55,9 @@
                <Test
                   Identifier = "ShopTests">
                </Test>
+               <Test
+                  Identifier = "TetrisClientTests">
+               </Test>
             </SkippedTests>
          </TestableReference>
       </Testables>
