@@ -6,4 +6,4 @@ before_install:
 script:
 - set -eo pipefail
 - xcodebuild test -workspace Example/BeamAPI.xcworkspace -scheme BeamAPI-Example -sdk iphonesimulator
-- pod lib lint --allow-warnings
+- pod lib lint --allow-warnings --verbose
