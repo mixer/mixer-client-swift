@@ -1,9 +1,7 @@
 # BeamAPI
 
-[![CI Status](http://img.shields.io/travis/Jack Cook/BeamAPI.svg?style=flat)](https://travis-ci.org/Jack Cook/BeamAPI)
-[![Version](https://img.shields.io/cocoapods/v/BeamAPI.svg?style=flat)](http://cocoapods.org/pods/BeamAPI)
-[![License](https://img.shields.io/cocoapods/l/BeamAPI.svg?style=flat)](http://cocoapods.org/pods/BeamAPI)
-[![Platform](https://img.shields.io/cocoapods/p/BeamAPI.svg?style=flat)](http://cocoapods.org/pods/BeamAPI)
+[![Build Status](https://travis-ci.org/WatchBeam/beam-client-swift.svg)](https://travis-ci.org/WatchBeam/beam-client-swift)
+[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/BeamAPI.svg)](https://cocoapods.org/pods/BeamAPI)
 
 ## Usage
 
