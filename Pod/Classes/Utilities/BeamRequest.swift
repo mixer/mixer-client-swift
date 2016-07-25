@@ -64,11 +64,11 @@ public class BeamRequest {
      :param: body The request body.
      :param: completion An optional completion block with retrieved data.
      */
-    public class func dataRequest(url: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: AnyObject? = nil, completion: ((data: NSData?, error: BeamRequestError?) -> Void)?) {
+    public class func dataRequest(baseURL: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: AnyObject? = nil, completion: ((data: NSData?, error: BeamRequestError?) -> Void)?) {
         let sessionConfig = NSURLSessionConfiguration.defaultSessionConfiguration()
         let session = NSURLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
         
-        var url = NSURL(string: url)!
+        var url = NSURL(string: baseURL)!
         url = NSURLByAppendingQueryParameters(url, queryParameters: params)
         
         let request = NSMutableURLRequest(URL: url)
@@ -86,6 +86,9 @@ public class BeamRequest {
         
         request.addValue("BeamApp/\(version) (iOS; \(deviceName()))", forHTTPHeaderField: "User-Agent")
         
+        let existingCSRFToken = NSUserDefaults.standardUserDefaults().stringForKey("CSRFToken") ?? ""
+        request.addValue(existingCSRFToken, forHTTPHeaderField: "X-CSRF-Token")
+        
         for (header, val) in headers {
             request.addValue(val, forHTTPHeaderField: header)
         }
@@ -93,6 +96,12 @@ public class BeamRequest {
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             guard let response = response as? NSHTTPURLResponse, data = data else {
                 completion?(data: nil, error: .Unknown(data: nil))
+                return
+            }
+            
+            if let csrfToken = response.allHeaderFields["X-CSRF-Token"] as? String where csrfToken != existingCSRFToken {
+                NSUserDefaults.standardUserDefaults().setObject(csrfToken, forKey: "CSRFToken")
+                dataRequest(baseURL, requestType: requestType, headers: headers, params: params, body: body, completion: completion)
                 return
             }
             
