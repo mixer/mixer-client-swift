@@ -99,7 +99,7 @@ public class BeamRequest {
                 return
             }
             
-            if let csrfToken = response.allHeaderFields["X-CSRF-Token"] as? String where csrfToken != existingCSRFToken {
+            if let csrfToken = response.allHeaderFields["X-CSRF-Token"] as? String where csrfToken != existingCSRFToken && requestType != "DELETE" {
                 NSUserDefaults.standardUserDefaults().setObject(csrfToken, forKey: "CSRFToken")
                 dataRequest(baseURL, requestType: requestType, headers: headers, params: params, body: body, completion: completion)
                 return
