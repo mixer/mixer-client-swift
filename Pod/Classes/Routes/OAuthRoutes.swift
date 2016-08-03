@@ -35,7 +35,7 @@ public class OAuthRoutes {
     public func loginWithProvider(provider: OAuthProvider, cookie: String, completion: ((user: BeamUser?, error: BeamRequestError?) -> Void)?) {
         let headers = ["Cookie": cookie]
         
-        BeamRequest.request("/oauth/\(provider.rawValue)/login", requestType: "POST", headers: headers) { (json, error) in
+        BeamRequest.request("/oauth/\(provider.rawValue)/login", requestType: "POST", headers: headers, ignoreCSRF: true) { (json, error) in
             guard let json = json where error == nil else {
                 completion?(user: nil, error: error)
                 return

@@ -25,8 +25,8 @@ public class BeamRequest {
      :param: body The request body.
      :param: completion An optional completion block with retrieved JSON data.
      */
-    public class func request(endpoint: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: AnyObject? = nil, completion: ((json: JSON?, error: BeamRequestError?) -> Void)?) {
-        BeamRequest.dataRequest("https://beam.pro/api/v1\(endpoint)", requestType: requestType, headers: headers, params: params, body: body) { (data, error) in
+    public class func request(endpoint: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: AnyObject? = nil, ignoreCSRF: Bool = false, completion: ((json: JSON?, error: BeamRequestError?) -> Void)?) {
+        BeamRequest.dataRequest("https://beam.pro/api/v1\(endpoint)", requestType: requestType, headers: headers, params: params, body: body, ignoreCSRF: ignoreCSRF) { (data, error) in
             guard let data = data else {
                 completion?(json: nil, error: error)
                 return
@@ -64,7 +64,7 @@ public class BeamRequest {
      :param: body The request body.
      :param: completion An optional completion block with retrieved data.
      */
-    public class func dataRequest(baseURL: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: AnyObject? = nil, completion: ((data: NSData?, error: BeamRequestError?) -> Void)?) {
+    public class func dataRequest(baseURL: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: AnyObject? = nil, ignoreCSRF: Bool = false, completion: ((data: NSData?, error: BeamRequestError?) -> Void)?) {
         let sessionConfig = NSURLSessionConfiguration.defaultSessionConfiguration()
         let session = NSURLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
         
@@ -99,7 +99,7 @@ public class BeamRequest {
                 return
             }
             
-            if let csrfToken = response.allHeaderFields["X-CSRF-Token"] as? String where csrfToken != existingCSRFToken && requestType != "DELETE" {
+            if let csrfToken = response.allHeaderFields["X-CSRF-Token"] as? String where csrfToken != existingCSRFToken && !ignoreCSRF {
                 NSUserDefaults.standardUserDefaults().setObject(csrfToken, forKey: "CSRFToken")
                 dataRequest(baseURL, requestType: requestType, headers: headers, params: params, body: body, completion: completion)
                 return
