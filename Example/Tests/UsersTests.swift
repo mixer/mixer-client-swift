@@ -64,7 +64,7 @@ class UsersTests: XCTestCase {
     func testUserFollowedChannels() {
         let expectation = expectationWithDescription("tests retreving a user's followed channels")
         
-        BeamClient.sharedClient.users.getFollowedChannelsByUser(userId) { (channels, error) in
+        BeamClient.sharedClient.users.getFollowedChannelsByUser(userId, page: 0) { (channels, error) in
             XCTAssertNotNil(channels)
             XCTAssertNil(error)
             expectation.fulfill()
