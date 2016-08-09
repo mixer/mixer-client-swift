@@ -244,9 +244,7 @@ public class ChannelsRoutes {
      :param: completion An optional copmletion block with the retrieved followers' data.
      */
     public func getFollowersOfChannel(id: Int, page: Int = 0, completion: ((users: [BeamUser]?, error: BeamRequestError?) -> Void)?) {
-        var params = ["page": "\(page)"]
-        
-        BeamRequest.request("/channels/\(id)/follow", params: params) { (json, error) in
+        BeamRequest.request("/channels/\(id)/follow", params: ["page": "\(page)"]) { (json, error) in
             guard let users = json?.array else {
                 completion?(users: nil, error: error)
                 return
