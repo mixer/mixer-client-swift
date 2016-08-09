@@ -11,6 +11,7 @@ import XCTest
 
 class NotificationsTests: XCTestCase {
     
+    let transport = "push"
     let userId = 278
     
     func testsNotifications() {
@@ -30,6 +31,18 @@ class NotificationsTests: XCTestCase {
         
         BeamClient.sharedClient.notifications.getNotificationTransports(userId) { (transports, error) in
             XCTAssertNil(transports)
+            XCTAssert(error == .InvalidCredentials)
+            expectation.fulfill()
+        }
+        
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
+    
+    func testsUpdateTransport() {
+        let expectation = expectationWithDescription("tests the updating a notification transport endpoint")
+        
+        BeamClient.sharedClient.notifications.updateNotificationTransport(userId, transport: transport, data: nil, settings: nil) { (transport, error) in
+            XCTAssertNil(transport)
             XCTAssert(error == .InvalidCredentials)
             expectation.fulfill()
         }

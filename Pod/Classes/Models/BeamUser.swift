@@ -65,7 +65,7 @@ public struct BeamUser {
     }
     
     /// Used to initialize a user object given JSON data.
-    public init(json: JSON) {
+    init(json: JSON) {
         id = json["id"].int ?? 0
         username = json["username"].string ?? ""
         email = json["email"].string

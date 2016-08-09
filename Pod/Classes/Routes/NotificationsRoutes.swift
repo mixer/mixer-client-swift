@@ -60,4 +60,40 @@ public class NotificationsRoutes {
             completion?(transports: retrievedTransports, error: error)
         }
     }
+    
+    /**
+     Creates a notification transport, or updates it if one exists with the same transport type.
+     
+     :param: userId The identifier of the user who will be using this notification transport.
+     :param: transport The type of transport being updated (e.g. email, push)
+     :param: data Transport-independent data about how it should work.
+     :param: settings Settings about when this transport should be used.
+     :param: turnAllOn If this is true and settings are not provided, all notifications for this transport will be turned on. This is false by default.
+     :param: completion An optional completion block with response data.
+     */
+    public func updateNotificationTransport(userId: Int, transport: String, data: [String: AnyObject]?, settings: [[String: AnyObject]]?, turnAllOn: Bool = false, completion: ((transport: BeamNotificationTransport?, error: BeamRequestError?) -> Void)?) {
+        let settingDict = settings == nil && turnAllOn ? ["*"] : []
+        
+        let body: [String: AnyObject] = [
+            "userId": "\(userId)",
+            "transport": transport,
+            "data": data ?? [:],
+            "settings": settings ?? [
+                [
+                    "type": "wentlive",
+                    "setting": settingDict
+                ]
+            ]
+        ]
+        
+        BeamRequest.request("/notifications/transports", requestType: "POST", body: body) { (json, error) in
+            guard let json = json where error == nil else {
+                completion?(transport: nil, error: error)
+                return
+            }
+            
+            let transport = BeamNotificationTransport(json: json)
+            completion?(transport: transport, error: error)
+        }
+    }
 }
