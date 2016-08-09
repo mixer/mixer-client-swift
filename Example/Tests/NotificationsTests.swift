@@ -24,4 +24,16 @@ class NotificationsTests: XCTestCase {
         
         waitForExpectationsWithTimeout(10, handler: nil)
     }
+    
+    func testsNotificationTransports() {
+        let expectation = expectationWithDescription("tests the notification transports endpoint")
+        
+        BeamClient.sharedClient.notifications.getNotificationTransports(userId) { (transports, error) in
+            XCTAssertNil(transports)
+            XCTAssert(error == .InvalidCredentials)
+            expectation.fulfill()
+        }
+        
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
 }

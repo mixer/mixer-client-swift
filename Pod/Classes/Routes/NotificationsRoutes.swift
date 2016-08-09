@@ -36,4 +36,28 @@ public class NotificationsRoutes {
             completion?(notifications: retrievedNotifications, error: error)
         }
     }
+    
+    /**
+     Retrieves all notification transports for a given user.
+     
+     :param: userId The identifier of the user whose notification transports are being requested.
+     :param: completion An optional completion block with retrieved notification transport data.
+     */
+    public func getNotificationTransports(userId: Int, completion: ((transports: [BeamNotificationTransport]?, error: BeamRequestError?) -> Void)?) {
+        BeamRequest.request("/notifications/transports", params: ["userId": "\(userId)"]) { (json, error) in
+            guard let transports = json?.array else {
+                completion?(transports: nil, error: error)
+                return
+            }
+            
+            var retrievedTransports = [BeamNotificationTransport]()
+            
+            for transport in transports {
+                let retrievedTransport = BeamNotificationTransport(json: transport)
+                retrievedTransports.append(retrievedTransport)
+            }
+            
+            completion?(transports: retrievedTransports, error: error)
+        }
+    }
 }
