@@ -20,8 +20,6 @@ class ChannelsTests: XCTestCase {
         let expectation = expectationWithDescription("tests the follow channel endpoint")
         
         BeamClient.sharedClient.channels.followChannel(channelId) { (error) in
-            
-            
             XCTAssert(error == .NotAuthenticated)
             expectation.fulfill()
         }

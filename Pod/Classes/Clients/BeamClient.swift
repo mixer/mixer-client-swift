@@ -29,6 +29,9 @@ public class BeamClient {
     /// The property through which all ingest methods are accessed.
     public let ingests: IngestsRoutes
     
+    /// The property through which all notification methods are accessed.
+    public let notifications: NotificationsRoutes
+    
     /// The property through which all OAuth methods are accessed.
     public let oauth: OAuthRoutes
     
@@ -56,6 +59,7 @@ public class BeamClient {
         channels = ChannelsRoutes()
         chat = ChatRoutes()
         ingests = IngestsRoutes()
+        notifications = NotificationsRoutes()
         oauth = OAuthRoutes()
         recordings = RecordingsRoutes()
         shop = ShopRoutes()
