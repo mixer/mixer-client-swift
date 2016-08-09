@@ -60,6 +60,28 @@ class ChannelsTests: XCTestCase {
         waitForExpectationsWithTimeout(10, handler: nil)
     }
     
+    func testHostChannel() {
+        let expectation = expectationWithDescription("tests hosting a channel")
+        
+        BeamClient.sharedClient.channels.hostChannel(channelId) { (error) in
+            XCTAssert(error == .NotAuthenticated)
+            expectation.fulfill()
+        }
+        
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
+    
+    func testStopHosting() {
+        let expectation = expectationWithDescription("tests stopping hosting")
+        
+        BeamClient.sharedClient.channels.stopHosting { (error) in
+            XCTAssert(error == .NotAuthenticated)
+            expectation.fulfill()
+        }
+        
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
+    
     func testChannelWithId() {
         let expectation = expectationWithDescription("tests retrieving a channel by id")
         

@@ -100,6 +100,41 @@ public class ChannelsRoutes {
         }
     }
     
+    /**
+     Hosts a channel from the currently authenticated user's channel.
+     
+     :param: channelId The id of the channel being hosted.
+     :param: completion An optional completion block with response data.
+     */
+    public func hostChannel(channelId: Int, completion: ((error: BeamRequestError?) -> Void)?) {
+        guard let id = BeamSession.sharedSession?.user.channel?.id else {
+            completion?(error: .NotAuthenticated)
+            return
+        }
+        
+        let body = ["id": channelId]
+        
+        BeamRequest.request("/channels/\(id)/hostee", requestType: "PUT", body: body) { (json, error) in
+            completion?(error: error)
+        }
+    }
+    
+    /**
+     Stops hosting a channel on the currently authenticated user's channel.
+     
+     :param: completion An optional completion block with response data.
+     */
+    public func stopHosting(completion: ((error: BeamRequestError?) -> Void)?) {
+        guard let id = BeamSession.sharedSession?.user.channel?.id else {
+            completion?(error: .NotAuthenticated)
+            return
+        }
+        
+        BeamRequest.request("/channels/\(id)/hostee", requestType: "DELETE") { (json, error) in
+            completion?(error: error)
+        }
+    }
+    
     // MARK: Retrieving Channels
     
     /**
