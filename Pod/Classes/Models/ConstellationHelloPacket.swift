@@ -12,7 +12,7 @@ import SwiftyJSON
 public class ConstellationHelloPacket: ConstellationPacket {
     
     /// True if the socket consumer authenticated as a user rather than a guest.
-    public var authenticated: Bool
+    public let authenticated: Bool
     
     /// Initializes a hello packet with JSON data.
     public init?(data: [String: JSON]) {

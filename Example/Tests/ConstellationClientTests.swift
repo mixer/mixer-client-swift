@@ -21,7 +21,7 @@ class ConstellationClientTests: XCTestCase, ConstellationClientDelegate {
         let client = ConstellationClient(delegate: self)
         client.connect()
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectationsWithTimeout(100, handler: nil)
     }
     
     func constellationDidConnect() {
