@@ -44,8 +44,6 @@ public class ConstellationPacket {
                                 packet = ConstellationChannelResubscribedPacket(data: data)
                             case ("channel", "update"):
                                 packet = ConstellationChannelUpdatePacket(data: data)
-//                            case ("interactive", "connect"):
-//                                break
                             case ("team", "deleted"):
                                 packet = ConstellationTeamDeletedPacket(data: data)
                             case ("team", "memberAccepted"):
@@ -57,23 +55,23 @@ public class ConstellationPacket {
                             case ("team", "ownerChanged"):
                                 packet = ConstellationTeamOwnerChangedPacket(data: data)
                             case ("user", "achievement"):
-                                break
+                                packet = ConstellationUserAchievementPacket(data: data)
                             case ("user", "followed"):
-                                break
+                                packet = ConstellationUserFollowedPacket(data: data)
                             case ("user", "notify"):
-                                break
+                                packet = ConstellationUserNotifyPacket(data: data)
                             case ("user", "subscribed"):
-                                break
+                                packet = ConstellationUserSubscribedPacket(data: data)
                             case ("user", "resubscrbed"):
-                                break
+                                packet = ConstellationUserResubscribedPacket(data: data)
                             case ("user", "teamAccepted"):
-                                break
+                                packet = ConstellationUserTeamAcceptedPacket(data: data)
                             case ("user", "teamInvited"):
-                                break
+                                packet = ConstellationUserTeamInvitedPacket(data: data)
                             case ("user", "teamRemoved"):
-                                break
+                                packet = ConstellationUserTeamRemovedPacket(data: data)
                             case ("user", "update"):
-                                break
+                                packet = ConstellationUserUpdatePacket(data: data)
                             default:
                                 packet = ConstellationLivePacket(data: data)
                             }

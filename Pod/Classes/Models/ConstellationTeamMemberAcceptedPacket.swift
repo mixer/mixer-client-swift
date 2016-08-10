@@ -18,7 +18,7 @@ public class ConstellationTeamMemberAcceptedPacket: ConstellationLivePacket {
     public let team: BeamTeam
     
     /// Initializes a team member accepted packet with JSON data.
-    override init?(data: [String : JSON]) {
+    override init?(data: [String: JSON]) {
         if let channel = data["channel"]?.string, payload = data["payload"] {
             self.teamId = Int(channel.componentsSeparatedByString(":")[1])!
             self.team = BeamTeam(json: payload)
