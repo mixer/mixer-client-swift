@@ -18,9 +18,7 @@ class ConstellationClientTests: XCTestCase, ConstellationClientDelegate {
         connectExpectation = expectationWithDescription("test connecting to constellation")
         packetExpectation = expectationWithDescription("test receiving a hello packet")
         
-        let client = ConstellationClient(delegate: self)
-        client.connect()
-        
+        ConstellationClient.sharedClient.connect(self)
         waitForExpectationsWithTimeout(100, handler: nil)
     }
     

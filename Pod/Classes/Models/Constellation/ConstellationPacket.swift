@@ -14,6 +14,16 @@ public class ConstellationPacket {
     /// The string of the packet's raw JSON data.
     private var packetString: String?
     
+    class func prepareToSend(packet: ConstellationSendable) -> String {
+        let packet = [
+            "type": "method",
+            "method": packet.method,
+            "params": packet.params
+        ]
+        
+        return JSON(packet).rawString(NSUTF8StringEncoding, options: NSJSONWritingOptions(rawValue: 0)) ?? ""
+    }
+    
     /**
      Interprets JSON packets received from the constellation servers.
      

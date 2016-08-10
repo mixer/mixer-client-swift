@@ -39,6 +39,25 @@ public class ConstellationClient: WebSocketDelegate {
         socket?.connect()
     }
     
+    /// Disconnects from constellation.
+    public func disconnect() {
+        self.socket?.disconnect()
+    }
+    
+    /**
+     Sends a packet to constellation.
+     
+     :param: packet The packet to be sent.
+     */
+    public func sendPacket(packet: ConstellationSendable) {
+        guard let socket = socket else {
+            return
+        }
+        
+        let packetData = ConstellationPacket.prepareToSend(packet)
+        socket.writeString(packetData)
+    }
+    
     // MARK: WebSocketDelegate Methods
     
     public func websocketDidConnect(socket: WebSocket) {
