@@ -19,9 +19,9 @@ public class ConstellationChannelUpdatePacket: ConstellationLivePacket {
     
     /// Initializes a channel update packet with JSON data.
     override init?(data: [String : JSON]) {
-        if let channel = data["channel"]?.string, updated = data["payload"] {
+        if let channel = data["channel"]?.string, payload = data["payload"] {
             self.channelId = Int(channel.componentsSeparatedByString(":")[1])!
-            self.updated = BeamChannel(json: updated)
+            self.updated = BeamChannel(json: payload)
             
             super.init(data: data)
         } else {

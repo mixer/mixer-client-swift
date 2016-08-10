@@ -1,0 +1,31 @@
+//
+//  ConstellationTeamMemberInvitedPacket.swift
+//  Pods
+//
+//  Created by Jack Cook on 8/10/16.
+//
+//
+
+import SwiftyJSON
+
+/// A team member invited packet is sent down when a user has been invited to join a stream team.
+public class ConstellationTeamMemberInvitedPacket: ConstellationLivePacket {
+    
+    /// The id of the team that this event corresponds to.
+    public let teamId: Int
+    
+    /// The user who was invited.
+    public let user: BeamUser
+    
+    /// Initializes a team member invited packet with JSON data.
+    override init?(data: [String : JSON]) {
+        if let channel = data["channel"]?.string, payload = data["payload"] {
+            self.teamId = Int(channel.componentsSeparatedByString(":")[1])!
+            self.user = BeamUser(json: payload)
+            
+            super.init(data: data)
+        } else {
+            return nil
+        }
+    }
+}

@@ -39,23 +39,23 @@ public class ConstellationPacket {
                             case ("channel", "hosted"):
                                 packet = ConstellationChannelHostedPacket(data: data)
                             case ("channel", "subscribed"):
-                                break
+                                packet = ConstellationChannelSubscribedPacket(data: data)
                             case ("channel", "resubscribed"):
-                                break
+                                packet = ConstellationChannelResubscribedPacket(data: data)
                             case ("channel", "update"):
-                                break
-                            case ("interactive", "connect"):
-                                break
+                                packet = ConstellationChannelUpdatePacket(data: data)
+//                            case ("interactive", "connect"):
+//                                break
                             case ("team", "deleted"):
-                                break
+                                packet = ConstellationTeamDeletedPacket(data: data)
                             case ("team", "memberAccepted"):
-                                break
+                                packet = ConstellationTeamMemberAcceptedPacket(data: data)
                             case ("team", "memberInvited"):
-                                break
+                                packet = ConstellationTeamMemberInvitedPacket(data: data)
                             case ("team", "memberRemoved"):
-                                break
+                                packet = ConstellationTeamMemberRemovedPacket(data: data)
                             case ("team", "ownerChanged"):
-                                break
+                                packet = ConstellationTeamOwnerChangedPacket(data: data)
                             case ("user", "achievement"):
                                 break
                             case ("user", "followed"):
