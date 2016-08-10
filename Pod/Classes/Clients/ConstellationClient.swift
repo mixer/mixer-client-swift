@@ -14,23 +14,26 @@ public class ConstellationClient: WebSocketDelegate {
     
     // MARK: Properties
     
+    /// The client's shared instance.
+    public class var sharedClient: ConstellationClient {
+        struct Static {
+            static let instance = ConstellationClient()
+        }
+        return Static.instance
+    }
+    
     /// The client's delegate, through which updates are relayed to the app.
     private weak var delegate: ConstellationClientDelegate?
     
     /// The websocket through which constellation data is sent and received.
     private var socket: WebSocket?
     
-    // MARK: Initializers
-    
-    /// Initializes a constellation client with a delegate.
-    public init(delegate constellationDelegate: ConstellationClientDelegate) {
-        delegate = constellationDelegate
-    }
-    
     // MARK: Public Methods
     
     /// Makes a connection to constellation through a websocket.
-    public func connect() {
+    public func connect(delegate: ConstellationClientDelegate) {
+        self.delegate = delegate
+        
         socket = WebSocket(url: NSURL(string: "wss://constellation.beam.pro")!)
         socket?.delegate = self
         socket?.connect()

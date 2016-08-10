@@ -75,6 +75,10 @@ public class ConstellationPacket {
                             default:
                                 packet = ConstellationLivePacket(data: data)
                             }
+                            
+                            if packet == nil {
+                                print("Unknown error interpreting constellation packet: \(json)")
+                            }
                         }
                     default:
                         print("Unrecognized constellation event packet received: \(json)")
