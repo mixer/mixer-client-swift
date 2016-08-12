@@ -10,14 +10,14 @@
 public class ConstellationLiveSubscribePacket: ConstellationPacket, ConstellationSendable {
     
     /// The events to subscribe to.
-    private let events: [String]
+    private let events: [ConstellationEvent]
     
     /**
      Used to initialize a live subscribe packet.
      
      :param: events The events to subscribe to.
      */
-    public init(events: [String]) {
+    public init(events: [ConstellationEvent]) {
         self.events = events
     }
     
@@ -26,6 +26,12 @@ public class ConstellationLiveSubscribePacket: ConstellationPacket, Constellatio
     }
     
     public var params: [String : AnyObject] {
-        return ["events": events]
+        var eventStrings = [String]()
+        
+        for event in events {
+            eventStrings.append(event.description)
+        }
+        
+        return ["events": eventStrings]
     }
 }

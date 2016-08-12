@@ -25,6 +25,9 @@ public class ConstellationClient: WebSocketDelegate {
     /// The client's delegate, through which updates are relayed to the app.
     private weak var delegate: ConstellationClientDelegate?
     
+    /// All events that the client is currently subscribed to.
+    private var events = [ConstellationEvent]()
+    
     /// The websocket through which constellation data is sent and received.
     private var socket: WebSocket?
     
@@ -56,6 +59,42 @@ public class ConstellationClient: WebSocketDelegate {
         
         let packetData = ConstellationPacket.prepareToSend(packet)
         socket.writeString(packetData)
+    }
+    
+    /**
+     Subscribes the client to a list of events.
+     
+     :param: events The list of events to subscribe to.
+     */
+    public func subscribeToEvents(events: [ConstellationEvent]) {
+        self.events.appendContentsOf(events)
+        
+        let subscribePacket = ConstellationLiveSubscribePacket(events: events)
+        sendPacket(subscribePacket)
+    }
+    
+    /**
+     Unsubscribes the client from a list of events.
+     
+     :param: events The list of events to unsubscribe from.
+     */
+    public func unsubscribeFromEvents(events: [ConstellationEvent]) {
+        for (idx, event) in self.events.enumerate() {
+            if events.contains({ $0.description == event.description }) {
+                self.events.removeAtIndex(idx)
+            }
+        }
+        
+        let unsubscribePacket = ConstellationLiveUnsubscribePacket(events: events)
+        sendPacket(unsubscribePacket)
+    }
+    
+    /// Unsubscribes the client from all events it is currently subscribed to.
+    public func unsubscribeFromAllEvents() {
+        let unsubscribePacket = ConstellationLiveUnsubscribePacket(events: events)
+        sendPacket(unsubscribePacket)
+        
+        events = [ConstellationEvent]()
     }
     
     // MARK: WebSocketDelegate Methods
