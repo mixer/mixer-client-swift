@@ -33,6 +33,14 @@ class ConstellationClientTests: XCTestCase, ConstellationClientDelegate {
     func constellationReceivedPacket(packet: ConstellationPacket) {
         if let packet = packet as? ConstellationHelloPacket {
             XCTAssertFalse(packet.authenticated)
+            
+            let subscribe = ConstellationLiveSubscribePacket(events: ["channel:3181:update"])
+            ConstellationClient.sharedClient.sendPacket(subscribe)
+        } else if let packet = packet as? ConstellationReplyPacket {
+            XCTAssertNil(packet.result)
+            XCTAssertNil(packet.error)
+            XCTAssert(packet.id == 0)
+            
             packetExpectation.fulfill()
         }
     }

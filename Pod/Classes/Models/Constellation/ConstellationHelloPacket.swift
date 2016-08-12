@@ -15,7 +15,7 @@ public class ConstellationHelloPacket: ConstellationPacket {
     public let authenticated: Bool
     
     /// Initializes a hello packet with JSON data.
-    public init?(data: [String: JSON]) {
+    init?(data: [String: JSON]) {
         if let authenticated = data["authenticated"]?.bool {
             self.authenticated = authenticated
         } else {
