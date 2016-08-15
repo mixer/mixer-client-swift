@@ -6,6 +6,8 @@
 //  Copyright (c) 2016 Beam Interactive, Inc. All rights reserved.
 //
 
+import SwiftyJSON
+
 /// A packet received when a user's roles have been changed.
 public class ChatUserUpdatePacket: ChatPacket {
     
@@ -21,18 +23,31 @@ public class ChatUserUpdatePacket: ChatPacket {
     /// The user's new roles.
     public let roles: [String]
     
-    /**
-     Used to initialize a user update packet.
-     
-     :param: The new permissions held by the user.
-     :param: userId The user's identifier.
-     :param: username The user's username.
-     :param: roles The user's new roles.
-     */
-    init(permissions: [String], userId: Int, username: String, roles: [String]) {
-        self.permissions = permissions
-        self.userId = userId
-        self.username = username
-        self.roles = roles
+    /// Initializes a chat user update packet with JSON data.
+    override init?(data: [String: JSON]) {
+        if let permissions = data["permissions"]?.array, userId = data["user"]?.int, username = data["username"]?.string, roles = data["roles"]?.array {
+            var parsedPermissions = [String]()
+            
+            for permission in permissions where permission.string != nil {
+                parsedPermissions.append(permission.string!)
+            }
+            
+            self.permissions = parsedPermissions
+            
+            self.userId = userId
+            self.username = username
+            
+            var parsedRoles = [String]()
+            
+            for role in roles where role.string != nil {
+                parsedRoles.append(role.string!)
+            }
+            
+            self.roles = parsedRoles
+            
+            super.init(data: data)
+        } else {
+            return nil
+        }
     }
 }

@@ -6,6 +6,8 @@
 //  Copyright (c) 2016 Beam Interactive, Inc. All rights reserved.
 //
 
+import SwiftyJSON
+
 /// A packet containing data about a message. Can be sent or received.
 public class ChatMessagePacket: ChatPacket, ChatSendable {
     
@@ -15,22 +17,16 @@ public class ChatMessagePacket: ChatPacket, ChatSendable {
     /// A string of text being sent to the chat servers as a message. Used when the packet is being sent.
     public var messageText: String?
     
-    /**
-     Used to initialize a message packet when the message is being received.
-     
-     :param: message The message object.
-     */
-    init(message: BeamMessage) {
-        self.message = message
+    /// Initializes a chat message packet with JSON data.
+    override init?(data: [String: JSON]) {
+        self.message = BeamMessage(json: JSON(data))
+        super.init(data: data)
     }
     
-    /**
-     Used ot initialize a message packet when the message is being sent.
-     
-     :param: message The text to be sent to the chat servers.
-     */
-    public init(message: String) {
-        messageText = message.stringByReplacingOccurrencesOfString("\"", withString: "\\\"")
+    /// Initializes a chat message packet with JSON data.
+    init?(data: JSON) {
+        self.message = BeamMessage(json: data)
+        super.init(data: ["data": data])
     }
     
     public var identifier: String {

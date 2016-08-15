@@ -19,6 +19,8 @@ public class ChatHistoryPacket: ChatPacket, ChatSendable {
      */
     public init(quantity: Int) {
         self.quantity = quantity
+        
+        super.init()
     }
     
     public var identifier: String {

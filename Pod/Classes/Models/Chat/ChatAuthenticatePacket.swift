@@ -25,6 +25,8 @@ public class ChatAuthenticatePacket: ChatPacket, ChatSendable {
      */
     public init(channelId: Int) {
         self.channelId = channelId
+        
+        super.init()
     }
     
     /**
@@ -38,6 +40,8 @@ public class ChatAuthenticatePacket: ChatPacket, ChatSendable {
         self.channelId = channelId
         self.userId = userId
         self.authKey = authKey
+        
+        super.init()
     }
     
     public var identifier: String {

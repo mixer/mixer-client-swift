@@ -14,6 +14,18 @@ public class ChatPacket {
     /// The string of the packet's raw data.
     private var packetString: String?
     
+    /// Initializes an empty packet.
+    init() {
+    }
+    
+    /// Initializes a chat packet with a JSON dictionary.
+    init?(data: [String: JSON]) {
+    }
+    
+    /// Initializes a chat packet with a JSON array.
+    init?(data: [JSON]) {
+    }
+    
     /**
      Creates a raw packet string from a packet object.
      
@@ -22,24 +34,14 @@ public class ChatPacket {
      :returns: The raw packet string to be sent to the chat servers.
      */
     class func prepareToSend(packet: ChatSendable, count: Int) -> String {
-        let method = packet.identifier
-        let arguments = packet.arguments()
+        let packet = [
+            "type": "method",
+            "method": packet.identifier,
+            "arguments": packet.arguments(),
+            "id": "\(count)"
+        ]
         
-        var argumentString = ""
-        
-        for arg in arguments {
-            if arg is String {
-                argumentString += "\"\(arg)\","
-            } else {
-                argumentString += "\(arg),"
-            }
-        }
-        
-        argumentString = argumentString.substringToIndex(argumentString.endIndex.predecessor())
-        
-        let packetString = "{\"type\":\"method\",\"method\":\"\(method)\",\"arguments\":[\(argumentString)],\"id\":\(count)}"
-        
-        return packetString
+        return JSON(packet).rawString(NSUTF8StringEncoding, options: NSJSONWritingOptions(rawValue: 0)) ?? ""
     }
     
     /**
@@ -51,73 +53,29 @@ public class ChatPacket {
     class func receivePacket(json: JSON) -> ChatPacket? {
         var packet: ChatPacket?
         
-        if let event = json["event"].string {
-            if let data = json["data"].dictionaryObject {
-                switch event {
-                case "ChatMessage":
-                    let message = BeamMessage(json: JSON(data))
-                    packet = ChatMessagePacket(message: message)
-                case "DeleteMessage":
-                    if let id = data["id"] as? String {
-                        packet = ChatDeleteMessagePacket(id: id)
-                    }
-                case "PollEnd":
-                    if let voters = data["voters"] as? Int {
-                        if let responses = data["responses"] as? [String: Int] {
-                            packet = ChatPollEndPacket(voters: voters, responses: responses)
-                        }
-                    }
-                case "PollStart":
-                    if let answers = data["answers"] as? [String] {
-                        if let question = data["q"] as? String {
-                            if let endTime = data["endsAt"] as? Int {
-                                if let duration = data["duration"] as? Int {
-                                    let endDate = NSDate(timeIntervalSinceReferenceDate: NSTimeInterval(endTime))
-                                    packet = ChatPollStartPacket(answers: answers, question: question, endTime: endDate, duration: duration)
-                                }
-                            }
-                        }
-                    }
-                case "UserJoin", "UserLeave":
-                    if let username = data["username"] as? String {
-                        if let roles = data["roles"] as? [String] {
-                            if let userId = data["id"] as? Int {
-                                if event == "UserJoin" {
-                                    packet = ChatUserJoinPacket(username: username, roles: roles, userId: userId)
-                                } else if event == "UserLeave" {
-                                    packet = ChatUserLeavePacket(username: username, roles: roles, userId: userId)
-                                }
-                            }
-                        }
-                    }
-                case "UserUpdate":
-                    if let permissions = data["permissions"] as? [String] {
-                        if let userId = data["user"] as? Int {
-                            if let username = data["username"] as? String {
-                                if let roles = data["roles"] as? [String] {
-                                    packet = ChatUserUpdatePacket(permissions: permissions, userId: userId, username: username, roles: roles)
-                                }
-                            }
-                        }
-                    }
-                default:
-                    print("Unrecognized packet received: \(event) with parameters \(data)")
-                }
+        if let event = json["event"].string, data = json["data"].dictionary {
+            switch event {
+            case "ChatMessage":
+                packet = ChatMessagePacket(data: data)
+            case "DeleteMessage":
+                packet = ChatDeleteMessagePacket(data: data)
+            case "PollEnd":
+                packet = ChatPollEndPacket(data: data)
+            case "PollStart":
+                packet = ChatPollStartPacket(data: data)
+            case "UserJoin":
+                packet = ChatUserJoinPacket(data: data)
+            case "UserLeave":
+                packet = ChatUserLeavePacket(data: data)
+            case "UserUpdate":
+                packet = ChatUserUpdatePacket(data: data)
+            default:
+                print("Unrecognized packet received: \(event) with parameters \(data)")
             }
-        } else if let type = json["type"].string {
+        } else if let type = json["type"].string, data = json["data"].array {
             switch type {
             case "reply":
-                if let data = json["data"].arrayObject {
-                    var packets = [ChatMessagePacket]()
-                    for datum in data {
-                        let message = BeamMessage(json: JSON(datum))
-                        let messagePacket = ChatMessagePacket(message: message)
-                        packets.append(messagePacket)
-                    }
-                    
-                    let packet = ChatMessagesPacket(packets: packets)
-                    return packet
-                }
+                packet = ChatMessagesPacket(data: data)
             default:
                 print("Unknown packet received: \(json)")
             }

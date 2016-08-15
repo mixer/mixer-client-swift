@@ -19,6 +19,8 @@ public class ChatVotePacket: ChatPacket, ChatSendable {
      */
     public init(option: Int) {
         self.option = option
+        
+        super.init()
     }
     
     public var identifier: String {

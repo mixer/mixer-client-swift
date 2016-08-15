@@ -6,7 +6,7 @@
 //  Copyright (c) 2016 Beam Interactive, Inc. All rights reserved.
 //
 
-import Foundation
+import SwiftyJSON
 
 /// A packet received when a poll has begun.
 public class ChatPollStartPacket: ChatPacket {
@@ -23,18 +23,23 @@ public class ChatPollStartPacket: ChatPacket {
     /// The number of seconds that the poll will last for.
     public let duration: Int
     
-    /**
-     Used to initialize a poll start packet.
-     
-     :param: answers The answers that can be chosen from in the poll.
-     :param: question The question being asked.
-     :param: endTime The time at which the poll will end.
-     :param: duration The number of seconds that the poll will last for.
-     */
-    public init(answers: [String], question: String, endTime: NSDate, duration: Int) {
-        self.answers = answers
-        self.question = question
-        self.endTime = endTime
-        self.duration = duration
+    /// Initializes a chat poll start packet with JSON data.
+    override init?(data: [String: JSON]) {
+        if let answers = data["answers"]?.array, question = data["q"]?.string, endTime = data["endsAt"]?.int, duration = data["duration"]?.int {
+            var parsedAnswers = [String]()
+            
+            for answer in answers where answer.string != nil {
+                parsedAnswers.append(answer.string!)
+            }
+            
+            self.answers = parsedAnswers
+            self.question = question
+            self.endTime = NSDate(timeIntervalSinceReferenceDate: NSTimeInterval(endTime))
+            self.duration = duration
+            
+            super.init(data: data)
+        } else {
+            return nil
+        }
     }
 }

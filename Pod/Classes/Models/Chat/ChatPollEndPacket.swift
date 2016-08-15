@@ -6,6 +6,8 @@
 //  Copyright (c) 2016 Beam Interactive, Inc. All rights reserved.
 //
 
+import SwiftyJSON
+
 /// A packet received when a poll has ended.
 public class ChatPollEndPacket: ChatPacket {
     
@@ -15,14 +17,15 @@ public class ChatPollEndPacket: ChatPacket {
     /// The responses made by poll voters.
     public let responses: [String: Int]
     
-    /**
-     Used to initialize a poll end packet.
-     
-     :param: voters The number of people who voted in the poll.
-     :param: responses The responses made by poll voters.
-     */
-    init(voters: Int, responses: [String: Int]) {
-        self.voters = voters
-        self.responses = responses
+    /// Initializes a chat poll end packet with JSON data.
+    override init?(data: [String: JSON]) {
+        if let voters = data["voters"]?.int, responses = data["responses"]?.dictionaryObject as? [String: Int] {
+            self.voters = voters
+            self.responses = responses
+            
+            super.init(data: data)
+        } else {
+            return nil
+        }
     }
 }
