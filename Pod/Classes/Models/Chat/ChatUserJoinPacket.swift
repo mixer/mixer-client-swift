@@ -1,5 +1,5 @@
 //
-//  UserJoinPacket.swift
+//  ChatUserJoinPacket.swift
 //  Beam API
 //
 //  Created by Jack Cook on 5/26/15.
@@ -7,7 +7,7 @@
 //
 
 /// A packet received when a user has joined the channel.
-public class UserJoinPacket: Packet {
+public class ChatUserJoinPacket: ChatPacket {
     
     /// The username of the user who joined.
     public let username: String

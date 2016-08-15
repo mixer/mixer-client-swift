@@ -1,5 +1,5 @@
 //
-//  PollEndPacket.swift
+//  ChatPollEndPacket.swift
 //  Beam API
 //
 //  Created by Jack Cook on 5/26/15.
@@ -7,7 +7,7 @@
 //
 
 /// A packet received when a poll has ended.
-public class PollEndPacket: Packet {
+public class ChatPollEndPacket: ChatPacket {
     
     /// The number of people who voted in the poll.
     public let voters: Int

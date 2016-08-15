@@ -72,14 +72,14 @@ public class ChatClient: WebSocketDelegate {
      
      :param: packet The packet being sent.
      */
-    public func sendPacket(packet: Sendable) {
+    public func sendPacket(packet: ChatSendable) {
         packetCount += 1
         
         guard let socket = socket else {
             return
         }
         
-        let packetData = Packet.prepareToSend(packet, count: packetCount)
+        let packetData = ChatPacket.prepareToSend(packet, count: packetCount)
         socket.writeString(packetData)
     }
     
@@ -88,7 +88,7 @@ public class ChatClient: WebSocketDelegate {
     public func websocketDidConnect(socket: WebSocket) {
         guard let userId = BeamSession.sharedSession?.user.id,
             authKey = authKey else {
-                let packet = AuthenticatePacket(channelId: channelId)
+                let packet = ChatAuthenticatePacket(channelId: channelId)
                 sendPacket(packet)
                 
                 delegate?.chatDidConnect()
@@ -98,7 +98,7 @@ public class ChatClient: WebSocketDelegate {
         
         delegate?.chatDidConnect()
         
-        let packet = AuthenticatePacket(channelId: channelId, userId: userId, authKey: authKey)
+        let packet = ChatAuthenticatePacket(channelId: channelId, userId: userId, authKey: authKey)
         sendPacket(packet)
     }
     
@@ -115,7 +115,7 @@ public class ChatClient: WebSocketDelegate {
             if let jsonObject = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSDictionary {
                 let json = JSON(jsonObject)
                 
-                if let packet = Packet.receivePacket(json) {
+                if let packet = ChatPacket.receivePacket(json) {
                     self.delegate?.chatReceivedPacket(packet)
                 }
             }
@@ -133,5 +133,5 @@ public protocol ChatClientDelegate: class {
     func chatDidConnect()
     
     /// Called when a packet is received and interpreted.
-    func chatReceivedPacket(packet: Packet)
+    func chatReceivedPacket(packet: ChatPacket)
 }

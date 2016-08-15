@@ -1,5 +1,5 @@
 //
-//  UserLeavePacket.swift
+//  ChatUserLeavePacket.swift
 //  Beam API
 //
 //  Created by Jack Cook on 5/26/15.
@@ -7,7 +7,7 @@
 //
 
 /// A packet received when a user has left the channel.
-public class UserLeavePacket: Packet {
+public class ChatUserLeavePacket: ChatPacket {
     
     /// The username of the user who left.
     public let username: String

@@ -1,5 +1,5 @@
 //
-//  AuthenticatePacket.swift
+//  ChatAuthenticatePacket.swift
 //  Beam API
 //
 //  Created by Jack Cook on 5/26/15.
@@ -7,7 +7,7 @@
 //
 
 /// A packet sent to tell the chat servers about the user's session. Needs to be used regardless of whether or not there is a locally authenticated user.
-public class AuthenticatePacket: Packet, Sendable {
+public class ChatAuthenticatePacket: ChatPacket, ChatSendable {
     
     /// The id of the channel being connected to.
     public let channelId: Int

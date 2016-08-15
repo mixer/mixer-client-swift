@@ -1,5 +1,5 @@
 //
-//  Packet.swift
+//  ChatPacket.swift
 //  Beam API
 //
 //  Created by Jack Cook on 6/4/15.
@@ -9,7 +9,7 @@
 import SwiftyJSON
 
 /// The base packet class. Also has methods used to receive and send packets.
-public class Packet {
+public class ChatPacket {
     
     /// The string of the packet's raw data.
     private var packetString: String?
@@ -21,7 +21,7 @@ public class Packet {
      :param: count The nth packet sent by the app.
      :returns: The raw packet string to be sent to the chat servers.
      */
-    class func prepareToSend(packet: Sendable, count: Int) -> String {
+    class func prepareToSend(packet: ChatSendable, count: Int) -> String {
         let method = packet.identifier
         let arguments = packet.arguments()
         
@@ -48,23 +48,23 @@ public class Packet {
      :param: json The JSON object being interpreted.
      :returns: The packet object to be used by the app.
      */
-    class func receivePacket(json: JSON) -> Packet? {
-        var packet: Packet?
+    class func receivePacket(json: JSON) -> ChatPacket? {
+        var packet: ChatPacket?
         
         if let event = json["event"].string {
             if let data = json["data"].dictionaryObject {
                 switch event {
                 case "ChatMessage":
                     let message = BeamMessage(json: JSON(data))
-                    packet = MessagePacket(message: message)
+                    packet = ChatMessagePacket(message: message)
                 case "DeleteMessage":
                     if let id = data["id"] as? String {
-                        packet = DeleteMessagePacket(id: id)
+                        packet = ChatDeleteMessagePacket(id: id)
                     }
                 case "PollEnd":
                     if let voters = data["voters"] as? Int {
                         if let responses = data["responses"] as? [String: Int] {
-                            packet = PollEndPacket(voters: voters, responses: responses)
+                            packet = ChatPollEndPacket(voters: voters, responses: responses)
                         }
                     }
                 case "PollStart":
@@ -73,7 +73,7 @@ public class Packet {
                             if let endTime = data["endsAt"] as? Int {
                                 if let duration = data["duration"] as? Int {
                                     let endDate = NSDate(timeIntervalSinceReferenceDate: NSTimeInterval(endTime))
-                                    packet = PollStartPacket(answers: answers, question: question, endTime: endDate, duration: duration)
+                                    packet = ChatPollStartPacket(answers: answers, question: question, endTime: endDate, duration: duration)
                                 }
                             }
                         }
@@ -83,9 +83,9 @@ public class Packet {
                         if let roles = data["roles"] as? [String] {
                             if let userId = data["id"] as? Int {
                                 if event == "UserJoin" {
-                                    packet = UserJoinPacket(username: username, roles: roles, userId: userId)
+                                    packet = ChatUserJoinPacket(username: username, roles: roles, userId: userId)
                                 } else if event == "UserLeave" {
-                                    packet = UserLeavePacket(username: username, roles: roles, userId: userId)
+                                    packet = ChatUserLeavePacket(username: username, roles: roles, userId: userId)
                                 }
                             }
                         }
@@ -95,7 +95,7 @@ public class Packet {
                         if let userId = data["user"] as? Int {
                             if let username = data["username"] as? String {
                                 if let roles = data["roles"] as? [String] {
-                                    packet = UserUpdatePacket(permissions: permissions, userId: userId, username: username, roles: roles)
+                                    packet = ChatUserUpdatePacket(permissions: permissions, userId: userId, username: username, roles: roles)
                                 }
                             }
                         }
@@ -108,14 +108,14 @@ public class Packet {
             switch type {
             case "reply":
                 if let data = json["data"].arrayObject {
-                    var packets = [MessagePacket]()
+                    var packets = [ChatMessagePacket]()
                     for datum in data {
                         let message = BeamMessage(json: JSON(datum))
-                        let messagePacket = MessagePacket(message: message)
+                        let messagePacket = ChatMessagePacket(message: message)
                         packets.append(messagePacket)
                     }
                     
-                    let packet = MessagesPacket(packets: packets)
+                    let packet = ChatMessagesPacket(packets: packets)
                     return packet
                 }
             default:

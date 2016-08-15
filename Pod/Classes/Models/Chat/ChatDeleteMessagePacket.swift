@@ -1,5 +1,5 @@
 //
-//  DeleteMessagePacket.swift
+//  ChatDeleteMessagePacket.swift
 //  Beam API
 //
 //  Created by Jack Cook on 6/29/15.
@@ -7,7 +7,7 @@
 //
 
 /// A packet telling the app to remove a message from the visible chat.
-public class DeleteMessagePacket: Packet {
+public class ChatDeleteMessagePacket: ChatPacket {
     
     /// The id of the message to be deleted.
     public var id: String

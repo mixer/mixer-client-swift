@@ -1,5 +1,5 @@
 //
-//  Sendable.swift
+//  ChatSendable.swift
 //  Beam API
 //
 //  Created by Jack Cook on 5/26/15.
@@ -7,7 +7,7 @@
 //
 
 /// The protocol inherited by packets that are being sent.
-public protocol Sendable {
+public protocol ChatSendable {
     
     /// The packet's arguments.
     func arguments() -> [AnyObject]

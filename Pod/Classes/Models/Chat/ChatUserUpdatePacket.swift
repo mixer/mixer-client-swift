@@ -1,5 +1,5 @@
 //
-//  UserUpdatePacket.swift
+//  ChatUserUpdatePacket.swift
 //  Beam API
 //
 //  Created by Jack Cook on 5/26/15.
@@ -7,7 +7,7 @@
 //
 
 /// A packet received when a user's roles have been changed.
-public class UserUpdatePacket: Packet {
+public class ChatUserUpdatePacket: ChatPacket {
     
     /// The new permissions held by the user.
     public let permissions: [String]

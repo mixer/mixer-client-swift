@@ -1,5 +1,5 @@
 //
-//  VotePacket.swift
+//  ChatVotePacket.swift
 //  Beam API
 //
 //  Created by Jack Cook on 5/26/15.
@@ -7,7 +7,7 @@
 //
 
 /// A packet sent to vote in a poll.
-public class VotePacket: Packet, Sendable {
+public class ChatVotePacket: ChatPacket, ChatSendable {
     
     /// The option chosen by the user.
     public let option: Int

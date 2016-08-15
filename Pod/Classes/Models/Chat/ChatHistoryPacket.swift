@@ -7,7 +7,7 @@
 //
 
 /// A packet sent to request the most recent chat messages sent to a channel.
-public class ChatHistoryPacket: Packet, Sendable {
+public class ChatHistoryPacket: ChatPacket, ChatSendable {
     
     /// The number of messages being requested.
     public var quantity: Int

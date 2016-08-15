@@ -1,5 +1,5 @@
 //
-//  MessagePacket.swift
+//  ChatMessagePacket.swift
 //  Beam API
 //
 //  Created by Jack Cook on 5/26/15.
@@ -7,7 +7,7 @@
 //
 
 /// A packet containing data about a message. Can be sent or received.
-public class MessagePacket: Packet, Sendable {
+public class ChatMessagePacket: ChatPacket, ChatSendable {
     
     /// A message object. Used when the packet is being received.
     public var message: BeamMessage?

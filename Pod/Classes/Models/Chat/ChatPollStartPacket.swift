@@ -1,5 +1,5 @@
 //
-//  PollStartPacket.swift
+//  ChatPollStartPacket.swift
 //  Beam API
 //
 //  Created by Jack Cook on 5/26/15.
@@ -9,7 +9,7 @@
 import Foundation
 
 /// A packet received when a poll has begun.
-public class PollStartPacket: Packet {
+public class ChatPollStartPacket: ChatPacket {
     
     /// The options that can be chosen from.
     public let answers: [String]

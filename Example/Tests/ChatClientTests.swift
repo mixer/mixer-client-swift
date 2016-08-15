@@ -27,5 +27,5 @@ class ChatClientTests: XCTestCase, ChatClientDelegate {
         expectation.fulfill()
     }
     
-    func chatReceivedPacket(packet: Packet) {}
+    func chatReceivedPacket(packet: ChatPacket) {}
 }
