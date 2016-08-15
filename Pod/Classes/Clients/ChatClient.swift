@@ -134,7 +134,4 @@ public protocol ChatClientDelegate: class {
     
     /// Called when a packet is received and interpreted.
     func chatReceivedPacket(packet: Packet)
-    
-    /// Called when a new viewer count has been received.
-    func updateWithViewers(viewers: Int)
 }

@@ -28,5 +28,4 @@ class ChatClientTests: XCTestCase, ChatClientDelegate {
     }
     
     func chatReceivedPacket(packet: Packet) {}
-    func updateWithViewers(viewers: Int) {}
 }
