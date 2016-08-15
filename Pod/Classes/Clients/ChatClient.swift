@@ -29,9 +29,6 @@ public class ChatClient: WebSocketDelegate {
     /// The websocket through which chat data is received and sent.
     private var socket: WebSocket?
     
-    /// The timer used to update channel data, currently used for viewer count. Needs to be removed.
-    private var timer: NSTimer!
-    
     /// Initializes a chat connection, which needs to be stored by your own class.
     public init(delegate chatDelegate: ChatClientDelegate) {
         delegate = chatDelegate
@@ -63,15 +60,11 @@ public class ChatClient: WebSocketDelegate {
                 self.socket?.connect()
             }
         }
-        
-        timer = NSTimer(timeInterval: 10, target: self, selector: #selector(updateData), userInfo: nil, repeats: true)
-        NSRunLoop.mainRunLoop().addTimer(timer!, forMode: NSRunLoopCommonModes)
     }
     
     /// Disconnects from the chat server.
     public func disconnect() {
         self.socket?.disconnect()
-        self.timer?.invalidate()
     }
     
     /**
@@ -88,19 +81,6 @@ public class ChatClient: WebSocketDelegate {
         
         let packetData = Packet.prepareToSend(packet, count: packetCount)
         socket.writeString(packetData)
-    }
-    
-    // MARK: Private Methods
-    
-    /// Called by the update timer in order to retrieve updated viewer counts.
-    @objc private func updateData() {
-        BeamClient.sharedClient.channels.getChannelWithId(self.channelId) { (channel, error) in
-            guard let viewers = channel?.viewersCurrent else {
-                return
-            }
-            
-            self.delegate?.updateWithViewers(viewers)
-        }
     }
     
     // MARK: WebSocketDelegate
