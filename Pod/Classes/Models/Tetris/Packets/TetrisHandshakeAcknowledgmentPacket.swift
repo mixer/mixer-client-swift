@@ -1,5 +1,5 @@
 //
-//  HandshakeAcknowledgmentPacket.swift
+//  TetrisHandshakeAcknowledgmentPacket.swift
 //  Pods
 //
 //  Created by Jack Cook on 3/5/16.
@@ -7,7 +7,7 @@
 //
 
 /// A packet received when a handshake has been acknowledged by the tetris servers.
-public class HandshakeAcknowledgmentPacket: TetrisPacket {
+public class TetrisHandshakeAcknowledgmentPacket: TetrisPacket {
     
     /// The current control state.
     public let state: String

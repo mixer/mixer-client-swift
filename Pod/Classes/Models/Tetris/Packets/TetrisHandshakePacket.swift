@@ -7,7 +7,7 @@
 //
 
 /// A packet sent to initialize a handshake with tetris.
-public class HandshakePacket: TetrisPacket, TetrisSendable {
+public class TetrisHandshakePacket: TetrisPacket, TetrisSendable {
     
     /// The id of the user being authenticated.
     public let id: Int?

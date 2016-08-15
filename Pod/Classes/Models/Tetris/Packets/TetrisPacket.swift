@@ -71,19 +71,19 @@ public class TetrisPacket {
         case "hshk": // 2
             if let id = data["id"].int,
                 key = data["key"].string {
-                    packet = HandshakePacket(id: id, key: key)
+                    packet = TetrisHandshakePacket(id: id, key: key)
             }
         case "hack": // 1
             if let state = data["state"].string {
-                packet = HandshakeAcknowledgmentPacket(state: state)
+                packet = TetrisHandshakeAcknowledgmentPacket(state: state)
             }
      // case "data": // 2
         case "erro": // 3
             if let message = data["message"].string {
-                packet = ErrorPacket(message: message)
+                packet = TetrisErrorPacket(message: message)
             }
         case "prog": // 4
-            var controls = [ProgressPacketControl]()
+            var controls = [TetrisProgressPacketControl]()
             
             if let tactiles = data["tactile"].array {
                 for tactile in tactiles {
@@ -91,7 +91,7 @@ public class TetrisPacket {
                         cooldown = tactile["cooldown"].int,
                         progress = tactile["progress"].int,
                         disabled = tactile["disabled"].bool {
-                            let control = ProgressPacketTactile(id: id, fired: tactile["fired"].bool ?? false, cooldown: cooldown, progress: progress, disabled: disabled)
+                            let control = TetrisProgressPacketTactile(id: id, fired: tactile["fired"].bool ?? false, cooldown: cooldown, progress: progress, disabled: disabled)
                             controls.append(control)
                     }
                 }
@@ -102,13 +102,13 @@ public class TetrisPacket {
                     if let id = joystick["id"].int,
                         angle = joystick["angle"].float,
                         intensity = joystick["intensity"].float {
-                            let control = ProgressPacketJoystick(id: id, angle: angle, intensity: intensity)
+                            let control = TetrisProgressPacketJoystick(id: id, angle: angle, intensity: intensity)
                             controls.append(control)
                     }
                 }
             }
             
-            packet = ProgressPacket(controls: controls)
+            packet = TetrisProgressPacket(controls: controls)
         default:
             print("Unrecognized packet received: \(event) with data \(dataString)")
         }

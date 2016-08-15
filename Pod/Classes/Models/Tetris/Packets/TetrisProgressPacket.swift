@@ -7,23 +7,23 @@
 //
 
 /// A packet received when control data has been updated.
-public class ProgressPacket: TetrisPacket {
+public class TetrisProgressPacket: TetrisPacket {
     
     /// Data on the state of all of the controls in the stream.
-    public let controls: [ProgressPacketControl]
+    public let controls: [TetrisProgressPacketControl]
     
     /**
      Used to initialize a progress packet.
      
      :param: controls The data on all of the stream's controls.
      */
-    init(controls: [ProgressPacketControl]) {
+    init(controls: [TetrisProgressPacketControl]) {
         self.controls = controls
     }
 }
 
 /// A representation of a base control's data.
-public class ProgressPacketControl {
+public class TetrisProgressPacketControl {
     
     /// The id of the control.
     public let id: Int
@@ -39,7 +39,7 @@ public class ProgressPacketControl {
 }
 
 /// A representation of a tactile's control data.
-public class ProgressPacketTactile: ProgressPacketControl {
+public class TetrisProgressPacketTactile: TetrisProgressPacketControl {
     
     /// True if the tactile is currently being pressed.
     public let fired: Bool
@@ -73,7 +73,7 @@ public class ProgressPacketTactile: ProgressPacketControl {
 }
 
 /// A representation of a joysitck's control data.
-public class ProgressPacketJoystick: ProgressPacketControl {
+public class TetrisProgressPacketJoystick: TetrisProgressPacketControl {
     
     /// The angle, in radians, at which the joystick nipple is angled.
     public let angle: Float

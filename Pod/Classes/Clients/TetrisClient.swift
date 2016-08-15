@@ -97,13 +97,13 @@ public class TetrisClient: WebSocketDelegate {
         
         guard let authKey = authKey,
             userId = userId else {
-                let packet = HandshakePacket()
+                let packet = TetrisHandshakePacket()
                 sendPacket(packet)
                 
                 return
         }
         
-        let packet = HandshakePacket(id: userId, key: authKey)
+        let packet = TetrisHandshakePacket(id: userId, key: authKey)
         sendPacket(packet)
     }
     

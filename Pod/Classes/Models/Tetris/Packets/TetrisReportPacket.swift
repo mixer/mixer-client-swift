@@ -7,17 +7,17 @@
 //
 
 /// A packet sent with local control data.
-public class ReportPacket: TetrisPacket, TetrisSendable {
+public class TetrisReportPacket: TetrisPacket, TetrisSendable {
     
     /// Data on the state of all of the controls in the stream.
-    public let controls: [ReportPacketControl]
+    public let controls: [TetrisReportPacketControl]
     
     /**
      Used to initialize a report packet.
      
      :param: controls The data on all of the stream's controls.
      */
-    public init(controls: [ReportPacketControl]) {
+    public init(controls: [TetrisReportPacketControl]) {
         self.controls = controls
     }
     
@@ -32,9 +32,9 @@ public class ReportPacket: TetrisPacket, TetrisSendable {
         var joysticks = [String]()
         
         for control in controls {
-            if control is ReportPacketTactile {
+            if control is TetrisReportPacketTactile {
                 tactiles.append(control.description)
-            } else if control is ReportPacketJoystick {
+            } else if control is TetrisReportPacketJoystick {
                 joysticks.append(control.description)
             }
         }
@@ -47,7 +47,7 @@ public class ReportPacket: TetrisPacket, TetrisSendable {
 }
 
 /// A representation of a base control's data.
-public class ReportPacketControl: CustomStringConvertible {
+public class TetrisReportPacketControl: CustomStringConvertible {
     
     /// The id of the control.
     public let id: Int
@@ -67,7 +67,7 @@ public class ReportPacketControl: CustomStringConvertible {
 }
 
 /// A representation of a tactile's control data.
-public class ReportPacketTactile: ReportPacketControl {
+public class TetrisReportPacketTactile: TetrisReportPacketControl {
     
     /// True if the tactile is being pressed.
     public let down: Bool
@@ -90,7 +90,7 @@ public class ReportPacketTactile: ReportPacketControl {
 }
 
 /// A representation of a joystick's control data.
-public class ReportPacketJoystick: ReportPacketControl {
+public class TetrisReportPacketJoystick: TetrisReportPacketControl {
     
     /// The x coordinate of the nipple's position in the joystick, -1.0 < x < 1.0.
     public let x: Float
