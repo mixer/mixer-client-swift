@@ -29,6 +29,12 @@ public class ChatMessagePacket: ChatPacket, ChatSendable {
         super.init(data: ["data": data])
     }
     
+    /// Initializes a chat message packet with a message string.
+    public init(message: String) {
+        messageText = message.stringByReplacingOccurrencesOfString("\"", withString: "\\\"")
+        super.init()
+    }
+    
     public var identifier: String {
         return "msg"
     }
