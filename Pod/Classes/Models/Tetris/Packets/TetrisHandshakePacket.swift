@@ -19,6 +19,8 @@ public class TetrisHandshakePacket: TetrisPacket, TetrisSendable {
     public override init() {
         id = nil
         key = nil
+        
+        super.init()
     }
     
     /**
@@ -30,6 +32,8 @@ public class TetrisHandshakePacket: TetrisPacket, TetrisSendable {
     public init(id: Int, key: String) {
         self.id = id
         self.key = key
+        
+        super.init()
     }
     
     public var identifier: String {

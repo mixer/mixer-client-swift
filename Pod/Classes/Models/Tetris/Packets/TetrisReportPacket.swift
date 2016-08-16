@@ -19,6 +19,8 @@ public class TetrisReportPacket: TetrisPacket, TetrisSendable {
      */
     public init(controls: [TetrisReportPacketControl]) {
         self.controls = controls
+        
+        super.init()
     }
     
     public var identifier: String {

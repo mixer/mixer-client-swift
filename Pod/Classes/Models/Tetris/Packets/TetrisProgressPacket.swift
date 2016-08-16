@@ -6,19 +6,38 @@
 //
 //
 
+import SwiftyJSON
+
 /// A packet received when control data has been updated.
 public class TetrisProgressPacket: TetrisPacket {
     
     /// Data on the state of all of the controls in the stream.
     public let controls: [TetrisProgressPacketControl]
     
-    /**
-     Used to initialize a progress packet.
-     
-     :param: controls The data on all of the stream's controls.
-     */
-    init(controls: [TetrisProgressPacketControl]) {
+    override init?(data: JSON) {
+        var controls = [TetrisProgressPacketControl]()
+        
+        if let tactiles = data["tactile"].array {
+            for tactile in tactiles {
+                if let id = tactile["id"].int, cooldown = tactile["cooldown"].int, progress = tactile["progress"].int, disabled = tactile["disabled"].bool {
+                    let control = TetrisProgressPacketTactile(id: id, fired: tactile["fired"].bool ?? false, cooldown: cooldown, progress: progress, disabled: disabled)
+                    controls.append(control)
+                }
+            }
+        }
+        
+        if let joysticks = data["joystick"].array {
+            for joystick in joysticks {
+                if let id = joystick["id"].int, angle = joystick["angle"].float, intensity = joystick["intensity"].float {
+                    let control = TetrisProgressPacketJoystick(id: id, angle: angle, intensity: intensity)
+                    controls.append(control)
+                }
+            }
+        }
+        
         self.controls = controls
+        
+        super.init(data: data)
     }
 }
 

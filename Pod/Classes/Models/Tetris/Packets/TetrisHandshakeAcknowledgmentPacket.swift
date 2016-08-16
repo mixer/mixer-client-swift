@@ -6,18 +6,22 @@
 //
 //
 
+import SwiftyJSON
+
 /// A packet received when a handshake has been acknowledged by the tetris servers.
 public class TetrisHandshakeAcknowledgmentPacket: TetrisPacket {
     
     /// The current control state.
     public let state: String
     
-    /**
-     Used to initialize a handshake acknowledgment packet.
-     
-     :param: state The current control state.
-     */
-    init(state: String) {
-        self.state = state
+    /// Initializes a tetris handshake acknowledgment packet with JSON data.
+    override init?(data: JSON) {
+        if let state = data["state"].string {
+            self.state = state
+            
+            super.init(data: data)
+        } else {
+            return nil
+        }
     }
 }
