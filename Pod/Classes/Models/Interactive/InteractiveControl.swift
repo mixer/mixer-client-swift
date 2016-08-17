@@ -1,5 +1,5 @@
 //
-//  TetrisControl.swift
+//  InteractiveControl.swift
 //  Pods
 //
 //  Created by Jack Cook on 2/27/16.
@@ -8,22 +8,22 @@
 
 import SwiftyJSON
 
-/// A base tetris control object.
-public class TetrisControl {
+/// A base Interactive control object.
+public class InteractiveControl {
     
     /// The control's blueprint, containing valid configurations.
-    public let blueprint: TetrisBlueprint?
+    public let blueprint: InteractiveBlueprint?
     
     /// The control's identifier.
     public let id: Int
     
     /**
-     Used to initialize a tetris control.
+     Used to initialize a Interactive control.
      
      :param: id The control's identifier.
      :param: blueprint The control's blueprint, containing valid configurations.
      */
-    public init(id: Int, blueprint: TetrisBlueprint?) {
+    public init(id: Int, blueprint: InteractiveBlueprint?) {
         self.id = id
         self.blueprint = blueprint
     }

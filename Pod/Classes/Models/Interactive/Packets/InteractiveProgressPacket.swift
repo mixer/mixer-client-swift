@@ -9,18 +9,18 @@
 import SwiftyJSON
 
 /// A packet received when control data has been updated.
-public class TetrisProgressPacket: TetrisPacket {
+public class InteractiveProgressPacket: InteractivePacket {
     
     /// Data on the state of all of the controls in the stream.
-    public let controls: [TetrisProgressPacketControl]
+    public let controls: [InteractiveProgressPacketControl]
     
     override init?(data: JSON) {
-        var controls = [TetrisProgressPacketControl]()
+        var controls = [InteractiveProgressPacketControl]()
         
         if let tactiles = data["tactile"].array {
             for tactile in tactiles {
                 if let id = tactile["id"].int, cooldown = tactile["cooldown"].int, progress = tactile["progress"].int, disabled = tactile["disabled"].bool {
-                    let control = TetrisProgressPacketTactile(id: id, fired: tactile["fired"].bool ?? false, cooldown: cooldown, progress: progress, disabled: disabled)
+                    let control = InteractiveProgressPacketTactile(id: id, fired: tactile["fired"].bool ?? false, cooldown: cooldown, progress: progress, disabled: disabled)
                     controls.append(control)
                 }
             }
@@ -29,7 +29,7 @@ public class TetrisProgressPacket: TetrisPacket {
         if let joysticks = data["joystick"].array {
             for joystick in joysticks {
                 if let id = joystick["id"].int, angle = joystick["angle"].float, intensity = joystick["intensity"].float {
-                    let control = TetrisProgressPacketJoystick(id: id, angle: angle, intensity: intensity)
+                    let control = InteractiveProgressPacketJoystick(id: id, angle: angle, intensity: intensity)
                     controls.append(control)
                 }
             }
@@ -42,7 +42,7 @@ public class TetrisProgressPacket: TetrisPacket {
 }
 
 /// A representation of a base control's data.
-public class TetrisProgressPacketControl {
+public class InteractiveProgressPacketControl {
     
     /// The id of the control.
     public let id: Int
@@ -58,7 +58,7 @@ public class TetrisProgressPacketControl {
 }
 
 /// A representation of a tactile's control data.
-public class TetrisProgressPacketTactile: TetrisProgressPacketControl {
+public class InteractiveProgressPacketTactile: InteractiveProgressPacketControl {
     
     /// True if the tactile is currently being pressed.
     public let fired: Bool
@@ -92,7 +92,7 @@ public class TetrisProgressPacketTactile: TetrisProgressPacketControl {
 }
 
 /// A representation of a joysitck's control data.
-public class TetrisProgressPacketJoystick: TetrisProgressPacketControl {
+public class InteractiveProgressPacketJoystick: InteractiveProgressPacketControl {
     
     /// The angle, in radians, at which the joystick nipple is angled.
     public let angle: Float

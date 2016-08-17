@@ -1,5 +1,5 @@
 //
-//  TetrisPacket.swift
+//  InteractivePacket.swift
 //  Pods
 //
 //  Created by Jack Cook on 3/5/16.
@@ -8,8 +8,8 @@
 
 import SwiftyJSON
 
-/// The base tetris packet class. Also has methods used to send and receive tetris packets.
-public class TetrisPacket {
+/// The base Interactive packet class. Also has methods used to send and receive Interactive packets.
+public class InteractivePacket {
     
     /// The string of the packet's raw data.
     private var packetString: String?
@@ -18,17 +18,17 @@ public class TetrisPacket {
     init() {
     }
     
-    /// Initializes a tetris packet with a JSON dictionary.
+    /// Initializes a Interactive packet with a JSON dictionary.
     init?(data: JSON) {
     }
     
     /**
-     Creates a raw packet string from a tetris packet object.
+     Creates a raw packet string from a Interactive packet object.
      
      :param: packet The packet being sent by the app.
-     :returns: The raw packet string to be sent to the tetris servers.
+     :returns: The raw packet string to be sent to the Interactive servers.
      */
-    class func prepareToSend(packet: TetrisSendable) -> String {
+    class func prepareToSend(packet: InteractiveSendable) -> String {
         let method = packet.identifier
         let data = packet.data()
         
@@ -58,13 +58,13 @@ public class TetrisPacket {
     }
     
     /**
-     Interprets JSON packets received from the tetris servers.
+     Interprets JSON packets received from the Interactive servers.
      
      :param: string The string being interpreted.
-     :returns: A tuple with the tetris packet and the current control state, if it has been updated.
+     :returns: A tuple with the Interactive packet and the current control state, if it has been updated.
      */
-    class func receivePacket(string: String) -> (packet: TetrisPacket?, state: String?)? {
-        var packet: TetrisPacket?
+    class func receivePacket(string: String) -> (packet: InteractivePacket?, state: String?)? {
+        var packet: InteractivePacket?
         
         let event = (string as NSString).substringToIndex(4)
         let dataString = (string as NSString).stringByReplacingCharactersInRange(NSMakeRange(0, 4), withString: "")
@@ -77,12 +77,12 @@ public class TetrisPacket {
         
         switch event {
         case "hack": // 1
-            packet = TetrisHandshakeAcknowledgmentPacket(data: data)
+            packet = InteractiveHandshakeAcknowledgmentPacket(data: data)
     
         case "erro": // 3
-            packet = TetrisErrorPacket(data: data)
+            packet = InteractiveErrorPacket(data: data)
         case "prog": // 4
-            packet = TetrisProgressPacket(data: data)
+            packet = InteractiveProgressPacket(data: data)
         default:
             print("Unrecognized packet received: \(event) with data \(dataString)")
         }

@@ -6,13 +6,13 @@
 //
 //
 
-/// A packet sent to initialize a handshake with tetris.
-public class TetrisHandshakePacket: TetrisPacket, TetrisSendable {
+/// A packet sent to initialize a handshake with Interactive.
+public class InteractiveHandshakePacket: InteractivePacket, InteractiveSendable {
     
     /// The id of the user being authenticated.
     public let id: Int?
     
-    /// The authentication key required by tetris for authentication.
+    /// The authentication key required by Interactive for authentication.
     public let key: String?
     
     /// Used when there is no locally authenticated user.
@@ -27,7 +27,7 @@ public class TetrisHandshakePacket: TetrisPacket, TetrisSendable {
      Used when there is a locally authenticated user.
      
      :param: id The id of the user being authenticated.
-     :param: key The authentication key required by tetris for authentication.
+     :param: key The authentication key required by Interactive for authentication.
      */
     public init(id: Int, key: String) {
         self.id = id

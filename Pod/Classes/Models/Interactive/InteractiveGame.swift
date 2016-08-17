@@ -1,5 +1,5 @@
 //
-//  TetrisGame.swift
+//  InteractiveGame.swift
 //  Pods
 //
 //  Created by Jack Cook on 2/27/16.
@@ -8,8 +8,8 @@
 
 import SwiftyJSON
 
-/// A tetris game object.
-public struct TetrisGame {
+/// A Interactive game object.
+public struct InteractiveGame {
     
     /// The identifier of the game.
     public let id: Int
@@ -29,7 +29,7 @@ public struct TetrisGame {
     /// Text explaining how to install the game (for broadcasters).
     public let installation: String?
     
-    /// Used to initialize a tetris game object given JSON data.
+    /// Used to initialize a Interactive game object given JSON data.
     init(json: JSON) {
         id = json["id"].int ?? 0
         ownerId = json["ownerId"].int ?? 0

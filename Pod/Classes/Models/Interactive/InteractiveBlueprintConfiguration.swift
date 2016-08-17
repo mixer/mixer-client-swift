@@ -1,5 +1,5 @@
 //
-//  TetrisBlueprintConfiguration.swift
+//  InteractiveBlueprintConfiguration.swift
 //  Pods
 //
 //  Created by Jack Cook on 2/27/16.
@@ -9,7 +9,7 @@
 import SwiftyJSON
 
 /// The blueprint configuration for a control given a specific state and grid size.
-public struct TetrisBlueprintConfiguration {
+public struct InteractiveBlueprintConfiguration {
     
     /// The control's origin on the grid in this configuration.
     public let coordinates: CGPoint
@@ -21,7 +21,7 @@ public struct TetrisBlueprintConfiguration {
     public let state: String
     
     /// The configuration's grid size.
-    public let grid: TetrisGrid
+    public let grid: InteractiveGrid
     
     /// Used to initialize a blueprint configuration given JSON data.
     init(json: JSON) {
@@ -37,6 +37,6 @@ public struct TetrisBlueprintConfiguration {
         }
         
         state = json["state"].string ?? ""
-        grid = TetrisGrid(value: json["grid"].string)
+        grid = InteractiveGrid(value: json["grid"].string)
     }
 }

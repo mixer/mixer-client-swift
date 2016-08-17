@@ -1,13 +1,13 @@
 //
-//  TetrisSendable.swift
+//  InteractiveSendable.swift
 //  Pods
 //
 //  Created by Jack Cook on 3/5/16.
 //
 //
 
-/// The protocol inherited by tetris packets that are being sent.
-public protocol TetrisSendable {
+/// The protocol inherited by Interactive packets that are being sent.
+public protocol InteractiveSendable {
     
     /// The packet's data.
     func data() -> [String: AnyObject]

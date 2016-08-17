@@ -1,5 +1,5 @@
 //
-//  TetrisVersion.swift
+//  InteractiveVersion.swift
 //  Pods
 //
 //  Created by Jack Cook on 2/27/16.
@@ -8,8 +8,8 @@
 
 import SwiftyJSON
 
-/// The version of tetris controls being used by a channel.
-public struct TetrisVersion {
+/// The version of Interactive controls being used by a channel.
+public struct InteractiveVersion {
     
     /// The version's identifier.
     public let id: Int
@@ -30,12 +30,12 @@ public struct TetrisVersion {
     public let state: String?
     
     /// The controls that should be generated from the version.
-    public var controls: [TetrisControl]
+    public var controls: [InteractiveControl]
     
     /// The game that the controls are used for.
-    public let game: TetrisGame?
+    public let game: InteractiveGame?
     
-    /// Used to initialize a tetris version given JSON data.
+    /// Used to initialize a Interactive version given JSON data.
     init(json: JSON) {
         id = json["id"].int ?? 0
         gameId = json["gameId"].int ?? 0
@@ -44,24 +44,24 @@ public struct TetrisVersion {
         changelog = json["changelog"].string
         state = json["state"].string
         
-        controls = [TetrisControl]()
+        controls = [InteractiveControl]()
         
         if let controls = json["controls"].dictionary {
             if let tactiles = controls["tactiles"]?.array {
                 for tactile in tactiles {
-                    let control = TetrisTactile(json: tactile)
+                    let control = InteractiveTactile(json: tactile)
                     self.controls.append(control)
                 }
             }
             
             if let joysticks = controls["joysticks"]?.array {
                 for joystick in joysticks {
-                    let control = TetrisJoystick(json: joystick)
+                    let control = InteractiveJoystick(json: joystick)
                     self.controls.append(control)
                 }
             }
         }
         
-        game = TetrisGame(json: json["game"])
+        game = InteractiveGame(json: json["game"])
     }
 }

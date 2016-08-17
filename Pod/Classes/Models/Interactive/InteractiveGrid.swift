@@ -1,5 +1,5 @@
 //
-//  TetrisGrid.swift
+//  InteractiveGrid.swift
 //  Pods
 //
 //  Created by Jack Cook on 2/27/16.
@@ -7,13 +7,13 @@
 //
 
 /// The size of the control grid being used.
-public enum TetrisGrid {
+public enum InteractiveGrid {
     case Small
     case Medium
     case Large
     case Unknown
     
-    /// Used to initialize a tetris grid value from its string counterpart.
+    /// Used to initialize a Interactive grid value from its string counterpart.
     init(value: String?) {
         if let value = value {
             if value == "small" {

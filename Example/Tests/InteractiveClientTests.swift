@@ -1,5 +1,5 @@
 //
-//  TetrisClientTests.swift
+//  InteractiveClientTests.swift
 //  BeamAPI
 //
 //  Created by Jack Cook on 3/5/16.
@@ -9,11 +9,11 @@
 import BeamAPI
 import XCTest
 
-class TetrisClientTests: XCTestCase, TetrisClientDelegate {
+class InteractiveClientTests: XCTestCase, InteractiveClientDelegate {
     
     var address: String!
     var channel: BeamChannel!
-    var client: TetrisClient!
+    var client: InteractiveClient!
     var expectation: XCTestExpectation!
     
     override func setUp() {
@@ -31,7 +31,7 @@ class TetrisClientTests: XCTestCase, TetrisClientDelegate {
             
             self.channel = channel
             
-            BeamClient.sharedClient.tetris.getTetrisDataByChannel(self.channel.id) { (data, error) in
+            BeamClient.sharedClient.Interactive.getInteractiveDataByChannel(self.channel.id) { (data, error) in
                 guard let address = data?.address else {
                     XCTFail()
                     return
@@ -47,22 +47,22 @@ class TetrisClientTests: XCTestCase, TetrisClientDelegate {
     }
     
     func testConnect() {
-        expectation = expectationWithDescription("test joining a channel through tetris")
+        expectation = expectationWithDescription("test joining a channel through Interactive")
         
-        client = TetrisClient(delegate: self)
+        client = InteractiveClient(delegate: self)
         client.connect(url: address, channelId: channel.id)
         
         waitForExpectationsWithTimeout(10, handler: nil)
     }
     
-    func tetrisDidConnect() {
+    func InteractiveDidConnect() {
         client.disconnect()
     }
     
-    func tetrisDidDisconnect() {
+    func InteractiveDidDisconnect() {
         expectation.fulfill()
     }
     
-    func tetrisChangedState(state: String) {}
-    func tetrisReceivedPacket(packet: TetrisPacket) {}
+    func InteractiveChangedState(state: String) {}
+    func InteractiveReceivedPacket(packet: InteractivePacket) {}
 }

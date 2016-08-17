@@ -59,8 +59,8 @@ public struct BeamChannel {
     /// True if the channel's content is interactive.
     public let interactive: Bool
     
-    /// The id of the tetris game being used by the channel.
-    public let tetrisGameId: Int?
+    /// The id of the Interactive game being used by the channel.
+    public let InteractiveGameId: Int?
     
     /// FTL is enabled if this value is > 0.
     public let ftl: Int
@@ -163,7 +163,7 @@ public struct BeamChannel {
         desc = json["description"].string
         typeId = json["typeId"].int
         interactive = json["interactive"].bool ?? (json["interactive"].int ?? 0) == 1
-        tetrisGameId = json["tetrisGameId"].int
+        InteractiveGameId = json["InteractiveGameId"].int
         ftl = json["ftl"].int ?? 0
         hasVod = json["hasVod"].bool ?? false
         createdAt = NSDate.fromBeam(json["createdAt"].string)

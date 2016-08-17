@@ -9,7 +9,7 @@ This is a client library for [Beam](https://dev.beam.pro) written in Swift.
 
 - Authenticate with Beam and manage your user session
 - Retrieve full data about channels, users, and other resources
-- Send and receive packets through the chat and Tetris servers
+- Send and receive packets through the chat and Interactive servers
 - [Complete Documentation](http://cocoadocs.org/docsets/BeamAPI/)
 
 ## Usage

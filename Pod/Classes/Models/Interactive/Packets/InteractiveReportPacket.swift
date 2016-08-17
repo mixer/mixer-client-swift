@@ -7,17 +7,17 @@
 //
 
 /// A packet sent with local control data.
-public class TetrisReportPacket: TetrisPacket, TetrisSendable {
+public class InteractiveReportPacket: InteractivePacket, InteractiveSendable {
     
     /// Data on the state of all of the controls in the stream.
-    public let controls: [TetrisReportPacketControl]
+    public let controls: [InteractiveReportPacketControl]
     
     /**
      Used to initialize a report packet.
      
      :param: controls The data on all of the stream's controls.
      */
-    public init(controls: [TetrisReportPacketControl]) {
+    public init(controls: [InteractiveReportPacketControl]) {
         self.controls = controls
         
         super.init()
@@ -34,9 +34,9 @@ public class TetrisReportPacket: TetrisPacket, TetrisSendable {
         var joysticks = [String]()
         
         for control in controls {
-            if control is TetrisReportPacketTactile {
+            if control is InteractiveReportPacketTactile {
                 tactiles.append(control.description)
-            } else if control is TetrisReportPacketJoystick {
+            } else if control is InteractiveReportPacketJoystick {
                 joysticks.append(control.description)
             }
         }
@@ -49,7 +49,7 @@ public class TetrisReportPacket: TetrisPacket, TetrisSendable {
 }
 
 /// A representation of a base control's data.
-public class TetrisReportPacketControl: CustomStringConvertible {
+public class InteractiveReportPacketControl: CustomStringConvertible {
     
     /// The id of the control.
     public let id: Int
@@ -69,7 +69,7 @@ public class TetrisReportPacketControl: CustomStringConvertible {
 }
 
 /// A representation of a tactile's control data.
-public class TetrisReportPacketTactile: TetrisReportPacketControl {
+public class InteractiveReportPacketTactile: InteractiveReportPacketControl {
     
     /// True if the tactile is being pressed.
     public let down: Bool
@@ -92,7 +92,7 @@ public class TetrisReportPacketTactile: TetrisReportPacketControl {
 }
 
 /// A representation of a joystick's control data.
-public class TetrisReportPacketJoystick: TetrisReportPacketControl {
+public class InteractiveReportPacketJoystick: InteractiveReportPacketControl {
     
     /// The x coordinate of the nipple's position in the joystick, -1.0 < x < 1.0.
     public let x: Float

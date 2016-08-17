@@ -1,5 +1,5 @@
 //
-//  TetrisTactile.swift
+//  InteractiveTactile.swift
 //  Pods
 //
 //  Created by Jack Cook on 3/9/16.
@@ -8,8 +8,8 @@
 
 import SwiftyJSON
 
-/// A tetris tactile control.
-public class TetrisTactile: TetrisControl {
+/// A Interactive tactile control.
+public class InteractiveTactile: InteractiveControl {
     
     /// The unicode number of the key the tactile would bind to on a keyboard.
     public let key: Int
@@ -26,7 +26,7 @@ public class TetrisTactile: TetrisControl {
     /// The number of seconds a button cannot be pressed for after pressing it once.
     public let cooldown: Int?
     
-    /// Used to initialize a tetris tactile given JSON data.
+    /// Used to initialize a Interactive tactile given JSON data.
     init(json: JSON) {
         key = json["key"].int ?? 0
         text = json["text"].string
@@ -35,7 +35,7 @@ public class TetrisTactile: TetrisControl {
         cooldown = json["cooldown"].dictionary?["press"]?.int ?? 0
         
         let id = json["id"].int ?? 0
-        let blueprint = TetrisBlueprint(json: json["blueprint"])
+        let blueprint = InteractiveBlueprint(json: json["blueprint"])
         
         super.init(id: id, blueprint: blueprint)
     }
