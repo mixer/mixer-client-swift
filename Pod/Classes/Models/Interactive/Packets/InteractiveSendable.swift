@@ -6,7 +6,7 @@
 //
 //
 
-/// The protocol inherited by Interactive packets that are being sent.
+/// The protocol adopted by interactive packets that are being sent.
 public protocol InteractiveSendable {
     
     /// The packet's data.

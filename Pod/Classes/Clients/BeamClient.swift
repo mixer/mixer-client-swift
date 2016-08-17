@@ -29,6 +29,9 @@ public class BeamClient {
     /// The property through which all ingest methods are accessed.
     public let ingests: IngestsRoutes
     
+    /// The property through which all interactive methods are accessed.
+    public let interactive: InteractiveRoutes
+    
     /// The property through which all notification methods are accessed.
     public let notifications: NotificationsRoutes
     
@@ -44,9 +47,6 @@ public class BeamClient {
     /// The property through which all team methods are accessed.
     public let teams: TeamsRoutes
     
-    /// The property through which all Interactive methods are accessed.
-    public let Interactive: InteractiveRoutes
-    
     /// The property through which all type methods are accessed.
     public let types: TypesRoutes
     
@@ -59,12 +59,12 @@ public class BeamClient {
         channels = ChannelsRoutes()
         chat = ChatRoutes()
         ingests = IngestsRoutes()
+        interactive = InteractiveRoutes()
         notifications = NotificationsRoutes()
         oauth = OAuthRoutes()
         recordings = RecordingsRoutes()
         shop = ShopRoutes()
         teams = TeamsRoutes()
-        Interactive = InteractiveRoutes()
         types = TypesRoutes()
         users = UsersRoutes()
     }

@@ -14,9 +14,9 @@ class InteractiveTests: XCTestCase {
     let channelId = 50772
     
     func testInteractiveData() {
-        let expectation = expectationWithDescription("tests the Interactive data endpoint")
+        let expectation = expectationWithDescription("tests the interactive data endpoint")
         
-        BeamClient.sharedClient.Interactive.getInteractiveDataByChannel(channelId) { (data, error) in
+        BeamClient.sharedClient.interactive.getInteractiveDataByChannel(channelId) { (data, error) in
             XCTAssertNotNil(data)
             XCTAssertNil(error)
             expectation.fulfill()

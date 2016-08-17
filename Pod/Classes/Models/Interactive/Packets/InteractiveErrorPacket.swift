@@ -8,7 +8,7 @@
 
 import SwiftyJSON
 
-/// A packet received when an error has occurred with Interactive.
+/// A packet received when an error has occurred with interactive.
 public class InteractiveErrorPacket: InteractivePacket {
     
     /// The error message.

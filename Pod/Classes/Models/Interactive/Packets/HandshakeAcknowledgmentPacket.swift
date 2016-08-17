@@ -8,7 +8,7 @@
 
 import SwiftyJSON
 
-/// A packet received when a handshake has been acknowledged by the Interactive servers.
+/// A packet received when a handshake has been acknowledged by the interactive servers.
 public class InteractiveHandshakeAcknowledgmentPacket: InteractivePacket {
     
     /// The current control state.

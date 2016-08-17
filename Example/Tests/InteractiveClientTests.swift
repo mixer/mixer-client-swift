@@ -31,7 +31,7 @@ class InteractiveClientTests: XCTestCase, InteractiveClientDelegate {
             
             self.channel = channel
             
-            BeamClient.sharedClient.Interactive.getInteractiveDataByChannel(self.channel.id) { (data, error) in
+            BeamClient.sharedClient.interactive.getInteractiveDataByChannel(self.channel.id) { (data, error) in
                 guard let address = data?.address else {
                     XCTFail()
                     return
@@ -47,7 +47,7 @@ class InteractiveClientTests: XCTestCase, InteractiveClientDelegate {
     }
     
     func testConnect() {
-        expectation = expectationWithDescription("test joining a channel through Interactive")
+        expectation = expectationWithDescription("test joining a channel with interactive capabilities")
         
         client = InteractiveClient(delegate: self)
         client.connect(url: address, channelId: channel.id)
@@ -55,14 +55,14 @@ class InteractiveClientTests: XCTestCase, InteractiveClientDelegate {
         waitForExpectationsWithTimeout(10, handler: nil)
     }
     
-    func InteractiveDidConnect() {
+    func interactiveDidConnect() {
         client.disconnect()
     }
     
-    func InteractiveDidDisconnect() {
+    func interactiveDidDisconnect() {
         expectation.fulfill()
     }
     
-    func InteractiveChangedState(state: String) {}
-    func InteractiveReceivedPacket(packet: InteractivePacket) {}
+    func interactiveChangedState(state: String) {}
+    func interactiveReceivedPacket(packet: InteractivePacket) {}
 }

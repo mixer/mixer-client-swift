@@ -8,7 +8,7 @@
 
 import SwiftyJSON
 
-/// The base Interactive packet class. Also has methods used to send and receive Interactive packets.
+/// The base interactive packet class. Also has methods used to send and receive interactive packets.
 public class InteractivePacket {
     
     /// The string of the packet's raw data.
@@ -26,7 +26,7 @@ public class InteractivePacket {
      Creates a raw packet string from an interactive packet object.
      
      :param: packet The packet being sent by the app.
-     :returns: The raw packet string to be sent to the Interactive servers.
+     :returns: The raw packet string to be sent to the interactive servers.
      */
     class func prepareToSend(packet: InteractiveSendable) -> String {
         let method = packet.identifier
@@ -58,10 +58,10 @@ public class InteractivePacket {
     }
     
     /**
-     Interprets JSON packets received from the Interactive servers.
+     Interprets JSON packets received from the interactive servers.
      
      :param: string The string being interpreted.
-     :returns: A tuple with the Interactive packet and the current control state, if it has been updated.
+     :returns: A tuple with the interactive packet and the current control state, if it has been updated.
      */
     class func receivePacket(string: String) -> (packet: InteractivePacket?, state: String?)? {
         var packet: InteractivePacket?

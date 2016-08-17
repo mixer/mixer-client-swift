@@ -11,10 +11,10 @@ import SwiftyJSON
 /// Holds data retrieved by InteractiveRoutes.getInteractiveDataByChannel.
 public struct InteractiveData {
     
-    /// The URL address of the Interactive server that should be connected to.
+    /// The URL address of the interactive server that should be connected to.
     public let address: String?
     
-    /// The key used for authentication with the Interactive servers.
+    /// The key used for authentication with the interactive servers.
     public let key: String?
     
     /// The id of the user being authenticated.

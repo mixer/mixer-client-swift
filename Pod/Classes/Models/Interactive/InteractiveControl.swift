@@ -8,7 +8,7 @@
 
 import SwiftyJSON
 
-/// A base Interactive control object.
+/// A base interactive control object.
 public class InteractiveControl {
     
     /// The control's blueprint, containing valid configurations.

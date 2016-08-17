@@ -14,6 +14,10 @@ public class ConstellationPacket {
     /// The string of the packet's raw JSON data.
     private var packetString: String?
     
+    /// Initializes an empty constellation packet.
+    public init() {
+    }
+    
     class func prepareToSend(packet: ConstellationSendable) -> String {
         let packet = [
             "type": "method",

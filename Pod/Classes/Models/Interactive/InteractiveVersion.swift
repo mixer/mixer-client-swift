@@ -8,7 +8,7 @@
 
 import SwiftyJSON
 
-/// The version of Interactive controls being used by a channel.
+/// The version of interactive controls being used by a channel.
 public struct InteractiveVersion {
     
     /// The version's identifier.

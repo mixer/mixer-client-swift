@@ -9,7 +9,7 @@
 import Starscream
 import SwiftyJSON
 
-/// Used to connect to a channel's interactive controls through our Interactive protocol.
+/// Used to connect to a channel's interactive controls through our interactive protocol.
 public class InteractiveClient: WebSocketDelegate {
     
     // MARK: Properties
@@ -26,15 +26,15 @@ public class InteractiveClient: WebSocketDelegate {
     /// The id of the authenticated user in the app.
     private var userId: Int?
     
-    /// The current Interactive control state.
+    /// The current interactive control state.
     private var state: String?
     
     /// The websocket through which control updates are received and sent.
     private var socket: WebSocket?
     
     /// Initializes an interactive connection, which needs to be stored by your own class.
-    public init(delegate InteractiveDelegate: InteractiveClientDelegate) {
-        delegate = InteractiveDelegate
+    public init(delegate interactiveDelegate: InteractiveClientDelegate) {
+        delegate = interactiveDelegate
     }
     
     // MARK: Public Methods
@@ -42,9 +42,9 @@ public class InteractiveClient: WebSocketDelegate {
     /**
      Connects to an interactive channel given data that is received with InteractiveRoutes.getInteractiveDataByChannel
     
-     :param: url The base URL of the Interactive server being connected to.
+     :param: url The base URL of the interactive server being connected to.
      :param: channelId The id of the channel being connected to.
-     :param: key The key used to authenticate with Interactive.
+     :param: key The key used to authenticate with interactive.
      :param: userId The id of the authenticated user in the app.
      */
     public func connect(url baseUrl: String, channelId: Int, key: String? = nil, userId: Int? = nil) {
@@ -61,13 +61,13 @@ public class InteractiveClient: WebSocketDelegate {
         socket?.connect()
     }
     
-    /// Disconnects from the Interactive server.
+    /// Disconnects from the interactive server.
     public func disconnect() {
         self.socket?.disconnect()
     }
     
     /**
-     Sends a packet to the Interactive server.
+     Sends a packet to the interactive server.
      
      :param: packet The packet being sent.
      */
@@ -86,14 +86,14 @@ public class InteractiveClient: WebSocketDelegate {
     private func updateState(state: String) {
         if state != self.state {
             self.state = state
-            delegate?.InteractiveChangedState(state)
+            delegate?.interactiveChangedState(state)
         }
     }
     
     // MARK: WebSocketDelegate
     
     public func websocketDidConnect(socket: WebSocket) {
-        delegate?.InteractiveDidConnect()
+        delegate?.interactiveDidConnect()
         
         guard let authKey = authKey,
             userId = userId else {
@@ -108,13 +108,13 @@ public class InteractiveClient: WebSocketDelegate {
     }
     
     public func websocketDidDisconnect(socket: WebSocket, error: NSError?) {
-        delegate?.InteractiveDidDisconnect()
+        delegate?.interactiveDidDisconnect()
     }
     
     public func websocketDidReceiveMessage(socket: WebSocket, text: String) {
         if let (packet, state) = InteractivePacket.receivePacket(text) {
             if let packet = packet {
-                delegate?.InteractiveReceivedPacket(packet)
+                delegate?.interactiveReceivedPacket(packet)
             }
             
             if let state = state {
@@ -127,18 +127,18 @@ public class InteractiveClient: WebSocketDelegate {
     }
 }
 
-/// The Interactive client's delegate, through which information is relayed to your app.
+/// The interactive client's delegate, through which information is relayed to your app.
 public protocol InteractiveClientDelegate: class {
     
-    /// Called when a connection is made to the Interactive server.
-    func InteractiveDidConnect()
+    /// Called when a connection is made to the interactive server.
+    func interactiveDidConnect()
     
     /// Called when the client disconnects, whether on purpose or due to an error.
-    func InteractiveDidDisconnect()
+    func interactiveDidDisconnect()
     
     /// Called when the control state is changed by the broadcaster.
-    func InteractiveChangedState(state: String)
+    func interactiveChangedState(state: String)
     
     /// Called when a packet is received and interpreted.
-    func InteractiveReceivedPacket(packet: InteractivePacket)
+    func interactiveReceivedPacket(packet: InteractivePacket)
 }

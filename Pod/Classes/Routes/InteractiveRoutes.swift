@@ -12,10 +12,10 @@ public class InteractiveRoutes {
     // MARK: Retrieving Interactive Data
     
     /**
-     Retrieves details used to connect to a channel's Interactive socket.
+     Retrieves details used to connect to a channel's interactive socket.
     
      :param: channelId The id of the channel being connected to.
-     :param: completion An optional completion block with retrieved Interactive details.
+     :param: completion An optional completion block with retrieved interactive details.
      */
     public func getInteractiveDataByChannel(channelId: Int, completion: ((data: InteractiveData?, error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/interactive/\(channelId)") { (json, error) in
