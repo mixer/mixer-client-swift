@@ -14,7 +14,7 @@ public class InteractiveErrorPacket: InteractivePacket {
     /// The error message.
     public let message: String
     
-    /// Initializes a Interactive error packet with JSON data.
+    /// Initializes an interactive error packet with JSON data.
     override init?(data: JSON) {
         if let message = data["message"].string {
             self.message = message

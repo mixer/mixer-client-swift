@@ -26,7 +26,7 @@ public struct InteractiveData {
     /// The version of the controls being used by the channel.
     public let version: InteractiveVersion?
     
-    /// Used to initialize a Interactive data object given JSON data.
+    /// Used to initialize an interactive data object given JSON data.
     init(json: JSON) {
         address = json["address"].string
         key = json["key"].string

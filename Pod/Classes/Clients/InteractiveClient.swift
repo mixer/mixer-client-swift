@@ -32,7 +32,7 @@ public class InteractiveClient: WebSocketDelegate {
     /// The websocket through which control updates are received and sent.
     private var socket: WebSocket?
     
-    /// Initializes a Interactive connection, which needs to be stored by your own class.
+    /// Initializes an interactive connection, which needs to be stored by your own class.
     public init(delegate InteractiveDelegate: InteractiveClientDelegate) {
         delegate = InteractiveDelegate
     }
@@ -40,7 +40,7 @@ public class InteractiveClient: WebSocketDelegate {
     // MARK: Public Methods
     
     /**
-     Connects to a Interactive channel given data that is received with InteractiveRoutes.getInteractiveDataByChannel
+     Connects to an interactive channel given data that is received with InteractiveRoutes.getInteractiveDataByChannel
     
      :param: url The base URL of the Interactive server being connected to.
      :param: channelId The id of the channel being connected to.

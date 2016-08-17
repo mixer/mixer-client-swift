@@ -35,7 +35,7 @@ public struct InteractiveVersion {
     /// The game that the controls are used for.
     public let game: InteractiveGame?
     
-    /// Used to initialize a Interactive version given JSON data.
+    /// Used to initialize an interactive version given JSON data.
     init(json: JSON) {
         id = json["id"].int ?? 0
         gameId = json["gameId"].int ?? 0

@@ -18,7 +18,7 @@ public class InteractiveControl {
     public let id: Int
     
     /**
-     Used to initialize a Interactive control.
+     Used to initialize an interactive control.
      
      :param: id The control's identifier.
      :param: blueprint The control's blueprint, containing valid configurations.

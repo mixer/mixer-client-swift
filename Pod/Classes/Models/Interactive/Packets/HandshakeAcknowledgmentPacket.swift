@@ -14,7 +14,7 @@ public class InteractiveHandshakeAcknowledgmentPacket: InteractivePacket {
     /// The current control state.
     public let state: String
     
-    /// Initializes a Interactive handshake acknowledgment packet with JSON data.
+    /// Initializes an interactive handshake acknowledgment packet with JSON data.
     override init?(data: JSON) {
         if let state = data["state"].string {
             self.state = state

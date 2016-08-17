@@ -8,7 +8,7 @@
 
 import SwiftyJSON
 
-/// A Interactive game object.
+/// An interactive game object.
 public struct InteractiveGame {
     
     /// The identifier of the game.
@@ -29,7 +29,7 @@ public struct InteractiveGame {
     /// Text explaining how to install the game (for broadcasters).
     public let installation: String?
     
-    /// Used to initialize a Interactive game object given JSON data.
+    /// Used to initialize an interactive game object given JSON data.
     init(json: JSON) {
         id = json["id"].int ?? 0
         ownerId = json["ownerId"].int ?? 0

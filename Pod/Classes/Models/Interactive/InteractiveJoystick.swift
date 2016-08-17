@@ -8,13 +8,13 @@
 
 import SwiftyJSON
 
-/// A Interactive joystick control.
+/// An interactive joystick control.
 public class InteractiveJoystick: InteractiveControl {
     
     /// Help text that can be displayed on hover.
     public let help: String?
     
-    /// Used to initialize a Interactive joystick given JSON data.
+    /// Used to initialize an interactive joystick given JSON data.
     init(json: JSON) {
         help = json["help"].string
         

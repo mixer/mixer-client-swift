@@ -13,7 +13,7 @@ public enum InteractiveGrid {
     case Large
     case Unknown
     
-    /// Used to initialize a Interactive grid value from its string counterpart.
+    /// Used to initialize an interactive grid value from its string counterpart.
     init(value: String?) {
         if let value = value {
             if value == "small" {

@@ -18,12 +18,12 @@ public class InteractivePacket {
     init() {
     }
     
-    /// Initializes a Interactive packet with a JSON dictionary.
+    /// Initializes an interactive packet with a JSON dictionary.
     init?(data: JSON) {
     }
     
     /**
-     Creates a raw packet string from a Interactive packet object.
+     Creates a raw packet string from an interactive packet object.
      
      :param: packet The packet being sent by the app.
      :returns: The raw packet string to be sent to the Interactive servers.

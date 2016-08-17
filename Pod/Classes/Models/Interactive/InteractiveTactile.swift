@@ -8,7 +8,7 @@
 
 import SwiftyJSON
 
-/// A Interactive tactile control.
+/// An interactive tactile control.
 public class InteractiveTactile: InteractiveControl {
     
     /// The unicode number of the key the tactile would bind to on a keyboard.
@@ -26,7 +26,7 @@ public class InteractiveTactile: InteractiveControl {
     /// The number of seconds a button cannot be pressed for after pressing it once.
     public let cooldown: Int?
     
-    /// Used to initialize a Interactive tactile given JSON data.
+    /// Used to initialize an interactive tactile given JSON data.
     init(json: JSON) {
         key = json["key"].int ?? 0
         text = json["text"].string
