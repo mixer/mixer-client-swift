@@ -10,7 +10,7 @@
 public class ChatHistoryPacket: ChatPacket, ChatSendable {
     
     /// The number of messages being requested.
-    public var quantity: Int
+    public let quantity: Int
     
     /**
      Used to initialize a chat history packet.
