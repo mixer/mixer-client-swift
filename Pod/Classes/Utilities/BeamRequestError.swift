@@ -27,6 +27,7 @@ public enum BeamRequestError: Equatable, ErrorType {
     
     // Registration Errors
     case InvalidUsername,
+    ReservedUsername,
     TakenUsername,
     WeakPassword,
     InvalidEmail,
@@ -45,6 +46,7 @@ public func ==(lhs: BeamRequestError, rhs: BeamRequestError) -> Bool {
     case (.InvalidCredentials, .InvalidCredentials): return true
     case (.Requires2FA, .Requires2FA): return true
     case (.InvalidUsername, .InvalidUsername): return true
+    case (.ReservedUsername, .ReservedUsername): return true
     case (.TakenUsername, .TakenUsername): return true
     case (.WeakPassword, .WeakPassword): return true
     case (.InvalidEmail, .InvalidEmail): return true

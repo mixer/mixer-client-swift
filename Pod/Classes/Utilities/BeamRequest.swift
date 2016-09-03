@@ -141,6 +141,11 @@ public class BeamRequest {
                                     case "string.min", "string.password": requestError = .WeakPassword
                                     default: requestError = .Unknown(data: json)
                                     }
+                                case "username":
+                                    switch type {
+                                    case "reserved": requestError = .ReservedUsername
+                                    default: requestError = .Unknown(data: json)
+                                    }
                                 default: requestError = .Unknown(data: json)
                                 }
                             }
