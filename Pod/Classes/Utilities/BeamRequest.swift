@@ -174,7 +174,7 @@ public class BeamRequest {
      
      :returns: The name of the device being used.
      */
-    private class func deviceName() -> String {
+    internal class func deviceName() -> String {
         var systemInfo = utsname()
         uname(&systemInfo)
         let machineMirror = Mirror(reflecting: systemInfo.machine)
