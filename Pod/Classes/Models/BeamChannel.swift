@@ -69,10 +69,10 @@ public struct BeamChannel {
     public let hasVod: Bool
     
     /// The date, in UTC, on which the channel was created.
-    public let createdAt: NSDate?
+    public let createdAt: Date?
     
     /// The date, in UTC, on which channel was last updated.
-    public let updatedAt: NSDate?
+    public let updatedAt: Date?
     
     /// The number of subscribers to the channel. nil if this is not the authenticated user's channel.
     public let subscribers: Int?
@@ -111,7 +111,7 @@ public struct BeamChannel {
     public let user: BeamUser?
     
     /// An object containing data about the relationship between an authenticated user and the channel.
-    private let status: [String: JSON]?
+    fileprivate let status: [String: JSON]?
     
     /// True if the authenticated user is following the channel.
     public var following: Bool? {
@@ -127,18 +127,16 @@ public struct BeamChannel {
     /// The roles that the authenticated user has in the channel.
     public var roles: [BeamGroup]? {
         get {
-            if let roles = status?["roles"],
-                rolesArray = roles.array {
-                    var retrievedRoles = [BeamGroup]()
-                    
-                    for role in rolesArray {
-                        if let roleString = role.string,
-                            group = BeamGroup(rawValue: roleString) {
-                                retrievedRoles.append(group)
-                        }
+            if let roles = status?["roles"], let rolesArray = roles.array {
+                var retrievedRoles = [BeamGroup]()
+                
+                for role in rolesArray {
+                    if let roleString = role.string, let group = BeamGroup(rawValue: roleString) {
+                        retrievedRoles.append(group)
                     }
-                    
-                    return retrievedRoles
+                }
+                
+                return retrievedRoles
             }
             
             return nil

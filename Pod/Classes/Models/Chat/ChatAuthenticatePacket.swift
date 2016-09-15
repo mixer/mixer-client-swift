@@ -51,14 +51,14 @@ public class ChatAuthenticatePacket: ChatPacket, ChatSendable {
     public func arguments() -> [AnyObject] {
         var objects = [AnyObject]()
         
-        objects.append(channelId)
+        objects.append(channelId as AnyObject)
         
         if let userId = userId {
-            objects.append(userId)
+            objects.append(userId as AnyObject)
         }
         
         if let authKey = authKey {
-            objects.append(authKey)
+            objects.append(authKey as AnyObject)
         }
         
         return objects

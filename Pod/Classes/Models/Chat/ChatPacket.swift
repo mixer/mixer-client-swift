@@ -12,7 +12,7 @@ import SwiftyJSON
 public class ChatPacket {
     
     /// The string of the packet's raw data.
-    private var packetString: String?
+    fileprivate var packetString: String?
     
     /// Initializes an empty packet.
     init() {
@@ -33,15 +33,15 @@ public class ChatPacket {
      :param: count The nth packet sent by the app.
      :returns: The raw packet string to be sent to the chat servers.
      */
-    class func prepareToSend(packet: ChatSendable, count: Int) -> String {
+    class func prepareToSend(_ packet: ChatSendable, count: Int) -> String {
         let packet = [
             "type": "method",
             "method": packet.identifier,
             "arguments": packet.arguments(),
             "id": "\(count)"
-        ]
+        ] as [String : Any]
         
-        return JSON(packet).rawString(NSUTF8StringEncoding, options: NSJSONWritingOptions(rawValue: 0)) ?? ""
+        return JSON(packet).rawString(String.Encoding.utf8, options: JSONSerialization.WritingOptions(rawValue: 0)) ?? ""
     }
     
     /**
@@ -50,10 +50,10 @@ public class ChatPacket {
      :param: json The JSON object being interpreted.
      :returns: The packet object to be used by the app.
      */
-    class func receivePacket(json: JSON) -> ChatPacket? {
+    class func receivePacket(_ json: JSON) -> ChatPacket? {
         var packet: ChatPacket?
         
-        if let event = json["event"].string, data = json["data"].dictionary {
+        if let event = json["event"].string, let data = json["data"].dictionary {
             switch event {
             case "ChatMessage":
                 packet = ChatMessagePacket(data: data)
@@ -72,7 +72,7 @@ public class ChatPacket {
             default:
                 print("Unrecognized packet received: \(event) with parameters \(data)")
             }
-        } else if let type = json["type"].string, data = json["data"].array {
+        } else if let type = json["type"].string, let data = json["data"].array {
             switch type {
             case "reply":
                 packet = ChatMessagesPacket(data: data)

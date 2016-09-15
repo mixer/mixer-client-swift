@@ -27,18 +27,17 @@ public struct BeamThumbnail {
     public let remotePath: String?
     
     /// The first time at which the channel was given a thumbnail.
-    public let createdAt: NSDate?
+    public let createdAt: Date?
     
     /// The most recent time at which the channel's thumbnail was updated.
-    public let updatedAt: NSDate?
+    public let updatedAt: Date?
     
     /// The size of the thumbnail image.
     public var size: CGSize?
     
     /// Used to initialize a thumbnail given JSON data.
     init(json: JSON) {
-        if let size = json["meta"]["size"].array,
-            w = size[0].int, h = size[1].int {
+        if let size = json["meta"]["size"].array, let w = size[0].int, let h = size[1].int {
             let width = CGFloat(w)
             let height = CGFloat(h)
             self.size = CGSizeMake(width, height)

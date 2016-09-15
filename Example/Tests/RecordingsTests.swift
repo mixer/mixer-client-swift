@@ -17,7 +17,7 @@ class RecordingsTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        let semaphore = dispatch_semaphore_create(0)
+        let semaphore = DispatchSemaphore(value: 0)
         
         BeamClient.sharedClient.channels.getRecordingsOfChannel(channelId) { (recordings, error) in
             guard let id = recordings?[0].id else {
@@ -32,22 +32,22 @@ class RecordingsTests: XCTestCase {
             dispatch_semaphore_signal(semaphore)
         }
         
-        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+        semaphore.wait(timeout: DispatchTime.distantFuture)
     }
     
     func testsRecordingSeen() {
-        let expectation = expectationWithDescription("tests marking a recording as seen")
+        let expectation = self.expectation(description: "tests marking a recording as seen")
         
         BeamClient.sharedClient.recordings.markRecordingSeen(recordingId) { (error) in
             XCTAssert(error == .NotAuthenticated)
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testsRecording() {
-        let expectation = expectationWithDescription("tests retrieving a recording")
+        let expectation = self.expectation(description: "tests retrieving a recording")
         
         BeamClient.sharedClient.recordings.getRecording(recordingId) { (recording, error) in
             XCTAssertNotNil(recording)
@@ -55,6 +55,6 @@ class RecordingsTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 }

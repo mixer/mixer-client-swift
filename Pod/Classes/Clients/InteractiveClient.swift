@@ -15,22 +15,22 @@ public class InteractiveClient: WebSocketDelegate {
     // MARK: Properties
     
     /// The client's delegate, through which control updates are relayed to your app.
-    private weak var delegate: InteractiveClientDelegate?
+    fileprivate weak var delegate: InteractiveClientDelegate?
     
     /// The stored authentication key. Will only be generated if BeamSession.sharedSession != nil, and is needed to send control updates.
-    private var authKey: String?
+    fileprivate var authKey: String?
     
     /// The id of the channel being connected to.
-    private var channelId: Int!
+    fileprivate var channelId: Int!
     
     /// The id of the authenticated user in the app.
-    private var userId: Int?
+    fileprivate var userId: Int?
     
     /// The current interactive control state.
-    private var state: String?
+    fileprivate var state: String?
     
     /// The websocket through which control updates are received and sent.
-    private var socket: WebSocket?
+    fileprivate var socket: WebSocket?
     
     /// Initializes an interactive connection, which needs to be stored by your own class.
     public init(delegate interactiveDelegate: InteractiveClientDelegate) {
@@ -52,7 +52,7 @@ public class InteractiveClient: WebSocketDelegate {
         self.channelId = channelId
         self.userId = userId ?? BeamSession.sharedSession?.user.id
         
-        guard let url = NSURL(string: "\(baseUrl)/play/\(channelId)") else {
+        guard let url = URL(string: "\(baseUrl)/play/\(channelId)") else {
             return
         }
         
@@ -71,7 +71,7 @@ public class InteractiveClient: WebSocketDelegate {
      
      :param: packet The packet being sent.
      */
-    public func sendPacket(packet: InteractiveSendable) {
+    public func sendPacket(_ packet: InteractiveSendable) {
         guard let socket = socket else {
             return
         }
@@ -83,7 +83,7 @@ public class InteractiveClient: WebSocketDelegate {
     // MARK: Private Methods
     
     /// Called when the control state is changed by the broadcaster.
-    private func updateState(state: String) {
+    fileprivate func updateState(_ state: String) {
         if state != self.state {
             self.state = state
             delegate?.interactiveChangedState(state)
@@ -92,11 +92,11 @@ public class InteractiveClient: WebSocketDelegate {
     
     // MARK: WebSocketDelegate
     
-    public func websocketDidConnect(socket: WebSocket) {
+    public func websocketDidConnect(_ socket: WebSocket) {
         delegate?.interactiveDidConnect()
         
         guard let authKey = authKey,
-            userId = userId else {
+            let userId = userId else {
                 let packet = InteractiveHandshakePacket()
                 sendPacket(packet)
                 
@@ -107,11 +107,11 @@ public class InteractiveClient: WebSocketDelegate {
         sendPacket(packet)
     }
     
-    public func websocketDidDisconnect(socket: WebSocket, error: NSError?) {
+    public func websocketDidDisconnect(_ socket: WebSocket, error: NSError?) {
         delegate?.interactiveDidDisconnect()
     }
     
-    public func websocketDidReceiveMessage(socket: WebSocket, text: String) {
+    public func websocketDidReceiveMessage(_ socket: WebSocket, text: String) {
         if let (packet, state) = InteractivePacket.receivePacket(text) {
             if let packet = packet {
                 delegate?.interactiveReceivedPacket(packet)
@@ -123,7 +123,7 @@ public class InteractiveClient: WebSocketDelegate {
         }
     }
     
-    public func websocketDidReceiveData(socket: WebSocket, data: NSData) {
+    public func websocketDidReceiveData(_ socket: WebSocket, data: Data) {
     }
 }
 
@@ -137,8 +137,8 @@ public protocol InteractiveClientDelegate: class {
     func interactiveDidDisconnect()
     
     /// Called when the control state is changed by the broadcaster.
-    func interactiveChangedState(state: String)
+    func interactiveChangedState(_ state: String)
     
     /// Called when a packet is received and interpreted.
-    func interactiveReceivedPacket(packet: InteractivePacket)
+    func interactiveReceivedPacket(_ packet: InteractivePacket)
 }

@@ -12,20 +12,20 @@ import SwiftyJSON
 public class ConstellationPacket {
     
     /// The string of the packet's raw JSON data.
-    private var packetString: String?
+    fileprivate var packetString: String?
     
     /// Initializes an empty constellation packet.
     public init() {
     }
     
-    class func prepareToSend(packet: ConstellationSendable) -> String {
+    class func prepareToSend(_ packet: ConstellationSendable) -> String {
         let packet = [
             "type": "method",
             "method": packet.method,
             "params": packet.params
-        ]
+        ] as [String : Any]
         
-        return JSON(packet).rawString(NSUTF8StringEncoding, options: NSJSONWritingOptions(rawValue: 0)) ?? ""
+        return JSON(packet).rawString(String.Encoding.utf8, options: JSONSerialization.WritingOptions(rawValue: 0)) ?? ""
     }
     
     /**
@@ -34,13 +34,13 @@ public class ConstellationPacket {
      :param: json The JSON object being interpreted.
      :returns: The constellation packet object to be used by the app.
      */
-    class func receivePacket(json: JSON) -> ConstellationPacket? {
+    class func receivePacket(_ json: JSON) -> ConstellationPacket? {
         var packet: ConstellationPacket?
         
         if let type = json["type"].string {
             switch type {
             case "event":
-                if let event = json["event"].string, data = json["data"].dictionary {
+                if let event = json["event"].string, let data = json["data"].dictionary {
                     switch event {
                     case "hello":
                         packet = ConstellationHelloPacket(data: data)

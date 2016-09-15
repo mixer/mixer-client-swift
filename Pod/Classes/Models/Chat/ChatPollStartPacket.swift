@@ -18,14 +18,14 @@ public class ChatPollStartPacket: ChatPacket {
     public let question: String
     
     /// The exact time at which the poll will end.
-    public let endTime: NSDate
+    public let endTime: Date
     
     /// The number of seconds that the poll will last for.
     public let duration: Int
     
     /// Initializes a chat poll start packet with JSON data.
     override init?(data: [String: JSON]) {
-        if let answers = data["answers"]?.array, question = data["q"]?.string, endTime = data["endsAt"]?.int, duration = data["duration"]?.int {
+        if let answers = data["answers"]?.array, let question = data["q"]?.string, let endTime = data["endsAt"]?.int, let duration = data["duration"]?.int {
             var parsedAnswers = [String]()
             
             for answer in answers where answer.string != nil {

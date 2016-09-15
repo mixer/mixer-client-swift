@@ -19,7 +19,7 @@ class InteractiveClientTests: XCTestCase, InteractiveClientDelegate {
     override func setUp() {
         super.setUp()
         
-        let semaphore = dispatch_semaphore_create(0)
+        let semaphore = DispatchSemaphore(value: 0)
         
         BeamClient.sharedClient.channels.getChannels(.Interactive) { (channels, error) in
             guard let channel = channels?[0] else {
@@ -43,16 +43,16 @@ class InteractiveClientTests: XCTestCase, InteractiveClientDelegate {
             }
         }
         
-        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+        semaphore.wait(timeout: DispatchTime.distantFuture)
     }
     
     func testConnect() {
-        expectation = expectationWithDescription("test joining a channel with interactive capabilities")
+        expectation = self.expectation(withDescription: "test joining a channel with interactive capabilities")
         
         client = InteractiveClient(delegate: self)
         client.connect(url: address, channelId: channel.id)
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func interactiveDidConnect() {
@@ -63,6 +63,6 @@ class InteractiveClientTests: XCTestCase, InteractiveClientDelegate {
         expectation.fulfill()
     }
     
-    func interactiveChangedState(state: String) {}
-    func interactiveReceivedPacket(packet: InteractivePacket) {}
+    func interactiveChangedState(_ state: String) {}
+    func interactiveReceivedPacket(_ packet: InteractivePacket) {}
 }

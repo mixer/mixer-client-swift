@@ -25,12 +25,9 @@ public struct InteractiveBlueprintConfiguration {
     
     /// Used to initialize a blueprint configuration given JSON data.
     init(json: JSON) {
-        if let x = json["x"].int,
-            y = json["y"].int,
-            w = json["width"].int,
-            h = json["height"].int {
-                coordinates = CGPointMake(CGFloat(x), CGFloat(y))
-                size = CGSizeMake(CGFloat(w), CGFloat(h))
+        if let x = json["x"].int, let y = json["y"].int, let w = json["width"].int, let h = json["height"].int {
+            coordinates = CGPointMake(CGFloat(x), CGFloat(y))
+            size = CGSizeMake(CGFloat(w), CGFloat(h))
         } else {
             coordinates = CGPointZero
             size = CGSizeZero

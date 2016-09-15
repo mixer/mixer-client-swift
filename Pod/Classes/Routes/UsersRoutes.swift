@@ -19,7 +19,7 @@ public class UsersRoutes {
      :param: email The email address of the user whose password was forgotten.
      :param: completion An optional completion block that fires when the email has been sent.
      */
-    public func forgotPassword(email: String, completion: ((error: BeamRequestError?) -> Void)?) {
+    public func forgotPassword(_ email: String, completion: ((_ error: BeamRequestError?) -> Void)?) {
         let body = ["email": email]
         
         BeamRequest.request("/users/reset", requestType: "POST", body: body) { (json, error) in
@@ -34,9 +34,9 @@ public class UsersRoutes {
      :param: preferences The preference data string to be interpreted by Beam's servers.
      :param: completion An optional completion block that fires when the preferences have been updated.
      */
-    public func updatePreferences(id: Int, preferences: AnyObject, completion: ((error: BeamRequestError?) -> Void)?) {
+    public func updatePreferences(_ id: Int, preferences: AnyObject, completion: ((_ error: BeamRequestError?) -> Void)?) {
         guard let _ = BeamSession.sharedSession else {
-            completion?(error: .NotAuthenticated)
+            completion?(.notAuthenticated)
             return
         }
         
@@ -52,9 +52,9 @@ public class UsersRoutes {
      :param: settings The string of profile data to be interpreted by the Beam servers.
      :param: completion An optional completion block that fires when the profile has been updated.
      */
-    public func updateProfile(id: Int, settings: AnyObject, completion: ((user: BeamUser?, error: BeamRequestError?) -> Void)?) {
+    public func updateProfile(_ id: Int, settings: AnyObject, completion: ((_ user: BeamUser?, _ error: BeamRequestError?) -> Void)?) {
         guard let _ = BeamSession.sharedSession else {
-            completion?(user: nil, error: .NotAuthenticated)
+            completion?(nil, .notAuthenticated)
             return
         }
         
@@ -77,7 +77,7 @@ public class UsersRoutes {
      :param: userId The id of the user whose achievements are being retrieved.
      :param: completion An optional completion block with retrieved achievement data.
      */
-    public func getAchievementsByUser(userId: Int, completion: ((achievements: [BeamUserAchievement]?, error: BeamRequestError?) -> Void)?) {
+    public func getAchievementsByUser(_ userId: Int, completion: ((_ achievements: [BeamUserAchievement]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/users/\(userId)/achievements") { (json, error) in
             guard let achievements = json?.array else {
                 completion?(achievements: nil, error: error)
@@ -101,7 +101,7 @@ public class UsersRoutes {
      :param: id The id of the user whose followed channels are being retrieved.
      :param: completion An optional completion block with retrieved channels' data.
      */
-    public func getFollowedChannelsByUser(id: Int, page: Int, completion: ((channels: [BeamChannel]?, error: BeamRequestError?) -> Void)?) {
+    public func getFollowedChannelsByUser(_ id: Int, page: Int, completion: ((_ channels: [BeamChannel]?, _ error: BeamRequestError?) -> Void)?) {
         let params = ["order": "online:desc,viewersCurrent:desc,viewersTotal:desc", "where": "suspended.eq.0", "page": "\(page)"]
         
         BeamRequest.request("/users/\(id)/follows", params: params) { (json, error) in
@@ -127,7 +127,7 @@ public class UsersRoutes {
      :param: id The id of the user whose preferences are being retrieved.
      :param: completion An optional completion block with retrieved preferences data.
      */
-    public func getPreferences(id: Int, completion: ((preferences: [String: AnyObject]?, error: BeamRequestError?) -> Void)?) {
+    public func getPreferences(_ id: Int, completion: ((_ preferences: [String: AnyObject]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/users/\(id)/preferences") { (json, error) in
             guard let preferences = json?.dictionaryObject else {
                 completion?(preferences: nil, error: error)
@@ -146,7 +146,7 @@ public class UsersRoutes {
      :param: id The identifier of the user being retrieved.
      :param: completion An optional completion block with retrieved user data.
      */
-    public func getUserWithId(id: Int, completion: ((user: BeamUser?, error: BeamRequestError?) -> Void)?) {
+    public func getUserWithId(_ id: Int, completion: ((_ user: BeamUser?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/users/\(id)") { (json, error) in
             guard let json = json else {
                 completion?(user: nil, error: error)
@@ -164,7 +164,7 @@ public class UsersRoutes {
      :param: query The search/query to be performed to find users.
      :param: completion An optional completion block with the retrieved users' data.
      */
-    public func getUsersByQuery(query: String, completion: ((users: [BeamUser]?, error: BeamRequestError?) -> Void)?) {
+    public func getUsersByQuery(_ query: String, completion: ((_ users: [BeamUser]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/users/search") { (json, error) in
             guard let users = json?.array else {
                 completion?(users: nil, error: error)

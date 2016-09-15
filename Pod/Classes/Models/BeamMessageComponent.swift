@@ -43,8 +43,7 @@ public struct BeamMessageComponent {
                 source = json["source"].string
                 pack = json["pack"].string
                 
-                if let coords = json["coords"].dictionary,
-                    xc = coords["x"]?.int, yc = coords["y"]?.int {
+                if let coords = json["coords"].dictionary, let xc = coords["x"]?.int, let yc = coords["y"]?.int {
                     let x = CGFloat(xc)
                     let y = CGFloat(yc)
                     coordinates = CGPointMake(x, y)

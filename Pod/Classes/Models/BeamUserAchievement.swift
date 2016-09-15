@@ -21,10 +21,10 @@ public struct BeamUserAchievement {
     public let progress: Float
     
     /// The date of the achievement's creation.
-    public let createdAt: NSDate?
+    public let createdAt: Date?
     
     /// The date the user last made progress on the achievement.
-    public let updatedAt: NSDate?
+    public let updatedAt: Date?
     
     /// The slug/identifier of the achievement being discussed.
     public let achievementSlug: String?

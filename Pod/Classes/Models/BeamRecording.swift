@@ -16,9 +16,9 @@ public struct BeamRecording {
     public let state: String?
     public let viewsTotal: Int
     public let duration: Float
-    public let expiresAt: NSDate?
-    public let createdAt: NSDate?
-    public let updatedAt: NSDate?
+    public let expiresAt: Date?
+    public let createdAt: Date?
+    public let updatedAt: Date?
     public let channelId: Int
     public let channel: BeamChannel?
     public let vods: [BeamVOD]

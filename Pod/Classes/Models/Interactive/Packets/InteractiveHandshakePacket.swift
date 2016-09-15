@@ -43,8 +43,8 @@ public class InteractiveHandshakePacket: InteractivePacket, InteractiveSendable 
     public func data() -> [String: AnyObject] {
         var data = [String: AnyObject]()
         
-        data["id"] = id ?? NSNull()
-        data["key"] = key ?? NSNull()
+        data["id"] = id as AnyObject?? ?? NSNull()
+        data["key"] = key as AnyObject?? ?? NSNull()
         
         return data
     }

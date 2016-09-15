@@ -16,7 +16,7 @@ public class ShopRoutes {
     
      :param: completion An optional completion block with retrieved shop categories.
      */
-    public func getCategories(completion: ((categories: [BeamShopCategory]?, error: BeamRequestError?) -> Void)?) {
+    public func getCategories(_ completion: ((_ categories: [BeamShopCategory]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/shop/categories") { (json, error) in
             guard let categories = json?.array else {
                 completion?(categories: nil, error: error)
@@ -40,7 +40,7 @@ public class ShopRoutes {
      :param: itemId The identifier of the item being requested.
      :param: completion An optional completion block with the retrieved item's data.
      */
-    public func getItemWithId(itemId: Int, completion: ((item: BeamShopItem?, error: BeamRequestError?) -> Void)?) {
+    public func getItemWithId(_ itemId: Int, completion: ((_ item: BeamShopItem?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/shop/items/\(itemId)") { (json, error) in
             guard let json = json else {
                 completion?(item: nil, error: error)
@@ -58,7 +58,7 @@ public class ShopRoutes {
      :param: categoryId The identifier of the category with items that are being requested.
      :param: completion An optional completion block with the requested items' data.
      */
-    public func getItemsByCategory(categoryId: Int, completion: ((items: [BeamShopItem]?, error: BeamRequestError?) -> Void)?) {
+    public func getItemsByCategory(_ categoryId: Int, completion: ((_ items: [BeamShopItem]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/shop/categories/\(categoryId)/items") { (json, error) in
             guard let items = json?.array else {
                 completion?(items: nil, error: error)

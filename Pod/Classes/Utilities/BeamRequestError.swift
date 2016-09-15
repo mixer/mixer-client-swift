@@ -9,46 +9,46 @@
 import SwiftyJSON
 
 /// The type of a request error encountered by the app.
-public enum BeamRequestError: Equatable, ErrorType {
+public enum BeamRequestError: Equatable, Error {
     
     // HTTP Errors
-    case BadRequest(data: JSON?),
-    AccessDenied,
-    NotFound
+    case badRequest(data: JSON?),
+    accessDenied,
+    notFound
     
     // Beam Errors
-    case NotAuthenticated,
-    Offline,
-    Unknown(data: JSON?)
+    case notAuthenticated,
+    offline,
+    unknown(data: JSON?)
     
     // Login Errors
-    case InvalidCredentials,
-    Requires2FA
+    case invalidCredentials,
+    requires2FA
     
     // Registration Errors
-    case InvalidUsername,
-    TakenUsername,
-    WeakPassword,
-    InvalidEmail,
-    TakenEmail
+    case invalidUsername,
+    takenUsername,
+    weakPassword,
+    invalidEmail,
+    takenEmail
 }
 
 /// Workaround for the fact that enums with associated values can't have raw types.
 public func ==(lhs: BeamRequestError, rhs: BeamRequestError) -> Bool {
     switch (lhs, rhs) {
-    case (.BadRequest(_), .BadRequest(_)): return true
-    case (.AccessDenied, .AccessDenied): return true
-    case (.NotFound, .NotFound): return true
-    case (.NotAuthenticated, .NotAuthenticated): return true
-    case (.Offline, .Offline): return true
-    case (.Unknown(_), .Unknown(_)): return true
-    case (.InvalidCredentials, .InvalidCredentials): return true
-    case (.Requires2FA, .Requires2FA): return true
-    case (.InvalidUsername, .InvalidUsername): return true
-    case (.TakenUsername, .TakenUsername): return true
-    case (.WeakPassword, .WeakPassword): return true
-    case (.InvalidEmail, .InvalidEmail): return true
-    case (.TakenEmail, .TakenEmail): return true
+    case (.badRequest(_), .badRequest(_)): return true
+    case (.accessDenied, .accessDenied): return true
+    case (.notFound, .notFound): return true
+    case (.notAuthenticated, .notAuthenticated): return true
+    case (.offline, .offline): return true
+    case (.unknown(_), .unknown(_)): return true
+    case (.invalidCredentials, .invalidCredentials): return true
+    case (.requires2FA, .requires2FA): return true
+    case (.invalidUsername, .invalidUsername): return true
+    case (.takenUsername, .takenUsername): return true
+    case (.weakPassword, .weakPassword): return true
+    case (.invalidEmail, .invalidEmail): return true
+    case (.takenEmail, .takenEmail): return true
     default: return false
     }
 }

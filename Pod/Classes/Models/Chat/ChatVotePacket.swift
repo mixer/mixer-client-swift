@@ -30,7 +30,7 @@ public class ChatVotePacket: ChatPacket, ChatSendable {
     public func arguments() -> [AnyObject] {
         var objects = [AnyObject]()
         
-        objects.append(option)
+        objects.append(option as AnyObject)
         
         return objects
     }

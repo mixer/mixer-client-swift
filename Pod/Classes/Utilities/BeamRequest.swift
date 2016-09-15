@@ -25,7 +25,7 @@ public class BeamRequest {
      :param: body The request body.
      :param: completion An optional completion block with retrieved JSON data.
      */
-    public class func request(endpoint: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: AnyObject? = nil, ignoreCSRF: Bool = false, completion: ((json: JSON?, error: BeamRequestError?) -> Void)?) {
+    public class func request(_ endpoint: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: AnyObject? = nil, ignoreCSRF: Bool = false, completion: ((_ json: JSON?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.dataRequest("https://beam.pro/api/v1\(endpoint)", requestType: requestType, headers: headers, params: params, body: body, ignoreCSRF: ignoreCSRF) { (data, error) in
             guard let data = data else {
                 completion?(json: nil, error: error)
@@ -43,14 +43,14 @@ public class BeamRequest {
      :param: url The URL of the image being retrieved.
      :param: completion An optional completion block with the retrieved image.
      */
-    public class func imageRequest(url: String, completion: ((image: UIImage?, error: BeamRequestError?) -> Void)?) {
+    public class func imageRequest(_ url: String, completion: ((_ image: UIImage?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.dataRequest(url) { (data, error) in
-            guard let data = data, image = UIImage(data: data) else {
-                completion?(image: nil, error: error)
+            guard let data = data, let image = UIImage(data: data) else {
+                completion?(nil, error)
                 return
             }
             
-            completion?(image: image, error: error)
+            completion?(image, error)
         }
     }
     
@@ -64,43 +64,43 @@ public class BeamRequest {
      :param: body The request body.
      :param: completion An optional completion block with retrieved data.
      */
-    public class func dataRequest(baseURL: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: AnyObject? = nil, ignoreCSRF: Bool = false, completion: ((data: NSData?, error: BeamRequestError?) -> Void)?) {
-        let sessionConfig = NSURLSessionConfiguration.defaultSessionConfiguration()
-        let session = NSURLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
+    public class func dataRequest(_ baseURL: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: AnyObject? = nil, ignoreCSRF: Bool = false, completion: ((_ data: Data?, _ error: BeamRequestError?) -> Void)?) {
+        let sessionConfig = URLSessionConfiguration.default
+        let session = URLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
         
-        var url = NSURL(string: baseURL)!
+        var url = URL(string: baseURL)!
         url = NSURLByAppendingQueryParameters(url, queryParameters: params)
         
-        let request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = requestType
+        let request = NSMutableURLRequest(url: url)
+        request.httpMethod = requestType
         
         if let body = body {
             do {
                 request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
-                request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(body, options: [])
+                request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
             } catch {
-                completion?(data: nil, error: .BadRequest(data: nil))
+                completion?(nil, .BadRequest(data: nil))
                 return
             }
         }
         
         request.addValue("BeamApp/\(version) (iOS; \(deviceName()))", forHTTPHeaderField: "User-Agent")
         
-        let existingCSRFToken = NSUserDefaults.standardUserDefaults().stringForKey("CSRFToken") ?? ""
+        let existingCSRFToken = UserDefaults.standard.string(forKey: "CSRFToken") ?? ""
         request.addValue(existingCSRFToken, forHTTPHeaderField: "X-CSRF-Token")
         
         for (header, val) in headers {
             request.addValue(val, forHTTPHeaderField: header)
         }
         
-        let task = session.dataTaskWithRequest(request) { (data, response, error) in
-            guard let response = response as? NSHTTPURLResponse, data = data else {
+        let task = session.dataTask(with: request, completionHandler: { (data, response, error) in
+            guard let response = response as? HTTPURLResponse, let data = data else {
                 completion?(data: nil, error: .Unknown(data: nil))
                 return
             }
             
-            if let csrfToken = response.allHeaderFields["X-CSRF-Token"] as? String where csrfToken != existingCSRFToken && !ignoreCSRF {
-                NSUserDefaults.standardUserDefaults().setObject(csrfToken, forKey: "CSRFToken")
+            if let csrfToken = response.allHeaderFields["X-CSRF-Token"] as? String , csrfToken != existingCSRFToken && !ignoreCSRF {
+                UserDefaults.standard.set(csrfToken, forKey: "CSRFToken")
                 dataRequest(baseURL, requestType: requestType, headers: headers, params: params, body: body, completion: completion)
                 return
             }
@@ -110,7 +110,7 @@ public class BeamRequest {
             
             if let error = error {
                 switch error.code {
-                case -1009: requestError = .Offline
+                case -1009: requestError = .offline
                 default: break
                 }
                 
@@ -122,23 +122,23 @@ public class BeamRequest {
                     
                     if let component = url.lastPathComponent {
                         if requestType == "POST" && component == "users" {
-                            if let name = json["name"].string, details = json["details"].array?[0], path = details["path"].string, type = details["type"].string where name == "ValidationError" {
+                            if let name = json["name"].string, let details = json["details"].array?[0], let path = details["path"].string, let type = details["type"].string , name == "ValidationError" {
                                 switch path {
                                 case "payload.email":
                                     switch type {
-                                    case "string.email": requestError = .InvalidEmail
-                                    case "unique": requestError = .TakenEmail
+                                    case "string.email": requestError = .invalidEmail
+                                    case "unique": requestError = .takenEmail
                                     default: requestError = .Unknown(data: json)
                                     }
                                 case "payload.username":
                                     switch type {
-                                    case "string.min": requestError = .InvalidUsername
-                                    case "unique": requestError = .TakenUsername
+                                    case "string.min": requestError = .invalidUsername
+                                    case "unique": requestError = .takenUsername
                                     default: requestError = .Unknown(data: json)
                                     }
                                 case "payload.password":
                                     switch type {
-                                    case "string.min", "string.password": requestError = .WeakPassword
+                                    case "string.min", "string.password": requestError = .weakPassword
                                     default: requestError = .Unknown(data: json)
                                     }
                                 default: requestError = .Unknown(data: json)
@@ -146,10 +146,10 @@ public class BeamRequest {
                             }
                         }
                     }
-                case 401: requestError = .InvalidCredentials
-                case 403: requestError = .AccessDenied
-                case 404: requestError = .NotFound
-                case 499: requestError = .Requires2FA
+                case 401: requestError = .invalidCredentials
+                case 403: requestError = .accessDenied
+                case 404: requestError = .notFound
+                case 499: requestError = .requires2FA
                 default:
                     print("Unknown status code: \(response.statusCode)")
                     requestError = .Unknown(data: json)
@@ -159,7 +159,7 @@ public class BeamRequest {
             } else {
                 completion?(data: data, error: nil)
             }
-        }
+        }) 
         
         task.resume()
     }
@@ -169,12 +169,12 @@ public class BeamRequest {
      
      :returns: The name of the device being used.
      */
-    private class func deviceName() -> String {
+    fileprivate class func deviceName() -> String {
         var systemInfo = utsname()
         uname(&systemInfo)
         let machineMirror = Mirror(reflecting: systemInfo.machine)
         let identifier = machineMirror.children.reduce("") { identifier, element in
-            guard let value = element.value as? Int8 where value != 0 else {
+            guard let value = element.value as? Int8 , value != 0 else {
                 return identifier
             }
             
@@ -190,15 +190,15 @@ public class BeamRequest {
      :param: queryParameters The keys and values of the URL parameters.
      :returns: The string of the parameters to be appended to the URL.
      */
-    private class func stringFromQueryParameters(queryParameters: [String: String]) -> String {
+    fileprivate class func stringFromQueryParameters(_ queryParameters: [String: String]) -> String {
         var parts: [String] = []
         for (name, value) in queryParameters {
             let part = NSString(format: "%@=%@",
-                name.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())!,
-                value.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())!)
+                name.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlHostAllowed)!,
+                value.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlHostAllowed)!)
             parts.append(part as String)
         }
-        return parts.joinWithSeparator("&")
+        return parts.joined(separator: "&")
     }
     
     /**
@@ -208,8 +208,8 @@ public class BeamRequest {
      :param: queryParameters. The keys and values of the URL parameters.
      :returns: The complete URL.
      */
-    private class func NSURLByAppendingQueryParameters(url: NSURL!, queryParameters: [String: String]) -> NSURL {
+    fileprivate class func NSURLByAppendingQueryParameters(_ url: URL!, queryParameters: [String: String]) -> URL {
         let URLString = NSString(format: "%@?%@", url.absoluteString, self.stringFromQueryParameters(queryParameters))
-        return NSURL(string: URLString as String)!
+        return URL(string: URLString as String)!
     }
 }

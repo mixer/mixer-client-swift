@@ -16,7 +16,7 @@ public class IngestsRoutes {
      
      :param: completion An optional completion block with retrieved ingest data.
      */
-    public func getIngests(completion: ((ingests: [BeamIngest]?, error: BeamRequestError?) -> Void)?) {
+    public func getIngests(_ completion: ((_ ingests: [BeamIngest]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/ingests") { (json, error) in
             guard let ingests = json?.array else {
                 completion?(ingests: nil, error: error)

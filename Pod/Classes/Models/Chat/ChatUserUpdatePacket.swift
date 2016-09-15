@@ -25,7 +25,7 @@ public class ChatUserUpdatePacket: ChatPacket {
     
     /// Initializes a chat user update packet with JSON data.
     override init?(data: [String: JSON]) {
-        if let permissions = data["permissions"]?.array, userId = data["user"]?.int, username = data["username"]?.string, roles = data["roles"]?.array {
+        if let permissions = data["permissions"]?.array, let userId = data["user"]?.int, let username = data["username"]?.string, let roles = data["roles"]?.array {
             var parsedPermissions = [String]()
             
             for permission in permissions where permission.string != nil {

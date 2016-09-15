@@ -22,7 +22,7 @@ public class ChatUserLeavePacket: ChatPacket {
     
     /// Initializes a chat user leave packet with JSON data.
     override init?(data: [String: JSON]) {
-        if let username = data["username"]?.string, roles = data["roles"]?.array, userId = data["id"]?.int {
+        if let username = data["username"]?.string, let roles = data["roles"]?.array, let userId = data["id"]?.int {
             self.username = username
             
             var parsedRoles = [String]()

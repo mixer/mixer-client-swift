@@ -21,14 +21,14 @@ public class ConstellationUserResubscribedPacket: ConstellationLivePacket {
     public let totalMonths: Int
     
     /// The date at which the user's subscription began.
-    public let since: NSDate?
+    public let since: Date?
     
     /// The date at which the user's subscription will end.
-    public let until: NSDate?
+    public let until: Date?
     
     /// Initializes a resubscribed packet with JSON data.
     override init?(data: [String: JSON]) {
-        if let channel = data["channel"]?.string, payload = data["payload"], channelId = payload["channel"].int, totalMonths = payload["totalMonths"].int {
+        if let channel = data["channel"]?.string, let payload = data["payload"], let channelId = payload["channel"].int, let totalMonths = payload["totalMonths"].int {
             self.userId = Int(channel.componentsSeparatedByString(":")[1])!
             self.channelId = channelId
             self.totalMonths = totalMonths

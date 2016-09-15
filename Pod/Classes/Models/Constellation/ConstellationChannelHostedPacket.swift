@@ -19,7 +19,7 @@ public class ConstellationChannelHostedPacket: ConstellationLivePacket {
     
     /// Initializes a channel hosted packet with JSON data.
     override init?(data: [String: JSON]) {
-        if let channel = data["channel"]?.string, payload = data["payload"] {
+        if let channel = data["channel"]?.string, let payload = data["payload"] {
             self.channelId = Int(channel.componentsSeparatedByString(":")[1])!
             self.host = BeamChannel(json: payload["hoster"])
             

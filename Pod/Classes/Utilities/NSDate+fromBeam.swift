@@ -9,7 +9,7 @@
 import Foundation
 
 /// A helper class used to parse dates returned by Beam's servers.
-public extension NSDate {
+public extension Date {
     
     /**
      Creates an NSDate object from a date string.
@@ -17,14 +17,14 @@ public extension NSDate {
      :param: dateString The raw string containing the data data.
      :returns: The NSDate object.
      */
-    public class func fromBeam(dateString: String?) -> NSDate? {
+    public static func fromBeam(_ dateString: String?) -> Date? {
         guard let string = dateString else {
             return nil
         }
         
-        let formatter = NSDateFormatter()
+        let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z"
         
-        return formatter.dateFromString(string)
+        return formatter.date(from: string)
     }
 }

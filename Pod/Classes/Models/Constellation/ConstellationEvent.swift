@@ -10,51 +10,51 @@ import Foundation
 
 /// A live event that can be subscribed to through Constellation.
 public enum ConstellationEvent: CustomStringConvertible {
-    case ChannelFollowed(channelId: Int)
-    case ChannelHosted(channelId: Int)
-    case ChannelSubscribed(channelId: Int)
-    case ChannelResubscribed(channelId: Int)
-    case ChannelUpdate(channelId: Int)
-    case InteractiveConnect(channelId: Int)
-    case InteractiveDisconnect(channelId: Int)
-    case TeamDeleted(teamId: Int)
-    case TeamMemberAccepted(teamId: Int)
-    case TeamMemberInvited(teamId: Int)
-    case TeamMemberRemoved(teamId: Int)
-    case TeamOwnerChanged(teamId: Int)
-    case UserAchievement(userId: Int)
-    case UserFollowed(userId: Int)
-    case UserNotify(userId: Int)
-    case UserSubscribed(userId: Int)
-    case UserResubscribed(userId: Int)
-    case UserTeamAccepted(userId: Int)
-    case UserTeamInvited(userId: Int)
-    case UserTeamRemoved(userId: Int)
-    case UserUpdate(userId: Int)
+    case channelFollowed(channelId: Int)
+    case channelHosted(channelId: Int)
+    case channelSubscribed(channelId: Int)
+    case channelResubscribed(channelId: Int)
+    case channelUpdate(channelId: Int)
+    case interactiveConnect(channelId: Int)
+    case interactiveDisconnect(channelId: Int)
+    case teamDeleted(teamId: Int)
+    case teamMemberAccepted(teamId: Int)
+    case teamMemberInvited(teamId: Int)
+    case teamMemberRemoved(teamId: Int)
+    case teamOwnerChanged(teamId: Int)
+    case userAchievement(userId: Int)
+    case userFollowed(userId: Int)
+    case userNotify(userId: Int)
+    case userSubscribed(userId: Int)
+    case userResubscribed(userId: Int)
+    case userTeamAccepted(userId: Int)
+    case userTeamInvited(userId: Int)
+    case userTeamRemoved(userId: Int)
+    case userUpdate(userId: Int)
     
     public var description: String {
         switch self {
-        case .ChannelFollowed(let id): return "channel:\(id):followed"
-        case .ChannelHosted(let id): return "channel:\(id):hosted"
-        case .ChannelSubscribed(let id): return "channel:\(id):subscribed"
-        case .ChannelResubscribed(let id): return "channel:\(id):resubscribed"
-        case .ChannelUpdate(let id): return "channel:\(id):update"
-        case .InteractiveConnect(let id): return "interactive:\(id):connect"
-        case .InteractiveDisconnect(let id): return "interactive:\(id):disconnected"
-        case .TeamDeleted(let id): return "team:\(id):deleted"
-        case .TeamMemberAccepted(let id): return "team:\(id):memberAccepted"
-        case .TeamMemberInvited(let id): return "team:\(id):memberInvited"
-        case .TeamMemberRemoved(let id): return "team:\(id):memberRemoved"
-        case .TeamOwnerChanged(let id): return "team:\(id):ownerChanged"
-        case .UserAchievement(let id): return "user:\(id):achievement"
-        case .UserFollowed(let id): return "user:\(id):followed"
-        case .UserNotify(let id): return "user:\(id):notify"
-        case .UserSubscribed(let id): return "user:\(id):subscribed"
-        case .UserResubscribed(let id): return "user:\(id):resubscribed"
-        case .UserTeamAccepted(let id): return "user:\(id):teamAccepted"
-        case .UserTeamInvited(let id): return "user:\(id):teamInvited"
-        case .UserTeamRemoved(let id): return "user:\(id):teamRemoved"
-        case .UserUpdate(let id): return "user:\(id):update"
+        case .channelFollowed(let id): return "channel:\(id):followed"
+        case .channelHosted(let id): return "channel:\(id):hosted"
+        case .channelSubscribed(let id): return "channel:\(id):subscribed"
+        case .channelResubscribed(let id): return "channel:\(id):resubscribed"
+        case .channelUpdate(let id): return "channel:\(id):update"
+        case .interactiveConnect(let id): return "interactive:\(id):connect"
+        case .interactiveDisconnect(let id): return "interactive:\(id):disconnected"
+        case .teamDeleted(let id): return "team:\(id):deleted"
+        case .teamMemberAccepted(let id): return "team:\(id):memberAccepted"
+        case .teamMemberInvited(let id): return "team:\(id):memberInvited"
+        case .teamMemberRemoved(let id): return "team:\(id):memberRemoved"
+        case .teamOwnerChanged(let id): return "team:\(id):ownerChanged"
+        case .userAchievement(let id): return "user:\(id):achievement"
+        case .userFollowed(let id): return "user:\(id):followed"
+        case .userNotify(let id): return "user:\(id):notify"
+        case .userSubscribed(let id): return "user:\(id):subscribed"
+        case .userResubscribed(let id): return "user:\(id):resubscribed"
+        case .userTeamAccepted(let id): return "user:\(id):teamAccepted"
+        case .userTeamInvited(let id): return "user:\(id):teamInvited"
+        case .userTeamRemoved(let id): return "user:\(id):teamRemoved"
+        case .userUpdate(let id): return "user:\(id):update"
         }
     }
 }

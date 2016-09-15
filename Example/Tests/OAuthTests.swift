@@ -23,7 +23,7 @@ class OAuthTests: XCTestCase {
     }
     
     func testLoginWithProvider() {
-        let expectation = expectationWithDescription("tests logging in through an oauth provider")
+        let expectation = self.expectation(description: "tests logging in through an oauth provider")
         
         var i = 0
         
@@ -40,6 +40,6 @@ class OAuthTests: XCTestCase {
             }
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 }

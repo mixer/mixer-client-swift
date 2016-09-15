@@ -22,7 +22,7 @@ public class ConstellationReplyPacket: ConstellationPacket {
     
     /// Initializes a reply packet with JSON data.
     init(result: [String: AnyObject]?, error: [String: JSON]?, id: Int) {
-        if let code = error?["code"]?.int, message = error?["message"]?.string {
+        if let code = error?["code"]?.int, let message = error?["message"]?.string {
             self.error = ConstellationReplyError(code: code, message: message)
         } else {
             self.error = nil

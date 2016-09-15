@@ -39,10 +39,10 @@ public struct BeamEmoticon {
      :param: spritesheet The entire spritesheet image.
      :returns: The cropped emoticon image.
      */
-    public func imageFromSpritesheet(spritesheet: UIImage) -> UIImage? {
-        let croppedRect = CGRectMake(position.x, position.y, size.width, size.height)
-        if let image = CGImageCreateWithImageInRect(spritesheet.CGImage, croppedRect) {
-            return UIImage(CGImage: image)
+    public func imageFromSpritesheet(_ spritesheet: UIImage) -> UIImage? {
+        let croppedRect = CGRect(x: position.x, y: position.y, width: size.width, height: size.height)
+        if let image = spritesheet.cgImage?.cropping(to: croppedRect) {
+            return UIImage(cgImage: image)
         }
         
         return nil

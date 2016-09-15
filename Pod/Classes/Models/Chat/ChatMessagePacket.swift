@@ -43,7 +43,7 @@ public class ChatMessagePacket: ChatPacket, ChatSendable {
         var objects = [AnyObject]()
         
         if let messageText = messageText {
-            objects.append(messageText)
+            objects.append(messageText as AnyObject)
         }
         
         return objects

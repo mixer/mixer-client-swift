@@ -19,7 +19,7 @@ public class InteractiveProgressPacket: InteractivePacket {
         
         if let tactiles = data["tactile"].array {
             for tactile in tactiles {
-                if let id = tactile["id"].int, cooldown = tactile["cooldown"].int, progress = tactile["progress"].int, disabled = tactile["disabled"].bool {
+                if let id = tactile["id"].int, let cooldown = tactile["cooldown"].int, let progress = tactile["progress"].int, let disabled = tactile["disabled"].bool {
                     let control = InteractiveProgressPacketTactile(id: id, fired: tactile["fired"].bool ?? false, cooldown: cooldown, progress: progress, disabled: disabled)
                     controls.append(control)
                 }
@@ -28,7 +28,7 @@ public class InteractiveProgressPacket: InteractivePacket {
         
         if let joysticks = data["joystick"].array {
             for joystick in joysticks {
-                if let id = joystick["id"].int, angle = joystick["angle"].float, intensity = joystick["intensity"].float {
+                if let id = joystick["id"].int, let angle = joystick["angle"].float, let intensity = joystick["intensity"].float {
                     let control = InteractiveProgressPacketJoystick(id: id, angle: angle, intensity: intensity)
                     controls.append(control)
                 }

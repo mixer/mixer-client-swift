@@ -30,7 +30,7 @@ public struct BeamType {
     public let viewersCurrent: Int
     
     /// The URL of the type's thumbnail image.
-    public let coverURL: NSURL?
+    public let coverURL: URL?
     
     /// The number of channels currently playing this game.
     public let online: Int

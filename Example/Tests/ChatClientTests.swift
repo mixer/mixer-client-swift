@@ -15,17 +15,17 @@ class ChatClientTests: XCTestCase, ChatClientDelegate {
     var expectation: XCTestExpectation!
     
     func testChatConnect() {
-        expectation = expectationWithDescription("test joining a channel's chat")
+        expectation = self.expectation(withDescription: "test joining a channel's chat")
         
         let chatClient = ChatClient(delegate: self)
         chatClient.joinChannel(channelId)
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func chatDidConnect() {
         expectation.fulfill()
     }
     
-    func chatReceivedPacket(packet: ChatPacket) {}
+    func chatReceivedPacket(_ packet: ChatPacket) {}
 }

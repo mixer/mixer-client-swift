@@ -21,13 +21,13 @@ public struct BeamNotification {
     public let type: String
     
     /// The date, in UTC, at which this notification was seen.
-    public let seenAt: NSDate?
+    public let seenAt: Date?
     
     /// The date, in UTC, at which this notification was sent.
-    public let sentAt: NSDate?
+    public let sentAt: Date?
     
     /// The date, in UTC, at which this notification will expire.
-    public let expiresAt: NSDate?
+    public let expiresAt: Date?
     
     /// The identifier of the user who received this notification.
     public let userId: Int

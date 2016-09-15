@@ -16,29 +16,29 @@ class UsersTests: XCTestCase {
     let userId = 278
     
     func testForgotPassword() {
-        let expectation = expectationWithDescription("tests forgot password endpoint")
+        let expectation = self.expectation(description: "tests forgot password endpoint")
         
         BeamClient.sharedClient.users.forgotPassword(email) { (error) in
             XCTAssertNil(error)
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testUpdatePreferences() {
-        let expectation = expectationWithDescription("tests updating a user's preferences")
+        let expectation = self.expectation(description: "tests updating a user's preferences")
         
         BeamClient.sharedClient.users.updatePreferences(userId, preferences: []) { (error) in
             XCTAssert(error == .NotAuthenticated)
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testUpdateProfile() {
-        let expectation = expectationWithDescription("tests updating a user's profile")
+        let expectation = self.expectation(description: "tests updating a user's profile")
         
         BeamClient.sharedClient.users.updateProfile(userId, settings: []) { (user, error) in
             XCTAssertNil(user)
@@ -46,11 +46,11 @@ class UsersTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testUserAchievements() {
-        let expectation = expectationWithDescription("tests retrieving a user's achievements")
+        let expectation = self.expectation(description: "tests retrieving a user's achievements")
         
         BeamClient.sharedClient.users.getAchievementsByUser(userId) { (achievements, error) in
             XCTAssertNotNil(achievements)
@@ -58,11 +58,11 @@ class UsersTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testUserFollowedChannels() {
-        let expectation = expectationWithDescription("tests retreving a user's followed channels")
+        let expectation = self.expectation(description: "tests retreving a user's followed channels")
         
         BeamClient.sharedClient.users.getFollowedChannelsByUser(userId, page: 0) { (channels, error) in
             XCTAssertNotNil(channels)
@@ -70,11 +70,11 @@ class UsersTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testPreferences() {
-        let expectation = expectationWithDescription("tests retrieving a user's preferences")
+        let expectation = self.expectation(description: "tests retrieving a user's preferences")
         
         BeamClient.sharedClient.users.getPreferences(userId) { (preferences, error) in
             XCTAssertNotNil(preferences)
@@ -82,11 +82,11 @@ class UsersTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testUserWithId() {
-        let expectation = expectationWithDescription("tests retrieving a user by id")
+        let expectation = self.expectation(description: "tests retrieving a user by id")
         
         BeamClient.sharedClient.users.getUserWithId(userId) { (user, error) in
             XCTAssertNotNil(user)
@@ -94,11 +94,11 @@ class UsersTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testUsersByQuery() {
-        let expectation = expectationWithDescription("tests searching for users")
+        let expectation = self.expectation(description: "tests searching for users")
         
         BeamClient.sharedClient.users.getUsersByQuery(query) { (users, error) in
             XCTAssertNotNil(users)
@@ -106,6 +106,6 @@ class UsersTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 }

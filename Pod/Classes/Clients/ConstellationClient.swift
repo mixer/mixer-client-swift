@@ -23,21 +23,21 @@ public class ConstellationClient: WebSocketDelegate {
     }
     
     /// The client's delegate, through which updates are relayed to the app.
-    private weak var delegate: ConstellationClientDelegate?
+    fileprivate weak var delegate: ConstellationClientDelegate?
     
     /// All events that the client is currently subscribed to.
-    private var events = [ConstellationEvent]()
+    fileprivate var events = [ConstellationEvent]()
     
     /// The websocket through which constellation data is sent and received.
-    private var socket: WebSocket?
+    fileprivate var socket: WebSocket?
     
     // MARK: Public Methods
     
     /// Makes a connection to constellation through a websocket.
-    public func connect(delegate: ConstellationClientDelegate) {
+    public func connect(_ delegate: ConstellationClientDelegate) {
         self.delegate = delegate
         
-        socket = WebSocket(url: NSURL(string: "wss://constellation.beam.pro")!)
+        socket = WebSocket(url: URL(string: "wss://constellation.beam.pro")!)
         socket?.delegate = self
         socket?.connect()
     }
@@ -52,7 +52,7 @@ public class ConstellationClient: WebSocketDelegate {
      
      :param: packet The packet to be sent.
      */
-    public func sendPacket(packet: ConstellationSendable) {
+    public func sendPacket(_ packet: ConstellationSendable) {
         guard let socket = socket else {
             return
         }
@@ -66,8 +66,8 @@ public class ConstellationClient: WebSocketDelegate {
      
      :param: events The list of events to subscribe to.
      */
-    public func subscribeToEvents(events: [ConstellationEvent]) {
-        self.events.appendContentsOf(events)
+    public func subscribeToEvents(_ events: [ConstellationEvent]) {
+        self.events.append(contentsOf: events)
         
         let subscribePacket = ConstellationLiveSubscribePacket(events: events)
         sendPacket(subscribePacket)
@@ -78,10 +78,10 @@ public class ConstellationClient: WebSocketDelegate {
      
      :param: events The list of events to unsubscribe from.
      */
-    public func unsubscribeFromEvents(events: [ConstellationEvent]) {
-        for (idx, event) in self.events.enumerate() {
-            if events.contains({ $0.description == event.description }) {
-                self.events.removeAtIndex(idx)
+    public func unsubscribeFromEvents(_ events: [ConstellationEvent]) {
+        for (idx, event) in self.events.enumerated() {
+            if events.contains(where: { $0.description == event.description }) {
+                self.events.remove(at: idx)
             }
         }
         
@@ -99,22 +99,22 @@ public class ConstellationClient: WebSocketDelegate {
     
     // MARK: WebSocketDelegate Methods
     
-    public func websocketDidConnect(socket: WebSocket) {
+    public func websocketDidConnect(_ socket: WebSocket) {
         delegate?.constellationDidConnect()
     }
     
-    public func websocketDidDisconnect(socket: WebSocket, error: NSError?) {
+    public func websocketDidDisconnect(_ socket: WebSocket, error: NSError?) {
         delegate?.constellationDidDisconnect(error)
     }
     
-    public func websocketDidReceiveMessage(socket: WebSocket, text: String) {
-        guard let data = text.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) else {
+    public func websocketDidReceiveMessage(_ socket: WebSocket, text: String) {
+        guard let data = text.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
             print("unknown error parsing constellation packet: \(text)")
             return
         }
         
         do {
-            if let jsonObject = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSDictionary {
+            if let jsonObject = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? NSDictionary {
                 let json = JSON(jsonObject)
                 
                 if let packet = ConstellationPacket.receivePacket(json) {
@@ -126,7 +126,7 @@ public class ConstellationClient: WebSocketDelegate {
         }
     }
     
-    public func websocketDidReceiveData(socket: WebSocket, data: NSData) {
+    public func websocketDidReceiveData(_ socket: WebSocket, data: Data) {
     }
 }
 
@@ -137,8 +137,8 @@ public protocol ConstellationClientDelegate: class {
     func constellationDidConnect()
     
     /// Called when the websocket disconnects, whether on purpose or unexpectedly.
-    func constellationDidDisconnect(error: NSError?)
+    func constellationDidDisconnect(_ error: NSError?)
     
     /// Called when a packet has been received and interpreted.
-    func constellationReceivedPacket(packet: ConstellationPacket)
+    func constellationReceivedPacket(_ packet: ConstellationPacket)
 }

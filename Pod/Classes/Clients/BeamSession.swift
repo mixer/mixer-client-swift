@@ -11,7 +11,7 @@ public let BeamAuthenticatedNotification = "BeamAuthenticatedNotification"
 /// Stores data about an authenticated user session.
 public class BeamSession {
     
-    private static var storedSharedSession: BeamSession?
+    fileprivate static var storedSharedSession: BeamSession?
     
     /// The session's shared instance. This will be nil if nobody is authenticated.
     public static var sharedSession: BeamSession? {
@@ -21,7 +21,7 @@ public class BeamSession {
         
         set {
             storedSharedSession = newValue
-            NSUserDefaults.standardUserDefaults().setBool(newValue != nil, forKey: "BeamSessionExists")
+            UserDefaults.standard.set(newValue != nil, forKey: "BeamSessionExists")
         }
     }
     
@@ -41,7 +41,7 @@ public class BeamSession {
      :param: code An optional 2FA code of the authenticating user.
      :param: completion An optional completion block, called when authentication completes.
      */
-    public static func authenticate(username: String, password: String, code: Int? = nil, completion: ((user: BeamUser?, error: BeamRequestError?) -> Void)?) {
+    public static func authenticate(_ username: String, password: String, code: Int? = nil, completion: ((_ user: BeamUser?, _ error: BeamRequestError?) -> Void)?) {
         var body = [
             "username": username,
             "password": password
@@ -52,7 +52,7 @@ public class BeamSession {
         }
         
         BeamRequest.request("/users/login", requestType: "POST", body: body) { (json, error) in
-            guard let json = json where error == nil else {
+            guard let json = json , error == nil else {
                 completion?(user: nil, error: error)
                 return
             }
@@ -72,7 +72,7 @@ public class BeamSession {
      
      :param: completion An optional completion block, called when logging out completes.
      */
-    public static func logout(completion: ((error: BeamRequestError?) -> Void)?) {
+    public static func logout(_ completion: ((_ error: BeamRequestError?) -> Void)?) {
         BeamSession.sharedSession = nil
         
         BeamRequest.request("/users/current", requestType: "DELETE") { (json, error) in
@@ -86,10 +86,10 @@ public class BeamSession {
      
      :param: completion An optional completion block with the authenticated user's data.
      */
-    public static func refreshPreviousSession(completion: ((user: BeamUser?, error: BeamRequestError?) -> Void)?) {
-        guard NSUserDefaults.standardUserDefaults().boolForKey("BeamSessionExists") else {
+    public static func refreshPreviousSession(_ completion: ((_ user: BeamUser?, _ error: BeamRequestError?) -> Void)?) {
+        guard UserDefaults.standard.bool(forKey: "BeamSessionExists") else {
             print("no session exists")
-            completion?(user: nil, error: .NotAuthenticated)
+            completion?(nil, .notAuthenticated)
             return
         }
         
@@ -120,7 +120,7 @@ public class BeamSession {
      :param: email The registering user's email address.
      :param: completion An optional completion block with the new user's data.
      */
-    public static func registerAccount(username: String, password: String, email: String, completion: ((user: BeamUser?, error: BeamRequestError?) -> Void)?) {
+    public static func registerAccount(_ username: String, password: String, email: String, completion: ((_ user: BeamUser?, _ error: BeamRequestError?) -> Void)?) {
         let body = [
             "username": username,
             "password": password,

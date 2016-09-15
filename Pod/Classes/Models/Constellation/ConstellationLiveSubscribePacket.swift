@@ -10,7 +10,7 @@
 public class ConstellationLiveSubscribePacket: ConstellationPacket, ConstellationSendable {
     
     /// The events to subscribe to.
-    private let events: [ConstellationEvent]
+    fileprivate let events: [ConstellationEvent]
     
     /**
      Used to initialize a live subscribe packet.
@@ -32,6 +32,6 @@ public class ConstellationLiveSubscribePacket: ConstellationPacket, Constellatio
             eventStrings.append(event.description)
         }
         
-        return ["events": eventStrings]
+        return ["events": eventStrings as AnyObject]
     }
 }

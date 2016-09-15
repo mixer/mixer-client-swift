@@ -15,22 +15,22 @@ class ConstellationClientTests: XCTestCase, ConstellationClientDelegate {
     var packetExpectation: XCTestExpectation!
     
     func testConstellationConnection() {
-        connectExpectation = expectationWithDescription("test connecting to constellation")
-        packetExpectation = expectationWithDescription("test receiving a hello packet")
+        connectExpectation = expectation(description: "test connecting to constellation")
+        packetExpectation = expectation(description: "test receiving a hello packet")
         
         ConstellationClient.sharedClient.connect(self)
-        waitForExpectationsWithTimeout(100, handler: nil)
+        waitForExpectations(timeout: 100, handler: nil)
     }
     
     func constellationDidConnect() {
         connectExpectation.fulfill()
     }
     
-    func constellationDidDisconnect(error: NSError?) {
+    func constellationDidDisconnect(_ error: NSError?) {
         XCTFail()
     }
     
-    func constellationReceivedPacket(packet: ConstellationPacket) {
+    func constellationReceivedPacket(_ packet: ConstellationPacket) {
         if let packet = packet as? ConstellationHelloPacket {
             XCTAssertFalse(packet.authenticated)
             

@@ -19,7 +19,7 @@ public class ChatPollEndPacket: ChatPacket {
     
     /// Initializes a chat poll end packet with JSON data.
     override init?(data: [String: JSON]) {
-        if let voters = data["voters"]?.int, responses = data["responses"]?.dictionaryObject as? [String: Int] {
+        if let voters = data["voters"]?.int, let responses = data["responses"]?.dictionaryObject as? [String: Int] {
             self.voters = voters
             self.responses = responses
             

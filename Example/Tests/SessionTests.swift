@@ -28,10 +28,10 @@ class SessionTests: XCTestCase {
         super.setUp()
         
         func genRandomString() -> String {
-            let random = NSUUID().UUIDString
-            let range = random.startIndex ..< random.startIndex.advancedBy(12)
-            let string = random.substringWithRange(range).lowercaseString
-            return "a" + string.stringByReplacingOccurrencesOfString("-", withString: "")
+            let random = UUID().uuidString
+            let range = random.startIndex ..< random.characters.index(random.startIndex, offsetBy: 12)
+            let string = random.substringWithRange(range).lowercased()
+            return "a" + string.replacingOccurrences(of: "-", with: "")
         }
         
         username = genRandomString()
@@ -45,7 +45,7 @@ class SessionTests: XCTestCase {
     }
     
     func testAuthenticate() {
-        let expectation = expectationWithDescription("tests authenticating")
+        let expectation = self.expectation(description: "tests authenticating")
         
         BeamSession.authenticate(username, password: password) { (user, error) in
             XCTAssertNil(user)
@@ -53,11 +53,11 @@ class SessionTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testAuthenticateWithCode() {
-        let expectation = expectationWithDescription("tests authenticating with 2fa")
+        let expectation = self.expectation(description: "tests authenticating with 2fa")
         
         BeamSession.authenticate(username, password: password, code: code) { (user, error) in
             XCTAssertNil(user)
@@ -65,22 +65,22 @@ class SessionTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testLogout() {
-        let expectation = expectationWithDescription("tests logging out")
+        let expectation = self.expectation(description: "tests logging out")
         
         BeamSession.logout { (error) in
             XCTAssert(error == .InvalidCredentials)
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testRefreshPreviousSession() {
-        let expectation = expectationWithDescription("tests the refresh endpoint")
+        let expectation = self.expectation(description: "tests the refresh endpoint")
         
         BeamSession.refreshPreviousSession { (user, error) in
             XCTAssertNil(user)
@@ -88,61 +88,61 @@ class SessionTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testRegisterInvalidUsername() {
-        let expectation = expectationWithDescription("tests the registration endpoint for the invalid username error")
+        let expectation = self.expectation(description: "tests the registration endpoint for the invalid username error")
         
         BeamSession.registerAccount(invalidUsername, password: password, email: email) { (user, error) in
             XCTAssert(error == .InvalidUsername)
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testRegisterTakenUsername() {
-        let expectation = expectationWithDescription("tests the registration endpoint for the taken username error")
+        let expectation = self.expectation(description: "tests the registration endpoint for the taken username error")
         
         BeamSession.registerAccount(takenUsername, password: password, email: email) { (user, error) in
             XCTAssert(error == .TakenUsername)
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testRegisterWeakPassword() {
-        let expectation = expectationWithDescription("tests the registration endpoint for the weak password error")
+        let expectation = self.expectation(description: "tests the registration endpoint for the weak password error")
         
         BeamSession.registerAccount(username, password: weakPassword, email: email) { (user, error) in
             XCTAssert(error == .WeakPassword)
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testRegisterInvalidEmail() {
-        let expectation = expectationWithDescription("tests the registration endpoint for the invalid email error")
+        let expectation = self.expectation(description: "tests the registration endpoint for the invalid email error")
         
         BeamSession.registerAccount(username, password: password, email: invalidEmail) { (user, error) in
             XCTAssert(error == .InvalidEmail)
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testRegisterTakenEmail() {
-        let expectation = expectationWithDescription("tests the registration endpoint for the taken email error")
+        let expectation = self.expectation(description: "tests the registration endpoint for the taken email error")
         
         BeamSession.registerAccount(username, password: password, email: takenEmail) { (user, error) in
             XCTAssert(error == .TakenEmail)
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 }

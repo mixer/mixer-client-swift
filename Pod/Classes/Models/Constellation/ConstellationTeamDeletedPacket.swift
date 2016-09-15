@@ -19,7 +19,7 @@ public class ConstellationTeamDeletedPacket: ConstellationLivePacket {
     
     /// Initializes a team deleted packet with JSON data.
     override init?(data: [String: JSON]) {
-        if let channel = data["channel"]?.string, payload = data["payload"] {
+        if let channel = data["channel"]?.string, let payload = data["payload"] {
             self.teamId = Int(channel.componentsSeparatedByString(":")[1])!
             self.team = BeamTeam(json: payload["team"])
             

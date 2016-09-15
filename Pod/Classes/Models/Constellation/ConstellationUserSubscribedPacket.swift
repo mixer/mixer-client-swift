@@ -19,7 +19,7 @@ public class ConstellationUserSubscribedPacket: ConstellationLivePacket {
     
     /// Initializes a user subscribed packet with JSON data.
     override init?(data: [String: JSON]) {
-        if let channel = data["channel"]?.string, payload = data["payload"], channelId = payload["channel"].int {
+        if let channel = data["channel"]?.string, let payload = data["payload"], let channelId = payload["channel"].int {
             self.userId = Int(channel.componentsSeparatedByString(":")[1])!
             self.channelId = channelId
             

@@ -22,8 +22,8 @@ public class OAuthRoutes {
      :param: provider The provider to be used for authentication.
      :returns: The URL used to begin the OAuth flow, to be opened in a web browser.
      */
-    public func getAuthorizationURL(provider: OAuthProvider) -> NSURL {
-        return NSURL(string: "https://beam.pro/api/v1/oauth/\(provider.rawValue)/check")!
+    public func getAuthorizationURL(_ provider: OAuthProvider) -> URL {
+        return URL(string: "https://beam.pro/api/v1/oauth/\(provider.rawValue)/check")!
     }
     
     /**
@@ -32,11 +32,11 @@ public class OAuthRoutes {
      :param: provider The provider to be used for authentication.
      :param: cookie The full cookie string.
      */
-    public func loginWithProvider(provider: OAuthProvider, cookie: String, completion: ((user: BeamUser?, error: BeamRequestError?) -> Void)?) {
+    public func loginWithProvider(_ provider: OAuthProvider, cookie: String, completion: ((_ user: BeamUser?, _ error: BeamRequestError?) -> Void)?) {
         let headers = ["Cookie": cookie]
         
         BeamRequest.request("/oauth/\(provider.rawValue)/login", requestType: "POST", headers: headers, ignoreCSRF: true) { (json, error) in
-            guard let json = json where error == nil else {
+            guard let json = json , error == nil else {
                 completion?(user: nil, error: error)
                 return
             }

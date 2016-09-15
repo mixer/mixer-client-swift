@@ -15,7 +15,7 @@ class TeamsTests: XCTestCase {
     let teamToken = "partners"
     
     func testTeamWithId() {
-        let expectation = expectationWithDescription("tests retrieving a team by id")
+        let expectation = self.expectation(description: "tests retrieving a team by id")
         
         BeamClient.sharedClient.teams.getTeamWithId(teamId) { (team, error) in
             XCTAssertNotNil(team)
@@ -23,11 +23,11 @@ class TeamsTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testTeamWithToken() {
-        let expectation = expectationWithDescription("tests retrieving a team by token")
+        let expectation = self.expectation(description: "tests retrieving a team by token")
         
         BeamClient.sharedClient.teams.getTeamWithToken(teamToken) { (team, error) in
             XCTAssertNotNil(team)
@@ -35,11 +35,11 @@ class TeamsTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testTeams() {
-        let expectation = expectationWithDescription("tests the teams endpoint")
+        let expectation = self.expectation(description: "tests the teams endpoint")
         
         BeamClient.sharedClient.teams.getTeams { (teams, error) in
             XCTAssertNotNil(teams)
@@ -47,11 +47,11 @@ class TeamsTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testMembersOfTeam() {
-        let expectation = expectationWithDescription("tests retrieving the members of a stream team")
+        let expectation = self.expectation(description: "tests retrieving the members of a stream team")
         
         BeamClient.sharedClient.teams.getMembersOfTeam(teamId) { (users, error) in
             XCTAssertNotNil(users)
@@ -59,6 +59,6 @@ class TeamsTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 }

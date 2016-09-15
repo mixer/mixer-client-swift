@@ -27,19 +27,19 @@ public struct BeamTeam {
     public let description: String?
     
     /// The url of the team's logo image.
-    public let logoUrl: NSURL?
+    public let logoUrl: URL?
     
     /// The url of the team's background image.
-    public let backgroundUrl: NSURL?
+    public let backgroundUrl: URL?
     
     /// The current number of viewers across all of the team's channels.
     public let totalViewersCurrent: Int
     
     /// The date, in UTC, on which the team was created.
-    public let createdAt: NSDate?
+    public let createdAt: Date?
     
     /// The date, in UTC, on which the channel was last updated.
-    public let updatedAt: NSDate?
+    public let updatedAt: Date?
     
     /// The team's Twitter profile URL.
     public let twitter: String?

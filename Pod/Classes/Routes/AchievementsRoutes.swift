@@ -16,7 +16,7 @@ public class AchievementsRoutes {
      
      :param: completion An optional completion block with retrieved achievement data.
      */
-    public func getAchievements(completion: ((achievements: [BeamAchievement]?, error: BeamRequestError?) -> Void)?) {
+    public func getAchievements(_ completion: ((_ achievements: [BeamAchievement]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/achievements") { (json, error) in
             guard let achievements = json?.array else {
                 completion?(achievements: nil, error: error)

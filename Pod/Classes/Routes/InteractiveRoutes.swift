@@ -17,7 +17,7 @@ public class InteractiveRoutes {
      :param: channelId The id of the channel being connected to.
      :param: completion An optional completion block with retrieved interactive details.
      */
-    public func getInteractiveDataByChannel(channelId: Int, completion: ((data: InteractiveData?, error: BeamRequestError?) -> Void)?) {
+    public func getInteractiveDataByChannel(_ channelId: Int, completion: ((_ data: InteractiveData?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/interactive/\(channelId)") { (json, error) in
             guard let json = json else {
                 completion?(data: nil, error: error)

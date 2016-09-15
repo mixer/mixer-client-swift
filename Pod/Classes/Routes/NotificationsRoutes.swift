@@ -20,11 +20,11 @@ public class NotificationsRoutes {
      :param: date The date before which notifications should be marked as read.
      :param: completion An optional completion block with response data.
      */
-    public func markNotificationsAsRead(userId: Int, beforeDate date: NSDate, completion: ((error: BeamRequestError?) -> Void)?) {
-        let formatter = NSDateFormatter()
-        formatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+    public func markNotificationsAsRead(_ userId: Int, beforeDate date: Date, completion: ((_ error: BeamRequestError?) -> Void)?) {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
-        let body = ["date": formatter.stringFromDate(date)]
+        let body = ["date": formatter.string(from: date)]
         
         BeamRequest.request("/notifications/read", requestType: "POST", params: ["userId": "\(userId)"], body: body) { (json, error) in
             completion?(error: error)
@@ -41,13 +41,13 @@ public class NotificationsRoutes {
      :param: turnAllOn If this is true and settings are not provided, all notifications for this transport will be turned on. This is false by default.
      :param: completion An optional completion block with response data.
      */
-    public func updateNotificationTransport(userId: Int, transport: String, data: [String: AnyObject]?, settings: [[String: AnyObject]]?, turnAllOn: Bool = false, completion: ((transport: BeamNotificationTransport?, error: BeamRequestError?) -> Void)?) {
+    public func updateNotificationTransport(_ userId: Int, transport: String, data: [String: AnyObject]?, settings: [[String: AnyObject]]?, turnAllOn: Bool = false, completion: ((_ transport: BeamNotificationTransport?, _ error: BeamRequestError?) -> Void)?) {
         let settingDict = settings == nil && turnAllOn ? ["*"] : []
         
         let body: [String: AnyObject] = [
-            "userId": "\(userId)",
-            "transport": transport,
-            "data": data ?? [:],
+            "userId": "\(userId)" as AnyObject,
+            "transport": transport as AnyObject,
+            "data": data as AnyObject? ?? [:],
             "settings": settings ?? [
                 [
                     "type": "wentlive",
@@ -57,7 +57,7 @@ public class NotificationsRoutes {
         ]
         
         BeamRequest.request("/notifications/transports", requestType: "POST", body: body) { (json, error) in
-            guard let json = json where error == nil else {
+            guard let json = json , error == nil else {
                 completion?(transport: nil, error: error)
                 return
             }
@@ -74,7 +74,7 @@ public class NotificationsRoutes {
      :param: transportId The identifier of the transport being deleted.
      :param: completion An optional completion block with response data.
      */
-    public func deleteNotificationTransport(userId: Int, transportId: Int, completion: ((error: BeamRequestError?) -> Void)?) {
+    public func deleteNotificationTransport(_ userId: Int, transportId: Int, completion: ((_ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/notifications/transports/\(transportId)", requestType: "DELETE", params: ["userId": "\(userId)"]) { (json, error) in
             completion?(error: error)
         }
@@ -88,7 +88,7 @@ public class NotificationsRoutes {
      :param: userId The identifier of the user whose notifications are being requested.
      :param: completion An optional completion block with retrieved notification data.
      */
-    public func getNotifications(userId: Int, completion: ((notifications: [BeamNotification]?, error: BeamRequestError?) -> Void)?) {
+    public func getNotifications(_ userId: Int, completion: ((_ notifications: [BeamNotification]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/notifications", params: ["userId": "\(userId)"]) { (json, error) in
             guard let notifications = json?.array else {
                 completion?(notifications: nil, error: error)
@@ -112,7 +112,7 @@ public class NotificationsRoutes {
      :param: userId The identifier of the user whose notification transports are being requested.
      :param: completion An optional completion block with retrieved notification transport data.
      */
-    public func getNotificationTransports(userId: Int, completion: ((transports: [BeamNotificationTransport]?, error: BeamRequestError?) -> Void)?) {
+    public func getNotificationTransports(_ userId: Int, completion: ((_ transports: [BeamNotificationTransport]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/notifications/transports", params: ["userId": "\(userId)"]) { (json, error) in
             guard let transports = json?.array else {
                 completion?(transports: nil, error: error)

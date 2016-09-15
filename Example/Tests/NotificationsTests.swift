@@ -16,18 +16,18 @@ class NotificationsTests: XCTestCase {
     let userId = 278
     
     func testsMarkNotificationsAsRead() {
-        let expectation = expectationWithDescription("tests marking notifications as read")
+        let expectation = self.expectation(description: "tests marking notifications as read")
         
-        BeamClient.sharedClient.notifications.markNotificationsAsRead(userId, beforeDate: NSDate()) { (error) in
+        BeamClient.sharedClient.notifications.markNotificationsAsRead(userId, beforeDate: Date()) { (error) in
             XCTAssert(error == .InvalidCredentials)
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testsUpdateTransport() {
-        let expectation = expectationWithDescription("tests the updating a notification transport endpoint")
+        let expectation = self.expectation(description: "tests the updating a notification transport endpoint")
         
         BeamClient.sharedClient.notifications.updateNotificationTransport(userId, transport: transport, data: nil, settings: nil) { (transport, error) in
             XCTAssertNil(transport)
@@ -35,22 +35,22 @@ class NotificationsTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testsDeleteTransport() {
-        let expectation = expectationWithDescription("tests the delete transport endpoint")
+        let expectation = self.expectation(description: "tests the delete transport endpoint")
         
         BeamClient.sharedClient.notifications.deleteNotificationTransport(userId, transportId: transportId) { (error) in
             XCTAssert(error == .InvalidCredentials)
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testsNotifications() {
-        let expectation = expectationWithDescription("tests the notifications endpoint")
+        let expectation = self.expectation(description: "tests the notifications endpoint")
         
         BeamClient.sharedClient.notifications.getNotifications(userId) { (notifications, error) in
             XCTAssertNil(notifications)
@@ -58,11 +58,11 @@ class NotificationsTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testsNotificationTransports() {
-        let expectation = expectationWithDescription("tests the notification transports endpoint")
+        let expectation = self.expectation(description: "tests the notification transports endpoint")
         
         BeamClient.sharedClient.notifications.getNotificationTransports(userId) { (transports, error) in
             XCTAssertNil(transports)
@@ -70,6 +70,6 @@ class NotificationsTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 }

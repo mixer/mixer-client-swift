@@ -17,7 +17,7 @@ public class TeamsRoutes {
      :param: id The identifier of the team being retrieved.
      :param: completion An optional completion block with retrieved team data.
      */
-    public func getTeamWithId(id: Int, completion: ((team: BeamTeam?, error: BeamRequestError?) -> Void)?) {
+    public func getTeamWithId(_ id: Int, completion: ((_ team: BeamTeam?, _ error: BeamRequestError?) -> Void)?) {
         getTeamWithEndpoint("/teams/\(id)", completion: completion)
     }
     
@@ -27,7 +27,7 @@ public class TeamsRoutes {
      :param: token The token of the team being retrieved.
      :param: completion An optional completion block with retrieved team data.
      */
-    public func getTeamWithToken(token: String, completion: ((team: BeamTeam?, error: BeamRequestError?) -> Void)?) {
+    public func getTeamWithToken(_ token: String, completion: ((_ team: BeamTeam?, _ error: BeamRequestError?) -> Void)?) {
         getTeamWithEndpoint("/teams/\(token)", completion: completion)
     }
     
@@ -37,7 +37,7 @@ public class TeamsRoutes {
      :param: endpoint The endpoint that the team is being retrieved from.
      :param: completion An optional completion block with retrieved team data.
      */
-    private func getTeamWithEndpoint(endpoint: String, completion: ((team: BeamTeam?, error: BeamRequestError?) -> Void)?) {
+    fileprivate func getTeamWithEndpoint(_ endpoint: String, completion: ((_ team: BeamTeam?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request(endpoint) { (json, error) in
             guard let json = json else {
                 completion?(team: nil, error: error)
@@ -55,7 +55,7 @@ public class TeamsRoutes {
      :param: page The page of stream teams to be requested.
      :param: completion An optional completion block with the retrieved teams' data.
      */
-    public func getTeams(page: Int = 0, completion: ((teams: [BeamTeam]?, error: BeamRequestError?) -> Void)?) {
+    public func getTeams(_ page: Int = 0, completion: ((_ teams: [BeamTeam]?, _ error: BeamRequestError?) -> Void)?) {
         let params = ["order": "totalViewersCurrent:desc"]
         
         BeamRequest.request("/teams", params: params) { (json, error) in
@@ -83,7 +83,7 @@ public class TeamsRoutes {
      :param: id The id of the team whose users are being requested.
      :param: completion An optional completion block with the retrieved users' data.
      */
-    public func getMembersOfTeam(id: Int, completion: ((users: [BeamUser]?, error: BeamRequestError?) -> Void)?) {
+    public func getMembersOfTeam(_ id: Int, completion: ((_ users: [BeamUser]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/teams/\(id)/users") { (json, error) in
             guard let users = json?.array else {
                 completion?(users: nil, error: error)

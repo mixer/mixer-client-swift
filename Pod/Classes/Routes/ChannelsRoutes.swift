@@ -13,7 +13,7 @@ public class ChannelsRoutes {
     
     /// The type of channels being requested.
     public enum ChannelsRequestType {
-        case All, Interactive, Rising, Fresh
+        case all, interactive, rising, fresh
     }
     
     // MARK: Acting on Channels
@@ -24,9 +24,9 @@ public class ChannelsRoutes {
      :param: channelId The id of the channel being followed.
      :param: completion An optional completion block that fires when the follow has been completed.
      */
-    public func followChannel(channelId: Int, completion: ((error: BeamRequestError?) -> Void)?) {
+    public func followChannel(_ channelId: Int, completion: ((_ error: BeamRequestError?) -> Void)?) {
         guard let session = BeamSession.sharedSession else {
-            completion?(error: .NotAuthenticated)
+            completion?(.notAuthenticated)
             return
         }
         
@@ -43,9 +43,9 @@ public class ChannelsRoutes {
      :param: channelId The id of the channel being unfollowed.
      :param: completion An optional completion block that fires when the unfollow has been completed.
      */
-    public func unfollowChannel(channelId: Int, completion: ((error: BeamRequestError?) -> Void)?) {
+    public func unfollowChannel(_ channelId: Int, completion: ((_ error: BeamRequestError?) -> Void)?) {
         guard let session = BeamSession.sharedSession else {
-            completion?(error: .NotAuthenticated)
+            completion?(.notAuthenticated)
             return
         }
         
@@ -63,10 +63,10 @@ public class ChannelsRoutes {
      :param: userId The id of the user who is being banned.
      :param: completion An optional completion block that fires when the ban has been completed.
      */
-    public func banUser(channelId: Int, userId: Int, completion: ((error: BeamRequestError?) -> Void)?) {
+    public func banUser(_ channelId: Int, userId: Int, completion: ((_ error: BeamRequestError?) -> Void)?) {
         let body = ["add": ["Banned"]]
         
-        updateUserRoles(channelId, userId: userId, requestBody: body, completion: completion)
+        updateUserRoles(channelId, userId: userId, requestBody: body as AnyObject, completion: completion)
     }
     
     /**
@@ -76,10 +76,10 @@ public class ChannelsRoutes {
      :param: userId The id of the user who is being unbanned.
      :param: completion An optional completion block that fires when the unban has been completed.
      */
-    public func unbanUser(channelId: Int, userId: Int, completion: ((error: BeamRequestError?) -> Void)?) {
+    public func unbanUser(_ channelId: Int, userId: Int, completion: ((_ error: BeamRequestError?) -> Void)?) {
         let body = ["remove": ["Banned"]]
         
-        updateUserRoles(channelId, userId: userId, requestBody: body, completion: completion)
+        updateUserRoles(channelId, userId: userId, requestBody: body as AnyObject, completion: completion)
     }
     
     /**
@@ -89,9 +89,9 @@ public class ChannelsRoutes {
      :param: userId The id of the user whose roles are being updated.
      :param: completion An optional completion block that fires when the update has been completed.
      */
-    public func updateUserRoles(channelId: Int, userId: Int, requestBody: AnyObject, completion: ((error: BeamRequestError?) -> Void)?) {
+    public func updateUserRoles(_ channelId: Int, userId: Int, requestBody: AnyObject, completion: ((_ error: BeamRequestError?) -> Void)?) {
         guard let _ = BeamSession.sharedSession else {
-            completion?(error: .NotAuthenticated)
+            completion?(.notAuthenticated)
             return
         }
         
@@ -106,9 +106,9 @@ public class ChannelsRoutes {
      :param: channelId The id of the channel being hosted.
      :param: completion An optional completion block with response data.
      */
-    public func hostChannel(channelId: Int, completion: ((error: BeamRequestError?) -> Void)?) {
+    public func hostChannel(_ channelId: Int, completion: ((_ error: BeamRequestError?) -> Void)?) {
         guard let id = BeamSession.sharedSession?.user.channel?.id else {
-            completion?(error: .NotAuthenticated)
+            completion?(.notAuthenticated)
             return
         }
         
@@ -124,9 +124,9 @@ public class ChannelsRoutes {
      
      :param: completion An optional completion block with response data.
      */
-    public func stopHosting(completion: ((error: BeamRequestError?) -> Void)?) {
+    public func stopHosting(_ completion: ((_ error: BeamRequestError?) -> Void)?) {
         guard let id = BeamSession.sharedSession?.user.channel?.id else {
-            completion?(error: .NotAuthenticated)
+            completion?(.notAuthenticated)
             return
         }
         
@@ -143,7 +143,7 @@ public class ChannelsRoutes {
      :param: id The identifier of the channel being retrieved.
      :param: completion An optional completion block with retrieved channel data.
      */
-    public func getChannelWithId(id: Int, completion: ((channel: BeamChannel?, error: BeamRequestError?) -> Void)?) {
+    public func getChannelWithId(_ id: Int, completion: ((_ channel: BeamChannel?, _ error: BeamRequestError?) -> Void)?) {
         getChannelWithEndpoint("/channels/\(id)", completion: completion)
     }
     
@@ -153,7 +153,7 @@ public class ChannelsRoutes {
      :param: token The token of the channel being retrieved.
      :param: completion An optional completion block with retrieved channel data.
      */
-    public func getChannelWithToken(token: String, completion: ((channel: BeamChannel?, error: BeamRequestError?) -> Void)?) {
+    public func getChannelWithToken(_ token: String, completion: ((_ channel: BeamChannel?, _ error: BeamRequestError?) -> Void)?) {
         getChannelWithEndpoint("/channels/\(token)", completion: completion)
     }
     
@@ -163,7 +163,7 @@ public class ChannelsRoutes {
      :param: endpoint The endpoint that the channel is being retrieved from.
      :param: completion An optional completion block with retrieved channel data.
      */
-    private func getChannelWithEndpoint(endpoint: String, completion: ((channel: BeamChannel?, error: BeamRequestError?) -> Void)?) {
+    fileprivate func getChannelWithEndpoint(_ endpoint: String, completion: ((_ channel: BeamChannel?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request(endpoint) { (json, error) in
             guard let json = json else {
                 completion?(channel: nil, error: error)
@@ -182,15 +182,15 @@ public class ChannelsRoutes {
      :param: page The page of channels to be requested.
      :param: completion An optional completion block with the retrieved channels' data.
      */
-    public func getChannels(requestType: ChannelsRequestType = .All, page: Int = 0, completion: ((channels: [BeamChannel]?, error: BeamRequestError?) -> Void)?) {
+    public func getChannels(_ requestType: ChannelsRequestType = .all, page: Int = 0, completion: ((_ channels: [BeamChannel]?, _ error: BeamRequestError?) -> Void)?) {
         var params = ["order": "online:desc,viewersCurrent:desc,viewersTotal:desc", "where": "suspended.eq.0,online.eq.1", "page": "\(page)"]
         
         switch requestType {
-        case .Interactive:
+        case .interactive:
             params["where"] = "suspended.eq.0,online.eq.1,interactive.eq.1"
-        case .Rising:
+        case .rising:
             params["order"] = "online:desc,rising"
-        case .Fresh:
+        case .fresh:
             params["order"] = "online:desc,fresh"
         default:
             break
@@ -205,7 +205,7 @@ public class ChannelsRoutes {
      :param: query The query being used to search for channels.
      :param: completion An optional completion block with the retrieved channels' data.
      */
-    public func getChannelsByQuery(query: String, completion: ((channels: [BeamChannel]?, error: BeamRequestError?) -> Void)?) {
+    public func getChannelsByQuery(_ query: String, completion: ((_ channels: [BeamChannel]?, _ error: BeamRequestError?) -> Void)?) {
         getChannelsByEndpoint("/channels", params: ["scope": "all", "order": "viewersTotal:desc", "where": "suspended.eq.0", "q": query], completion: completion)
     }
     
@@ -216,7 +216,7 @@ public class ChannelsRoutes {
      :param: params An optional set of parameters to be applied to the request.
      :param: completion An optional completion block with the retrieved channels' data.
      */
-    private func getChannelsByEndpoint(endpoint: String, params: [String: String]?, completion: ((channels: [BeamChannel]?, error: BeamRequestError?) -> Void)?) {
+    fileprivate func getChannelsByEndpoint(_ endpoint: String, params: [String: String]?, completion: ((_ channels: [BeamChannel]?, _ error: BeamRequestError?) -> Void)?) {
         let defaultParams = ["order": "online:desc,viewersCurrent:desc,viewersTotal:desc", "where": "suspended.eq.0"]
         BeamRequest.request(endpoint, requestType: "GET", params: params ?? defaultParams) { (json, error) in
             guard let channels = json?.array else {
@@ -243,7 +243,7 @@ public class ChannelsRoutes {
      :param: id The id of the channel followers are being retrieved from.
      :param: completion An optional completion block with the retrieved emoticons' data.
      */
-    public func getEmoticonsOfChannel(id: Int, completion: ((spritesheetUrl: NSURL?, emoticons: [BeamEmoticon]?, error: BeamRequestError?) -> Void)?) {
+    public func getEmoticonsOfChannel(_ id: Int, completion: ((_ spritesheetUrl: URL?, _ emoticons: [BeamEmoticon]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/channels/\(id)/emoticons") { (json, error) in
             guard let json = json else {
                 completion?(spritesheetUrl: nil, emoticons: nil, error: error)
@@ -278,7 +278,7 @@ public class ChannelsRoutes {
      :param: page The page in the range [0, ∞] of followers being requested. Defaults to 0.
      :param: completion An optional copmletion block with the retrieved followers' data.
      */
-    public func getFollowersOfChannel(id: Int, page: Int = 0, completion: ((users: [BeamUser]?, error: BeamRequestError?) -> Void)?) {
+    public func getFollowersOfChannel(_ id: Int, page: Int = 0, completion: ((_ users: [BeamUser]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/channels/\(id)/follow", params: ["page": "\(page)"]) { (json, error) in
             guard let users = json?.array else {
                 completion?(users: nil, error: error)
@@ -302,7 +302,7 @@ public class ChannelsRoutes {
      :param: channelId The id of the channel recordings are being retrieved from.
      :param: completion An optional completion block with the retrieved recordings' data.
      */
-    public func getRecordingsOfChannel(id: Int, completion: ((recordings: [BeamRecording]?, error: BeamRequestError?) -> Void)?) {
+    public func getRecordingsOfChannel(_ id: Int, completion: ((_ recordings: [BeamRecording]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/channels/\(id)/recordings") { (json, error) in
             guard let recordings = json?.array else {
                 completion?(recordings: nil, error: error)
@@ -327,9 +327,9 @@ public class ChannelsRoutes {
      
      :param: completion An optional completion block with the retrieved emoticon packs' data.
      */
-    public func getDefaultEmoticons(completion: ((packs: [BeamEmoticonPack]?, error: BeamRequestError?) -> Void)?) {
+    public func getDefaultEmoticons(_ completion: ((_ packs: [BeamEmoticonPack]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.dataRequest("https://beam.pro/_latest/emoticons/manifest.json") { (data, error) in
-            guard let data = data, packs = JSON(data: data).dictionary else {
+            guard let data = data, let packs = JSON(data: data).dictionary else {
                 completion?(packs: nil, error: error)
                 return
             }
@@ -353,9 +353,9 @@ public class ChannelsRoutes {
      :param: channelId The id of the channel being modified.
      :param: body The request body, containing the channel data to update.
      */
-    public func updateData(channelId: Int, body: AnyObject, completion: ((channel: BeamChannel?, error: BeamRequestError?) -> Void)?) {
+    public func updateData(_ channelId: Int, body: AnyObject, completion: ((_ channel: BeamChannel?, _ error: BeamRequestError?) -> Void)?) {
         guard let _ = BeamSession.sharedSession else {
-            completion?(channel: nil, error: .NotAuthenticated)
+            completion?(nil, .notAuthenticated)
             return
         }
         

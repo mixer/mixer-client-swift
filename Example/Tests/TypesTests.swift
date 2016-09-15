@@ -15,7 +15,7 @@ class TypesTests: XCTestCase {
     let typeId = 33217
     
     func testTypeWithId() {
-        let expectation = expectationWithDescription("tests retrieving a type by id")
+        let expectation = self.expectation(description: "tests retrieving a type by id")
         
         BeamClient.sharedClient.types.getTypeWithId(typeId) { (type, error) in
             XCTAssertNotNil(type)
@@ -23,11 +23,11 @@ class TypesTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testTypes() {
-        let expectation = expectationWithDescription("tests retrieving types")
+        let expectation = self.expectation(description: "tests retrieving types")
         
         BeamClient.sharedClient.types.getTypes { (types, error) in
             XCTAssertNotNil(types)
@@ -35,11 +35,11 @@ class TypesTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testTypesByQuery() {
-        let expectation = expectationWithDescription("tests searching for types")
+        let expectation = self.expectation(description: "tests searching for types")
         
         BeamClient.sharedClient.types.getTypesByQuery(query) { (types, error) in
             XCTAssertNotNil(types)
@@ -47,6 +47,6 @@ class TypesTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 }

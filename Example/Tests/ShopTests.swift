@@ -15,7 +15,7 @@ class ShopTests: XCTestCase {
     let itemId = 1
     
     func testCategories() {
-        let expectation = expectationWithDescription("tests the categories endpoint")
+        let expectation = self.expectation(description: "tests the categories endpoint")
         
         BeamClient.sharedClient.shop.getCategories { (categories, error) in
             XCTAssertNotNil(categories)
@@ -23,11 +23,11 @@ class ShopTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testItemsByCategory() {
-        let expectation = expectationWithDescription("tests retrieving items from a category")
+        let expectation = self.expectation(description: "tests retrieving items from a category")
         
         BeamClient.sharedClient.shop.getItemsByCategory(categoryId) { (items, error) in
             XCTAssertNotNil(items)
@@ -35,11 +35,11 @@ class ShopTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testItemWithId() {
-        let expectation = expectationWithDescription("tests retrieving an item by id")
+        let expectation = self.expectation(description: "tests retrieving an item by id")
         
         BeamClient.sharedClient.shop.getItemWithId(itemId) { (item, error) in
             XCTAssertNotNil(item)
@@ -47,6 +47,6 @@ class ShopTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 }

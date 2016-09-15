@@ -12,7 +12,7 @@ import XCTest
 class IngestsTests: XCTestCase {
     
     func testsIngests() {
-        let expectation = expectationWithDescription("tests the ingests endpoint")
+        let expectation = self.expectation(description: "tests the ingests endpoint")
         
         BeamClient.sharedClient.ingests.getIngests { (ingests, error) in
             XCTAssertNotNil(ingests)
@@ -20,6 +20,6 @@ class IngestsTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 }

@@ -57,7 +57,7 @@ public struct BeamUser {
     public let player: String?
     
     /// Stored as JSON to avoid using a recursive value type.
-    private let channelData: JSON
+    fileprivate let channelData: JSON
     
     /// The user's associated channel object.
     public var channel: BeamChannel? {

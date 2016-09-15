@@ -15,19 +15,19 @@ public class ChatClient: WebSocketDelegate {
     // MARK: Properties
     
     /// The client's delegate, through which updates and chat messages are relayed to your app.
-    private weak var delegate: ChatClientDelegate?
+    fileprivate weak var delegate: ChatClientDelegate?
     
     /// The stored authentication key. Will only be generated if BeamSession.sharedSession != nil, and is needed to send chat messages.
-    private var authKey: String?
+    fileprivate var authKey: String?
     
     /// The id of the channel being connected to.
-    private var channelId: Int!
+    fileprivate var channelId: Int!
     
     /// The number of the packet being sent.
-    private var packetCount = 0
+    fileprivate var packetCount = 0
     
     /// The websocket through which chat data is received and sent.
-    private var socket: WebSocket?
+    fileprivate var socket: WebSocket?
     
     /// Initializes a chat connection, which needs to be stored by your own class.
     public init(delegate chatDelegate: ChatClientDelegate) {
@@ -41,7 +41,7 @@ public class ChatClient: WebSocketDelegate {
     
      :param: channelId The id of the channel being connected to.
      */
-    public func joinChannel(channelId: Int) {
+    public func joinChannel(_ channelId: Int) {
         self.channelId = channelId
         
         BeamClient.sharedClient.chat.getChatDetailsById(channelId) { (endpoints, authKey, error) in
@@ -54,7 +54,7 @@ public class ChatClient: WebSocketDelegate {
                 self.authKey = authKey
             }
             
-            if let url = NSURL(string: endpoints[0]) {
+            if let url = URL(string: endpoints[0]) {
                 self.socket = WebSocket(url: url, protocols: ["chat", "http-only"])
                 self.socket?.delegate = self
                 self.socket?.connect()
@@ -72,7 +72,7 @@ public class ChatClient: WebSocketDelegate {
      
      :param: packet The packet being sent.
      */
-    public func sendPacket(packet: ChatSendable) {
+    public func sendPacket(_ packet: ChatSendable) {
         packetCount += 1
         
         guard let socket = socket else {
@@ -85,15 +85,14 @@ public class ChatClient: WebSocketDelegate {
     
     // MARK: WebSocketDelegate
     
-    public func websocketDidConnect(socket: WebSocket) {
-        guard let userId = BeamSession.sharedSession?.user.id,
-            authKey = authKey else {
-                let packet = ChatAuthenticatePacket(channelId: channelId)
-                sendPacket(packet)
-                
-                delegate?.chatDidConnect()
-                
-                return
+    public func websocketDidConnect(_ socket: WebSocket) {
+        guard let userId = BeamSession.sharedSession?.user.id, let authKey = authKey else {
+            let packet = ChatAuthenticatePacket(channelId: channelId)
+            sendPacket(packet)
+            
+            delegate?.chatDidConnect()
+            
+            return
         }
         
         delegate?.chatDidConnect()
@@ -102,17 +101,17 @@ public class ChatClient: WebSocketDelegate {
         sendPacket(packet)
     }
     
-    public func websocketDidDisconnect(socket: WebSocket, error: NSError?) {
+    public func websocketDidDisconnect(_ socket: WebSocket, error: NSError?) {
     }
     
-    public func websocketDidReceiveMessage(socket: WebSocket, text: String) {
-        guard let data = text.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) else {
+    public func websocketDidReceiveMessage(_ socket: WebSocket, text: String) {
+        guard let data = text.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
             print("unknown error parsing chat packet")
             return
         }
         
         do {
-            if let jsonObject = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSDictionary {
+            if let jsonObject = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? NSDictionary {
                 let json = JSON(jsonObject)
                 
                 if let packet = ChatPacket.receivePacket(json) {
@@ -122,7 +121,7 @@ public class ChatClient: WebSocketDelegate {
         } catch { }
     }
     
-    public func websocketDidReceiveData(socket: WebSocket, data: NSData) {
+    public func websocketDidReceiveData(_ socket: WebSocket, data: Data) {
     }
 }
 
@@ -133,5 +132,5 @@ public protocol ChatClientDelegate: class {
     func chatDidConnect()
     
     /// Called when a packet is received and interpreted.
-    func chatReceivedPacket(packet: ChatPacket)
+    func chatReceivedPacket(_ packet: ChatPacket)
 }

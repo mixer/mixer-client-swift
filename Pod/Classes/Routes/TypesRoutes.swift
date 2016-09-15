@@ -17,7 +17,7 @@ public class TypesRoutes {
      :param: id The identifier of the type being retrieved.
      :param: completion An optional completion block with retrieved channel data.
      */
-    public func getTypeWithId(id: Int, completion: ((type: BeamType?, error: BeamRequestError?) -> Void)?) {
+    public func getTypeWithId(_ id: Int, completion: ((_ type: BeamType?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/types?where=id.eq.\(id)") { (json, error) in
             guard let json = json?[0] else {
                 completion?(type: nil, error: error)
@@ -34,7 +34,7 @@ public class TypesRoutes {
      
      :param: completion An optional completion block with the retrieved channels' data.
      */
-    public func getTypes(completion: ((types: [BeamType]?, error: BeamRequestError?) -> Void)?) {
+    public func getTypes(_ completion: ((_ types: [BeamType]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/types", requestType: "GET", params: ["where": "online.neq.0"]) { (json, error) in
             guard let types = json?.array else {
                 completion?(types: nil, error: error)
@@ -58,7 +58,7 @@ public class TypesRoutes {
      :param: query The query being used to search for types.
      :param: completion An optional completion block with the retrieved types' data.
      */
-    public func getTypesByQuery(query: String, completion: ((types: [BeamType]?, error: BeamRequestError?) -> Void)?) {
+    public func getTypesByQuery(_ query: String, completion: ((_ types: [BeamType]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/types", requestType: "GET", params: ["query": query]) { (json, error) in
             guard let types = json?.array else {
                 completion?(types: nil, error: error)

@@ -28,6 +28,6 @@ public class ChatHistoryPacket: ChatPacket, ChatSendable {
     }
     
     public func arguments() -> [AnyObject] {
-        return [quantity]
+        return [quantity as AnyObject]
     }
 }

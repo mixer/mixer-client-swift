@@ -8,25 +8,25 @@
 
 /// The size of the control grid being used.
 public enum InteractiveGrid {
-    case Small
-    case Medium
-    case Large
-    case Unknown
+    case small
+    case medium
+    case large
+    case unknown
     
     /// Used to initialize an interactive grid value from its string counterpart.
     init(value: String?) {
         if let value = value {
             if value == "small" {
-                self = .Small
+                self = .small
             } else if value == "medium" {
-                self = .Medium
+                self = .medium
             } else if value == "large" {
-                self = .Large
+                self = .large
             } else {
-                self = .Unknown
+                self = .unknown
             }
         } else {
-            self = .Unknown
+            self = .unknown
         }
     }
 }

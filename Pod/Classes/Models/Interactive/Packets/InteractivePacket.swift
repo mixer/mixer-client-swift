@@ -12,7 +12,7 @@ import SwiftyJSON
 public class InteractivePacket {
     
     /// The string of the packet's raw data.
-    private var packetString: String?
+    fileprivate var packetString: String?
     
     /// Initializes an empty packet.
     init() {
@@ -28,7 +28,7 @@ public class InteractivePacket {
      :param: packet The packet being sent by the app.
      :returns: The raw packet string to be sent to the interactive servers.
      */
-    class func prepareToSend(packet: InteractiveSendable) -> String {
+    class func prepareToSend(_ packet: InteractiveSendable) -> String {
         let method = packet.identifier
         let data = packet.data()
         
@@ -41,14 +41,14 @@ public class InteractivePacket {
                 dataString += "\"\(datum.0)\":null,"
             } else if datum.1 is [String] {
                 let array = datum.1 as! [String]
-                dataString += "\"\(datum.0)\":[\(array.joinWithSeparator(","))],"
+                dataString += "\"\(datum.0)\":[\(array.joined(separator: ","))],"
             } else {
                 dataString += "\"\(datum.0)\":\(datum.1),"
             }
         }
         
         if dataString.characters.count > 0 {
-            dataString = dataString.substringToIndex(dataString.endIndex.predecessor())
+            dataString = dataString.substring(to: dataString.characters.index(before: dataString.endIndex))
             
             let packetString = "\(method){\(dataString)}"
             return packetString
@@ -63,13 +63,13 @@ public class InteractivePacket {
      :param: string The string being interpreted.
      :returns: A tuple with the interactive packet and the current control state, if it has been updated.
      */
-    class func receivePacket(string: String) -> (packet: InteractivePacket?, state: String?)? {
+    class func receivePacket(_ string: String) -> (packet: InteractivePacket?, state: String?)? {
         var packet: InteractivePacket?
         
-        let event = (string as NSString).substringToIndex(4)
-        let dataString = (string as NSString).stringByReplacingCharactersInRange(NSMakeRange(0, 4), withString: "")
+        let event = (string as NSString).substring(to: 4)
+        let dataString = (string as NSString).replacingCharacters(in: NSMakeRange(0, 4), with: "")
         
-        guard let actualData = dataString.dataUsingEncoding(NSUTF8StringEncoding) else {
+        guard let actualData = dataString.data(using: String.Encoding.utf8) else {
             return nil
         }
         

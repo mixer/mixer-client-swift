@@ -19,7 +19,7 @@ public class ConstellationLivePacket: ConstellationPacket {
     
     /// Initializes a live packet with JSON data.
     init?(data: [String: JSON]) {
-        if let channel = data["channel"]?.string, payload = data["payload"] {
+        if let channel = data["channel"]?.string, let payload = data["payload"] {
             self.channel = channel
             self.payload = payload
         } else {

@@ -17,29 +17,29 @@ class ChatTests: XCTestCase {
     let userId = 278
     
     func testDeleteAllChatMessages() {
-        let expectation = expectationWithDescription("tests deleting all chat messages from a channel")
+        let expectation = self.expectation(description: "tests deleting all chat messages from a channel")
         
         BeamClient.sharedClient.chat.deleteAllChatMessages(channelId) { (error) in
             XCTAssert(error == .NotAuthenticated)
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testDeleteChatMessage() {
-        let expectation = expectationWithDescription("tests deleting a chat message by id")
+        let expectation = self.expectation(description: "tests deleting a chat message by id")
         
         BeamClient.sharedClient.chat.deleteChatMessage(channelId, messageId: messageId) { (error) in
             XCTAssert(error == .NotAuthenticated)
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testChatDetailsById() {
-        let expectation = expectationWithDescription("tests retrieving chat details")
+        let expectation = self.expectation(description: "tests retrieving chat details")
         
         BeamClient.sharedClient.chat.getChatDetailsById(channelId) { (endpoints, authKey, error) in
             XCTAssertNotNil(endpoints)
@@ -48,11 +48,11 @@ class ChatTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testViewersByChannel() {
-        let expectation = expectationWithDescription("tests retrieving viewers of a channel")
+        let expectation = self.expectation(description: "tests retrieving viewers of a channel")
         
         BeamClient.sharedClient.chat.getViewersByChannel(channelId) { (users, error) in
             XCTAssertNotNil(users)
@@ -60,11 +60,11 @@ class ChatTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testViewersByChannelWithQuery() {
-        let expectation = expectationWithDescription("tests retrieving viewers of a channel by query")
+        let expectation = self.expectation(description: "tests retrieving viewers of a channel by query")
         
         BeamClient.sharedClient.chat.getViewersByChannelWithQuery(channelId, query: query) { (users, error) in
             XCTAssertNotNil(users)
@@ -72,7 +72,7 @@ class ChatTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testSpacesuit() {

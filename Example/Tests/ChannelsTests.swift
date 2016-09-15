@@ -17,73 +17,73 @@ class ChannelsTests: XCTestCase {
     let userId = 278
     
     func testFollowChannel() {
-        let expectation = expectationWithDescription("tests the follow channel endpoint")
+        let expectation = self.expectation(description: "tests the follow channel endpoint")
         
         BeamClient.sharedClient.channels.followChannel(channelId) { (error) in
             XCTAssert(error == .NotAuthenticated)
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testUnfollowChannel() {
-        let expectation = expectationWithDescription("tests the unfollow channel endpoint")
+        let expectation = self.expectation(description: "tests the unfollow channel endpoint")
         
         BeamClient.sharedClient.channels.unfollowChannel(channelId) { (error) in
             XCTAssert(error == .NotAuthenticated)
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testBanUser() {
-        let expectation = expectationWithDescription("tests banning a user from chat")
+        let expectation = self.expectation(description: "tests banning a user from chat")
         
         BeamClient.sharedClient.channels.banUser(channelId, userId: userId) { (error) in
             XCTAssert(error == .NotAuthenticated)
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testUnbanUser() {
-        let expectation = expectationWithDescription("tests unbanning a user from chat")
+        let expectation = self.expectation(description: "tests unbanning a user from chat")
         
         BeamClient.sharedClient.channels.unbanUser(channelId, userId: userId) { (error) in
             XCTAssert(error == .NotAuthenticated)
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testHostChannel() {
-        let expectation = expectationWithDescription("tests hosting a channel")
+        let expectation = self.expectation(description: "tests hosting a channel")
         
         BeamClient.sharedClient.channels.hostChannel(channelId) { (error) in
             XCTAssert(error == .NotAuthenticated)
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testStopHosting() {
-        let expectation = expectationWithDescription("tests stopping hosting")
+        let expectation = self.expectation(description: "tests stopping hosting")
         
         BeamClient.sharedClient.channels.stopHosting { (error) in
             XCTAssert(error == .NotAuthenticated)
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testChannelWithId() {
-        let expectation = expectationWithDescription("tests retrieving a channel by id")
+        let expectation = self.expectation(description: "tests retrieving a channel by id")
         
         BeamClient.sharedClient.channels.getChannelWithId(channelId) { (channel, error) in
             XCTAssertNotNil(channel)
@@ -91,11 +91,11 @@ class ChannelsTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testChannelWithToken() {
-        let expectation = expectationWithDescription("tests retrieving a channel by token")
+        let expectation = self.expectation(description: "tests retrieving a channel by token")
         
         BeamClient.sharedClient.channels.getChannelWithToken(channelToken) { (channel, error) in
             XCTAssertNotNil(channel)
@@ -103,11 +103,11 @@ class ChannelsTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testChannels() {
-        let expectation = expectationWithDescription("tests the default channels endpoint")
+        let expectation = self.expectation(description: "tests the default channels endpoint")
         
         var i = 0
         
@@ -124,11 +124,11 @@ class ChannelsTests: XCTestCase {
             }
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testChannelsByQuery() {
-        let expectation = expectationWithDescription("tests searching for channels")
+        let expectation = self.expectation(description: "tests searching for channels")
         
         BeamClient.sharedClient.channels.getChannelsByQuery(query) { (channels, error) in
             XCTAssertNotNil(channels)
@@ -136,11 +136,11 @@ class ChannelsTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testFollowersOfChannel() {
-        let expectation = expectationWithDescription("tests retrieving a channel's followers")
+        let expectation = self.expectation(description: "tests retrieving a channel's followers")
         
         BeamClient.sharedClient.channels.getFollowersOfChannel(channelId) { (users, error) in
             XCTAssertNotNil(users)
@@ -148,11 +148,11 @@ class ChannelsTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testEmoticonsOfChannel() {
-        let expectation = expectationWithDescription("tests retrieving a channel's emoticons")
+        let expectation = self.expectation(description: "tests retrieving a channel's emoticons")
         
         BeamClient.sharedClient.channels.getEmoticonsOfChannel(channelId) { (spritesheetUrl, emoticons, error) in
             XCTAssertNotNil(spritesheetUrl)
@@ -161,11 +161,11 @@ class ChannelsTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testRecordingsOfChannel() {
-        let expectation = expectationWithDescription("tests retrieving recordings from a channel")
+        let expectation = self.expectation(description: "tests retrieving recordings from a channel")
         
         BeamClient.sharedClient.channels.getRecordingsOfChannel(channelId) { (recordings, error) in
             XCTAssertNotNil(recordings)
@@ -173,11 +173,11 @@ class ChannelsTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testDefaultEmoticons() {
-        let expectation = expectationWithDescription("tests retrieving the default Beam emoticons")
+        let expectation = self.expectation(description: "tests retrieving the default Beam emoticons")
         
         BeamClient.sharedClient.channels.getDefaultEmoticons { (packs, error) in
             XCTAssertNotNil(packs)
@@ -185,11 +185,11 @@ class ChannelsTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testUpdateData() {
-        let expectation = expectationWithDescription("tests updating chnanel data")
+        let expectation = self.expectation(description: "tests updating chnanel data")
         
         BeamClient.sharedClient.channels.updateData(channelId, body: []) { (channel, error) in
             XCTAssertNil(channel)
@@ -197,6 +197,6 @@ class ChannelsTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 }

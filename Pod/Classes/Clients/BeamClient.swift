@@ -54,7 +54,7 @@ public class BeamClient {
     public let users: UsersRoutes
     
     /// The client's initializer. You will never have to call this yourself.
-    private init() {
+    fileprivate init() {
         achievements = AchievementsRoutes()
         channels = ChannelsRoutes()
         chat = ChatRoutes()

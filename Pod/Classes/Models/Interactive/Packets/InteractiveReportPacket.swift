@@ -41,8 +41,8 @@ public class InteractiveReportPacket: InteractivePacket, InteractiveSendable {
             }
         }
         
-        data["joystick"] = joysticks
-        data["tactile"] = tactiles
+        data["joystick"] = joysticks as AnyObject?
+        data["tactile"] = tactiles as AnyObject?
         
         return data
     }

@@ -17,9 +17,9 @@ public class RecordingsRoutes {
      :param: id The id of the recording being marked.
      :param: completion An optional completion block that fires when the action has been completed.
      */
-    public func markRecordingSeen(id: Int, completion: ((error: BeamRequestError?) -> Void)?) {
+    public func markRecordingSeen(_ id: Int, completion: ((_ error: BeamRequestError?) -> Void)?) {
         guard let _ = BeamSession.sharedSession else {
-            completion?(error: .NotAuthenticated)
+            completion?(.notAuthenticated)
             return
         }
         
@@ -36,7 +36,7 @@ public class RecordingsRoutes {
      :param: id The identifier of the recording being retrieved.
      :param: completion An optional completion block with retrieved recording data.
      */
-    public func getRecording(id: Int, completion: ((recording: BeamRecording?, error: BeamRequestError?) -> Void)?) {
+    public func getRecording(_ id: Int, completion: ((_ recording: BeamRecording?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/recordings/\(id)") { (json, error) in
             guard let json = json else {
                 completion?(recording: nil, error: error)

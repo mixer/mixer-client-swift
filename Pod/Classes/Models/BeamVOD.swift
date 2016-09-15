@@ -15,11 +15,11 @@ public struct BeamVOD {
     public let baseUrl: String?
     public let mainUrl: String?
     public let format: String
-    public let createdAt: NSDate?
-    public let updatedAt: NSDate?
+    public let createdAt: Date?
+    public let updatedAt: Date?
     public let recordingId: Int
     
-    public var url: NSURL? {
+    public var url: URL? {
         func filePath() -> String? {
             return [
                 "dash": "manifest.mpd",
@@ -30,10 +30,10 @@ public struct BeamVOD {
             ][format]
         }
         
-        if let baseUrl = baseUrl, filePath = filePath() {
-            return NSURL(string: "\(baseUrl)\(filePath)")
-        } else if let storageNode = storageNode, mainUrl = mainUrl {
-            return NSURL(string: "https://\(storageNode)/\(id)/\(mainUrl)")
+        if let baseUrl = baseUrl, let filePath = filePath() {
+            return URL(string: "\(baseUrl)\(filePath)")
+        } else if let storageNode = storageNode, let mainUrl = mainUrl {
+            return URL(string: "https://\(storageNode)/\(id)/\(mainUrl)")
         }
         
         return nil
