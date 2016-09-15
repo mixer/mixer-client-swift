@@ -12,7 +12,7 @@ import SwiftyJSON
 public class ChatMessagesPacket: ChatPacket {
     
     /// The messages that were received.
-    public var packets: [ChatMessagePacket]
+    public let packets: [ChatMessagePacket]
     
     override init?(data: [JSON]) {
         var packets = [ChatMessagePacket]()

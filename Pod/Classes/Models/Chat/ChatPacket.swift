@@ -72,10 +72,14 @@ public class ChatPacket {
             default:
                 print("Unrecognized packet received: \(event) with parameters \(data)")
             }
-        } else if let type = json["type"].string, let data = json["data"].array {
+        } else if let type = json["type"].string {
             switch type {
             case "reply":
-                packet = ChatMessagesPacket(data: data)
+                if let data = json["data"].array {
+                    packet = ChatMessagesPacket(data: data)
+                } else if let error = json["error"].string {
+                    packet = ChatErrorPacket(error: error)
+                }
             default:
                 print("Unknown packet received: \(json)")
             }

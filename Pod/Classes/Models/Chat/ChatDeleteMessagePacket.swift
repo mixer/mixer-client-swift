@@ -12,7 +12,7 @@ import SwiftyJSON
 public class ChatDeleteMessagePacket: ChatPacket {
     
     /// The id of the message to be deleted.
-    public var id: String
+    public let id: String
     
     /// Initializes a chat delete message packet with JSON data.
     override init?(data: [String: JSON]) {
