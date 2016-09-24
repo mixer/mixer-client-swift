@@ -8,7 +8,6 @@ Pod::Spec.new do |s|
 
   s.requires_arc           = true
   s.ios.deployment_target  = "8.2"
-  s.tvos.deployment_target = "9.0"
   s.source                 = { :git => "https://github.com/WatchBeam/beam-client-swift.git", :tag => "1.3" }
   s.source_files           = "Pod/Classes/**/*"
 
