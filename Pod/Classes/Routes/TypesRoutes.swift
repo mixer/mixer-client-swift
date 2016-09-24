@@ -20,12 +20,12 @@ public class TypesRoutes {
     public func getTypeWithId(_ id: Int, completion: ((_ type: BeamType?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/types?where=id.eq.\(id)") { (json, error) in
             guard let json = json?[0] else {
-                completion?(type: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
             let type = BeamType(json: json)
-            completion?(type: type, error: error)
+            completion?(type, error)
         }
     }
     
@@ -37,7 +37,7 @@ public class TypesRoutes {
     public func getTypes(_ completion: ((_ types: [BeamType]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/types", requestType: "GET", params: ["where": "online.neq.0"]) { (json, error) in
             guard let types = json?.array else {
-                completion?(types: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
@@ -48,7 +48,7 @@ public class TypesRoutes {
                 retrievedTypes.append(retrievedType)
             }
             
-            completion?(types: retrievedTypes, error: error)
+            completion?(retrievedTypes, error)
         }
     }
     
@@ -61,7 +61,7 @@ public class TypesRoutes {
     public func getTypesByQuery(_ query: String, completion: ((_ types: [BeamType]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/types", requestType: "GET", params: ["query": query]) { (json, error) in
             guard let types = json?.array else {
-                completion?(types: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
@@ -72,7 +72,7 @@ public class TypesRoutes {
                 retrievedTypes.append(retrievedType)
             }
             
-            completion?(types: retrievedTypes, error: error)
+            completion?(retrievedTypes, error)
         }
     }
 }

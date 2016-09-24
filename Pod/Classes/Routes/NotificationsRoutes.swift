@@ -26,8 +26,8 @@ public class NotificationsRoutes {
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
         let body = ["date": formatter.string(from: date)]
         
-        BeamRequest.request("/notifications/read", requestType: "POST", params: ["userId": "\(userId)"], body: body) { (json, error) in
-            completion?(error: error)
+        BeamRequest.request("/notifications/read", requestType: "POST", params: ["userId": "\(userId)"], body: body as? AnyObject) { (json, error) in
+            completion?(error)
         }
     }
     
@@ -47,23 +47,23 @@ public class NotificationsRoutes {
         let body: [String: AnyObject] = [
             "userId": "\(userId)" as AnyObject,
             "transport": transport as AnyObject,
-            "data": data as AnyObject? ?? [:],
-            "settings": settings ?? [
+            "data": data as? AnyObject ?? [:] as AnyObject,
+            "settings": settings as? AnyObject ?? [
                 [
                     "type": "wentlive",
                     "setting": settingDict
                 ]
-            ]
+            ] as AnyObject
         ]
         
-        BeamRequest.request("/notifications/transports", requestType: "POST", body: body) { (json, error) in
+        BeamRequest.request("/notifications/transports", requestType: "POST", body: body as? AnyObject) { (json, error) in
             guard let json = json , error == nil else {
-                completion?(transport: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
             let transport = BeamNotificationTransport(json: json)
-            completion?(transport: transport, error: error)
+            completion?(transport, error)
         }
     }
     
@@ -76,7 +76,7 @@ public class NotificationsRoutes {
      */
     public func deleteNotificationTransport(_ userId: Int, transportId: Int, completion: ((_ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/notifications/transports/\(transportId)", requestType: "DELETE", params: ["userId": "\(userId)"]) { (json, error) in
-            completion?(error: error)
+            completion?(error)
         }
     }
     
@@ -91,7 +91,7 @@ public class NotificationsRoutes {
     public func getNotifications(_ userId: Int, completion: ((_ notifications: [BeamNotification]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/notifications", params: ["userId": "\(userId)"]) { (json, error) in
             guard let notifications = json?.array else {
-                completion?(notifications: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
@@ -102,7 +102,7 @@ public class NotificationsRoutes {
                 retrievedNotifications.append(retrievedNotification)
             }
             
-            completion?(notifications: retrievedNotifications, error: error)
+            completion?(retrievedNotifications, error)
         }
     }
     
@@ -115,7 +115,7 @@ public class NotificationsRoutes {
     public func getNotificationTransports(_ userId: Int, completion: ((_ transports: [BeamNotificationTransport]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/notifications/transports", params: ["userId": "\(userId)"]) { (json, error) in
             guard let transports = json?.array else {
-                completion?(transports: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
@@ -126,7 +126,7 @@ public class NotificationsRoutes {
                 retrievedTransports.append(retrievedTransport)
             }
             
-            completion?(transports: retrievedTransports, error: error)
+            completion?(retrievedTransports, error)
         }
     }
 }

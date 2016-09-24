@@ -62,20 +62,20 @@ public struct BeamTeam {
         description = json["description"].string ?? ""
         
         if let logo = json["logoUrl"].string {
-            logoUrl = NSURL(string: logo)
+            logoUrl = URL(string: logo)
         } else {
             logoUrl = nil
         }
         
         if let background = json["backgroundUrl"].string {
-            backgroundUrl = NSURL(string: background)
+            backgroundUrl = URL(string: background)
         } else {
             backgroundUrl = nil
         }
         
         totalViewersCurrent = json["totalViewersCurrent"].int ?? 0
-        createdAt = NSDate.fromBeam(json["createdAt"].string)
-        updatedAt = NSDate.fromBeam(json["updatedAt"].string)
+        createdAt = Date.fromBeam(json["createdAt"].string)
+        updatedAt = Date.fromBeam(json["updatedAt"].string)
         
         if let social = json["social"].dictionary {
             twitter = social["twitter"]?.string

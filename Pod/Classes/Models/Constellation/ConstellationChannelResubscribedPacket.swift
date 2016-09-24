@@ -23,7 +23,7 @@ public class ConstellationChannelResubscribedPacket: ConstellationLivePacket {
     /// Initializes a channel resubscribed packet with JSON data.
     override init?(data: [String: JSON]) {
         if let channel = data["channel"]?.string, let payload = data["payload"], let totalMonths = payload["totalMonths"].int {
-            self.channelId = Int(channel.componentsSeparatedByString(":")[1])!
+            self.channelId = Int(channel.components(separatedBy: ":")[1])!
             self.user = BeamUser(json: payload["user"])
             self.totalMonths = totalMonths
             

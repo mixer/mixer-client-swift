@@ -148,11 +148,11 @@ public struct BeamChannel {
         id = json["id"].int ?? 0
         userId = json["userId"].int ?? 0
         token = json["token"].string ?? ""
-        online = json["online"].bool ?? (json["online"].int ?? 0) == 1
-        featured = json["featured"].bool ?? (json["featured"].int ?? 0) == 1
-        partnered = json["partnered"].bool ?? (json["partnered"].int ?? 0) == 1
-        transcodingEnabled = json["transcodingEnabled"].bool ?? (json["transcodingEnabled"].int ?? 0) == 1
-        suspended = json["suspended"].bool ?? (json["suspended"].int ?? 0) == 1
+        online = json["online"].bool ?? ((json["online"].int ?? 0) == 1)
+        featured = json["featured"].bool ?? ((json["featured"].int ?? 0) == 1)
+        partnered = json["partnered"].bool ?? ((json["partnered"].int ?? 0) == 1)
+        transcodingEnabled = json["transcodingEnabled"].bool ?? ((json["transcodingEnabled"].int ?? 0) == 1)
+        suspended = json["suspended"].bool ?? ((json["suspended"].int ?? 0) == 1)
         name = json["name"].string ?? ""
         audience = json["audience"].string ?? ""
         viewersTotal = json["viewersTotal"].int ?? 0
@@ -160,12 +160,12 @@ public struct BeamChannel {
         followers = json["numFollowers"].int ?? 0
         desc = json["description"].string
         typeId = json["typeId"].int
-        interactive = json["interactive"].bool ?? (json["interactive"].int ?? 0) == 1
+        interactive = json["interactive"].bool ?? ((json["interactive"].int ?? 0) == 1)
         interactiveGameId = json["tetrisGameId"].int
         ftl = json["ftl"].int ?? 0
         hasVod = json["hasVod"].bool ?? false
-        createdAt = NSDate.fromBeam(json["createdAt"].string)
-        updatedAt = NSDate.fromBeam(json["updatedAt"].string)
+        createdAt = Date.fromBeam(json["createdAt"].string)
+        updatedAt = Date.fromBeam(json["updatedAt"].string)
         subscribers = json["numSubscribers"].int
         
         thumbnail = BeamThumbnail(json: json["thumbnail"])

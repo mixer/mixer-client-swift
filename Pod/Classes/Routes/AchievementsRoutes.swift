@@ -19,7 +19,7 @@ public class AchievementsRoutes {
     public func getAchievements(_ completion: ((_ achievements: [BeamAchievement]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/achievements") { (json, error) in
             guard let achievements = json?.array else {
-                completion?(achievements: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
@@ -30,7 +30,7 @@ public class AchievementsRoutes {
                 retrievedAchievements.append(retrievedAchievement)
             }
             
-            completion?(achievements: retrievedAchievements, error: error)
+            completion?(retrievedAchievements, error)
         }
     }
 }

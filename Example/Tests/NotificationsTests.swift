@@ -19,7 +19,7 @@ class NotificationsTests: XCTestCase {
         let expectation = self.expectation(description: "tests marking notifications as read")
         
         BeamClient.sharedClient.notifications.markNotificationsAsRead(userId, beforeDate: Date()) { (error) in
-            XCTAssert(error == .InvalidCredentials)
+            XCTAssert(error == .invalidCredentials)
             expectation.fulfill()
         }
         
@@ -31,7 +31,7 @@ class NotificationsTests: XCTestCase {
         
         BeamClient.sharedClient.notifications.updateNotificationTransport(userId, transport: transport, data: nil, settings: nil) { (transport, error) in
             XCTAssertNil(transport)
-            XCTAssert(error == .InvalidCredentials)
+            XCTAssert(error == .invalidCredentials)
             expectation.fulfill()
         }
         
@@ -42,7 +42,7 @@ class NotificationsTests: XCTestCase {
         let expectation = self.expectation(description: "tests the delete transport endpoint")
         
         BeamClient.sharedClient.notifications.deleteNotificationTransport(userId, transportId: transportId) { (error) in
-            XCTAssert(error == .InvalidCredentials)
+            XCTAssert(error == .invalidCredentials)
             expectation.fulfill()
         }
         
@@ -54,7 +54,7 @@ class NotificationsTests: XCTestCase {
         
         BeamClient.sharedClient.notifications.getNotifications(userId) { (notifications, error) in
             XCTAssertNil(notifications)
-            XCTAssert(error == .InvalidCredentials)
+            XCTAssert(error == .invalidCredentials)
             expectation.fulfill()
         }
         
@@ -66,7 +66,7 @@ class NotificationsTests: XCTestCase {
         
         BeamClient.sharedClient.notifications.getNotificationTransports(userId) { (transports, error) in
             XCTAssertNil(transports)
-            XCTAssert(error == .InvalidCredentials)
+            XCTAssert(error == .invalidCredentials)
             expectation.fulfill()
         }
         

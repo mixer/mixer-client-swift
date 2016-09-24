@@ -6,7 +6,7 @@
 //  Copyright © 2016 MCProHosting. All rights reserved.
 //
 
-public let BeamAuthenticatedNotification = "BeamAuthenticatedNotification"
+public let BeamAuthenticatedNotification = Notification.Name("BeamAuthenticatedNotification")
 
 /// Stores data about an authenticated user session.
 public class BeamSession {
@@ -51,9 +51,9 @@ public class BeamSession {
             body["code"] = String(code)
         }
         
-        BeamRequest.request("/users/login", requestType: "POST", body: body) { (json, error) in
+        BeamRequest.request("/users/login", requestType: "POST", body: body as AnyObject) { (json, error) in
             guard let json = json , error == nil else {
-                completion?(user: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
@@ -61,9 +61,9 @@ public class BeamSession {
             let session = BeamSession(user: user)
             BeamSession.sharedSession = session
             
-            NSNotificationCenter.defaultCenter().postNotificationName(BeamAuthenticatedNotification, object: nil)
+            NotificationCenter.default.post(name: BeamAuthenticatedNotification, object: nil)
             
-            completion?(user: user, error: error)
+            completion?(user, error)
         }
     }
     
@@ -76,7 +76,7 @@ public class BeamSession {
         BeamSession.sharedSession = nil
         
         BeamRequest.request("/users/current", requestType: "DELETE") { (json, error) in
-            completion?(error: error)
+            completion?(error)
         }
     }
     
@@ -95,7 +95,7 @@ public class BeamSession {
         
         BeamRequest.request("/users/current/refresh", requestType: "POST") { (json, error) in
             guard let json = json else {
-                completion?(user: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
@@ -105,9 +105,9 @@ public class BeamSession {
                 let session = BeamSession(user: user)
                 BeamSession.sharedSession = session
                 
-                completion?(user: user, error: error)
+                completion?(user, error)
             } else {
-                completion?(user: nil, error: nil)
+                completion?(nil, nil)
             }
         }
     }
@@ -127,10 +127,10 @@ public class BeamSession {
             "email": email
         ]
         
-        BeamRequest.request("/users", requestType: "POST", body: body) { (json, error) in
+        BeamRequest.request("/users", requestType: "POST", body: body as AnyObject) { (json, error) in
             guard error == nil,
                 let json = json else {
-                    completion?(user: nil, error: error)
+                    completion?(nil, error)
                     return
             }
             
@@ -139,9 +139,9 @@ public class BeamSession {
             let session = BeamSession(user: user)
             BeamSession.sharedSession = session
             
-            NSNotificationCenter.defaultCenter().postNotificationName(BeamAuthenticatedNotification, object: nil)
+            NotificationCenter.default.post(name: BeamAuthenticatedNotification, object: nil)
             
-            completion?(user: user, error: error)
+            completion?(user, error)
         }
     }
 }

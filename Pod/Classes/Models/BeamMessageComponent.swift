@@ -46,7 +46,7 @@ public struct BeamMessageComponent {
                 if let coords = json["coords"].dictionary, let xc = coords["x"]?.int, let yc = coords["y"]?.int {
                     let x = CGFloat(xc)
                     let y = CGFloat(yc)
-                    coordinates = CGPointMake(x, y)
+                    coordinates = CGPoint(x: x, y: y)
                 }
             case "inaspacesuit":
                 self.type = .SpaceSuit

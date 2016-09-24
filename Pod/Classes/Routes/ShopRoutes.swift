@@ -19,7 +19,7 @@ public class ShopRoutes {
     public func getCategories(_ completion: ((_ categories: [BeamShopCategory]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/shop/categories") { (json, error) in
             guard let categories = json?.array else {
-                completion?(categories: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
@@ -30,7 +30,7 @@ public class ShopRoutes {
                 retrievedCategories.append(retrievedCategory)
             }
             
-            completion?(categories: retrievedCategories, error: error)
+            completion?(retrievedCategories, error)
         }
     }
     
@@ -43,12 +43,12 @@ public class ShopRoutes {
     public func getItemWithId(_ itemId: Int, completion: ((_ item: BeamShopItem?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/shop/items/\(itemId)") { (json, error) in
             guard let json = json else {
-                completion?(item: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
             let item = BeamShopItem(json: json)
-            completion?(item: item, error: error)
+            completion?(item, error)
         }
     }
     
@@ -61,7 +61,7 @@ public class ShopRoutes {
     public func getItemsByCategory(_ categoryId: Int, completion: ((_ items: [BeamShopItem]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/shop/categories/\(categoryId)/items") { (json, error) in
             guard let items = json?.array else {
-                completion?(items: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
@@ -72,7 +72,7 @@ public class ShopRoutes {
                 retrievedItems.append(retrievedItem)
             }
             
-            completion?(items: retrievedItems, error: error)
+            completion?(retrievedItems, error)
         }
     }
 }

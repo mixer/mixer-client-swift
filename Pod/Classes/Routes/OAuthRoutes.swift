@@ -37,7 +37,7 @@ public class OAuthRoutes {
         
         BeamRequest.request("/oauth/\(provider.rawValue)/login", requestType: "POST", headers: headers, ignoreCSRF: true) { (json, error) in
             guard let json = json , error == nil else {
-                completion?(user: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
@@ -45,9 +45,9 @@ public class OAuthRoutes {
             let session = BeamSession(user: user)
             BeamSession.sharedSession = session
             
-            NSNotificationCenter.defaultCenter().postNotificationName(BeamAuthenticatedNotification, object: nil)
+            NotificationCenter.default.post(name: BeamAuthenticatedNotification, object: nil)
             
-            completion?(user: user, error: error)
+            completion?(user, error)
         }
     }
 }

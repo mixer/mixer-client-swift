@@ -40,12 +40,12 @@ public class TeamsRoutes {
     fileprivate func getTeamWithEndpoint(_ endpoint: String, completion: ((_ team: BeamTeam?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request(endpoint) { (json, error) in
             guard let json = json else {
-                completion?(team: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
             let team = BeamTeam(json: json)
-            completion?(team: team, error: error)
+            completion?(team, error)
         }
     }
     
@@ -60,7 +60,7 @@ public class TeamsRoutes {
         
         BeamRequest.request("/teams", params: params) { (json, error) in
             guard let teams = json?.array else {
-                completion?(teams: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
@@ -71,7 +71,7 @@ public class TeamsRoutes {
                 retrievedTeams.append(retrievedTeam)
             }
             
-            completion?(teams: retrievedTeams, error: error)
+            completion?(retrievedTeams, error)
         }
     }
     
@@ -86,7 +86,7 @@ public class TeamsRoutes {
     public func getMembersOfTeam(_ id: Int, completion: ((_ users: [BeamUser]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/teams/\(id)/users") { (json, error) in
             guard let users = json?.array else {
-                completion?(users: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
@@ -97,7 +97,7 @@ public class TeamsRoutes {
                 retrievedUsers.append(retrievedUser)
             }
             
-            completion?(users: retrievedUsers, error: error)
+            completion?(retrievedUsers, error)
         }
     }
 }

@@ -12,6 +12,6 @@ Pod::Spec.new do |s|
   s.source                 = { :git => "https://github.com/WatchBeam/beam-client-swift.git", :tag => "1.2.9" }
   s.source_files           = "Pod/Classes/**/*"
 
-  s.dependency "Starscream", "~> 1.1"
-  s.dependency "SwiftyJSON", "~> 2.3"
+  s.dependency "Starscream", "~> 2.0"
+  s.dependency "SwiftyJSON", "~> 3.0"
 end

@@ -45,8 +45,8 @@ public struct BeamVOD {
         baseUrl = json["baseUrl"].string
         mainUrl = json["mainUrl"].string
         format = json["format"].string ?? "unknown"
-        createdAt = NSDate.fromBeam(json["createdAt"].string)
-        updatedAt = NSDate.fromBeam(json["updatedAt"].string)
+        createdAt = Date.fromBeam(json["createdAt"].string)
+        updatedAt = Date.fromBeam(json["updatedAt"].string)
         recordingId = json["recordingId"].int ?? 0
     }
 }

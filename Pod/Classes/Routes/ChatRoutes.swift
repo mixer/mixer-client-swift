@@ -45,7 +45,7 @@ public class ChatRoutes {
         }
         
         BeamRequest.request(endpoint, requestType: "DELETE") { (json, error) in
-            completion?(error: error)
+            completion?(error)
         }
     }
     
@@ -62,7 +62,7 @@ public class ChatRoutes {
         
         BeamRequest.request("/chats/\(channelId)") { (json, error) in
             guard let json = json else {
-                completion?(endpoints: nil, authKey: nil, error: error)
+                completion?(nil, nil, error)
                 return
             }
             
@@ -80,7 +80,7 @@ public class ChatRoutes {
                 retrievedAuthKey = authKey
             }
             
-            completion?(endpoints: retrievedEndpoints, authKey: retrievedAuthKey, error: error)
+            completion?(retrievedEndpoints, retrievedAuthKey, error)
         }
     }
     
@@ -115,7 +115,7 @@ public class ChatRoutes {
     fileprivate func getViewersByEndpoint(_ endpoint: String, params: [String: String], completion: ((_ viewers: [ChannelViewer]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request(endpoint, requestType: "GET", params: params) { (json, error) in
             guard let users = json?.array else {
-                completion?(viewers: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
@@ -142,7 +142,7 @@ public class ChatRoutes {
                 }
             }
             
-            completion?(viewers: retrievedUsers, error: error)
+            completion?(retrievedUsers, error)
         }
     }
     

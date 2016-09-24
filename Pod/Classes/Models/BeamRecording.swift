@@ -30,9 +30,9 @@ public struct BeamRecording {
         state = json["state"].string
         viewsTotal = json["viewsTotal"].int ?? 0
         duration = json["duration"].float ?? 0
-        expiresAt = NSDate.fromBeam(json["expiresAt"].string)
-        createdAt = NSDate.fromBeam(json["createdAt"].string)
-        updatedAt = NSDate.fromBeam(json["updatedAt"].string)
+        expiresAt = Date.fromBeam(json["expiresAt"].string)
+        createdAt = Date.fromBeam(json["createdAt"].string)
+        updatedAt = Date.fromBeam(json["updatedAt"].string)
         channelId = json["channelId"].int ?? 0
         channel = BeamChannel(json: json["channel"])
         

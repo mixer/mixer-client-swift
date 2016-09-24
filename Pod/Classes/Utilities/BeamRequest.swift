@@ -28,12 +28,12 @@ public class BeamRequest {
     public class func request(_ endpoint: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: AnyObject? = nil, ignoreCSRF: Bool = false, completion: ((_ json: JSON?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.dataRequest("https://beam.pro/api/v1\(endpoint)", requestType: requestType, headers: headers, params: params, body: body, ignoreCSRF: ignoreCSRF) { (data, error) in
             guard let data = data else {
-                completion?(json: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
             let json = JSON(data: data)
-            completion?(json: json, error: error)
+            completion?(json, error)
         }
     }
     
@@ -71,7 +71,7 @@ public class BeamRequest {
         var url = URL(string: baseURL)!
         url = NSURLByAppendingQueryParameters(url, queryParameters: params)
         
-        let request = NSMutableURLRequest(url: url)
+        var request = URLRequest(url: url)
         request.httpMethod = requestType
         
         if let body = body {
@@ -79,7 +79,7 @@ public class BeamRequest {
                 request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
                 request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
             } catch {
-                completion?(nil, .BadRequest(data: nil))
+                completion?(nil, .badRequest(data: nil))
                 return
             }
         }
@@ -93,9 +93,9 @@ public class BeamRequest {
             request.addValue(val, forHTTPHeaderField: header)
         }
         
-        let task = session.dataTask(with: request, completionHandler: { (data, response, error) in
+        let task = session.dataTask(with: request) { (data, response, error) in
             guard let response = response as? HTTPURLResponse, let data = data else {
-                completion?(data: nil, error: .Unknown(data: nil))
+                completion?(nil, .unknown(data: nil))
                 return
             }
             
@@ -106,48 +106,48 @@ public class BeamRequest {
             }
             
             let json = JSON(data: data)
-            var requestError: BeamRequestError = .Unknown(data: json)
+            var requestError: BeamRequestError = .unknown(data: json)
             
             if let error = error {
-                switch error.code {
+                switch error._code {
                 case -1009: requestError = .offline
                 default: break
                 }
                 
-                completion?(data: nil, error: requestError)
+                completion?(nil, requestError)
             } else if response.statusCode != 200 && response.statusCode != 204 {
                 switch response.statusCode {
                 case 400:
-                    requestError = .BadRequest(data: json)
+                    requestError = .badRequest(data: json)
                     
-                    if let component = url.lastPathComponent {
-                        if requestType == "POST" && component == "users" {
-                            if let name = json["name"].string, let details = json["details"].array?[0], let path = details["path"].string, let type = details["type"].string , name == "ValidationError" {
-                                switch path {
-                                case "payload.email":
-                                    switch type {
-                                    case "string.email": requestError = .invalidEmail
-                                    case "unique": requestError = .takenEmail
-                                    default: requestError = .Unknown(data: json)
-                                    }
-                                case "payload.username":
-                                    switch type {
-                                    case "string.min": requestError = .invalidUsername
-                                    case "unique": requestError = .takenUsername
-                                    default: requestError = .Unknown(data: json)
-                                    }
-                                case "payload.password":
-                                    switch type {
-                                    case "string.min", "string.password": requestError = .weakPassword
-                                    default: requestError = .Unknown(data: json)
-                                    }
-                                case "username":
-                                    switch type {
-                                    case "reserved": requestError = .ReservedUsername
-                                    default: requestError = .Unknown(data: json)
-                                    }
-                                default: requestError = .Unknown(data: json)
+                    let component = url.lastPathComponent
+                    
+                    if requestType == "POST" && component == "users" {
+                        if let name = json["name"].string, let details = json["details"].array?[0], let path = details["path"].string, let type = details["type"].string , name == "ValidationError" {
+                            switch path {
+                            case "payload.email":
+                                switch type {
+                                case "string.email": requestError = .invalidEmail
+                                case "unique": requestError = .takenEmail
+                                default: requestError = .unknown(data: json)
                                 }
+                            case "payload.username":
+                                switch type {
+                                case "string.min": requestError = .invalidUsername
+                                case "unique": requestError = .takenUsername
+                                default: requestError = .unknown(data: json)
+                                }
+                            case "payload.password":
+                                switch type {
+                                case "string.min", "string.password": requestError = .weakPassword
+                                default: requestError = .unknown(data: json)
+                                }
+                            case "username":
+                                switch type {
+                                case "reserved": requestError = .reservedUsername
+                                default: requestError = .unknown(data: json)
+                                }
+                            default: requestError = .unknown(data: json)
                             }
                         }
                     }
@@ -157,14 +157,14 @@ public class BeamRequest {
                 case 499: requestError = .requires2FA
                 default:
                     print("Unknown status code: \(response.statusCode)")
-                    requestError = .Unknown(data: json)
+                    requestError = .unknown(data: json)
                 }
                 
-                completion?(data: data, error: requestError)
+                completion?(data, requestError)
             } else {
-                completion?(data: data, error: nil)
+                completion?(data, nil)
             }
-        }) 
+        }
         
         task.resume()
     }
@@ -174,7 +174,7 @@ public class BeamRequest {
      
      :returns: The name of the device being used.
      */
-    fileprivate class func deviceName() -> String {
+    internal class func deviceName() -> String {
         var systemInfo = utsname()
         uname(&systemInfo)
         let machineMirror = Mirror(reflecting: systemInfo.machine)

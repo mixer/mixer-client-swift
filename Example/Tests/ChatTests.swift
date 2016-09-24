@@ -20,7 +20,7 @@ class ChatTests: XCTestCase {
         let expectation = self.expectation(description: "tests deleting all chat messages from a channel")
         
         BeamClient.sharedClient.chat.deleteAllChatMessages(channelId) { (error) in
-            XCTAssert(error == .NotAuthenticated)
+            XCTAssert(error == .notAuthenticated)
             expectation.fulfill()
         }
         
@@ -31,7 +31,7 @@ class ChatTests: XCTestCase {
         let expectation = self.expectation(description: "tests deleting a chat message by id")
         
         BeamClient.sharedClient.chat.deleteChatMessage(channelId, messageId: messageId) { (error) in
-            XCTAssert(error == .NotAuthenticated)
+            XCTAssert(error == .notAuthenticated)
             expectation.fulfill()
         }
         

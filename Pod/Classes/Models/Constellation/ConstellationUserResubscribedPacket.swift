@@ -29,11 +29,11 @@ public class ConstellationUserResubscribedPacket: ConstellationLivePacket {
     /// Initializes a resubscribed packet with JSON data.
     override init?(data: [String: JSON]) {
         if let channel = data["channel"]?.string, let payload = data["payload"], let channelId = payload["channel"].int, let totalMonths = payload["totalMonths"].int {
-            self.userId = Int(channel.componentsSeparatedByString(":")[1])!
+            self.userId = Int(channel.components(separatedBy: ":")[1])!
             self.channelId = channelId
             self.totalMonths = totalMonths
-            self.since = NSDate.fromBeam(payload["since"].string)
-            self.until = NSDate.fromBeam(payload["until"].string)
+            self.since = Date.fromBeam(payload["since"].string)
+            self.until = Date.fromBeam(payload["until"].string)
             
             super.init(data: data)
         } else {

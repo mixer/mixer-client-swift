@@ -29,17 +29,17 @@ class RecordingsTests: XCTestCase {
             
             self.recordingId = id
             
-            dispatch_semaphore_signal(semaphore)
+            semaphore.signal()
         }
         
-        semaphore.wait(timeout: DispatchTime.distantFuture)
+        let _ = semaphore.wait(timeout: DispatchTime.distantFuture)
     }
     
     func testsRecordingSeen() {
         let expectation = self.expectation(description: "tests marking a recording as seen")
         
         BeamClient.sharedClient.recordings.markRecordingSeen(recordingId) { (error) in
-            XCTAssert(error == .NotAuthenticated)
+            XCTAssert(error == .notAuthenticated)
             expectation.fulfill()
         }
         

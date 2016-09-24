@@ -32,8 +32,8 @@ public class ChannelsRoutes {
         
         let body = ["user": String(session.user.id)]
         
-        BeamRequest.request("/channels/\(channelId)/follow", requestType: "PUT", body: body) { (json, error) in
-            completion?(error: error)
+        BeamRequest.request("/channels/\(channelId)/follow", requestType: "PUT", body: body as? AnyObject) { (json, error) in
+            completion?(error)
         }
     }
     
@@ -51,8 +51,8 @@ public class ChannelsRoutes {
         
         let body = ["user": String(session.user.id)]
         
-        BeamRequest.request("/channels/\(channelId)/follow", requestType: "DELETE", body: body) { (json, error) in
-            completion?(error: error)
+        BeamRequest.request("/channels/\(channelId)/follow", requestType: "DELETE", body: body as? AnyObject) { (json, error) in
+            completion?(error)
         }
     }
     
@@ -96,7 +96,7 @@ public class ChannelsRoutes {
         }
         
         BeamRequest.request("/channels/\(channelId)/users/\(userId)", requestType: "PATCH", body: requestBody) { (json, error) in
-            completion?(error: error)
+            completion?(error)
         }
     }
     
@@ -114,8 +114,8 @@ public class ChannelsRoutes {
         
         let body = ["id": channelId]
         
-        BeamRequest.request("/channels/\(id)/hostee", requestType: "PUT", body: body) { (json, error) in
-            completion?(error: error)
+        BeamRequest.request("/channels/\(id)/hostee", requestType: "PUT", body: body as? AnyObject) { (json, error) in
+            completion?(error)
         }
     }
     
@@ -131,7 +131,7 @@ public class ChannelsRoutes {
         }
         
         BeamRequest.request("/channels/\(id)/hostee", requestType: "DELETE") { (json, error) in
-            completion?(error: error)
+            completion?(error)
         }
     }
     
@@ -166,12 +166,12 @@ public class ChannelsRoutes {
     fileprivate func getChannelWithEndpoint(_ endpoint: String, completion: ((_ channel: BeamChannel?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request(endpoint) { (json, error) in
             guard let json = json else {
-                completion?(channel: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
             let channel = BeamChannel(json: json)
-            completion?(channel: channel, error: error)
+            completion?(channel, error)
         }
     }
     
@@ -220,7 +220,7 @@ public class ChannelsRoutes {
         let defaultParams = ["order": "online:desc,viewersCurrent:desc,viewersTotal:desc", "where": "suspended.eq.0"]
         BeamRequest.request(endpoint, requestType: "GET", params: params ?? defaultParams) { (json, error) in
             guard let channels = json?.array else {
-                completion?(channels: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
@@ -231,7 +231,7 @@ public class ChannelsRoutes {
                 retrievedChannels.append(retrievedChannel)
             }
             
-            completion?(channels: retrievedChannels, error: error)
+            completion?(retrievedChannels, error)
         }
     }
     
@@ -246,7 +246,7 @@ public class ChannelsRoutes {
     public func getEmoticonsOfChannel(_ id: Int, completion: ((_ spritesheetUrl: URL?, _ emoticons: [BeamEmoticon]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/channels/\(id)/emoticons") { (json, error) in
             guard let json = json else {
-                completion?(spritesheetUrl: nil, emoticons: nil, error: error)
+                completion?(nil, nil, error)
                 return
             }
             
@@ -267,7 +267,7 @@ public class ChannelsRoutes {
                 }
             }
             
-            completion?(spritesheetUrl: spritesheet, emoticons: retrievedEmoticons, error: error)
+            completion?(spritesheet as? URL, retrievedEmoticons, error)
         }
     }
     
@@ -281,7 +281,7 @@ public class ChannelsRoutes {
     public func getFollowersOfChannel(_ id: Int, page: Int = 0, completion: ((_ users: [BeamUser]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/channels/\(id)/follow", params: ["page": "\(page)"]) { (json, error) in
             guard let users = json?.array else {
-                completion?(users: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
@@ -292,7 +292,7 @@ public class ChannelsRoutes {
                 retrievedUsers.append(retrievedUser)
             }
             
-            completion?(users: retrievedUsers, error: error)
+            completion?(retrievedUsers, error)
         }
     }
     
@@ -305,7 +305,7 @@ public class ChannelsRoutes {
     public func getRecordingsOfChannel(_ id: Int, completion: ((_ recordings: [BeamRecording]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/channels/\(id)/recordings") { (json, error) in
             guard let recordings = json?.array else {
-                completion?(recordings: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
@@ -316,7 +316,7 @@ public class ChannelsRoutes {
                 retrievedRecordings.append(retrievedRecording)
             }
             
-            completion?(recordings: retrievedRecordings, error: error)
+            completion?(retrievedRecordings, error)
         }
     }
     
@@ -330,7 +330,7 @@ public class ChannelsRoutes {
     public func getDefaultEmoticons(_ completion: ((_ packs: [BeamEmoticonPack]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.dataRequest("https://beam.pro/_latest/emoticons/manifest.json") { (data, error) in
             guard let data = data, let packs = JSON(data: data).dictionary else {
-                completion?(packs: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
@@ -341,7 +341,7 @@ public class ChannelsRoutes {
                 retrievedPacks.append(pack)
             }
             
-            completion?(packs: retrievedPacks, error: error)
+            completion?(retrievedPacks, error)
         }
     }
     
@@ -361,12 +361,12 @@ public class ChannelsRoutes {
         
         BeamRequest.request("/channels/\(channelId)", requestType: "PUT", body: body) { (json, error) in
             guard let json = json else {
-                completion?(channel: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
             let channel = BeamChannel(json: json)
-            completion?(channel: channel, error: error)
+            completion?(channel, error)
         }
     }
 }

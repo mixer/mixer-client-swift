@@ -28,7 +28,7 @@ public struct BeamNotificationTransport {
     
     /// Used to initialize a notification transport given JSON data.
     init(json: JSON) {
-        data = json["data"].dictionaryObject
+        data = json["data"].dictionaryObject as? [String: AnyObject]
         id = json["id"].int ?? 0
         transport = json["transport"].string ?? "unknown"
         userId = json["userId"].int ?? 0

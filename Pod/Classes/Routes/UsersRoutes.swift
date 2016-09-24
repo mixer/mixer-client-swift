@@ -22,8 +22,8 @@ public class UsersRoutes {
     public func forgotPassword(_ email: String, completion: ((_ error: BeamRequestError?) -> Void)?) {
         let body = ["email": email]
         
-        BeamRequest.request("/users/reset", requestType: "POST", body: body) { (json, error) in
-            completion?(error: error)
+        BeamRequest.request("/users/reset", requestType: "POST", body: body as? AnyObject) { (json, error) in
+            completion?(error)
         }
     }
     
@@ -41,7 +41,7 @@ public class UsersRoutes {
         }
         
         BeamRequest.request("/users/\(id)/preferences", requestType: "POST", body: preferences) { (json, error) in
-            completion?(error: error)
+            completion?(error)
         }
     }
     
@@ -60,12 +60,12 @@ public class UsersRoutes {
         
         BeamRequest.request("/users/\(id)", requestType: "PUT", body: settings) { (json, error) in
             guard let json = json else {
-                completion?(user: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
             let user = BeamUser(json: json)
-            completion?(user: user, error: error)
+            completion?(user, error)
         }
     }
     
@@ -80,7 +80,7 @@ public class UsersRoutes {
     public func getAchievementsByUser(_ userId: Int, completion: ((_ achievements: [BeamUserAchievement]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/users/\(userId)/achievements") { (json, error) in
             guard let achievements = json?.array else {
-                completion?(achievements: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
@@ -91,7 +91,7 @@ public class UsersRoutes {
                 retrievedAchievements.append(retrievedAchievement)
             }
             
-            completion?(achievements: retrievedAchievements, error: error)
+            completion?(retrievedAchievements, error)
         }
     }
     
@@ -106,7 +106,7 @@ public class UsersRoutes {
         
         BeamRequest.request("/users/\(id)/follows", params: params) { (json, error) in
             guard let channels = json?.array else {
-                completion?(channels: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
@@ -117,7 +117,7 @@ public class UsersRoutes {
                 retrievedChannels.append(retrievedChannel)
             }
             
-            completion?(channels: retrievedChannels, error: error)
+            completion?(retrievedChannels, error)
         }
     }
     
@@ -130,11 +130,11 @@ public class UsersRoutes {
     public func getPreferences(_ id: Int, completion: ((_ preferences: [String: AnyObject]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/users/\(id)/preferences") { (json, error) in
             guard let preferences = json?.dictionaryObject else {
-                completion?(preferences: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
-            completion?(preferences: preferences, error: error)
+            completion?(preferences as? [String: AnyObject], error)
         }
     }
     
@@ -149,12 +149,12 @@ public class UsersRoutes {
     public func getUserWithId(_ id: Int, completion: ((_ user: BeamUser?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/users/\(id)") { (json, error) in
             guard let json = json else {
-                completion?(user: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
             let user = BeamUser(json: json)
-            completion?(user: user, error: error)
+            completion?(user, error)
         }
     }
     
@@ -167,7 +167,7 @@ public class UsersRoutes {
     public func getUsersByQuery(_ query: String, completion: ((_ users: [BeamUser]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/users/search") { (json, error) in
             guard let users = json?.array else {
-                completion?(users: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
@@ -178,7 +178,7 @@ public class UsersRoutes {
                 retrievedUsers.append(retrievedUser)
             }
             
-            completion?(users: retrievedUsers, error: error)
+            completion?(retrievedUsers, error)
         }
     }
 }

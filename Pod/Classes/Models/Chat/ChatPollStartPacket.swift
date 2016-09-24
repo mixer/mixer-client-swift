@@ -34,7 +34,7 @@ public class ChatPollStartPacket: ChatPacket {
             
             self.answers = parsedAnswers
             self.question = question
-            self.endTime = NSDate(timeIntervalSinceReferenceDate: NSTimeInterval(endTime))
+            self.endTime = Date(timeIntervalSinceReferenceDate: TimeInterval(endTime))
             self.duration = duration
             
             super.init(data: data)

@@ -30,7 +30,7 @@ class SessionTests: XCTestCase {
         func genRandomString() -> String {
             let random = UUID().uuidString
             let range = random.startIndex ..< random.characters.index(random.startIndex, offsetBy: 12)
-            let string = random.substringWithRange(range).lowercased()
+            let string = random.substring(with: range).lowercased()
             return "a" + string.replacingOccurrences(of: "-", with: "")
         }
         
@@ -49,7 +49,7 @@ class SessionTests: XCTestCase {
         
         BeamSession.authenticate(username, password: password) { (user, error) in
             XCTAssertNil(user)
-            XCTAssert(error == .InvalidCredentials)
+            XCTAssert(error == .invalidCredentials)
             expectation.fulfill()
         }
         
@@ -61,7 +61,7 @@ class SessionTests: XCTestCase {
         
         BeamSession.authenticate(username, password: password, code: code) { (user, error) in
             XCTAssertNil(user)
-            XCTAssert(error == .InvalidCredentials)
+            XCTAssert(error == .invalidCredentials)
             expectation.fulfill()
         }
         
@@ -72,7 +72,7 @@ class SessionTests: XCTestCase {
         let expectation = self.expectation(description: "tests logging out")
         
         BeamSession.logout { (error) in
-            XCTAssert(error == .InvalidCredentials)
+            XCTAssert(error == .invalidCredentials)
             expectation.fulfill()
         }
         
@@ -84,7 +84,7 @@ class SessionTests: XCTestCase {
         
         BeamSession.refreshPreviousSession { (user, error) in
             XCTAssertNil(user)
-            XCTAssert(error == .NotAuthenticated)
+            XCTAssert(error == .notAuthenticated)
             expectation.fulfill()
         }
         
@@ -95,7 +95,7 @@ class SessionTests: XCTestCase {
         let expectation = self.expectation(description: "tests the registration endpoint for the invalid username error")
         
         BeamSession.registerAccount(invalidUsername, password: password, email: email) { (user, error) in
-            XCTAssert(error == .InvalidUsername)
+            XCTAssert(error == .invalidUsername)
             expectation.fulfill()
         }
         
@@ -106,7 +106,7 @@ class SessionTests: XCTestCase {
         let expectation = self.expectation(description: "tests the registration endpoint for the taken username error")
         
         BeamSession.registerAccount(takenUsername, password: password, email: email) { (user, error) in
-            XCTAssert(error == .TakenUsername)
+            XCTAssert(error == .takenUsername)
             expectation.fulfill()
         }
         
@@ -117,7 +117,7 @@ class SessionTests: XCTestCase {
         let expectation = self.expectation(description: "tests the registration endpoint for the weak password error")
         
         BeamSession.registerAccount(username, password: weakPassword, email: email) { (user, error) in
-            XCTAssert(error == .WeakPassword)
+            XCTAssert(error == .weakPassword)
             expectation.fulfill()
         }
         
@@ -128,7 +128,7 @@ class SessionTests: XCTestCase {
         let expectation = self.expectation(description: "tests the registration endpoint for the invalid email error")
         
         BeamSession.registerAccount(username, password: password, email: invalidEmail) { (user, error) in
-            XCTAssert(error == .InvalidEmail)
+            XCTAssert(error == .invalidEmail)
             expectation.fulfill()
         }
         
@@ -139,7 +139,7 @@ class SessionTests: XCTestCase {
         let expectation = self.expectation(description: "tests the registration endpoint for the taken email error")
         
         BeamSession.registerAccount(username, password: password, email: takenEmail) { (user, error) in
-            XCTAssert(error == .TakenEmail)
+            XCTAssert(error == .takenEmail)
             expectation.fulfill()
         }
         

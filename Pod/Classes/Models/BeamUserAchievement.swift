@@ -40,8 +40,8 @@ public struct BeamUserAchievement {
         id = json["id"].int ?? 0
         earned = json["earned"].bool ?? false
         progress = json["progress"].float ?? 0
-        createdAt = NSDate.fromBeam(json["createdAt"].string)
-        updatedAt = NSDate.fromBeam(json["updatedAt"].string)
+        createdAt = Date.fromBeam(json["createdAt"].string)
+        updatedAt = Date.fromBeam(json["updatedAt"].string)
         achievementSlug = json["achievement"].string
         userId = json["user"].int ?? 0
         achievement = BeamAchievement(json: json["Achievement"])

@@ -21,7 +21,7 @@ class InteractiveClientTests: XCTestCase, InteractiveClientDelegate {
         
         let semaphore = DispatchSemaphore(value: 0)
         
-        BeamClient.sharedClient.channels.getChannels(.Interactive) { (channels, error) in
+        BeamClient.sharedClient.channels.getChannels(.interactive) { (channels, error) in
             guard let channel = channels?[0] else {
                 XCTFail()
                 return
@@ -39,15 +39,15 @@ class InteractiveClientTests: XCTestCase, InteractiveClientDelegate {
                 
                 self.address = address
 
-                dispatch_semaphore_signal(semaphore)
+                semaphore.signal()
             }
         }
         
-        semaphore.wait(timeout: DispatchTime.distantFuture)
+        let _ = semaphore.wait(timeout: DispatchTime.distantFuture)
     }
     
     func testConnect() {
-        expectation = self.expectation(withDescription: "test joining a channel with interactive capabilities")
+        expectation = self.expectation(description: "test joining a channel with interactive capabilities")
         
         client = InteractiveClient(delegate: self)
         client.connect(url: address, channelId: channel.id)

@@ -46,7 +46,7 @@ public class ConstellationPacket {
                         packet = ConstellationHelloPacket(data: data)
                     case "live":
                         if let channel = data["channel"]?.string {
-                            let channelData = channel.componentsSeparatedByString(":")
+                            let channelData = channel.components(separatedBy: ":")
                             switch (channelData[0], channelData[2]) {
                             case ("channel", "followed"):
                                 packet = ConstellationChannelFollowedPacket(data: data)
@@ -95,7 +95,7 @@ public class ConstellationPacket {
                     }
                 }
             case "reply":
-                packet = ConstellationReplyPacket(result: json["result"].dictionaryObject, error: json["error"].dictionary, id: json["id"].int ?? 0)
+                packet = ConstellationReplyPacket(result: json["result"].dictionaryObject as? [String: AnyObject], error: json["error"].dictionary, id: json["id"].int ?? 0)
             default:
                 print("Unrecognized constellation packet received: \(json)")
             }

@@ -24,7 +24,7 @@ public class RecordingsRoutes {
         }
         
         BeamRequest.request("/recordings/\(id)/seen", requestType: "POST") { (json, error) in
-            completion?(error: error)
+            completion?(error)
         }
     }
     
@@ -39,12 +39,12 @@ public class RecordingsRoutes {
     public func getRecording(_ id: Int, completion: ((_ recording: BeamRecording?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/recordings/\(id)") { (json, error) in
             guard let json = json else {
-                completion?(recording: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
             let recording = BeamRecording(json: json)
-            completion?(recording: recording, error: error)
+            completion?(recording, error)
         }
     }
 }

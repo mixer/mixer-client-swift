@@ -29,8 +29,8 @@ class UsersTests: XCTestCase {
     func testUpdatePreferences() {
         let expectation = self.expectation(description: "tests updating a user's preferences")
         
-        BeamClient.sharedClient.users.updatePreferences(userId, preferences: []) { (error) in
-            XCTAssert(error == .NotAuthenticated)
+        BeamClient.sharedClient.users.updatePreferences(userId, preferences: [] as AnyObject) { (error) in
+            XCTAssert(error == .notAuthenticated)
             expectation.fulfill()
         }
         
@@ -40,9 +40,9 @@ class UsersTests: XCTestCase {
     func testUpdateProfile() {
         let expectation = self.expectation(description: "tests updating a user's profile")
         
-        BeamClient.sharedClient.users.updateProfile(userId, settings: []) { (user, error) in
+        BeamClient.sharedClient.users.updateProfile(userId, settings: [] as AnyObject) { (user, error) in
             XCTAssertNil(user)
-            XCTAssert(error == .NotAuthenticated)
+            XCTAssert(error == .notAuthenticated)
             expectation.fulfill()
         }
         

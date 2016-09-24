@@ -15,7 +15,7 @@ class ChatClientTests: XCTestCase, ChatClientDelegate {
     var expectation: XCTestExpectation!
     
     func testChatConnect() {
-        expectation = self.expectation(withDescription: "test joining a channel's chat")
+        expectation = self.expectation(description: "test joining a channel's chat")
         
         let chatClient = ChatClient(delegate: self)
         chatClient.joinChannel(channelId)

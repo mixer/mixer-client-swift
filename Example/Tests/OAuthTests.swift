@@ -30,7 +30,7 @@ class OAuthTests: XCTestCase {
         for provider in [OAuthRoutes.OAuthProvider.Twitter, .Discord] {
             BeamClient.sharedClient.oauth.loginWithProvider(provider, cookie: "") { (user, error) in
                 XCTAssertNil(user)
-                XCTAssert(error == .InvalidCredentials)
+                XCTAssert(error == .invalidCredentials)
                 
                 i += 1
                 

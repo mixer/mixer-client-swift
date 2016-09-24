@@ -34,12 +34,12 @@ public struct BeamNotification {
     
     /// Used to initialize a notification given JSON data.
     init(json: JSON) {
-        payload = json["payload"].dictionaryObject
+        payload = json["payload"].dictionaryObject as? [String: AnyObject]
         id = json["id"].int ?? 0
         type = json["type"].string ?? "unknown"
-        seenAt = NSDate.fromBeam(json["seenAt"].string)
-        sentAt = NSDate.fromBeam(json["sentAt"].string)
-        expiresAt = NSDate.fromBeam(json["expiresAt"].string)
+        seenAt = Date.fromBeam(json["seenAt"].string)
+        sentAt = Date.fromBeam(json["sentAt"].string)
+        expiresAt = Date.fromBeam(json["expiresAt"].string)
         userId = json["userId"].int ?? 0
     }
 }

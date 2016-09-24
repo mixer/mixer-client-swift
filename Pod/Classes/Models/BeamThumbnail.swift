@@ -40,7 +40,7 @@ public struct BeamThumbnail {
         if let size = json["meta"]["size"].array, let w = size[0].int, let h = size[1].int {
             let width = CGFloat(w)
             let height = CGFloat(h)
-            self.size = CGSizeMake(width, height)
+            self.size = CGSize(width: width, height: height)
         }
         
         id = json["id"].int
@@ -48,7 +48,7 @@ public struct BeamThumbnail {
         url = json["url"].string
         store = json["store"].string
         remotePath = json["remotePath"].string
-        createdAt = NSDate.fromBeam(json["createdAt"].string)
-        updatedAt = NSDate.fromBeam(json["updatedAt"].string)
+        createdAt = Date.fromBeam(json["createdAt"].string)
+        updatedAt = Date.fromBeam(json["updatedAt"].string)
     }
 }

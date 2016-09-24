@@ -59,7 +59,7 @@ public class ConstellationClient: WebSocketDelegate {
         }
         
         let packetData = ConstellationPacket.prepareToSend(packet)
-        socket.writeString(packetData)
+        socket.write(string: packetData)
     }
     
     /**
@@ -100,15 +100,15 @@ public class ConstellationClient: WebSocketDelegate {
     
     // MARK: WebSocketDelegate Methods
     
-    public func websocketDidConnect(_ socket: WebSocket) {
+    public func websocketDidConnect(socket: WebSocket) {
         delegate?.constellationDidConnect()
     }
     
-    public func websocketDidDisconnect(_ socket: WebSocket, error: NSError?) {
+    public func websocketDidDisconnect(socket: WebSocket, error: NSError?) {
         delegate?.constellationDidDisconnect(error)
     }
     
-    public func websocketDidReceiveMessage(_ socket: WebSocket, text: String) {
+    public func websocketDidReceiveMessage(socket: WebSocket, text: String) {
         guard let data = text.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
             print("unknown error parsing constellation packet: \(text)")
             return
@@ -127,7 +127,7 @@ public class ConstellationClient: WebSocketDelegate {
         }
     }
     
-    public func websocketDidReceiveData(_ socket: WebSocket, data: Data) {
+    public func websocketDidReceiveData(socket: WebSocket, data: Data) {
     }
 }
 

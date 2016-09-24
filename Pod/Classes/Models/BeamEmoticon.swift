@@ -29,8 +29,8 @@ public struct BeamEmoticon {
         let w = json["width"].int ?? 22
         let h = json["height"].int ?? 22
         
-        position = CGPointMake(CGFloat(x), CGFloat(y))
-        size = CGSizeMake(CGFloat(w), CGFloat(h))
+        position = CGPoint(x: CGFloat(x), y: CGFloat(y))
+        size = CGSize(width: CGFloat(w), height: CGFloat(h))
     }
     
     /**

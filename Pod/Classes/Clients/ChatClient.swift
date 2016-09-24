@@ -80,12 +80,12 @@ public class ChatClient: WebSocketDelegate {
         }
         
         let packetData = ChatPacket.prepareToSend(packet, count: packetCount)
-        socket.writeString(packetData)
+        socket.write(string: packetData)
     }
     
     // MARK: WebSocketDelegate
     
-    public func websocketDidConnect(_ socket: WebSocket) {
+    public func websocketDidConnect(socket: WebSocket) {
         guard let userId = BeamSession.sharedSession?.user.id, let authKey = authKey else {
             let packet = ChatAuthenticatePacket(channelId: channelId)
             sendPacket(packet)
@@ -101,10 +101,10 @@ public class ChatClient: WebSocketDelegate {
         sendPacket(packet)
     }
     
-    public func websocketDidDisconnect(_ socket: WebSocket, error: NSError?) {
+    public func websocketDidDisconnect(socket: WebSocket, error: NSError?) {
     }
     
-    public func websocketDidReceiveMessage(_ socket: WebSocket, text: String) {
+    public func websocketDidReceiveMessage(socket: WebSocket, text: String) {
         guard let data = text.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
             print("unknown error parsing chat packet")
             return
@@ -121,7 +121,7 @@ public class ChatClient: WebSocketDelegate {
         } catch { }
     }
     
-    public func websocketDidReceiveData(_ socket: WebSocket, data: Data) {
+    public func websocketDidReceiveData(socket: WebSocket, data: Data) {
     }
 }
 

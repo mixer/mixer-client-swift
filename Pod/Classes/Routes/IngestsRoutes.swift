@@ -19,7 +19,7 @@ public class IngestsRoutes {
     public func getIngests(_ completion: ((_ ingests: [BeamIngest]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/ingests") { (json, error) in
             guard let ingests = json?.array else {
-                completion?(ingests: nil, error: error)
+                completion?(nil, error)
                 return
             }
             
@@ -30,7 +30,7 @@ public class IngestsRoutes {
                 retrievedIngests.append(retrievedIngest)
             }
             
-            completion?(ingests: retrievedIngests, error: error)
+            completion?(retrievedIngests, error)
         }
     }
 }

@@ -20,7 +20,7 @@ class ChannelsTests: XCTestCase {
         let expectation = self.expectation(description: "tests the follow channel endpoint")
         
         BeamClient.sharedClient.channels.followChannel(channelId) { (error) in
-            XCTAssert(error == .NotAuthenticated)
+            XCTAssert(error == .notAuthenticated)
             expectation.fulfill()
         }
         
@@ -31,7 +31,7 @@ class ChannelsTests: XCTestCase {
         let expectation = self.expectation(description: "tests the unfollow channel endpoint")
         
         BeamClient.sharedClient.channels.unfollowChannel(channelId) { (error) in
-            XCTAssert(error == .NotAuthenticated)
+            XCTAssert(error == .notAuthenticated)
             expectation.fulfill()
         }
         
@@ -42,7 +42,7 @@ class ChannelsTests: XCTestCase {
         let expectation = self.expectation(description: "tests banning a user from chat")
         
         BeamClient.sharedClient.channels.banUser(channelId, userId: userId) { (error) in
-            XCTAssert(error == .NotAuthenticated)
+            XCTAssert(error == .notAuthenticated)
             expectation.fulfill()
         }
         
@@ -53,7 +53,7 @@ class ChannelsTests: XCTestCase {
         let expectation = self.expectation(description: "tests unbanning a user from chat")
         
         BeamClient.sharedClient.channels.unbanUser(channelId, userId: userId) { (error) in
-            XCTAssert(error == .NotAuthenticated)
+            XCTAssert(error == .notAuthenticated)
             expectation.fulfill()
         }
         
@@ -64,7 +64,7 @@ class ChannelsTests: XCTestCase {
         let expectation = self.expectation(description: "tests hosting a channel")
         
         BeamClient.sharedClient.channels.hostChannel(channelId) { (error) in
-            XCTAssert(error == .NotAuthenticated)
+            XCTAssert(error == .notAuthenticated)
             expectation.fulfill()
         }
         
@@ -75,7 +75,7 @@ class ChannelsTests: XCTestCase {
         let expectation = self.expectation(description: "tests stopping hosting")
         
         BeamClient.sharedClient.channels.stopHosting { (error) in
-            XCTAssert(error == .NotAuthenticated)
+            XCTAssert(error == .notAuthenticated)
             expectation.fulfill()
         }
         
@@ -111,7 +111,7 @@ class ChannelsTests: XCTestCase {
         
         var i = 0
         
-        for req in [ChannelsRoutes.ChannelsRequestType.All, .Interactive, .Rising, .Fresh] {
+        for req in [ChannelsRoutes.ChannelsRequestType.all, .interactive, .rising, .fresh] {
             BeamClient.sharedClient.channels.getChannels(req) { (channels, error) in
                 XCTAssertNotNil(channels)
                 XCTAssertNil(error)
@@ -191,9 +191,9 @@ class ChannelsTests: XCTestCase {
     func testUpdateData() {
         let expectation = self.expectation(description: "tests updating chnanel data")
         
-        BeamClient.sharedClient.channels.updateData(channelId, body: []) { (channel, error) in
+        BeamClient.sharedClient.channels.updateData(channelId, body: [] as AnyObject) { (channel, error) in
             XCTAssertNil(channel)
-            XCTAssert(error == .NotAuthenticated)
+            XCTAssert(error == .notAuthenticated)
             expectation.fulfill()
         }
         

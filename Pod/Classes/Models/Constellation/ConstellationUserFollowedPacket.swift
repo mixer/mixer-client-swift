@@ -23,7 +23,7 @@ public class ConstellationUserFollowedPacket: ConstellationLivePacket {
     /// Initializes a user followed packet with JSON data.
     override init?(data: [String: JSON]) {
         if let channel = data["channel"]?.string, let payload = data["payload"], let following = payload["following"].bool {
-            self.userId = Int(channel.componentsSeparatedByString(":")[1])!
+            self.userId = Int(channel.components(separatedBy: ":")[1])!
             self.followed = BeamChannel(json: payload["channel"])
             self.following = following
             
