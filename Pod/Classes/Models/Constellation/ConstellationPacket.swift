@@ -9,7 +9,7 @@
 import SwiftyJSON
 
 /// The base constellation packet class. Also has methods used to send and receive packets.
-public class ConstellationPacket {
+open class ConstellationPacket {
     
     /// The string of the packet's raw JSON data.
     fileprivate var packetString: String?
