@@ -92,7 +92,7 @@ public struct BeamUser {
         preferences = [String: AnyObject]()
         if let preferences = json["preferences"].dictionaryObject {
             for (key, val) in preferences {
-                self.preferences?[key] = val as? AnyObject
+                self.preferences?[key] = val as AnyObject
             }
         }
         

@@ -24,9 +24,9 @@ public class NotificationsRoutes {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
-        let body = ["date": formatter.string(from: date)]
+        let body = ["date": formatter.string(from: date)] as AnyObject
         
-        BeamRequest.request("/notifications/read", requestType: "POST", params: ["userId": "\(userId)"], body: body as? AnyObject) { (json, error) in
+        BeamRequest.request("/notifications/read", requestType: "POST", params: ["userId": "\(userId)"], body: body) { (json, error) in
             completion?(error)
         }
     }
@@ -44,7 +44,7 @@ public class NotificationsRoutes {
     public func updateNotificationTransport(_ userId: Int, transport: String, data: [String: AnyObject]?, settings: [[String: AnyObject]]?, turnAllOn: Bool = false, completion: ((_ transport: BeamNotificationTransport?, _ error: BeamRequestError?) -> Void)?) {
         let settingDict = settings == nil && turnAllOn ? ["*"] : []
         
-        let body: [String: Any] = [
+        let body = [
             "userId": "\(userId)",
             "transport": transport,
             "data": data ?? [:],
@@ -54,9 +54,9 @@ public class NotificationsRoutes {
                     "setting": settingDict
                 ]
             ] as [[String: Any]]
-        ]
+        ] as AnyObject
         
-        BeamRequest.request("/notifications/transports", requestType: "POST", body: body as? AnyObject) { (json, error) in
+        BeamRequest.request("/notifications/transports", requestType: "POST", body: body) { (json, error) in
             guard let json = json , error == nil else {
                 completion?(nil, error)
                 return

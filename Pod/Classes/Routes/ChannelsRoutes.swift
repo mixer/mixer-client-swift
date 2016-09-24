@@ -49,9 +49,9 @@ public class ChannelsRoutes {
             return
         }
         
-        let body = ["user": String(session.user.id)]
+        let body = ["user": String(session.user.id)] as AnyObject
         
-        BeamRequest.request("/channels/\(channelId)/follow", requestType: "DELETE", body: body as? AnyObject) { (json, error) in
+        BeamRequest.request("/channels/\(channelId)/follow", requestType: "DELETE", body: body) { (json, error) in
             completion?(error)
         }
     }
@@ -112,9 +112,9 @@ public class ChannelsRoutes {
             return
         }
         
-        let body = ["id": channelId]
+        let body = ["id": channelId] as AnyObject
         
-        BeamRequest.request("/channels/\(id)/hostee", requestType: "PUT", body: body as? AnyObject) { (json, error) in
+        BeamRequest.request("/channels/\(id)/hostee", requestType: "PUT", body: body) { (json, error) in
             completion?(error)
         }
     }

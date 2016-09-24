@@ -20,9 +20,9 @@ public class UsersRoutes {
      :param: completion An optional completion block that fires when the email has been sent.
      */
     public func forgotPassword(_ email: String, completion: ((_ error: BeamRequestError?) -> Void)?) {
-        let body = ["email": email]
+        let body = ["email": email] as AnyObject
         
-        BeamRequest.request("/users/reset", requestType: "POST", body: body as? AnyObject) { (json, error) in
+        BeamRequest.request("/users/reset", requestType: "POST", body: body) { (json, error) in
             completion?(error)
         }
     }
@@ -129,12 +129,12 @@ public class UsersRoutes {
      */
     public func getPreferences(_ id: Int, completion: ((_ preferences: [String: AnyObject]?, _ error: BeamRequestError?) -> Void)?) {
         BeamRequest.request("/users/\(id)/preferences") { (json, error) in
-            guard let preferences = json?.dictionaryObject else {
+            guard let preferences = json?.dictionaryObject as? [String: AnyObject] else {
                 completion?(nil, error)
                 return
             }
             
-            completion?(preferences as? [String: AnyObject], error)
+            completion?(preferences, error)
         }
     }
     
