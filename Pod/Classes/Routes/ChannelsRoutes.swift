@@ -30,9 +30,9 @@ public class ChannelsRoutes {
             return
         }
         
-        let body = ["user": String(session.user.id)]
+        let body = ["user": String(session.user.id)] as AnyObject
         
-        BeamRequest.request("/channels/\(channelId)/follow", requestType: "PUT", body: body as? AnyObject) { (json, error) in
+        BeamRequest.request("/channels/\(channelId)/follow", requestType: "PUT", body: body) { (json, error) in
             completion?(error)
         }
     }
