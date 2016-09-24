@@ -44,16 +44,16 @@ public class NotificationsRoutes {
     public func updateNotificationTransport(_ userId: Int, transport: String, data: [String: AnyObject]?, settings: [[String: AnyObject]]?, turnAllOn: Bool = false, completion: ((_ transport: BeamNotificationTransport?, _ error: BeamRequestError?) -> Void)?) {
         let settingDict = settings == nil && turnAllOn ? ["*"] : []
         
-        let body: [String: AnyObject] = [
-            "userId": "\(userId)" as AnyObject,
-            "transport": transport as AnyObject,
-            "data": data as? AnyObject ?? [:] as AnyObject,
-            "settings": settings as? AnyObject ?? [
+        let body: [String: Any] = [
+            "userId": "\(userId)",
+            "transport": transport,
+            "data": data ?? [:],
+            "settings": settings ?? [
                 [
                     "type": "wentlive",
                     "setting": settingDict
                 ]
-            ] as AnyObject
+            ] as [[String: Any]]
         ]
         
         BeamRequest.request("/notifications/transports", requestType: "POST", body: body as? AnyObject) { (json, error) in

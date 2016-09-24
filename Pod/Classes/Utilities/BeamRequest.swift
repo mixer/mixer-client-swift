@@ -87,7 +87,7 @@ public class BeamRequest {
         request.addValue("BeamApp/\(version) (iOS; \(deviceName()))", forHTTPHeaderField: "User-Agent")
         
         let existingCSRFToken = UserDefaults.standard.string(forKey: "CSRFToken") ?? ""
-        request.addValue(existingCSRFToken, forHTTPHeaderField: "X-CSRF-Token")
+        request.addValue(existingCSRFToken, forHTTPHeaderField: "x-csrf-token")
         
         for (header, val) in headers {
             request.addValue(val, forHTTPHeaderField: header)
@@ -99,7 +99,7 @@ public class BeamRequest {
                 return
             }
             
-            if let csrfToken = response.allHeaderFields["X-CSRF-Token"] as? String , csrfToken != existingCSRFToken && !ignoreCSRF {
+            if let csrfToken = response.allHeaderFields["x-csrf-token"] as? String, csrfToken != existingCSRFToken && !ignoreCSRF {
                 UserDefaults.standard.set(csrfToken, forKey: "CSRFToken")
                 dataRequest(baseURL, requestType: requestType, headers: headers, params: params, body: body, completion: completion)
                 return
