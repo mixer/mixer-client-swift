@@ -64,6 +64,9 @@ public struct BeamUser {
         return channelData.dictionary == nil ? nil : BeamChannel(json: channelData)
     }
     
+    /// A JSON representation of this user.
+    fileprivate let json: JSON
+    
     /// Used to initialize a user object given JSON data.
     public init(json: JSON) {
         id = json["id"].int ?? 0
@@ -109,21 +112,19 @@ public struct BeamUser {
         }
         
         channelData = json["channel"]
+        self.json = json
     }
     
-    public var encoded: Data {
-        get {
-            var user = self
-            return withUnsafePointer(to: &user) { p in
-                Data(bytes: p, count: MemoryLayout.size(ofValue: user))
-            }
+    public var encoded: Data? {
+        do {
+            return try json.rawData()
+        } catch {
+            return nil
         }
     }
     
     public static func decode(data: Data) -> BeamUser {
-        let data = data as NSData
-        let pointer = UnsafeMutablePointer<BeamUser>.allocate(capacity: MemoryLayout.size(ofValue: BeamUser.self))
-        data.getBytes(pointer)
-        return pointer.move()
+        let json = JSON(data: data)
+        return BeamUser(json: json)
     }
 }

@@ -183,7 +183,19 @@ public class BeamRequest {
                             }
                         }
                     }
-                case 401: requestError = .invalidCredentials
+                case 401:
+                    if json["message"] == "Invalid token" {
+                        BeamClient.sharedClient.jwt.generateJWTGrant { (error) in
+                            guard let error = error else {
+                                completion?(data, .invalidCredentials)
+                                return
+                            }
+                            
+                            dataRequest(baseURL, requestType: requestType, headers: headers, params: params, body: body, options: options, completion: completion)
+                        }
+                    } else {
+                        requestError = .invalidCredentials
+                    }
                 case 403: requestError = .accessDenied
                 case 404: requestError = .notFound
                 case 499: requestError = .requires2FA
