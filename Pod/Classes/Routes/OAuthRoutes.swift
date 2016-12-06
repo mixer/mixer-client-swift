@@ -42,8 +42,7 @@ public class OAuthRoutes {
             }
             
             let user = BeamUser(json: json)
-            let session = BeamSession(user: user)
-            BeamSession.sharedSession = session
+            UserDefaults.standard.set(user, forKey: "UserData")
             
             NotificationCenter.default.post(name: BeamAuthenticatedNotification, object: nil)
             

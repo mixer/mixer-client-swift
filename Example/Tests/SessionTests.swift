@@ -79,18 +79,6 @@ class SessionTests: XCTestCase {
         waitForExpectations(timeout: 10, handler: nil)
     }
     
-    func testRefreshPreviousSession() {
-        let expectation = self.expectation(description: "tests the refresh endpoint")
-        
-        BeamSession.refreshPreviousSession { (user, error) in
-            XCTAssertNil(user)
-            XCTAssert(error == .notAuthenticated)
-            expectation.fulfill()
-        }
-        
-        waitForExpectations(timeout: 10, handler: nil)
-    }
-    
     func testRegisterInvalidUsername() {
         let expectation = self.expectation(description: "tests the registration endpoint for the invalid username error")
         
