@@ -14,8 +14,8 @@ public class BeamSession {
     /// The session's shared instance. This will be nil if nobody is authenticated.
     public static var sharedSession: BeamSession? {
         get {
-            if let user = UserDefaults.standard.object(forKey: "UserData") as? BeamUser {
-                return BeamSession(user: user)
+            if let userData = UserDefaults.standard.data(forKey: "UserData") {
+                return BeamSession(user: BeamUser.decode(data: userData))
             }
             
             return nil
@@ -55,7 +55,7 @@ public class BeamSession {
             }
             
             let user = BeamUser(json: json)
-            UserDefaults.standard.set(user, forKey: "UserData")
+            UserDefaults.standard.set(user.encoded, forKey: "UserData")
             
             NotificationCenter.default.post(name: BeamAuthenticatedNotification, object: nil)
             
@@ -97,7 +97,7 @@ public class BeamSession {
             }
             
             let user = BeamUser(json: json)
-            UserDefaults.standard.set(user, forKey: "UserData")
+            UserDefaults.standard.set(user.encoded, forKey: "UserData")
             
             NotificationCenter.default.post(name: BeamAuthenticatedNotification, object: nil)
             

@@ -110,4 +110,20 @@ public struct BeamUser {
         
         channelData = json["channel"]
     }
+    
+    public var encoded: Data {
+        get {
+            var user = self
+            return withUnsafePointer(to: &user) { p in
+                Data(bytes: p, count: MemoryLayout.size(ofValue: user))
+            }
+        }
+    }
+    
+    public static func decode(data: Data) -> BeamUser {
+        let data = data as NSData
+        let pointer = UnsafeMutablePointer<BeamUser>.allocate(capacity: MemoryLayout.size(ofValue: BeamUser.self))
+        data.getBytes(pointer)
+        return pointer.move()
+    }
 }
