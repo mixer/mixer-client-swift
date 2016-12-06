@@ -186,7 +186,7 @@ public class BeamRequest {
                 case 401:
                     if json["message"] == "Invalid token" {
                         BeamClient.sharedClient.jwt.generateJWTGrant { (error) in
-                            guard let error = error else {
+                            guard error == nil else {
                                 completion?(data, .invalidCredentials)
                                 return
                             }
