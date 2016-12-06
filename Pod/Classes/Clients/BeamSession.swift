@@ -11,17 +11,14 @@ public let BeamAuthenticatedNotification = Notification.Name("BeamAuthenticatedN
 /// Stores data about an authenticated user session.
 public class BeamSession {
     
-    fileprivate static var storedSharedSession: BeamSession?
-    
     /// The session's shared instance. This will be nil if nobody is authenticated.
     public static var sharedSession: BeamSession? {
         get {
-            return storedSharedSession
-        }
-        
-        set {
-            storedSharedSession = newValue
-            UserDefaults.standard.set(newValue != nil, forKey: "BeamSessionExists")
+            if let user = UserDefaults.standard.object(forKey: "UserData") as? BeamUser {
+                return BeamSession(user: user)
+            }
+            
+            return nil
         }
     }
     
@@ -58,8 +55,7 @@ public class BeamSession {
             }
             
             let user = BeamUser(json: json)
-            let session = BeamSession(user: user)
-            BeamSession.sharedSession = session
+            UserDefaults.standard.set(user, forKey: "UserData")
             
             NotificationCenter.default.post(name: BeamAuthenticatedNotification, object: nil)
             
@@ -73,42 +69,9 @@ public class BeamSession {
      :param: completion An optional completion block, called when logging out completes.
      */
     public static func logout(_ completion: ((_ error: BeamRequestError?) -> Void)?) {
-        BeamSession.sharedSession = nil
-        
         UserDefaults.standard.set(nil, forKey: "Cookies")
         UserDefaults.standard.set(nil, forKey: "JWT")
-    }
-    
-    
-    /**
-     Refreshes any previous sessions that could be found on the device. Useful for persisting sessions between app launches.
-     
-     :param: completion An optional completion block with the authenticated user's data.
-     */
-    public static func refreshPreviousSession(_ completion: ((_ user: BeamUser?, _ error: BeamRequestError?) -> Void)?) {
-        guard UserDefaults.standard.bool(forKey: "BeamSessionExists") else {
-            print("no session exists")
-            completion?(nil, .notAuthenticated)
-            return
-        }
-        
-        BeamRequest.request("/users/current/refresh", requestType: "POST") { (json, error) in
-            guard let json = json else {
-                completion?(nil, error)
-                return
-            }
-            
-            if let _ = json["username"].string {
-                let user = BeamUser(json: json)
-                
-                let session = BeamSession(user: user)
-                BeamSession.sharedSession = session
-                
-                completion?(user, error)
-            } else {
-                completion?(nil, nil)
-            }
-        }
+        UserDefaults.standard.set(nil, forKey: "UserData")
     }
     
     /**
@@ -134,9 +97,7 @@ public class BeamSession {
             }
             
             let user = BeamUser(json: json)
-            
-            let session = BeamSession(user: user)
-            BeamSession.sharedSession = session
+            UserDefaults.standard.set(user, forKey: "UserData")
             
             NotificationCenter.default.post(name: BeamAuthenticatedNotification, object: nil)
             
