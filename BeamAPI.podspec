@@ -12,5 +12,5 @@ Pod::Spec.new do |s|
   s.source_files           = "Pod/Classes/**/*"
 
   s.dependency "Starscream", "~> 2.0"
-  s.dependency "SwiftyJSON", "~> 3.0"
+  s.dependency "SwiftyJSON", "~> 3.1"
 end

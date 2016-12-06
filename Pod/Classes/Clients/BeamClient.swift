@@ -32,6 +32,9 @@ public class BeamClient {
     /// The property through which all interactive methods are accessed.
     public let interactive: InteractiveRoutes
     
+    /// The property through which all JWT methods are accessed.
+    public let jwt: JWTRoutes
+    
     /// The property through which all notification methods are accessed.
     public let notifications: NotificationsRoutes
     
@@ -60,6 +63,7 @@ public class BeamClient {
         chat = ChatRoutes()
         ingests = IngestsRoutes()
         interactive = InteractiveRoutes()
+        jwt = JWTRoutes()
         notifications = NotificationsRoutes()
         oauth = OAuthRoutes()
         recordings = RecordingsRoutes()

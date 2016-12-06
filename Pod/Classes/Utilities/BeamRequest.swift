@@ -25,8 +25,8 @@ public class BeamRequest {
      :param: body The request body.
      :param: completion An optional completion block with retrieved JSON data.
      */
-    public class func request(_ endpoint: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: AnyObject? = nil, ignoreCSRF: Bool = false, completion: ((_ json: JSON?, _ error: BeamRequestError?) -> Void)?) {
-        BeamRequest.dataRequest("https://beam.pro/api/v1\(endpoint)", requestType: requestType, headers: headers, params: params, body: body, ignoreCSRF: ignoreCSRF) { (data, error) in
+    public class func request(_ endpoint: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: AnyObject? = nil, completion: ((_ json: JSON?, _ error: BeamRequestError?) -> Void)?) {
+        BeamRequest.dataRequest("https://beam.pro/api/v1\(endpoint)", requestType: requestType, headers: headers, params: params, body: body) { (data, error) in
             guard let data = data else {
                 completion?(nil, error)
                 return
@@ -55,7 +55,7 @@ public class BeamRequest {
     }
     
     /**
-     Retrieves NSData from Beam's servers.
+     Retrieves data from Beam's servers.
      
      :param: url The URL of the data being retrieved.
      :param: requestType The type of the request being made.
@@ -64,12 +64,12 @@ public class BeamRequest {
      :param: body The request body.
      :param: completion An optional completion block with retrieved data.
      */
-    public class func dataRequest(_ baseURL: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: AnyObject? = nil, ignoreCSRF: Bool = false, completion: ((_ data: Data?, _ error: BeamRequestError?) -> Void)?) {
-        let sessionConfig = URLSessionConfiguration.default
+    public class func dataRequest(_ baseURL: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: AnyObject? = nil, completion: ((_ data: Data?, _ error: BeamRequestError?) -> Void)?) {
+        let sessionConfig = URLSessionConfiguration.ephemeral
         let session = URLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
         
         var url = URL(string: baseURL)!
-        url = NSURLByAppendingQueryParameters(url, queryParameters: params)
+        url = URLByAppendingQueryParameters(url, queryParameters: params)
         
         var request = URLRequest(url: url)
         request.httpMethod = requestType
@@ -86,9 +86,6 @@ public class BeamRequest {
         
         request.addValue("BeamApp/\(version) (iOS; \(deviceName()))", forHTTPHeaderField: "User-Agent")
         
-        let existingCSRFToken = UserDefaults.standard.string(forKey: "CSRFToken") ?? ""
-        request.addValue(existingCSRFToken, forHTTPHeaderField: "x-csrf-token")
-        
         for (header, val) in headers {
             request.addValue(val, forHTTPHeaderField: header)
         }
@@ -96,12 +93,6 @@ public class BeamRequest {
         let task = session.dataTask(with: request) { (data, response, error) in
             guard let response = response as? HTTPURLResponse, let data = data else {
                 completion?(nil, .unknown(data: nil))
-                return
-            }
-            
-            if let csrfToken = response.allHeaderFields["x-csrf-token"] as? String, csrfToken != existingCSRFToken && !ignoreCSRF {
-                UserDefaults.standard.set(csrfToken, forKey: "CSRFToken")
-                dataRequest(baseURL, requestType: requestType, headers: headers, params: params, body: body, completion: completion)
                 return
             }
             
@@ -213,8 +204,8 @@ public class BeamRequest {
      :param: queryParameters. The keys and values of the URL parameters.
      :returns: The complete URL.
      */
-    fileprivate class func NSURLByAppendingQueryParameters(_ url: URL!, queryParameters: [String: String]) -> URL {
-        let URLString = NSString(format: "%@?%@", url.absoluteString, self.stringFromQueryParameters(queryParameters))
+    fileprivate class func URLByAppendingQueryParameters(_ url: URL!, queryParameters: [String: String]) -> URL {
+        let URLString = NSString(format: "%@?%@", url.absoluteString, stringFromQueryParameters(queryParameters))
         return URL(string: URLString as String)!
     }
 }
