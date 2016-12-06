@@ -51,7 +51,7 @@ public class BeamSession {
             body["code"] = String(code)
         }
         
-        BeamRequest.request("/users/login", requestType: "POST", body: body as AnyObject) { (json, error) in
+        BeamRequest.request("/users/login", requestType: "POST", body: body as AnyObject, options: .storeCookies) { (json, error) in
             guard let json = json , error == nil else {
                 completion?(nil, error)
                 return
@@ -75,9 +75,8 @@ public class BeamSession {
     public static func logout(_ completion: ((_ error: BeamRequestError?) -> Void)?) {
         BeamSession.sharedSession = nil
         
-        BeamRequest.request("/users/current", requestType: "DELETE") { (json, error) in
-            completion?(error)
-        }
+        UserDefaults.standard.set(nil, forKey: "Cookies")
+        UserDefaults.standard.set(nil, forKey: "JWT")
     }
     
     

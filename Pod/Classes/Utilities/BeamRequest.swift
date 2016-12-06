@@ -25,8 +25,8 @@ public class BeamRequest {
      :param: body The request body.
      :param: completion An optional completion block with retrieved JSON data.
      */
-    public class func request(_ endpoint: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: AnyObject? = nil, completion: ((_ json: JSON?, _ error: BeamRequestError?) -> Void)?) {
-        BeamRequest.dataRequest("https://beam.pro/api/v1\(endpoint)", requestType: requestType, headers: headers, params: params, body: body) { (data, error) in
+    public class func request(_ endpoint: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: AnyObject? = nil, options: BeamRequestOptions = [], completion: ((_ json: JSON?, _ error: BeamRequestError?) -> Void)?) {
+        BeamRequest.dataRequest("https://beam.pro/api/v1\(endpoint)", requestType: requestType, headers: headers, params: params, body: body, options: options) { (data, error) in
             guard let data = data else {
                 completion?(nil, error)
                 return
@@ -62,9 +62,10 @@ public class BeamRequest {
      :param: headers The HTTP headers to be used in the request.
      :param: params The URL parameters to be used in the request.
      :param: body The request body.
+     :param: options Any special operations that should be performed for this request.
      :param: completion An optional completion block with retrieved data.
      */
-    public class func dataRequest(_ baseURL: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: AnyObject? = nil, completion: ((_ data: Data?, _ error: BeamRequestError?) -> Void)?) {
+    public class func dataRequest(_ baseURL: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: AnyObject? = nil, options: BeamRequestOptions = [], completion: ((_ data: Data?, _ error: BeamRequestError?) -> Void)?) {
         let sessionConfig = URLSessionConfiguration.ephemeral
         let session = URLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
         
@@ -90,10 +91,50 @@ public class BeamRequest {
             request.addValue(val, forHTTPHeaderField: header)
         }
         
+        if options.contains(.cookieAuth) {
+            let storedCookies = UserDefaults.standard.object(forKey: "Cookies") as! [[HTTPCookiePropertyKey: Any]]
+            var cookies = [HTTPCookie]()
+            
+            for properties in storedCookies {
+                if let cookie = HTTPCookie(properties: properties) {
+                    cookies.append(cookie)
+                }
+            }
+            
+            let cookieHeaders = HTTPCookie.requestHeaderFields(with: cookies)
+            
+            for (header, val) in cookieHeaders {
+                request.addValue(val, forHTTPHeaderField: header)
+            }
+        } else if !options.contains(.noAuth) {
+            if let jwt = UserDefaults.standard.string(forKey: "JWT") {
+                request.addValue("JWT \(jwt)", forHTTPHeaderField: "Authorization")
+            }
+        }
+        
         let task = session.dataTask(with: request) { (data, response, error) in
             guard let response = response as? HTTPURLResponse, let data = data else {
                 completion?(nil, .unknown(data: nil))
                 return
+            }
+            
+            if options.contains(.storeCookies) {
+                let cookies = HTTPCookie.cookies(withResponseHeaderFields: response.allHeaderFields as! [String : String], for: url)
+                var storedCookies = [[HTTPCookiePropertyKey: Any]]()
+                
+                for cookie in cookies {
+                    if let properties = cookie.properties {
+                        storedCookies.append(properties)
+                    }
+                }
+                
+                UserDefaults.standard.set(storedCookies, forKey: "Cookies")
+            }
+            
+            if options.contains(.storeJWT) {
+                if let jwt = response.allHeaderFields["x-jwt"] {
+                    UserDefaults.standard.set(jwt, forKey: "JWT")
+                }
             }
             
             let json = JSON(data: data)
@@ -165,7 +206,7 @@ public class BeamRequest {
      
      :returns: The name of the device being used.
      */
-    internal class func deviceName() -> String {
+    class func deviceName() -> String {
         var systemInfo = utsname()
         uname(&systemInfo)
         let machineMirror = Mirror(reflecting: systemInfo.machine)
@@ -187,7 +228,7 @@ public class BeamRequest {
      :returns: The string of the parameters to be appended to the URL.
      */
     fileprivate class func stringFromQueryParameters(_ queryParameters: [String: String]) -> String {
-        var parts: [String] = []
+        var parts = [String]()
         for (name, value) in queryParameters {
             let part = NSString(format: "%@=%@",
                 name.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlHostAllowed)!,
