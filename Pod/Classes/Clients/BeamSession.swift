@@ -69,9 +69,12 @@ public class BeamSession {
      :param: completion An optional completion block, called when logging out completes.
      */
     public static func logout(_ completion: ((_ error: BeamRequestError?) -> Void)?) {
-        UserDefaults.standard.set(nil, forKey: "Cookies")
-        UserDefaults.standard.set(nil, forKey: "JWT")
-        UserDefaults.standard.set(nil, forKey: "UserData")
+        UserDefaults.standard.removeObject(forKey: "Cookies")
+        UserDefaults.standard.removeObject(forKey: "JWT")
+        UserDefaults.standard.removeObject(forKey: "UserData")
+        if let completion = completion {
+            completion(nil)
+        }
     }
     
     /**
