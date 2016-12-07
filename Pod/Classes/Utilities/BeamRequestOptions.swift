@@ -14,14 +14,14 @@ public struct BeamRequestOptions: OptionSet {
     }
     
     // Only use cookie-based authentication
-    static let cookieAuth = BeamRequestOptions(rawValue: 1 << 0)
+    public static let cookieAuth = BeamRequestOptions(rawValue: 1 << 0)
     
     // Don't pass any forms of authentication
-    static let noAuth = BeamRequestOptions(rawValue: 1 << 1)
+    public static let noAuth = BeamRequestOptions(rawValue: 1 << 1)
     
     // Store any received cookies
-    static let storeCookies = BeamRequestOptions(rawValue: 1 << 2)
+    public static let storeCookies = BeamRequestOptions(rawValue: 1 << 2)
     
     // Store any received JWT tokens
-    static let storeJWT = BeamRequestOptions(rawValue: 1 << 3)
+    public static let storeJWT = BeamRequestOptions(rawValue: 1 << 3)
 }
