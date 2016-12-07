@@ -72,9 +72,8 @@ public class BeamSession {
         UserDefaults.standard.removeObject(forKey: "Cookies")
         UserDefaults.standard.removeObject(forKey: "JWT")
         UserDefaults.standard.removeObject(forKey: "UserData")
-        if let completion = completion {
-            completion(nil)
-        }
+        
+        completion?(nil)
     }
     
     /**
