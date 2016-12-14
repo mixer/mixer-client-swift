@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name       = "BeamAPI"
-  s.version    = "1.4.2"
+  s.version    = "1.4.3"
   s.summary    = "An interface to communicate with Beam's backend."
   s.homepage   = "https://github.com/WatchBeam/beam-client-swift"
   s.license    = "MIT"
@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
 
   s.requires_arc           = true
   s.ios.deployment_target  = "8.2"
-  s.source                 = { :git => "https://github.com/WatchBeam/beam-client-swift.git", :tag => "1.4.2" }
+  s.source                 = { :git => "https://github.com/WatchBeam/beam-client-swift.git", :tag => "1.4.3" }
   s.source_files           = "Pod/Classes/**/*"
 
   s.dependency "Starscream", "~> 2.0"

@@ -23,11 +23,27 @@ public class BeamSession {
     }
     
     /// The authenticated user's data.
-    public var user: BeamUser!
+    public var user: BeamUser
     
     /// Initializes a session given a user. Won't do anything on its own unless BeamSession.sharedSession is set to it.
     public init(user: BeamUser) {
         self.user = user
+    }
+    
+    /**
+     Updates the stored user model.
+     
+     :param: completion An optional completion block, called when the new user object has been retrieved.
+     */
+    public func updateStoredUser(completion: ((_ user: BeamUser?, _ error: BeamRequestError?) -> Void)?) {
+        BeamClient.sharedClient.users.getUserWithId(self.user.id) { user, error in
+            if let user = user {
+                self.user = user
+                UserDefaults.standard.set(user.encoded, forKey: "UserData")
+            }
+            
+            completion?(user, error)
+        }
     }
     
     /**
