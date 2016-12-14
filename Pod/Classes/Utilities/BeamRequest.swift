@@ -12,6 +12,9 @@ import SwiftyJSON
 /// The most low-level class used to make requests to the Beam servers.
 public class BeamRequest {
     
+    /// A delegate for the BeamRequest class.
+    public static var delegate: BeamRequestDelegate?
+    
     /// The version of the app, to be used in request user agents.
     public static var version = 0.1
     
@@ -185,13 +188,22 @@ public class BeamRequest {
                     }
                 case 401:
                     if json["message"] == "Invalid token" {
-                        BeamClient.sharedClient.jwt.generateJWTGrant { (error) in
-                            guard error == nil else {
-                                completion?(data, .invalidCredentials)
-                                return
+                        if UserDefaults.standard.object(forKey: "Cookies") != nil {
+                            BeamClient.sharedClient.jwt.generateJWTGrant { (error) in
+                                guard error == nil else {
+                                    completion?(data, .invalidCredentials)
+                                    return
+                                }
+                                
+                                dataRequest(baseURL, requestType: requestType, headers: headers, params: params, body: body, options: options, completion: completion)
                             }
-                            
-                            dataRequest(baseURL, requestType: requestType, headers: headers, params: params, body: body, options: options, completion: completion)
+                        } else {
+                            delegate?.requestNewJWT { token in
+                                if token != nil {
+                                    UserDefaults.standard.set(token, forKey: "JWT")
+                                    dataRequest(baseURL, requestType: requestType, headers: headers, params: params, body: body, options: options, completion: completion)
+                                }
+                            }
                         }
                     } else {
                         requestError = .invalidCredentials
