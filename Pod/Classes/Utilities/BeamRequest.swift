@@ -198,11 +198,13 @@ public class BeamRequest {
                                 dataRequest(baseURL, requestType: requestType, headers: headers, params: params, body: body, options: options, completion: completion)
                             }
                         } else {
-                            delegate?.requestNewJWT { token in
-                                if token != nil {
-                                    UserDefaults.standard.set(token, forKey: "JWT")
-                                    dataRequest(baseURL, requestType: requestType, headers: headers, params: params, body: body, options: options, completion: completion)
+                            delegate?.requestNewJWT { (error) in
+                                guard error == nil else {
+                                    completion?(data, .invalidCredentials)
+                                    return
                                 }
+                                
+                                dataRequest(baseURL, requestType: requestType, headers: headers, params: params, body: body, options: options, completion: completion)
                             }
                         }
                     } else {
