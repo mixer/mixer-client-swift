@@ -10,5 +10,5 @@
 public protocol BeamRequestDelegate: class {
     
     /// Provides the API client with a new JWT token to use in the event that one is needed.
-    func requestNewJWT(completion: (_ error: BeamRequestError?) -> Void)
+    func requestNewJWT(completion: @escaping(_ error: BeamRequestError?) -> Void)
 }
