@@ -15,17 +15,18 @@ public class BeamRequest {
     /// A delegate for the BeamRequest class.
     public static var delegate: BeamRequestDelegate?
     
-    public static var pendingRequests = [(String, String, [String: String], [String: String], AnyObject?, BeamRequestOptions, ((data: Data?, error: BeamRequestError?) -> Void)?)]()
+    /// Requests to be executed as soon as a JWT is retrieved.
+    static var pendingRequests = [BeamRequestParameters]()
     
     /// True if a JWT is currently being requested.
-    public static var requestingJWT = false {
+    static var requestingJWT = false {
         didSet {
             if !requestingJWT {
-                for request in pendingRequests {
-                    dataRequest(request.0, requestType: request.1, headers: request.2, params: request.3, body: request.4, options: request.5, completion: request.6)
+                for parameters in pendingRequests {
+                    dataRequest(parameters)
                 }
                 
-                pendingRequests = [(String, String, [String: String], [String: String], AnyObject?, BeamRequestOptions, ((data: Data?, error: BeamRequestError?) -> Void)?)]()
+                pendingRequests = [BeamRequestParameters]()
             }
         }
     }
@@ -70,6 +71,15 @@ public class BeamRequest {
             
             completion?(image, error)
         }
+    }
+    
+    /**
+     Uses a BeamRequestParameters struct to execute a data request.
+     
+     :param: parameters The parameters to be passed.
+     */
+    class func dataRequest(_ parameters: BeamRequestParameters) {
+        dataRequest(parameters.baseURL, requestType: parameters.requestType, headers: parameters.headers, params: parameters.params, body: parameters.body, options: parameters.options, completion: parameters.completion)
     }
     
     /**
@@ -137,7 +147,9 @@ public class BeamRequest {
             }
             
             guard !requestingJWT else {
-                pendingRequests.append((baseURL, requestType, headers, params, body, options, completion))
+                let parameters = BeamRequestParameters(baseURL: baseURL, requestType: requestType, headers: headers, params: params, body: body, options: options, completion: completion)
+                pendingRequests.append(parameters)
+                
                 return
             }
             
