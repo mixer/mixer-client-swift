@@ -15,6 +15,21 @@ public class BeamRequest {
     /// A delegate for the BeamRequest class.
     public static var delegate: BeamRequestDelegate?
     
+    public static var pendingRequests = [(String, String, [String: String], [String: String], AnyObject?, BeamRequestOptions, ((data: Data?, error: BeamRequestError?) -> Void)?)]()
+    
+    /// True if a JWT is currently being requested.
+    public static var requestingJWT = false {
+        didSet {
+            if !requestingJWT {
+                for request in pendingRequests {
+                    dataRequest(request.0, requestType: request.1, headers: request.2, params: request.3, body: request.4, options: request.5, completion: request.6)
+                }
+                
+                pendingRequests = [(String, String, [String: String], [String: String], AnyObject?, BeamRequestOptions, ((data: Data?, error: BeamRequestError?) -> Void)?)]()
+            }
+        }
+    }
+    
     /// The version of the app, to be used in request user agents.
     public static var version = 0.1
     
@@ -121,6 +136,11 @@ public class BeamRequest {
                 return
             }
             
+            guard !requestingJWT else {
+                pendingRequests.append((baseURL, requestType, headers, params, body, options, completion))
+                return
+            }
+            
             if options.contains(.storeCookies) {
                 let cookies = HTTPCookie.cookies(withResponseHeaderFields: response.allHeaderFields as! [String : String], for: url)
                 var storedCookies = [[HTTPCookiePropertyKey: Any]]()
@@ -188,8 +208,12 @@ public class BeamRequest {
                     }
                 case 401:
                     if json["message"] == "Invalid token" {
+                        requestingJWT = true
+                        
                         if UserDefaults.standard.object(forKey: "Cookies") != nil {
                             BeamClient.sharedClient.jwt.generateJWTGrant { (error) in
+                                requestingJWT = false
+                                
                                 guard error == nil else {
                                     completion?(data, .invalidCredentials)
                                     return
@@ -199,6 +223,8 @@ public class BeamRequest {
                             }
                         } else {
                             delegate?.requestNewJWT { (error) in
+                                requestingJWT = false
+                                
                                 guard error == nil else {
                                     completion?(data, .invalidCredentials)
                                     return
