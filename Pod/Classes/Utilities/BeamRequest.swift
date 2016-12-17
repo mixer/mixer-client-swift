@@ -146,7 +146,7 @@ public class BeamRequest {
                 return
             }
             
-            guard !requestingJWT else {
+            guard !requestingJWT || options.contains(.storeJWT) else {
                 let parameters = BeamRequestParameters(baseURL: baseURL, requestType: requestType, headers: headers, params: params, body: body, options: options, completion: completion)
                 pendingRequests.append(parameters)
                 
@@ -295,8 +295,8 @@ public class BeamRequest {
         var parts = [String]()
         for (name, value) in queryParameters {
             let part = NSString(format: "%@=%@",
-                name.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlHostAllowed)!,
-                value.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlHostAllowed)!)
+                                name.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlHostAllowed)!,
+                                value.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlHostAllowed)!)
             parts.append(part as String)
         }
         return parts.joined(separator: "&")
