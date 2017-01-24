@@ -120,7 +120,7 @@ public class BeamRequest {
         }
         
         if options.contains(.cookieAuth) {
-            let storedCookies = UserDefaults.standard.object(forKey: "Cookies") as! [[HTTPCookiePropertyKey: Any]]
+            let storedCookies = BeamUserDefaults.standard.object(forKey: "Cookies") as! [[HTTPCookiePropertyKey: Any]]
             var cookies = [HTTPCookie]()
             
             for properties in storedCookies {
@@ -135,7 +135,7 @@ public class BeamRequest {
                 request.addValue(val, forHTTPHeaderField: header)
             }
         } else if !options.contains(.noAuth) {
-            if let jwt = UserDefaults.standard.string(forKey: "JWT") {
+            if let jwt = BeamUserDefaults.standard.string(forKey: "JWT") {
                 request.addValue("JWT \(jwt)", forHTTPHeaderField: "Authorization")
             }
         }
@@ -163,12 +163,12 @@ public class BeamRequest {
                     }
                 }
                 
-                UserDefaults.standard.set(storedCookies, forKey: "Cookies")
+                BeamUserDefaults.standard.set(storedCookies, forKey: "Cookies")
             }
             
             if options.contains(.storeJWT) {
                 if let jwt = response.allHeaderFields["x-jwt"] {
-                    UserDefaults.standard.set(jwt, forKey: "JWT")
+                    BeamUserDefaults.standard.set(jwt, forKey: "JWT")
                 }
             }
             
@@ -222,7 +222,7 @@ public class BeamRequest {
                     if json["message"] == "Invalid token" {
                         requestingJWT = true
                         
-                        if UserDefaults.standard.object(forKey: "Cookies") != nil {
+                        if BeamUserDefaults.standard.object(forKey: "Cookies") != nil {
                             BeamClient.sharedClient.jwt.generateJWTGrant { (error) in
                                 requestingJWT = false
                                 

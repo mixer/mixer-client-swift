@@ -42,7 +42,7 @@ public class OAuthRoutes {
             }
             
             let user = BeamUser(json: json)
-            UserDefaults.standard.set(user.encoded, forKey: "UserData")
+            BeamUserDefaults.standard.set(user.encoded, forKey: "UserData")
             
             NotificationCenter.default.post(name: BeamAuthenticatedNotification, object: nil)
             
