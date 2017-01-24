@@ -7,7 +7,7 @@
 
 import Foundation
 
-class BeamUserDefaults: UserDefaults {
+public class BeamUserDefaults: UserDefaults {
     
     /// MARK: Properties
     
