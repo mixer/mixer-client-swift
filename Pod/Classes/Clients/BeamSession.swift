@@ -14,7 +14,7 @@ public class BeamSession {
     /// The session's shared instance. This will be nil if nobody is authenticated.
     public static var sharedSession: BeamSession? {
         get {
-            if let userData = UserDefaults.standard.data(forKey: "UserData") {
+            if let userData = BeamUserDefaults.standard.data(forKey: "UserData") {
                 return BeamSession(user: BeamUser.decode(data: userData))
             }
             
@@ -39,7 +39,7 @@ public class BeamSession {
         BeamClient.sharedClient.users.getUserWithId(self.user.id) { user, error in
             if let user = user {
                 self.user = user
-                UserDefaults.standard.set(user.encoded, forKey: "UserData")
+                BeamUserDefaults.standard.set(user.encoded, forKey: "UserData")
             }
             
             completion?(user, error)
@@ -71,7 +71,7 @@ public class BeamSession {
             }
             
             let user = BeamUser(json: json)
-            UserDefaults.standard.set(user.encoded, forKey: "UserData")
+            BeamUserDefaults.standard.set(user.encoded, forKey: "UserData")
             
             NotificationCenter.default.post(name: BeamAuthenticatedNotification, object: nil)
             
@@ -85,9 +85,9 @@ public class BeamSession {
      :param: completion An optional completion block, called when logging out completes.
      */
     public static func logout(_ completion: ((_ error: BeamRequestError?) -> Void)?) {
-        UserDefaults.standard.removeObject(forKey: "Cookies")
-        UserDefaults.standard.removeObject(forKey: "JWT")
-        UserDefaults.standard.removeObject(forKey: "UserData")
+        BeamUserDefaults.standard.removeObject(forKey: "Cookies")
+        BeamUserDefaults.standard.removeObject(forKey: "JWT")
+        BeamUserDefaults.standard.removeObject(forKey: "UserData")
         
         completion?(nil)
     }
@@ -115,11 +115,20 @@ public class BeamSession {
             }
             
             let user = BeamUser(json: json)
-            UserDefaults.standard.set(user.encoded, forKey: "UserData")
+            BeamUserDefaults.standard.set(user.encoded, forKey: "UserData")
             
             NotificationCenter.default.post(name: BeamAuthenticatedNotification, object: nil)
             
             completion?(user, error)
         }
+    }
+    
+    /**
+     Configures user defaults to store data in a suite instead of the default container.
+     
+     :param: suiteName The suite name identifier.
+    */
+    public static func setUserDefaults(suiteName: String) -> Bool {
+        return BeamUserDefaults.set(suiteName: suiteName)
     }
 }
