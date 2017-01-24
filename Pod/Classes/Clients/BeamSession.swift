@@ -128,6 +128,7 @@ public class BeamSession {
      
      :param: suiteName The suite name identifier.
     */
+    @discardableResult
     public static func setUserDefaults(suiteName: String) -> Bool {
         return BeamUserDefaults.set(suiteName: suiteName)
     }
