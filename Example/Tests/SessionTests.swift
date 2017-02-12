@@ -12,7 +12,7 @@ import XCTest
 class SessionTests: XCTestCase {
     
     var username: String!
-    let invalidUsername = "a"
+    let invalidUsername = "xcz"
     let takenUsername = "beamtest"
     
     var password: String!
@@ -73,17 +73,6 @@ class SessionTests: XCTestCase {
         
         BeamSession.logout { (error) in
             XCTAssert(error == .invalidCredentials)
-            expectation.fulfill()
-        }
-        
-        waitForExpectations(timeout: 10, handler: nil)
-    }
-    
-    func testRegisterInvalidUsername() {
-        let expectation = self.expectation(description: "tests the registration endpoint for the invalid username error")
-        
-        BeamSession.registerAccount(invalidUsername, password: password, email: email) { (user, error) in
-            XCTAssert(error == .invalidUsername)
             expectation.fulfill()
         }
         

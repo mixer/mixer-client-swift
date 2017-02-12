@@ -93,7 +93,7 @@ public class BeamRequest {
      :param: options Any special operations that should be performed for this request.
      :param: completion An optional completion block with retrieved data.
      */
-    public class func dataRequest(_ baseURL: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: AnyObject? = nil, options: BeamRequestOptions = [], completion: ((_ data: Data?, _ error: BeamRequestError?) -> Void)?) {
+    public class func dataRequest(_ baseURL: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: AnyObject? = nil, options: BeamRequestOptions = [], csrfToken: String? = nil, completion: ((_ data: Data?, _ error: BeamRequestError?) -> Void)?) {
         let sessionConfig = URLSessionConfiguration.ephemeral
         let session = URLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
         
@@ -140,6 +140,10 @@ public class BeamRequest {
             }
         }
         
+        if let token = csrfToken {
+            request.addValue(token, forHTTPHeaderField: "x-csrf-token")
+        }
+        
         let task = session.dataTask(with: request) { (data, response, error) in
             guard let response = response as? HTTPURLResponse, let data = data else {
                 completion?(nil, .unknown(data: nil))
@@ -153,7 +157,7 @@ public class BeamRequest {
                 return
             }
             
-            if options.contains(.storeCookies) {
+            if options.contains(.storeCookies) || options.contains(.mayNeedCSRF) {
                 let cookies = HTTPCookie.cookies(withResponseHeaderFields: response.allHeaderFields as! [String : String], for: url)
                 var storedCookies = [[HTTPCookiePropertyKey: Any]]()
                 
@@ -174,6 +178,8 @@ public class BeamRequest {
             
             let json = JSON(data: data)
             var requestError: BeamRequestError = .unknown(data: json)
+            
+            print("\(csrfToken) vs. \(response.allHeaderFields["x-csrf-token"])")
             
             if let error = error {
                 switch error._code {
@@ -200,7 +206,6 @@ public class BeamRequest {
                                 }
                             case "payload.username":
                                 switch type {
-                                case "string.min": requestError = .invalidUsername
                                 case "unique": requestError = .takenUsername
                                 default: requestError = .unknown(data: json)
                                 }
@@ -245,11 +250,18 @@ public class BeamRequest {
                                 dataRequest(baseURL, requestType: requestType, headers: headers, params: params, body: body, options: options, completion: completion)
                             }
                         }
+                        
+                        return
                     } else {
                         requestError = .invalidCredentials
                     }
                 case 403: requestError = .accessDenied
                 case 404: requestError = .notFound
+                case 461:
+                    if options.contains(.mayNeedCSRF), let token = response.allHeaderFields["x-csrf-token"] as? String {
+                        dataRequest(baseURL, requestType: requestType, headers: headers, params: params, body: body, options: [.cookieAuth, .storeCookies], csrfToken: token, completion: completion)
+                        return
+                    }
                 case 499: requestError = .requires2FA
                 default:
                     print("Unknown status code: \(response.statusCode)")

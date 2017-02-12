@@ -24,4 +24,7 @@ public struct BeamRequestOptions: OptionSet {
     
     // Store any received JWT tokens
     public static let storeJWT = BeamRequestOptions(rawValue: 1 << 3)
+    
+    // Request may need a CSRF token
+    public static let mayNeedCSRF = BeamRequestOptions(rawValue: 1 << 4)
 }
