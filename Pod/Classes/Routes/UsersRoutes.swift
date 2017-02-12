@@ -22,7 +22,7 @@ public class UsersRoutes {
     public func forgotPassword(_ email: String, completion: ((_ error: BeamRequestError?) -> Void)?) {
         let body = ["email": email] as AnyObject
         
-        BeamRequest.request("/users/reset", requestType: "POST", body: body) { (json, error) in
+        BeamRequest.request("/users/reset", requestType: "POST", body: body, options: .mayNeedCSRF) { (json, error) in
             completion?(error)
         }
     }

@@ -26,7 +26,7 @@ public class NotificationsRoutes {
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
         let body = ["date": formatter.string(from: date)] as AnyObject
         
-        BeamRequest.request("/notifications/read", requestType: "POST", params: ["userId": "\(userId)"], body: body) { (json, error) in
+        BeamRequest.request("/notifications/read", requestType: "POST", params: ["userId": "\(userId)"], body: body, options: .mayNeedCSRF) { (json, error) in
             completion?(error)
         }
     }
@@ -56,7 +56,7 @@ public class NotificationsRoutes {
             ] as [[String: Any]]
         ] as AnyObject
         
-        BeamRequest.request("/notifications/transports", requestType: "POST", body: body) { (json, error) in
+        BeamRequest.request("/notifications/transports", requestType: "POST", body: body, options: .mayNeedCSRF) { (json, error) in
             guard let json = json , error == nil else {
                 completion?(nil, error)
                 return
@@ -75,7 +75,7 @@ public class NotificationsRoutes {
      :param: completion An optional completion block with response data.
      */
     public func deleteNotificationTransport(_ userId: Int, transportId: Int, completion: ((_ error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request("/notifications/transports/\(transportId)", requestType: "DELETE", params: ["userId": "\(userId)"]) { (json, error) in
+        BeamRequest.request("/notifications/transports/\(transportId)", requestType: "DELETE", params: ["userId": "\(userId)"], options: .mayNeedCSRF) { (json, error) in
             completion?(error)
         }
     }

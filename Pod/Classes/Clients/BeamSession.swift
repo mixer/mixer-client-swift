@@ -107,7 +107,7 @@ public class BeamSession {
             "email": email
         ]
         
-        BeamRequest.request("/users", requestType: "POST", body: body as AnyObject, options: .mayNeedCSRF) { (json, error) in
+        BeamRequest.request("/users", requestType: "POST", body: body as AnyObject, options: [.mayNeedCSRF, .storeCookies]) { (json, error) in
             guard error == nil,
                 let json = json else {
                     completion?(nil, error)

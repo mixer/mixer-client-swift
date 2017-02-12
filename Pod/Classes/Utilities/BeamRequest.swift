@@ -179,8 +179,6 @@ public class BeamRequest {
             let json = JSON(data: data)
             var requestError: BeamRequestError = .unknown(data: json)
             
-            print("\(csrfToken) vs. \(response.allHeaderFields["x-csrf-token"])")
-            
             if let error = error {
                 switch error._code {
                 case -1009: requestError = .offline
@@ -259,7 +257,14 @@ public class BeamRequest {
                 case 404: requestError = .notFound
                 case 461:
                     if options.contains(.mayNeedCSRF), let token = response.allHeaderFields["x-csrf-token"] as? String {
-                        dataRequest(baseURL, requestType: requestType, headers: headers, params: params, body: body, options: [.cookieAuth, .storeCookies], csrfToken: token, completion: completion)
+                        var newOptions = options
+                        newOptions.remove(.mayNeedCSRF)
+                        
+                        if !newOptions.contains(.cookieAuth) {
+                            newOptions.insert(.cookieAuth)
+                        }
+                        
+                        dataRequest(baseURL, requestType: requestType, headers: headers, params: params, body: body, options: newOptions, csrfToken: token, completion: completion)
                         return
                     }
                 case 499: requestError = .requires2FA

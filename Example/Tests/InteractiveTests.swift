@@ -11,7 +11,7 @@ import XCTest
 
 class InteractiveTests: XCTestCase {
     
-    let channelId = 218395
+    let channelId = 181490
     
     func testInteractiveData() {
         let expectation = self.expectation(description: "tests the interactive data endpoint")

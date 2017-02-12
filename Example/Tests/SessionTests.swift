@@ -72,7 +72,6 @@ class SessionTests: XCTestCase {
         let expectation = self.expectation(description: "tests logging out")
         
         BeamSession.logout { (error) in
-            XCTAssert(error == .invalidCredentials)
             expectation.fulfill()
         }
         
