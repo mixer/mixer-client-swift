@@ -230,7 +230,13 @@ public class BeamRequest {
                                 requestingJWT = false
                                 
                                 guard error == nil else {
-                                    completion?(data, .invalidCredentials)
+                                    if error == .invalidCredentials {
+                                        BeamSession.logout(nil)
+                                        dataRequest(baseURL, requestType: requestType, headers: headers, params: params, body: body, options: options, completion: completion)
+                                    } else {
+                                        completion?(data, .invalidCredentials)
+                                    }
+                                    
                                     return
                                 }
                                 
