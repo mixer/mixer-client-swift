@@ -303,7 +303,7 @@ public class ChannelsRoutes {
      :param: completion An optional completion block with the retrieved recordings' data.
      */
     public func getRecordingsOfChannel(_ id: Int, completion: ((_ recordings: [BeamRecording]?, _ error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request("/channels/\(id)/recordings") { (json, error) in
+        BeamRequest.request("/channels/\(id)/recordings", params: ["order": "createdAt:DESC"]) { (json, error) in
             guard let recordings = json?.array else {
                 completion?(nil, error)
                 return
