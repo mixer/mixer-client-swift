@@ -33,7 +33,7 @@ public struct BeamNotificationPreferences {
     public let notifySubscriber: [String]
     
     /// The user's notification transports.
-    public var transports: [String: Any]?
+    public var transports: [[String: Any]]?
     
     /// Used to initialize a user's notification preferences given JSON data.
     init(json: JSON) {
@@ -88,6 +88,16 @@ public struct BeamNotificationPreferences {
         
         notifySubscriber = retrievedNotifySubscriber
         
-        transports = json["transports"].dictionaryObject
+        var retrievedTransports = [[String: Any]]()
+        
+        if let transports = json["transports"].array {
+            for transport in transports {
+                if let transport = transport.dictionaryObject {
+                    retrievedTransports.append(transport)
+                }
+            }
+        }
+        
+        transports = retrievedTransports
     }
 }
