@@ -25,7 +25,7 @@ public class NotificationsRoutes {
             return
         }
         
-        BeamRequest.request("/notifications/preferences", requestType: "PATCH", body: JSON(preferences) as AnyObject) { (json, error) in
+        BeamRequest.request("/notifications/preferences", requestType: "PATCH", body: preferences.dictionary as AnyObject) { (json, error) in
             guard let json = json else {
                 completion?(nil, error)
                 return

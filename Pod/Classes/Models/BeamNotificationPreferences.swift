@@ -100,4 +100,34 @@ public struct BeamNotificationPreferences {
         
         transports = retrievedTransports
     }
+    
+    var dictionary: [String: Any] {
+        let health = [
+            "eat": self.health.eat,
+            "stretch": self.health.stretch
+        ]
+        
+        var notifications = [[String: Any]]()
+        
+        for notification in liveNotifications {
+            notifications.append([
+                "payload": notification.payload ?? [String: Any](),
+                "sentAt": notification.sentAt?.timeIntervalSince1970 ?? 0,
+                "type": notification.type,
+                "userId": notification.userId,
+                "id": notification.id ?? ""
+            ])
+        }
+        
+        return [
+            "allowsEmailMarketing": allowsEmailMarketing,
+            "health": health,
+            "id": id,
+            "liveNotifications": notifications,
+            "liveOnByDefault": liveOnByDefault,
+            "notifyFollower": notifyFollower,
+            "notifySubscriber": notifySubscriber,
+            "transports": transports
+        ]
+    }
 }
