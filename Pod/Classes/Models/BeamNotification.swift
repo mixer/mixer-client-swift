@@ -12,34 +12,26 @@ import SwiftyJSON
 public struct BeamNotification {
     
     /// The payload, containing the notification's data.
-    public let payload: [String: AnyObject]?
-    
-    /// The notification's identifier.
-    public let id: Int
-    
-    /// The type of notification.
-    public let type: String
-    
-    /// The date, in UTC, at which this notification was seen.
-    public let seenAt: Date?
+    public let payload: [String: Any]?
     
     /// The date, in UTC, at which this notification was sent.
     public let sentAt: Date?
     
-    /// The date, in UTC, at which this notification will expire.
-    public let expiresAt: Date?
+    /// The type of notification.
+    public let type: String
     
     /// The identifier of the user who received this notification.
     public let userId: Int
     
+    /// The notification's identifier.
+    public let id: String?
+    
     /// Used to initialize a notification given JSON data.
     init(json: JSON) {
         payload = json["payload"].dictionaryObject as? [String: AnyObject]
-        id = json["id"].int ?? 0
-        type = json["type"].string ?? "unknown"
-        seenAt = Date.fromBeam(json["seenAt"].string)
         sentAt = Date.fromBeam(json["sentAt"].string)
-        expiresAt = Date.fromBeam(json["expiresAt"].string)
+        type = json["type"].string ?? "unknown"
         userId = json["userId"].int ?? 0
+        id = json["id"].string
     }
 }
