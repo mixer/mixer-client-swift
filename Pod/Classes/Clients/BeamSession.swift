@@ -64,7 +64,7 @@ public class BeamSession {
             body["code"] = String(code)
         }
         
-        BeamRequest.request("/users/login", requestType: "POST", body: body as AnyObject, options: .storeCookies) { (json, error) in
+        BeamRequest.request("/users/login", requestType: "POST", body: body as AnyObject, options: [.noAuth, .storeCookies]) { (json, error) in
             guard let json = json , error == nil else {
                 completion?(nil, error)
                 return

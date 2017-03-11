@@ -194,6 +194,7 @@
 				TargetAttributes = {
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = XTRYGN7EA5;
 						LastSwiftMigration = 0800;
 					};
 				};
@@ -387,6 +388,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E85179B6D5D6B487B946E6B4 /* Pods-BeamAPI_Tests.debug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = XTRYGN7EA5;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -404,6 +406,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A0C967F7D78FD680D95ABA9C /* Pods-BeamAPI_Tests.release.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = XTRYGN7EA5;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";

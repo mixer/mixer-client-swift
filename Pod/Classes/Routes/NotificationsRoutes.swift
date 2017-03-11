@@ -20,12 +20,12 @@ public class NotificationsRoutes {
      :param: completion An optional completion block with response data.
      */
     public func updateNotificationPreferences(preferences: BeamNotificationPreferences, completion: ((_ preferences: BeamNotificationPreferences?, _ error: BeamRequestError?) -> Void)?) {
-        guard let _ = BeamSession.sharedSession else {
+        guard let id = BeamSession.sharedSession?.user.id else {
             completion?(nil, .notAuthenticated)
             return
         }
         
-        BeamRequest.request("/notifications/preferences", requestType: "PATCH", body: preferences.dictionary as AnyObject) { (json, error) in
+        BeamRequest.request("/users/\(id)/notifications/preferences", requestType: "PATCH", body: preferences.dictionary as AnyObject) { (json, error) in
             guard let json = json else {
                 completion?(nil, error)
                 return
@@ -44,12 +44,12 @@ public class NotificationsRoutes {
      :param: completion An optional completion block with response data.
      */
     public func getNotificationPreferences(completion: ((_ preferences: BeamNotificationPreferences?, _ error: BeamRequestError?) -> Void)?) {
-        guard let _ = BeamSession.sharedSession else {
+        guard let id = BeamSession.sharedSession?.user.id else {
             completion?(nil, .notAuthenticated)
             return
         }
         
-        BeamRequest.request("/notifications/preferences") { (json, error) in
+        BeamRequest.request("/users/\(id)/notifications/preferences") { (json, error) in
             guard let json = json else {
                 completion?(nil, error)
                 return

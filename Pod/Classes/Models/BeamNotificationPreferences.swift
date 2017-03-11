@@ -127,7 +127,7 @@ public struct BeamNotificationPreferences {
             "liveOnByDefault": liveOnByDefault,
             "notifyFollower": notifyFollower,
             "notifySubscriber": notifySubscriber,
-            "transports": (transports ?? [[String: Any]]()) as Any
+            "transports": transports ?? [[String: Any]]()
         ]
     }
 }
