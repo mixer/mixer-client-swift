@@ -183,7 +183,7 @@ public class ChannelsRoutes {
      :param: completion An optional completion block with the retrieved channels' data.
      */
     public func getChannels(_ requestType: ChannelsRequestType = .all, page: Int = 0, completion: ((_ channels: [BeamChannel]?, _ error: BeamRequestError?) -> Void)?) {
-        var params = ["order": "online:desc,viewersCurrent:desc,viewersTotal:desc", "where": "suspended.eq.0,online.eq.1", "page": "\(page)"]
+        var params = ["order": "viewersCurrent:desc", "where": "suspended.eq.0,online.eq.1", "page": "\(page)"]
         
         switch requestType {
         case .interactive:
@@ -196,7 +196,7 @@ public class ChannelsRoutes {
             break
         }
         
-        getChannelsByEndpoint("/channels", params: params, completion: completion)
+        getChannelsWithParameters(params, completion: completion)
     }
     
     /**
@@ -206,19 +206,17 @@ public class ChannelsRoutes {
      :param: completion An optional completion block with the retrieved channels' data.
      */
     public func getChannelsByQuery(_ query: String, completion: ((_ channels: [BeamChannel]?, _ error: BeamRequestError?) -> Void)?) {
-        getChannelsByEndpoint("/channels", params: ["scope": "all", "order": "viewersTotal:desc", "where": "suspended.eq.0", "q": query], completion: completion)
+        getChannelsWithParameters(["scope": "all", "order": "viewersTotal:desc", "where": "suspended.eq.0", "q": query], completion: completion)
     }
     
     /**
      Retrieves channels from a specified endpoint.
      
-     :param: endpoint The endpoint that the channels are being retrieved from.
-     :param: params An optional set of parameters to be applied to the request.
+     :param: params Parameters to be applied to the request.
      :param: completion An optional completion block with the retrieved channels' data.
      */
-    fileprivate func getChannelsByEndpoint(_ endpoint: String, params: [String: String]?, completion: ((_ channels: [BeamChannel]?, _ error: BeamRequestError?) -> Void)?) {
-        let defaultParams = ["order": "online:desc,viewersCurrent:desc,viewersTotal:desc", "where": "suspended.eq.0"]
-        BeamRequest.request(endpoint, requestType: "GET", params: params ?? defaultParams) { (json, error) in
+    fileprivate func getChannelsWithParameters(_ params: [String: String], completion: ((_ channels: [BeamChannel]?, _ error: BeamRequestError?) -> Void)?) {
+        BeamRequest.request("/channels", requestType: "GET", params: params) { (json, error) in
             guard let channels = json?.array else {
                 completion?(nil, error)
                 return
@@ -250,10 +248,10 @@ public class ChannelsRoutes {
                 return
             }
             
-            var spritesheet: NSURL?
+            var spritesheet: URL?
             
             if let spritesheetUrl = json["url"].string {
-                spritesheet = NSURL(string: spritesheetUrl)
+                spritesheet = URL(string: spritesheetUrl)
             }
             
             var retrievedEmoticons: [BeamEmoticon]?
@@ -267,7 +265,7 @@ public class ChannelsRoutes {
                 }
             }
             
-            completion?(spritesheet as? URL, retrievedEmoticons, error)
+            completion?(spritesheet, retrievedEmoticons, error)
         }
     }
     
