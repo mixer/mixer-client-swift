@@ -35,7 +35,7 @@ public class TypesRoutes {
      :param: completion An optional completion block with the retrieved channels' data.
      */
     public func getTypes(_ completion: ((_ types: [BeamType]?, _ error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request("/types", requestType: "GET", params: ["where": "online.neq.0"]) { (json, error) in
+        BeamRequest.request("/types", requestType: "GET", params: ["order": "viewersCurrent:DESC"]) { (json, error) in
             guard let types = json?.array else {
                 completion?(nil, error)
                 return
