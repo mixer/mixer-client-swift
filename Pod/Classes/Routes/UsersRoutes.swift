@@ -102,7 +102,12 @@ public class UsersRoutes {
      :param: completion An optional completion block with retrieved channels' data.
      */
     public func getFollowedChannelsByUser(_ id: Int, page: Int, completion: ((_ channels: [BeamChannel]?, _ error: BeamRequestError?) -> Void)?) {
-        let params = ["order": "online:desc,viewersCurrent:desc,viewersTotal:desc", "where": "suspended.eq.0", "page": "\(page)"]
+        let params = [
+            "order": "online:desc,viewersCurrent:desc,viewersTotal:desc",
+            "where": "suspended.eq.0",
+            "page": "\(page)",
+            "noCount": "1",
+        ]
         
         BeamRequest.request("/users/\(id)/follows", params: params) { (json, error) in
             guard let channels = json?.array else {

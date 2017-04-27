@@ -183,7 +183,12 @@ public class ChannelsRoutes {
      :param: completion An optional completion block with the retrieved channels' data.
      */
     public func getChannels(_ requestType: ChannelsRequestType = .all, page: Int = 0, completion: ((_ channels: [BeamChannel]?, _ error: BeamRequestError?) -> Void)?) {
-        var params = ["order": "viewersCurrent:desc", "where": "suspended.eq.0,online.eq.1", "page": "\(page)"]
+        var params = [
+            "order": "viewersCurrent:desc",
+            "where": "suspended.eq.0,online.eq.1",
+            "page": "\(page)",
+            "noCount": "1",
+        ]
         
         switch requestType {
         case .interactive:
@@ -206,7 +211,13 @@ public class ChannelsRoutes {
      :param: completion An optional completion block with the retrieved channels' data.
      */
     public func getChannelsByQuery(_ query: String, completion: ((_ channels: [BeamChannel]?, _ error: BeamRequestError?) -> Void)?) {
-        getChannelsWithParameters(["scope": "all", "order": "viewersTotal:desc", "where": "suspended.eq.0", "q": query], completion: completion)
+        getChannelsWithParameters([
+            "scope": "all",
+            "order": "viewersTotal:desc",
+            "where": "suspended.eq.0",
+            "q": query,
+            "noCount": "1",
+        ], completion: completion)
     }
     
     /**
@@ -277,7 +288,10 @@ public class ChannelsRoutes {
      :param: completion An optional copmletion block with the retrieved followers' data.
      */
     public func getFollowersOfChannel(_ id: Int, page: Int = 0, completion: ((_ users: [BeamUser]?, _ error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request("/channels/\(id)/follow", params: ["page": "\(page)"]) { (json, error) in
+        BeamRequest.request("/channels/\(id)/follow", params: [
+            "page": "\(page)",
+            "noCount": "1",
+        ]) { (json, error) in
             guard let users = json?.array else {
                 completion?(nil, error)
                 return
