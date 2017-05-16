@@ -39,7 +39,7 @@ public class ConstellationClient: WebSocketDelegate {
         
         socket = WebSocket(url: URL(string: "wss://constellation.beam.pro")!)
         socket?.delegate = self
-        socket?.headers["User-Agent"] = "BeamApp/\(BeamRequest.version) (iOS; \(BeamRequest.deviceName()))"
+        socket?.headers["User-Agent"] = "IOSApp/\(BeamRequest.version) (iOS; \(BeamRequest.deviceName()))"
         socket?.connect()
     }
     
