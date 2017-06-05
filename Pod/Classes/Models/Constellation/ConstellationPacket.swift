@@ -95,7 +95,7 @@ open class ConstellationPacket {
                     }
                 }
             case "reply":
-                packet = ConstellationReplyPacket(result: json["result"].dictionaryObject as? [String: AnyObject], error: json["error"].dictionary, id: json["id"].int ?? 0)
+                packet = ConstellationReplyPacket(result: json["result"].dictionaryObject, error: json["error"].dictionary, id: json["id"].int ?? 0)
             default:
                 print("Unrecognized constellation packet received: \(json)")
             }

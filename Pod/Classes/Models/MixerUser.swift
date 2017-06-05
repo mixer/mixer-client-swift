@@ -42,7 +42,7 @@ public struct MixerUser {
     public let groups: [MixerGroup]?
     
     /// The user's preferences. Only retrieved if this is the authenticated user's object.
-    public let preferences: [String: AnyObject]?
+    public let preferences: [String: Any]?
     
     /// The user's Twitter profile URL.
     public let twitter: String?

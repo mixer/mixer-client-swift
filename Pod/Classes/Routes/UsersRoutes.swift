@@ -132,9 +132,9 @@ public class UsersRoutes {
      :param: id The id of the user whose preferences are being retrieved.
      :param: completion An optional completion block with retrieved preferences data.
      */
-    public func getPreferences(_ id: Int, completion: ((_ preferences: [String: AnyObject]?, _ error: MixerRequestError?) -> Void)?) {
+    public func getPreferences(_ id: Int, completion: ((_ preferences: [String: Any]?, _ error: MixerRequestError?) -> Void)?) {
         MixerRequest.request("/users/\(id)/preferences") { (json, error) in
-            guard let preferences = json?.dictionaryObject as? [String: AnyObject] else {
+            guard let preferences = json?.dictionaryObject else {
                 completion?(nil, error)
                 return
             }

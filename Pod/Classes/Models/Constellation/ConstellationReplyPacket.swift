@@ -15,13 +15,13 @@ public class ConstellationReplyPacket: ConstellationPacket {
     public let id: Int
     
     /// The result of the sent packet.
-    public let result: [String: AnyObject]?
+    public let result: [String: Any]?
     
     /// Any errors that occurred in response to the sent packet.
     public let error: ConstellationReplyError?
     
     /// Initializes a reply packet with JSON data.
-    init(result: [String: AnyObject]?, error: [String: JSON]?, id: Int) {
+    init(result: [String: Any]?, error: [String: JSON]?, id: Int) {
         if let code = error?["code"]?.int, let message = error?["message"]?.string {
             self.error = ConstellationReplyError(code: code, message: message)
         } else {
