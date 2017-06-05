@@ -1,5 +1,5 @@
 //
-//  BeamNotificationPreferences.swift
+//  MixerNotificationPreferences.swift
 //  Pods
 //
 //  Created by Jack Cook on 3/8/17.
@@ -9,19 +9,19 @@
 import SwiftyJSON
 
 /// A user's notification preferences.
-public struct BeamNotificationPreferences {
+public struct MixerNotificationPreferences {
     
     /// Whether or not the user has allowed marketing emails.
     public let allowsEmailMarketing: Bool
     
     /// The user's current health statistics.
-    public let health: BeamUserHealth
+    public let health: MixerUserHealth
     
     /// The user's id.
     public let id: Int
     
     /// A list of the user's current notifications.
-    public let liveNotifications: [BeamNotification]
+    public let liveNotifications: [MixerNotification]
     
     /// The user's transports that are on by default.
     public let liveOnByDefault: [String]
@@ -38,14 +38,14 @@ public struct BeamNotificationPreferences {
     /// Used to initialize a user's notification preferences given JSON data.
     init(json: JSON) {
         allowsEmailMarketing = json["allowsEmailMarketing"].bool ?? false
-        health = BeamUserHealth(json: json["health"])
+        health = MixerUserHealth(json: json["health"])
         id = Int(json["id"].string ?? "0") ?? 0
         
-        var retrievedLiveNotifications = [BeamNotification]()
+        var retrievedLiveNotifications = [MixerNotification]()
         
         if let liveNotifications = json["liveNotifications"].array {
             for notification in liveNotifications {
-                let notification = BeamNotification(json: notification)
+                let notification = MixerNotification(json: notification)
                 retrievedLiveNotifications.append(notification)
             }
         }

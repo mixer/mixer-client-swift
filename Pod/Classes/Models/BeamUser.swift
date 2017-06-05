@@ -1,15 +1,15 @@
 //
-//  BeamUser.swift
-//  Beam API
+//  MixerUser.swift
+//  Mixer API
 //
 //  Created by Jack Cook on 3/25/15.
-//  Copyright (c) 2016 Beam Interactive, Inc. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
 import SwiftyJSON
 
 /// A user object.
-public struct BeamUser {
+public struct MixerUser {
     
     /// The user's identifier.
     public let id: Int
@@ -39,7 +39,7 @@ public struct BeamUser {
     public let bio: String?
     
     /// The groups held by the user.
-    public let groups: [BeamGroup]?
+    public let groups: [MixerGroup]?
     
     /// The user's preferences. Only retrieved if this is the authenticated user's object.
     public let preferences: [String: AnyObject]?
@@ -60,8 +60,8 @@ public struct BeamUser {
     fileprivate let channelData: JSON
     
     /// The user's associated channel object.
-    public var channel: BeamChannel? {
-        return channelData.dictionary == nil ? nil : BeamChannel(json: channelData)
+    public var channel: MixerChannel? {
+        return channelData.dictionary == nil ? nil : MixerChannel(json: channelData)
     }
     
     /// A JSON representation of this user.
@@ -76,14 +76,14 @@ public struct BeamUser {
         experience = json["experience"].int ?? 0
         level = json["level"].int ?? 0
         sparks = json["sparks"].int ?? 0
-        avatarUrl = json["avatarUrl"].string ?? "https://beam.pro/_latest/img/app/avatars/default.jpg"
+        avatarUrl = json["avatarUrl"].string ?? "https://Mixer.pro/_latest/img/app/avatars/default.jpg"
         bio = json["bio"].string
         
-        groups = [BeamGroup]()
+        groups = [MixerGroup]()
         if let groups = json["groups"].array {
             for group in groups {
                 if let name = group["name"].string {
-                    let retrieved_group = BeamGroup(rawValue: name)
+                    let retrieved_group = MixerGroup(rawValue: name)
                     
                     if let group = retrieved_group {
                         self.groups?.append(group)
@@ -123,8 +123,8 @@ public struct BeamUser {
         }
     }
     
-    public static func decode(data: Data) -> BeamUser {
+    public static func decode(data: Data) -> MixerUser {
         let json = JSON(data: data)
-        return BeamUser(json: json)
+        return MixerUser(json: json)
     }
 }

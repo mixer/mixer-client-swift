@@ -1,5 +1,5 @@
 //
-//  BeamEmoticon.swift
+//  MixerEmoticon.swift
 //  Pods
 //
 //  Created by Jack Cook on 7/13/16.
@@ -9,7 +9,7 @@
 import SwiftyJSON
 
 /// An emoticon object.
-public struct BeamEmoticon {
+public struct MixerEmoticon {
     
     /// The emoticon's name (what needs to be typed into chat).
     public let name: String

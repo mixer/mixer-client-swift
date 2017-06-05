@@ -32,8 +32,8 @@ public class ConstellationUserResubscribedPacket: ConstellationLivePacket {
             self.userId = Int(channel.components(separatedBy: ":")[1])!
             self.channelId = channelId
             self.totalMonths = totalMonths
-            self.since = Date.fromBeam(payload["since"].string)
-            self.until = Date.fromBeam(payload["until"].string)
+            self.since = Date.fromMixer(payload["since"].string)
+            self.until = Date.fromMixer(payload["until"].string)
             
             super.init(data: data)
         } else {

@@ -1,15 +1,15 @@
 //
-//  BeamShopItem.swift
-//  Beam
+//  MixerShopItem.swift
+//  Mixer
 //
 //  Created by Jack Cook on 1/9/16.
-//  Copyright © 2016 MCProHosting. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
 import SwiftyJSON
 
-/// An item in Beam's shop. More will be implemented when items are added to the shop.
-public struct BeamShopItem {
+/// An item in Mixer's shop. More will be implemented when items are added to the shop.
+public struct MixerShopItem {
     
     /// The title of the shop item.
     public let title: String?

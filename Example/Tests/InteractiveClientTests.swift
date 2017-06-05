@@ -1,18 +1,18 @@
 //
 //  InteractiveClientTests.swift
-//  BeamAPI
+//  MixerAPI
 //
 //  Created by Jack Cook on 3/5/16.
-//  Copyright © 2016 CocoaPods. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
-import BeamAPI
+import MixerAPI
 import XCTest
 
 class InteractiveClientTests: XCTestCase, InteractiveClientDelegate {
     
     var address: String!
-    var channel: BeamChannel!
+    var channel: MixerChannel!
     var client: InteractiveClient!
     var expectation: XCTestExpectation!
     
@@ -21,7 +21,7 @@ class InteractiveClientTests: XCTestCase, InteractiveClientDelegate {
         
         let semaphore = DispatchSemaphore(value: 0)
         
-        BeamClient.sharedClient.channels.getChannels(.interactive) { (channels, error) in
+        MixerClient.sharedClient.channels.getChannels(.interactive) { (channels, error) in
             guard let channel = channels?[0] else {
                 XCTFail()
                 return
@@ -31,7 +31,7 @@ class InteractiveClientTests: XCTestCase, InteractiveClientDelegate {
             
             self.channel = channel
             
-            BeamClient.sharedClient.interactive.getInteractiveDataByChannel(self.channel.id) { (data, error) in
+            MixerClient.sharedClient.interactive.getInteractiveDataByChannel(self.channel.id) { (data, error) in
                 guard let address = data?.address else {
                     XCTFail()
                     return

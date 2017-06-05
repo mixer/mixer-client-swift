@@ -19,19 +19,19 @@ public class NotificationsRoutes {
      :param: preferences The notification preferences that will replace the current preferences.
      :param: completion An optional completion block with response data.
      */
-    public func updateNotificationPreferences(preferences: BeamNotificationPreferences, completion: ((_ preferences: BeamNotificationPreferences?, _ error: BeamRequestError?) -> Void)?) {
-        guard let id = BeamSession.sharedSession?.user.id else {
+    public func updateNotificationPreferences(preferences: MixerNotificationPreferences, completion: ((_ preferences: MixerNotificationPreferences?, _ error: MixerRequestError?) -> Void)?) {
+        guard let id = MixerSession.sharedSession?.user.id else {
             completion?(nil, .notAuthenticated)
             return
         }
         
-        BeamRequest.request("/users/\(id)/notifications/preferences", requestType: "PATCH", body: preferences.dictionary as AnyObject) { (json, error) in
+        MixerRequest.request("/users/\(id)/notifications/preferences", requestType: "PATCH", body: preferences.dictionary as AnyObject) { (json, error) in
             guard let json = json else {
                 completion?(nil, error)
                 return
             }
             
-            let preferences = BeamNotificationPreferences(json: json)
+            let preferences = MixerNotificationPreferences(json: json)
             completion?(preferences, error)
         }
     }
@@ -43,19 +43,19 @@ public class NotificationsRoutes {
      
      :param: completion An optional completion block with response data.
      */
-    public func getNotificationPreferences(completion: ((_ preferences: BeamNotificationPreferences?, _ error: BeamRequestError?) -> Void)?) {
-        guard let id = BeamSession.sharedSession?.user.id else {
+    public func getNotificationPreferences(completion: ((_ preferences: MixerNotificationPreferences?, _ error: MixerRequestError?) -> Void)?) {
+        guard let id = MixerSession.sharedSession?.user.id else {
             completion?(nil, .notAuthenticated)
             return
         }
         
-        BeamRequest.request("/users/\(id)/notifications/preferences") { (json, error) in
+        MixerRequest.request("/users/\(id)/notifications/preferences") { (json, error) in
             guard let json = json else {
                 completion?(nil, error)
                 return
             }
             
-            let preferences = BeamNotificationPreferences(json: json)
+            let preferences = MixerNotificationPreferences(json: json)
             completion?(preferences, error)
         }
     }

@@ -1,5 +1,5 @@
 //
-//  BeamUserDefaults.swift
+//  MixerUserDefaults.swift
 //  Pods
 //
 //  Created by Daniel Niemeyer on 1/23/17.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class BeamUserDefaults: UserDefaults {
+public class MixerUserDefaults: UserDefaults {
     
     /// MARK: Properties
     

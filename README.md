@@ -1,16 +1,16 @@
-# BeamAPI
+# MixerAPI
 
-[![Build Status](https://travis-ci.org/WatchBeam/beam-client-swift.svg)](https://travis-ci.org/WatchBeam/beam-client-swift)
-[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/BeamAPI.svg)](https://cocoapods.org/pods/BeamAPI)
+[![Build Status](https://travis-ci.org/mixer/mixer-client-swift.svg)](https://travis-ci.org/mixer/mixer-client-swift)
+[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/MixerAPI.svg)](https://cocoapods.org/pods/MixerAPI)
 
-This is a client library for [Beam](https://dev.beam.pro) written in Swift.
+This is a client library for [Mixer](https://dev.mixer.com) written in Swift.
 
 ## Features
 
-- Authenticate with Beam and manage your user session
+- Authenticate with Mixer and manage your user session
 - Retrieve full data about channels, users, and other resources
 - Send and receive packets through the chat and Interactive servers
-- [Complete Documentation](http://cocoadocs.org/docsets/BeamAPI/)
+- [Complete Documentation](http://cocoadocs.org/docsets/MixerAPI/)
 
 ## Usage
 
@@ -25,16 +25,16 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ### CocoaPods
 
-You can add BeamAPI to your project by adding it to your [Podfile](https://guides.cocoapods.org/using/the-podfile.html).
+You can add MixerAPI to your project by adding it to your [Podfile](https://guides.cocoapods.org/using/the-podfile.html).
 
-Because BeamAPI is written in Swift, you will need to add the `use_frameworks!` flag in your Podfile.
+Because MixerAPI is written in Swift, you will need to add the `use_frameworks!` flag in your Podfile.
 
 ```ruby
 platform :ios, '9.0'
 use_frameworks!
 
 target '<Your Target Name>' do
-  pod 'BeamAPI', '~> 1.0'
+  pod 'MixerAPI', '~> 1.6'
 end
 ```
 
@@ -43,9 +43,9 @@ end
 ### Retrieving Channel Data
 
 ```swift
-import BeamAPI
+import MixerAPI
 
-BeamClient.sharedClient.channels.getChannelWithId(252) { (channel, error) in
+MixerClient.sharedClient.channels.getChannelWithId(252) { (channel, error) in
     guard let channel = channel else {
         return
     }
@@ -57,7 +57,7 @@ BeamClient.sharedClient.channels.getChannelWithId(252) { (channel, error) in
 ### Connecting to Chat
 
 ```swift
-import BeamAPI
+import MixerAPI
 
 class ChatReceiver: NSObject, ChatClientDelegate {
 
@@ -88,4 +88,4 @@ class ChatReceiver: NSObject, ChatClientDelegate {
 
 ## License
 
-BeamAPI is available under the MIT license. See the LICENSE file for more info.
+MixerAPI is available under the MIT license. See the LICENSE file for more info.

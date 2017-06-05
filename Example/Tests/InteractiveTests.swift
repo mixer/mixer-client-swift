@@ -1,22 +1,22 @@
 //
 //  InteractiveTests.swift
-//  BeamAPI
+//  MixerAPI
 //
 //  Created by Jack Cook on 3/3/16.
-//  Copyright © 2016 CocoaPods. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
-import BeamAPI
+import MixerAPI
 import XCTest
 
 class InteractiveTests: XCTestCase {
     
-    let channelId = 181490
+    let channelId = 3783781
     
     func testInteractiveData() {
         let expectation = self.expectation(description: "tests the interactive data endpoint")
         
-        BeamClient.sharedClient.interactive.getInteractiveDataByChannel(channelId) { (data, error) in
+        MixerClient.sharedClient.interactive.getInteractiveDataByChannel(channelId) { (data, error) in
             XCTAssertNotNil(data)
             XCTAssertNil(error)
             expectation.fulfill()

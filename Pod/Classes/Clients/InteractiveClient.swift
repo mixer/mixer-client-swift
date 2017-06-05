@@ -17,7 +17,7 @@ public class InteractiveClient: WebSocketDelegate {
     /// The client's delegate, through which control updates are relayed to your app.
     fileprivate weak var delegate: InteractiveClientDelegate?
     
-    /// The stored authentication key. Will only be generated if BeamSession.sharedSession != nil, and is needed to send control updates.
+    /// The stored authentication key. Will only be generated if MixerSession.sharedSession != nil, and is needed to send control updates.
     fileprivate var authKey: String?
     
     /// The id of the channel being connected to.
@@ -50,7 +50,7 @@ public class InteractiveClient: WebSocketDelegate {
     public func connect(url baseUrl: String, channelId: Int, key: String? = nil, userId: Int? = nil) {
         authKey = key
         self.channelId = channelId
-        self.userId = userId ?? BeamSession.sharedSession?.user.id
+        self.userId = userId ?? MixerSession.sharedSession?.user.id
         
         guard let url = URL(string: "\(baseUrl)/play/\(channelId)") else {
             return

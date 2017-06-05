@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD610AC96B8838ACAABCFE29 /* Pods_MixerAPI_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64FD9702493D89699E5539C8 /* Pods_MixerAPI_Tests.framework */; };
 		CD69B84355E5FD291AFD803A /* Pods_BeamAPI_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 240F481F34E5804A03FE2609 /* Pods_BeamAPI_Tests.framework */; };
 		EB06F6B61D36DA410019024F /* TeamsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB06F6B51D36DA410019024F /* TeamsTests.swift */; };
 		EB1207571D381A1C00365126 /* OAuthTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1207561D381A1C00365126 /* OAuthTests.swift */; };
@@ -29,11 +30,14 @@
 /* Begin PBXFileReference section */
 		240F481F34E5804A03FE2609 /* Pods_BeamAPI_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BeamAPI_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E7801D99FB8A22697ED20F4 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		5110D7E62BB7BCB2D648BB8A /* BeamAPI.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = BeamAPI.podspec; path = ../BeamAPI.podspec; sourceTree = "<group>"; };
-		607FACE51AFB9204008FA782 /* BeamAPI_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BeamAPI_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		39FFC1721A078F7317DE9AFF /* Pods-MixerAPI_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MixerAPI_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MixerAPI_Tests/Pods-MixerAPI_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		5110D7E62BB7BCB2D648BB8A /* MixerAPI.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = MixerAPI.podspec; path = ../MixerAPI.podspec; sourceTree = "<group>"; };
+		607FACE51AFB9204008FA782 /* MixerAPI_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MixerAPI_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		64FD9702493D89699E5539C8 /* Pods_MixerAPI_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MixerAPI_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DF9655806BF1EAA6E237AC7 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		A0C967F7D78FD680D95ABA9C /* Pods-BeamAPI_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeamAPI_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BeamAPI_Tests/Pods-BeamAPI_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		D5D135FC502149321526552E /* Pods-MixerAPI_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MixerAPI_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MixerAPI_Tests/Pods-MixerAPI_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		E85179B6D5D6B487B946E6B4 /* Pods-BeamAPI_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeamAPI_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BeamAPI_Tests/Pods-BeamAPI_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		EB06F6B51D36DA410019024F /* TeamsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamsTests.swift; sourceTree = "<group>"; };
 		EB1207561D381A1C00365126 /* OAuthTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthTests.swift; sourceTree = "<group>"; };
@@ -59,6 +63,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD69B84355E5FD291AFD803A /* Pods_BeamAPI_Tests.framework in Frameworks */,
+				AD610AC96B8838ACAABCFE29 /* Pods_MixerAPI_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				240F481F34E5804A03FE2609 /* Pods_BeamAPI_Tests.framework */,
+				64FD9702493D89699E5539C8 /* Pods_MixerAPI_Tests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -87,7 +93,7 @@
 		607FACD11AFB9204008FA782 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				607FACE51AFB9204008FA782 /* BeamAPI_Tests.xctest */,
+				607FACE51AFB9204008FA782 /* MixerAPI_Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -113,7 +119,7 @@
 		607FACF51AFB993E008FA782 /* Podspec Metadata */ = {
 			isa = PBXGroup;
 			children = (
-				5110D7E62BB7BCB2D648BB8A /* BeamAPI.podspec */,
+				5110D7E62BB7BCB2D648BB8A /* MixerAPI.podspec */,
 				2E7801D99FB8A22697ED20F4 /* README.md */,
 				8DF9655806BF1EAA6E237AC7 /* LICENSE */,
 			);
@@ -125,6 +131,8 @@
 			children = (
 				E85179B6D5D6B487B946E6B4 /* Pods-BeamAPI_Tests.debug.xcconfig */,
 				A0C967F7D78FD680D95ABA9C /* Pods-BeamAPI_Tests.release.xcconfig */,
+				39FFC1721A078F7317DE9AFF /* Pods-MixerAPI_Tests.debug.xcconfig */,
+				D5D135FC502149321526552E /* Pods-MixerAPI_Tests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -162,9 +170,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		607FACE41AFB9204008FA782 /* BeamAPI_Tests */ = {
+		607FACE41AFB9204008FA782 /* MixerAPI_Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "BeamAPI_Tests" */;
+			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "MixerAPI_Tests" */;
 			buildPhases = (
 				B31C3F6A64FB23FB40E28F14 /* [CP] Check Pods Manifest.lock */,
 				607FACE11AFB9204008FA782 /* Sources */,
@@ -177,9 +185,9 @@
 			);
 			dependencies = (
 			);
-			name = BeamAPI_Tests;
+			name = MixerAPI_Tests;
 			productName = Tests;
-			productReference = 607FACE51AFB9204008FA782 /* BeamAPI_Tests.xctest */;
+			productReference = 607FACE51AFB9204008FA782 /* MixerAPI_Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -199,7 +207,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "BeamAPI" */;
+			buildConfigurationList = 607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "MixerAPI" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -212,7 +220,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				607FACE41AFB9204008FA782 /* BeamAPI_Tests */,
+				607FACE41AFB9204008FA782 /* MixerAPI_Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -240,7 +248,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BeamAPI_Tests/Pods-BeamAPI_Tests-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MixerAPI_Tests/Pods-MixerAPI_Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B2378A0AE2F6B94C9CA4F84E /* [CP] Copy Pods Resources */ = {
@@ -255,7 +263,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BeamAPI_Tests/Pods-BeamAPI_Tests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MixerAPI_Tests/Pods-MixerAPI_Tests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B31C3F6A64FB23FB40E28F14 /* [CP] Check Pods Manifest.lock */ = {
@@ -386,7 +394,7 @@
 		};
 		607FACF31AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E85179B6D5D6B487B946E6B4 /* Pods-BeamAPI_Tests.debug.xcconfig */;
+			baseConfigurationReference = 39FFC1721A078F7317DE9AFF /* Pods-MixerAPI_Tests.debug.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = XTRYGN7EA5;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -404,7 +412,7 @@
 		};
 		607FACF41AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A0C967F7D78FD680D95ABA9C /* Pods-BeamAPI_Tests.release.xcconfig */;
+			baseConfigurationReference = D5D135FC502149321526552E /* Pods-MixerAPI_Tests.release.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = XTRYGN7EA5;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -419,7 +427,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "BeamAPI" */ = {
+		607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "MixerAPI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				607FACED1AFB9204008FA782 /* Debug */,
@@ -428,7 +436,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "BeamAPI_Tests" */ = {
+		607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "MixerAPI_Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				607FACF31AFB9204008FA782 /* Debug */,

@@ -1,14 +1,14 @@
 //
-//  NSDate+fromBeam.swift
-//  Beam API
+//  NSDate+fromMixer.swift
+//  Mixer API
 //
 //  Created by Jack Cook on 7/6/15.
-//  Copyright © 2015 MCProHosting. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
 import Foundation
 
-/// A helper class used to parse dates returned by Beam's servers.
+/// A helper class used to parse dates returned by Mixer's servers.
 public extension Date {
     
     /**
@@ -17,7 +17,7 @@ public extension Date {
      :param: dateString The raw string containing the data data.
      :returns: The NSDate object.
      */
-    public static func fromBeam(_ dateString: String?) -> Date? {
+    public static func fromMixer(_ dateString: String?) -> Date? {
         guard let string = dateString else {
             return nil
         }

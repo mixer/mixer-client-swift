@@ -15,7 +15,7 @@ public class ConstellationUserFollowedPacket: ConstellationLivePacket {
     public let userId: Int
     
     /// The channel that was followed.
-    public let followed: BeamChannel
+    public let followed: MixerChannel
     
     /// True if the user followed the channel, false if the user unfollowed the channel.
     public let following: Bool
@@ -24,7 +24,7 @@ public class ConstellationUserFollowedPacket: ConstellationLivePacket {
     override init?(data: [String: JSON]) {
         if let channel = data["channel"]?.string, let payload = data["payload"], let following = payload["following"].bool {
             self.userId = Int(channel.components(separatedBy: ":")[1])!
-            self.followed = BeamChannel(json: payload["channel"])
+            self.followed = MixerChannel(json: payload["channel"])
             self.following = following
             
             super.init(data: data)

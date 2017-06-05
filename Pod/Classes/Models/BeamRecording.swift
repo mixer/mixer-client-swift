@@ -1,5 +1,5 @@
 //
-//  BeamRecording.swift
+//  MixerRecording.swift
 //  Pods
 //
 //  Created by Jack Cook on 6/12/16.
@@ -8,7 +8,7 @@
 
 import SwiftyJSON
 
-public struct BeamRecording {
+public struct MixerRecording {
     
     public let id: Int
     public let name: String
@@ -20,8 +20,8 @@ public struct BeamRecording {
     public let createdAt: Date?
     public let updatedAt: Date?
     public let channelId: Int
-    public let channel: BeamChannel?
-    public let vods: [BeamVOD]
+    public let channel: MixerChannel?
+    public let vods: [MixerVOD]
     
     init(json: JSON) {
         id = json["id"].int ?? 0
@@ -30,17 +30,17 @@ public struct BeamRecording {
         state = json["state"].string
         viewsTotal = json["viewsTotal"].int ?? 0
         duration = json["duration"].float ?? 0
-        expiresAt = Date.fromBeam(json["expiresAt"].string)
-        createdAt = Date.fromBeam(json["createdAt"].string)
-        updatedAt = Date.fromBeam(json["updatedAt"].string)
+        expiresAt = Date.fromMixer(json["expiresAt"].string)
+        createdAt = Date.fromMixer(json["createdAt"].string)
+        updatedAt = Date.fromMixer(json["updatedAt"].string)
         channelId = json["channelId"].int ?? 0
-        channel = BeamChannel(json: json["channel"])
+        channel = MixerChannel(json: json["channel"])
         
-        var retrievedVODs = [BeamVOD]()
+        var retrievedVODs = [MixerVOD]()
         
         if let vods = json["vods"].array {
             for vod in vods {
-                let vodObject = BeamVOD(json: vod)
+                let vodObject = MixerVOD(json: vod)
                 retrievedVODs.append(vodObject)
             }
         }

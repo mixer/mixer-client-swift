@@ -15,7 +15,7 @@ public class ConstellationChannelResubscribedPacket: ConstellationLivePacket {
     public let channelId: Int
     
     /// The user who resubscribed to the channel.
-    public let user: BeamUser
+    public let user: MixerUser
     
     /// The number of months the user has been subscribed for.
     public let totalMonths: Int
@@ -24,7 +24,7 @@ public class ConstellationChannelResubscribedPacket: ConstellationLivePacket {
     override init?(data: [String: JSON]) {
         if let channel = data["channel"]?.string, let payload = data["payload"], let totalMonths = payload["totalMonths"].int {
             self.channelId = Int(channel.components(separatedBy: ":")[1])!
-            self.user = BeamUser(json: payload["user"])
+            self.user = MixerUser(json: payload["user"])
             self.totalMonths = totalMonths
             
             super.init(data: data)

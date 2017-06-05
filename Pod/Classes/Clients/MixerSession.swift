@@ -1,21 +1,21 @@
 //
-//  BeamSession.swift
-//  Beam
+//  MixerSession.swift
+//  Mixer
 //
 //  Created by Jack Cook on 1/8/16.
-//  Copyright © 2016 MCProHosting. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
-public let BeamAuthenticatedNotification = Notification.Name("BeamAuthenticatedNotification")
+public let MixerAuthenticatedNotification = Notification.Name("MixerAuthenticatedNotification")
 
 /// Stores data about an authenticated user session.
-public class BeamSession {
+public class MixerSession {
     
     /// The session's shared instance. This will be nil if nobody is authenticated.
-    public static var sharedSession: BeamSession? {
+    public static var sharedSession: MixerSession? {
         get {
-            if let userData = BeamUserDefaults.standard.data(forKey: "UserData") {
-                return BeamSession(user: BeamUser.decode(data: userData))
+            if let userData = MixerUserDefaults.standard.data(forKey: "UserData") {
+                return MixerSession(user: MixerUser.decode(data: userData))
             }
             
             return nil
@@ -23,10 +23,10 @@ public class BeamSession {
     }
     
     /// The authenticated user's data.
-    public var user: BeamUser
+    public var user: MixerUser
     
-    /// Initializes a session given a user. Won't do anything on its own unless BeamSession.sharedSession is set to it.
-    public init(user: BeamUser) {
+    /// Initializes a session given a user. Won't do anything on its own unless MixerSession.sharedSession is set to it.
+    public init(user: MixerUser) {
         self.user = user
     }
     
@@ -35,11 +35,11 @@ public class BeamSession {
      
      :param: completion An optional completion block, called when the new user object has been retrieved.
      */
-    public func updateStoredUser(completion: ((_ user: BeamUser?, _ error: BeamRequestError?) -> Void)?) {
-        BeamClient.sharedClient.users.getUserWithId(self.user.id) { user, error in
+    public func updateStoredUser(completion: ((_ user: MixerUser?, _ error: MixerRequestError?) -> Void)?) {
+        MixerClient.sharedClient.users.getUserWithId(self.user.id) { user, error in
             if let user = user {
                 self.user = user
-                BeamUserDefaults.standard.set(user.encoded, forKey: "UserData")
+                MixerUserDefaults.standard.set(user.encoded, forKey: "UserData")
             }
             
             completion?(user, error)
@@ -54,7 +54,7 @@ public class BeamSession {
      :param: code An optional 2FA code of the authenticating user.
      :param: completion An optional completion block, called when authentication completes.
      */
-    public static func authenticate(_ username: String, password: String, code: Int? = nil, completion: ((_ user: BeamUser?, _ error: BeamRequestError?) -> Void)?) {
+    public static func authenticate(_ username: String, password: String, code: Int? = nil, completion: ((_ user: MixerUser?, _ error: MixerRequestError?) -> Void)?) {
         var body = [
             "username": username,
             "password": password
@@ -64,60 +64,60 @@ public class BeamSession {
             body["code"] = String(code)
         }
         
-        BeamRequest.request("/users/login", requestType: "POST", body: body as AnyObject, options: [.noAuth, .storeCookies]) { (json, error) in
+        MixerRequest.request("/users/login", requestType: "POST", body: body as AnyObject, options: [.noAuth, .storeCookies]) { (json, error) in
             guard let json = json , error == nil else {
                 completion?(nil, error)
                 return
             }
             
-            let user = BeamUser(json: json)
-            BeamUserDefaults.standard.set(user.encoded, forKey: "UserData")
+            let user = MixerUser(json: json)
+            MixerUserDefaults.standard.set(user.encoded, forKey: "UserData")
             
-            NotificationCenter.default.post(name: BeamAuthenticatedNotification, object: nil)
+            NotificationCenter.default.post(name: MixerAuthenticatedNotification, object: nil)
             
             completion?(user, error)
         }
     }
     
     /**
-     Logs out a user by deleting their stored session locally and on the Beam servers.
+     Logs out a user by deleting their stored session locally and on the Mixer servers.
      
      :param: completion An optional completion block, called when logging out completes.
      */
-    public static func logout(_ completion: ((_ error: BeamRequestError?) -> Void)?) {
-        BeamUserDefaults.standard.removeObject(forKey: "Cookies")
-        BeamUserDefaults.standard.removeObject(forKey: "JWT")
-        BeamUserDefaults.standard.removeObject(forKey: "UserData")
+    public static func logout(_ completion: ((_ error: MixerRequestError?) -> Void)?) {
+        MixerUserDefaults.standard.removeObject(forKey: "Cookies")
+        MixerUserDefaults.standard.removeObject(forKey: "JWT")
+        MixerUserDefaults.standard.removeObject(forKey: "UserData")
         
         completion?(nil)
     }
     
     /**
-     Registers a new Beam user. Keep in mind that the user will have to verify their email address.
+     Registers a new Mixer user. Keep in mind that the user will have to verify their email address.
      
      :param: username The registering user's username.
      :param: password The registering user's password.
      :param: email The registering user's email address.
      :param: completion An optional completion block with the new user's data.
      */
-    public static func registerAccount(_ username: String, password: String, email: String, completion: ((_ user: BeamUser?, _ error: BeamRequestError?) -> Void)?) {
+    public static func registerAccount(_ username: String, password: String, email: String, completion: ((_ user: MixerUser?, _ error: MixerRequestError?) -> Void)?) {
         let body = [
             "username": username,
             "password": password,
             "email": email
         ]
         
-        BeamRequest.request("/users", requestType: "POST", body: body as AnyObject, options: [.mayNeedCSRF, .storeCookies]) { (json, error) in
+        MixerRequest.request("/users", requestType: "POST", body: body as AnyObject, options: [.mayNeedCSRF, .storeCookies]) { (json, error) in
             guard error == nil,
                 let json = json else {
                     completion?(nil, error)
                     return
             }
             
-            let user = BeamUser(json: json)
-            BeamUserDefaults.standard.set(user.encoded, forKey: "UserData")
+            let user = MixerUser(json: json)
+            MixerUserDefaults.standard.set(user.encoded, forKey: "UserData")
             
-            NotificationCenter.default.post(name: BeamAuthenticatedNotification, object: nil)
+            NotificationCenter.default.post(name: MixerAuthenticatedNotification, object: nil)
             
             completion?(user, error)
         }
@@ -130,6 +130,6 @@ public class BeamSession {
     */
     @discardableResult
     public static func setUserDefaults(suiteName: String) -> Bool {
-        return BeamUserDefaults.set(suiteName: suiteName)
+        return MixerUserDefaults.set(suiteName: suiteName)
     }
 }

@@ -1,12 +1,12 @@
 //
 //  ShopTests.swift
-//  BeamAPI
+//  MixerAPI
 //
 //  Created by Jack Cook on 1/30/16.
-//  Copyright © 2016 CocoaPods. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
-import BeamAPI
+import MixerAPI
 import XCTest
 
 class ShopTests: XCTestCase {
@@ -17,7 +17,7 @@ class ShopTests: XCTestCase {
     func testCategories() {
         let expectation = self.expectation(description: "tests the categories endpoint")
         
-        BeamClient.sharedClient.shop.getCategories { (categories, error) in
+        MixerClient.sharedClient.shop.getCategories { (categories, error) in
             XCTAssertNotNil(categories)
             XCTAssertNil(error)
             expectation.fulfill()
@@ -29,7 +29,7 @@ class ShopTests: XCTestCase {
     func testItemsByCategory() {
         let expectation = self.expectation(description: "tests retrieving items from a category")
         
-        BeamClient.sharedClient.shop.getItemsByCategory(categoryId) { (items, error) in
+        MixerClient.sharedClient.shop.getItemsByCategory(categoryId) { (items, error) in
             XCTAssertNotNil(items)
             XCTAssertNil(error)
             expectation.fulfill()
@@ -41,7 +41,7 @@ class ShopTests: XCTestCase {
     func testItemWithId() {
         let expectation = self.expectation(description: "tests retrieving an item by id")
         
-        BeamClient.sharedClient.shop.getItemWithId(itemId) { (item, error) in
+        MixerClient.sharedClient.shop.getItemWithId(itemId) { (item, error) in
             XCTAssertNotNil(item)
             XCTAssertNil(error)
             expectation.fulfill()

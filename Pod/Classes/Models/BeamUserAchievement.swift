@@ -1,5 +1,5 @@
 //
-//  BeamUserAchievement.swift
+//  MixerUserAchievement.swift
 //  Pods
 //
 //  Created by Jack Cook on 7/12/16.
@@ -9,7 +9,7 @@
 import SwiftyJSON
 
 /// An object detailing user progress made on an achievement.
-public struct BeamUserAchievement {
+public struct MixerUserAchievement {
     
     /// The achievement's identifier.
     public let id: Int
@@ -33,17 +33,17 @@ public struct BeamUserAchievement {
     public let userId: Int
     
     /// The achievement being discussed.
-    public let achievement: BeamAchievement
+    public let achievement: MixerAchievement
     
     /// Used to initialize a user achievement object given JSON data.
     init(json: JSON) {
         id = json["id"].int ?? 0
         earned = json["earned"].bool ?? false
         progress = json["progress"].float ?? 0
-        createdAt = Date.fromBeam(json["createdAt"].string)
-        updatedAt = Date.fromBeam(json["updatedAt"].string)
+        createdAt = Date.fromMixer(json["createdAt"].string)
+        updatedAt = Date.fromMixer(json["updatedAt"].string)
         achievementSlug = json["achievement"].string
         userId = json["user"].int ?? 0
-        achievement = BeamAchievement(json: json["Achievement"])
+        achievement = MixerAchievement(json: json["Achievement"])
     }
 }

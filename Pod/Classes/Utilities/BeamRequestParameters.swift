@@ -1,13 +1,13 @@
 //
-//  BeamRequestParameters.swift
+//  MixerRequestParameters.swift
 //  Pods
 //
 //  Created by Jack Cook on 16/12/2016.
 //
 //
 
-/// Parameters that can be passed to BeamRequest.dataRequest
-struct BeamRequestParameters {
+/// Parameters that can be passed to MixerRequest.dataRequest
+struct MixerRequestParameters {
     
     /// The URL of the data being retrieved
     var baseURL: String
@@ -25,8 +25,8 @@ struct BeamRequestParameters {
     var body: AnyObject?
     
     /// Any special operations that should be performed for this request
-    var options: BeamRequestOptions
+    var options: MixerRequestOptions
     
     /// An optional completion block with retrieved data
-    var completion: ((_ data: Data?, _ error: BeamRequestError?) -> Void)?
+    var completion: ((_ data: Data?, _ error: MixerRequestError?) -> Void)?
 }

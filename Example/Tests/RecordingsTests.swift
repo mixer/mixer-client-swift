@@ -1,12 +1,12 @@
 //
 //  RecordingsTests.swift
-//  BeamAPI
+//  MixerAPI
 //
 //  Created by Jack Cook on 7/12/16.
-//  Copyright © 2016 CocoaPods. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
-import BeamAPI
+import MixerAPI
 import XCTest
 
 class RecordingsTests: XCTestCase {
@@ -19,7 +19,7 @@ class RecordingsTests: XCTestCase {
         
         let semaphore = DispatchSemaphore(value: 0)
         
-        BeamClient.sharedClient.channels.getRecordingsOfChannel(channelId) { (recordings, error) in
+        MixerClient.sharedClient.channels.getRecordingsOfChannel(channelId) { (recordings, error) in
             guard let id = recordings?[0].id else {
                 XCTFail()
                 return
@@ -38,7 +38,7 @@ class RecordingsTests: XCTestCase {
     func testsRecordingSeen() {
         let expectation = self.expectation(description: "tests marking a recording as seen")
         
-        BeamClient.sharedClient.recordings.markRecordingSeen(recordingId) { (error) in
+        MixerClient.sharedClient.recordings.markRecordingSeen(recordingId) { (error) in
             XCTAssert(error == .notAuthenticated)
             expectation.fulfill()
         }
@@ -49,7 +49,7 @@ class RecordingsTests: XCTestCase {
     func testsRecording() {
         let expectation = self.expectation(description: "tests retrieving a recording")
         
-        BeamClient.sharedClient.recordings.getRecording(recordingId) { (recording, error) in
+        MixerClient.sharedClient.recordings.getRecording(recordingId) { (recording, error) in
             XCTAssertNotNil(recording)
             XCTAssertNil(error)
             expectation.fulfill()

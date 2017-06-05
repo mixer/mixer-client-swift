@@ -15,13 +15,13 @@ public class ConstellationChannelUpdatePacket: ConstellationLivePacket {
     public let channelId: Int
     
     /// The channel that was updated.
-    public let updated: BeamChannel
+    public let updated: MixerChannel
     
     /// Initializes a channel update packet with JSON data.
     override init?(data: [String: JSON]) {
         if let channel = data["channel"]?.string, let payload = data["payload"] {
             self.channelId = Int(channel.components(separatedBy: ":")[1])!
-            self.updated = BeamChannel(json: payload)
+            self.updated = MixerChannel(json: payload)
             
             super.init(data: data)
         } else {

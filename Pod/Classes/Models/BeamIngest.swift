@@ -1,5 +1,5 @@
 //
-//  BeamIngest.swift
+//  MixerIngest.swift
 //  Pods
 //
 //  Created by Jack Cook on 7/12/16.
@@ -9,7 +9,7 @@
 import SwiftyJSON
 
 /// An ingest object.
-public struct BeamIngest {
+public struct MixerIngest {
     
     /// The ingest's name.
     public let name: String?
@@ -32,8 +32,8 @@ public struct BeamIngest {
         var protocols = [String]()
         
         if let protocolsList = json["protocols"].array {
-            for beamProtocol in protocolsList {
-                if let protocolName = beamProtocol["type"].string {
+            for MixerProtocol in protocolsList {
+                if let protocolName = MixerProtocol["type"].string {
                     protocols.append(protocolName)
                 }
             }

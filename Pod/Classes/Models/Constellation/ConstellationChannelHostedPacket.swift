@@ -15,13 +15,13 @@ public class ConstellationChannelHostedPacket: ConstellationLivePacket {
     public let channelId: Int
     
     /// The channel that hosted the channel.
-    public let host: BeamChannel
+    public let host: MixerChannel
     
     /// Initializes a channel hosted packet with JSON data.
     override init?(data: [String: JSON]) {
         if let channel = data["channel"]?.string, let payload = data["payload"] {
             self.channelId = Int(channel.components(separatedBy: ":")[1])!
-            self.host = BeamChannel(json: payload["hoster"])
+            self.host = MixerChannel(json: payload["hoster"])
             
             super.init(data: data)
         } else {

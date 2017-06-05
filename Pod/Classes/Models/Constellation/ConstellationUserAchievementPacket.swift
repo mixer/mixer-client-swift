@@ -15,13 +15,13 @@ public class ConstellationUserAchievementPacket: ConstellationLivePacket {
     public let userId: Int
     
     /// The achievement that has been updated.
-    public let achievement: BeamAchievement
+    public let achievement: MixerAchievement
     
     /// Initializes a user achievement packet with JSON data.
     override init?(data: [String: JSON]) {
         if let channel = data["channel"]?.string, let payload = data["payload"] {
             self.userId = Int(channel.components(separatedBy: ":")[1])!
-            self.achievement = BeamAchievement(json: payload)
+            self.achievement = MixerAchievement(json: payload)
             
             super.init(data: data)
         } else {

@@ -9,7 +9,7 @@
 import Starscream
 import SwiftyJSON
 
-/// Used to connect to and communicate with Beam's liveloading socket.
+/// Used to connect to and communicate with Mixer's liveloading socket.
 public class ConstellationClient: WebSocketDelegate {
     
     // MARK: Properties
@@ -37,9 +37,9 @@ public class ConstellationClient: WebSocketDelegate {
     public func connect(_ delegate: ConstellationClientDelegate) {
         self.delegate = delegate
         
-        socket = WebSocket(url: URL(string: "wss://constellation.beam.pro")!)
+        socket = WebSocket(url: URL(string: "wss://constellation.mixer.com")!)
         socket?.delegate = self
-        socket?.headers["User-Agent"] = "IOSApp/\(BeamRequest.version) (iOS; \(BeamRequest.deviceName()))"
+        socket?.headers["User-Agent"] = "IOSApp/\(MixerRequest.version) (iOS; \(MixerRequest.deviceName()))"
         socket?.connect()
     }
     

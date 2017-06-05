@@ -17,13 +17,13 @@ public class RecordingsRoutes {
      :param: id The id of the recording being marked.
      :param: completion An optional completion block that fires when the action has been completed.
      */
-    public func markRecordingSeen(_ id: Int, completion: ((_ error: BeamRequestError?) -> Void)?) {
-        guard let _ = BeamSession.sharedSession else {
+    public func markRecordingSeen(_ id: Int, completion: ((_ error: MixerRequestError?) -> Void)?) {
+        guard let _ = MixerSession.sharedSession else {
             completion?(.notAuthenticated)
             return
         }
         
-        BeamRequest.request("/recordings/\(id)/seen", requestType: "POST") { (json, error) in
+        MixerRequest.request("/recordings/\(id)/seen", requestType: "POST") { (json, error) in
             completion?(error)
         }
     }
@@ -36,14 +36,14 @@ public class RecordingsRoutes {
      :param: id The identifier of the recording being retrieved.
      :param: completion An optional completion block with retrieved recording data.
      */
-    public func getRecording(_ id: Int, completion: ((_ recording: BeamRecording?, _ error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request("/recordings/\(id)") { (json, error) in
+    public func getRecording(_ id: Int, completion: ((_ recording: MixerRecording?, _ error: MixerRequestError?) -> Void)?) {
+        MixerRequest.request("/recordings/\(id)") { (json, error) in
             guard let json = json else {
                 completion?(nil, error)
                 return
             }
             
-            let recording = BeamRecording(json: json)
+            let recording = MixerRecording(json: json)
             completion?(recording, error)
         }
     }

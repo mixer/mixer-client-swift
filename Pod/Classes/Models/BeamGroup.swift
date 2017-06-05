@@ -1,15 +1,15 @@
 //
-//  BeamGroup.swift
-//  Beam API
+//  MixerGroup.swift
+//  Mixer API
 //
 //  Created by Jack Cook on 4/25/15.
-//  Copyright (c) 2016 Beam Interactive, Inc. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
 import UIKit
 
 /// The group/role held by a given user.
-public enum BeamGroup: String {
+public enum MixerGroup: String {
     case Founder = "Founder"
     case Staff = "Staff"
     case GlobalMod = "GlobalMod"
@@ -46,7 +46,7 @@ public enum BeamGroup: String {
  :param: groups The user's held groups.
  :returns: The color that should be given to the user.
  */
-public func chatColorForGroups(_ groups: [BeamGroup]) -> UIColor {
+public func chatColorForGroups(_ groups: [MixerGroup]) -> UIColor {
     if groups.contains(.Owner) {
         return UIColor(red: 1, green: 1, blue: 1, alpha: 1)
     }
@@ -80,8 +80,8 @@ public func chatColorForGroups(_ groups: [BeamGroup]) -> UIColor {
  :param: groups The user's held groups.
  :returns: The highest group held by the user.
  */
-public func getHighestGroup(_ groups: [BeamGroup]) -> BeamGroup {
-    var highestGroup = BeamGroup.User
+public func getHighestGroup(_ groups: [MixerGroup]) -> MixerGroup {
+    var highestGroup = MixerGroup.User
     for group in groups {
         if group.getValue() > highestGroup.getValue() {
             highestGroup = group

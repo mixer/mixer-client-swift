@@ -1,9 +1,9 @@
 //
 //  ChatPacket.swift
-//  Beam API
+//  Mixer API
 //
 //  Created by Jack Cook on 6/4/15.
-//  Copyright (c) 2016 Beam Interactive, Inc. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
 import SwiftyJSON

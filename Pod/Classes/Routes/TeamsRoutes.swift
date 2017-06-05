@@ -17,7 +17,7 @@ public class TeamsRoutes {
      :param: id The identifier of the team being retrieved.
      :param: completion An optional completion block with retrieved team data.
      */
-    public func getTeamWithId(_ id: Int, completion: ((_ team: BeamTeam?, _ error: BeamRequestError?) -> Void)?) {
+    public func getTeamWithId(_ id: Int, completion: ((_ team: MixerTeam?, _ error: MixerRequestError?) -> Void)?) {
         getTeamWithEndpoint("/teams/\(id)", completion: completion)
     }
     
@@ -27,7 +27,7 @@ public class TeamsRoutes {
      :param: token The token of the team being retrieved.
      :param: completion An optional completion block with retrieved team data.
      */
-    public func getTeamWithToken(_ token: String, completion: ((_ team: BeamTeam?, _ error: BeamRequestError?) -> Void)?) {
+    public func getTeamWithToken(_ token: String, completion: ((_ team: MixerTeam?, _ error: MixerRequestError?) -> Void)?) {
         getTeamWithEndpoint("/teams/\(token)", completion: completion)
     }
     
@@ -37,14 +37,14 @@ public class TeamsRoutes {
      :param: endpoint The endpoint that the team is being retrieved from.
      :param: completion An optional completion block with retrieved team data.
      */
-    fileprivate func getTeamWithEndpoint(_ endpoint: String, completion: ((_ team: BeamTeam?, _ error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request(endpoint) { (json, error) in
+    fileprivate func getTeamWithEndpoint(_ endpoint: String, completion: ((_ team: MixerTeam?, _ error: MixerRequestError?) -> Void)?) {
+        MixerRequest.request(endpoint) { (json, error) in
             guard let json = json else {
                 completion?(nil, error)
                 return
             }
             
-            let team = BeamTeam(json: json)
+            let team = MixerTeam(json: json)
             completion?(team, error)
         }
     }
@@ -55,19 +55,19 @@ public class TeamsRoutes {
      :param: page The page of stream teams to be requested.
      :param: completion An optional completion block with the retrieved teams' data.
      */
-    public func getTeams(_ page: Int = 0, completion: ((_ teams: [BeamTeam]?, _ error: BeamRequestError?) -> Void)?) {
+    public func getTeams(_ page: Int = 0, completion: ((_ teams: [MixerTeam]?, _ error: MixerRequestError?) -> Void)?) {
         let params = ["order": "totalViewersCurrent:desc"]
         
-        BeamRequest.request("/teams", params: params) { (json, error) in
+        MixerRequest.request("/teams", params: params) { (json, error) in
             guard let teams = json?.array else {
                 completion?(nil, error)
                 return
             }
             
-            var retrievedTeams = [BeamTeam]()
+            var retrievedTeams = [MixerTeam]()
             
             for team in teams {
-                let retrievedTeam = BeamTeam(json: team)
+                let retrievedTeam = MixerTeam(json: team)
                 retrievedTeams.append(retrievedTeam)
             }
             
@@ -83,17 +83,17 @@ public class TeamsRoutes {
      :param: id The id of the team whose users are being requested.
      :param: completion An optional completion block with the retrieved users' data.
      */
-    public func getMembersOfTeam(_ id: Int, completion: ((_ users: [BeamUser]?, _ error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request("/teams/\(id)/users") { (json, error) in
+    public func getMembersOfTeam(_ id: Int, completion: ((_ users: [MixerUser]?, _ error: MixerRequestError?) -> Void)?) {
+        MixerRequest.request("/teams/\(id)/users") { (json, error) in
             guard let users = json?.array else {
                 completion?(nil, error)
                 return
             }
             
-            var retrievedUsers = [BeamUser]()
+            var retrievedUsers = [MixerUser]()
             
             for user in users {
-                let retrievedUser = BeamUser(json: user)
+                let retrievedUser = MixerUser(json: user)
                 retrievedUsers.append(retrievedUser)
             }
             

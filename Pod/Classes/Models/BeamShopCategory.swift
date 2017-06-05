@@ -1,15 +1,15 @@
 //
-//  BeamShopCategory.swift
-//  Beam
+//  MixerShopCategory.swift
+//  Mixer
 //
 //  Created by Jack Cook on 1/9/16.
-//  Copyright © 2016 MCProHosting. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
 import SwiftyJSON
 
-/// A category in Beam's shop.
-public struct BeamShopCategory {
+/// A category in Mixer's shop.
+public struct MixerShopCategory {
     
     /// The category's identifier.
     public let id: Int?

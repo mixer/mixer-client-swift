@@ -1,15 +1,15 @@
 //
 //  ChatClient.swift
-//  Beam
+//  Mixer
 //
 //  Created by Jack Cook on 1/8/16.
-//  Copyright © 2016 MCProHosting. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
 import Starscream
 import SwiftyJSON
 
-/// Used to connect to and communicate with a Beam chat server. There is no shared session, meaning several chat connections can be made at once.
+/// Used to connect to and communicate with a Mixer chat server. There is no shared session, meaning several chat connections can be made at once.
 public class ChatClient: WebSocketDelegate {
     
     // MARK: Properties
@@ -17,7 +17,7 @@ public class ChatClient: WebSocketDelegate {
     /// The client's delegate, through which updates and chat messages are relayed to your app.
     fileprivate weak var delegate: ChatClientDelegate?
     
-    /// The stored authentication key. Will only be generated if BeamSession.sharedSession != nil, and is needed to send chat messages.
+    /// The stored authentication key. Will only be generated if MixerSession.sharedSession != nil, and is needed to send chat messages.
     fileprivate var authKey: String?
     
     /// The id of the channel being connected to.
@@ -44,7 +44,7 @@ public class ChatClient: WebSocketDelegate {
     public func joinChannel(_ channelId: Int) {
         self.channelId = channelId
         
-        BeamClient.sharedClient.chat.getChatDetailsById(channelId) { (endpoints, authKey, error) in
+        MixerClient.sharedClient.chat.getChatDetailsById(channelId) { (endpoints, authKey, error) in
             guard let endpoints = endpoints else {
                 print("channel details did not return endpoints or authkey")
                 return
@@ -86,7 +86,7 @@ public class ChatClient: WebSocketDelegate {
     // MARK: WebSocketDelegate
     
     public func websocketDidConnect(socket: WebSocket) {
-        guard let userId = BeamSession.sharedSession?.user.id, let authKey = authKey else {
+        guard let userId = MixerSession.sharedSession?.user.id, let authKey = authKey else {
             let packet = ChatAuthenticatePacket(channelId: channelId)
             sendPacket(packet)
             

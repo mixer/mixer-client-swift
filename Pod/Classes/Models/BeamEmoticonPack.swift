@@ -1,5 +1,5 @@
 //
-//  BeamEmoticonPack.swift
+//  MixerEmoticonPack.swift
 //  Pods
 //
 //  Created by Jack Cook on 7/15/16.
@@ -9,7 +9,7 @@
 import SwiftyJSON
 
 /// An emoticon pack object.
-public struct BeamEmoticonPack {
+public struct MixerEmoticonPack {
     
     /// The string indicating where the pack is stored on backend.
     public let slug: String
@@ -24,7 +24,7 @@ public struct BeamEmoticonPack {
     public let authors: [String]
     
     /// The emoticons provided in this pack.
-    public let emoticons: [BeamEmoticon]
+    public let emoticons: [MixerEmoticon]
     
     /// Used to initialize an emoticon given JSON data.
     init(slug: String, json: JSON) {
@@ -39,11 +39,11 @@ public struct BeamEmoticonPack {
             authors = [String]()
         }
         
-        var emoticons = [BeamEmoticon]()
+        var emoticons = [MixerEmoticon]()
         
         if let retrievedEmoticons = json["emoticons"].dictionary {
             for (name, retrievedEmoticon) in retrievedEmoticons {
-                let emoticon = BeamEmoticon(name: name, json: retrievedEmoticon)
+                let emoticon = MixerEmoticon(name: name, json: retrievedEmoticon)
                 emoticons.append(emoticon)
             }
         }

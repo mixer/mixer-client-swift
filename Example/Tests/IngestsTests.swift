@@ -1,12 +1,12 @@
 //
 //  IngestsTests.swift
-//  BeamAPI
+//  MixerAPI
 //
 //  Created by Jack Cook on 7/12/16.
-//  Copyright © 2016 CocoaPods. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
-import BeamAPI
+import MixerAPI
 import XCTest
 
 class IngestsTests: XCTestCase {
@@ -14,7 +14,7 @@ class IngestsTests: XCTestCase {
     func testsIngests() {
         let expectation = self.expectation(description: "tests the ingests endpoint")
         
-        BeamClient.sharedClient.ingests.getIngests { (ingests, error) in
+        MixerClient.sharedClient.ingests.getIngests { (ingests, error) in
             XCTAssertNotNil(ingests)
             XCTAssertNil(error)
             expectation.fulfill()

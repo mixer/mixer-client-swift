@@ -1,9 +1,9 @@
 //
 //  ShopRoutes.swift
-//  Beam
+//  Mixer
 //
 //  Created by Jack Cook on 1/9/16.
-//  Copyright © 2016 MCProHosting. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
 /// Routes that can be used to interact with and retrieve shop data.
@@ -16,17 +16,17 @@ public class ShopRoutes {
     
      :param: completion An optional completion block with retrieved shop categories.
      */
-    public func getCategories(_ completion: ((_ categories: [BeamShopCategory]?, _ error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request("/shop/categories") { (json, error) in
+    public func getCategories(_ completion: ((_ categories: [MixerShopCategory]?, _ error: MixerRequestError?) -> Void)?) {
+        MixerRequest.request("/shop/categories") { (json, error) in
             guard let categories = json?.array else {
                 completion?(nil, error)
                 return
             }
             
-            var retrievedCategories = [BeamShopCategory]()
+            var retrievedCategories = [MixerShopCategory]()
             
             for category in categories {
-                let retrievedCategory = BeamShopCategory(json: category)
+                let retrievedCategory = MixerShopCategory(json: category)
                 retrievedCategories.append(retrievedCategory)
             }
             
@@ -40,14 +40,14 @@ public class ShopRoutes {
      :param: itemId The identifier of the item being requested.
      :param: completion An optional completion block with the retrieved item's data.
      */
-    public func getItemWithId(_ itemId: Int, completion: ((_ item: BeamShopItem?, _ error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request("/shop/items/\(itemId)") { (json, error) in
+    public func getItemWithId(_ itemId: Int, completion: ((_ item: MixerShopItem?, _ error: MixerRequestError?) -> Void)?) {
+        MixerRequest.request("/shop/items/\(itemId)") { (json, error) in
             guard let json = json else {
                 completion?(nil, error)
                 return
             }
             
-            let item = BeamShopItem(json: json)
+            let item = MixerShopItem(json: json)
             completion?(item, error)
         }
     }
@@ -58,17 +58,17 @@ public class ShopRoutes {
      :param: categoryId The identifier of the category with items that are being requested.
      :param: completion An optional completion block with the requested items' data.
      */
-    public func getItemsByCategory(_ categoryId: Int, completion: ((_ items: [BeamShopItem]?, _ error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request("/shop/categories/\(categoryId)/items") { (json, error) in
+    public func getItemsByCategory(_ categoryId: Int, completion: ((_ items: [MixerShopItem]?, _ error: MixerRequestError?) -> Void)?) {
+        MixerRequest.request("/shop/categories/\(categoryId)/items") { (json, error) in
             guard let items = json?.array else {
                 completion?(nil, error)
                 return
             }
             
-            var retrievedItems = [BeamShopItem]()
+            var retrievedItems = [MixerShopItem]()
             
             for item in items {
-                let retrievedItem = BeamShopItem(json: item)
+                let retrievedItem = MixerShopItem(json: item)
                 retrievedItems.append(retrievedItem)
             }
             

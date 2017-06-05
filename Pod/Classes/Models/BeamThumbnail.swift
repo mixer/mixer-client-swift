@@ -1,15 +1,15 @@
 //
-//  BeamThumbnail.swift
-//  Beam API
+//  MixerThumbnail.swift
+//  Mixer API
 //
 //  Created by Jack Cook on 4/25/15.
-//  Copyright (c) 2016 Beam Interactive, Inc. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
 import SwiftyJSON
 
 /// A channel thumbnail object.
-public struct BeamThumbnail {
+public struct MixerThumbnail {
     
     /// The identifier of the thumbnail.
     public let id: Int?
@@ -20,10 +20,10 @@ public struct BeamThumbnail {
     /// A URL of the thumbnail image.
     public let url: String?
     
-    /// The store of the thumbnail on Beam's servers.
+    /// The store of the thumbnail on Mixer's servers.
     public let store: String?
     
-    /// The path of the thumbnail on Beam's servers.
+    /// The path of the thumbnail on Mixer's servers.
     public let remotePath: String?
     
     /// The first time at which the channel was given a thumbnail.
@@ -48,7 +48,7 @@ public struct BeamThumbnail {
         url = json["url"].string
         store = json["store"].string
         remotePath = json["remotePath"].string
-        createdAt = Date.fromBeam(json["createdAt"].string)
-        updatedAt = Date.fromBeam(json["updatedAt"].string)
+        createdAt = Date.fromMixer(json["createdAt"].string)
+        updatedAt = Date.fromMixer(json["updatedAt"].string)
     }
 }

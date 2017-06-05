@@ -1,12 +1,12 @@
 //
 //  Achievement.swift
-//  BeamAPI
+//  MixerAPI
 //
 //  Created by Jack Cook on 1/30/16.
-//  Copyright © 2016 CocoaPods. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
-import BeamAPI
+import MixerAPI
 import XCTest
 
 class AchievementsTests: XCTestCase {
@@ -16,7 +16,7 @@ class AchievementsTests: XCTestCase {
     func testAchievements() {
         let expectation = self.expectation(description: "tests the achievements endpoint")
         
-        BeamClient.sharedClient.achievements.getAchievements { (achievements, error) in
+        MixerClient.sharedClient.achievements.getAchievements { (achievements, error) in
             XCTAssertNotNil(achievements)
             XCTAssertNil(error)
             expectation.fulfill()

@@ -1,12 +1,12 @@
 //
 //  ChatTests.swift
-//  BeamAPI
+//  MixerAPI
 //
 //  Created by Jack Cook on 1/30/16.
-//  Copyright © 2016 CocoaPods. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
-import BeamAPI
+import MixerAPI
 import XCTest
 
 class ChatTests: XCTestCase {
@@ -19,7 +19,7 @@ class ChatTests: XCTestCase {
     func testDeleteAllChatMessages() {
         let expectation = self.expectation(description: "tests deleting all chat messages from a channel")
         
-        BeamClient.sharedClient.chat.deleteAllChatMessages(channelId) { (error) in
+        MixerClient.sharedClient.chat.deleteAllChatMessages(channelId) { (error) in
             XCTAssert(error == .notAuthenticated)
             expectation.fulfill()
         }
@@ -30,7 +30,7 @@ class ChatTests: XCTestCase {
     func testDeleteChatMessage() {
         let expectation = self.expectation(description: "tests deleting a chat message by id")
         
-        BeamClient.sharedClient.chat.deleteChatMessage(channelId, messageId: messageId) { (error) in
+        MixerClient.sharedClient.chat.deleteChatMessage(channelId, messageId: messageId) { (error) in
             XCTAssert(error == .notAuthenticated)
             expectation.fulfill()
         }
@@ -41,7 +41,7 @@ class ChatTests: XCTestCase {
     func testChatDetailsById() {
         let expectation = self.expectation(description: "tests retrieving chat details")
         
-        BeamClient.sharedClient.chat.getChatDetailsById(channelId) { (endpoints, authKey, error) in
+        MixerClient.sharedClient.chat.getChatDetailsById(channelId) { (endpoints, authKey, error) in
             XCTAssertNotNil(endpoints)
             XCTAssertNil(authKey)
             XCTAssertNil(error)
@@ -54,7 +54,7 @@ class ChatTests: XCTestCase {
     func testViewersByChannel() {
         let expectation = self.expectation(description: "tests retrieving viewers of a channel")
         
-        BeamClient.sharedClient.chat.getViewersByChannel(channelId) { (users, error) in
+        MixerClient.sharedClient.chat.getViewersByChannel(channelId) { (users, error) in
             XCTAssertNotNil(users)
             XCTAssertNil(error)
             expectation.fulfill()
@@ -66,7 +66,7 @@ class ChatTests: XCTestCase {
     func testViewersByChannelWithQuery() {
         let expectation = self.expectation(description: "tests retrieving viewers of a channel by query")
         
-        BeamClient.sharedClient.chat.getViewersByChannelWithQuery(channelId, query: query) { (users, error) in
+        MixerClient.sharedClient.chat.getViewersByChannelWithQuery(channelId, query: query) { (users, error) in
             XCTAssertNotNil(users)
             XCTAssertNil(error)
             expectation.fulfill()
@@ -76,7 +76,7 @@ class ChatTests: XCTestCase {
     }
     
     func testSpacesuit() {
-        let spacesuit = BeamClient.sharedClient.chat.getSpaceSuit(userId)
+        let spacesuit = MixerClient.sharedClient.chat.getSpaceSuit(userId)
         XCTAssertNotNil(spacesuit)
     }
 }

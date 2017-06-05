@@ -1,22 +1,22 @@
 //
-//  BeamRequestError.swift
-//  Beam API
+//  MixerRequestError.swift
+//  Mixer API
 //
 //  Created by Jack Cook on 8/4/15.
-//  Copyright © 2015 MCProHosting. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
 import SwiftyJSON
 
 /// The type of a request error encountered by the app.
-public enum BeamRequestError: Equatable, Error {
+public enum MixerRequestError: Equatable, Error {
     
     // HTTP Errors
     case badRequest(data: JSON?),
     accessDenied,
     notFound
     
-    // Beam Errors
+    // Mixer Errors
     case notAuthenticated,
     offline,
     unknown(data: JSON?)
@@ -34,7 +34,7 @@ public enum BeamRequestError: Equatable, Error {
 }
 
 /// Workaround for the fact that enums with associated values can't have raw types.
-public func ==(lhs: BeamRequestError, rhs: BeamRequestError) -> Bool {
+public func ==(lhs: MixerRequestError, rhs: MixerRequestError) -> Bool {
     switch (lhs, rhs) {
     case (.badRequest(_), .badRequest(_)): return true
     case (.accessDenied, .accessDenied): return true

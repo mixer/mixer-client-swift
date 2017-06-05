@@ -1,15 +1,15 @@
 //
-//  BeamChannel.swift
-//  Beam API
+//  MixerChannel.swift
+//  Mixer API
 //
 //  Created by Jack Cook on 4/25/15.
-//  Copyright (c) 2016 Beam Interactive, Inc. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
 import SwiftyJSON
 
 /// A channel object.
-public struct BeamChannel {
+public struct MixerChannel {
     
     /// The channel's identifier.
     public let id: Int
@@ -23,10 +23,10 @@ public struct BeamChannel {
     /// True if the channel is online.
     public let online: Bool
     
-    /// True if the channel is featured by Beam.
+    /// True if the channel is featured by Mixer.
     public let featured: Bool
     
-    /// True if the channel is partnered with Beam.
+    /// True if the channel is partnered with Mixer.
     public let partnered: Bool
     
     /// True if the channel has transcoding enabled.
@@ -78,10 +78,10 @@ public struct BeamChannel {
     public let subscribers: Int?
     
     /// The channel's thumbnail.
-    public let thumbnail: BeamThumbnail?
+    public let thumbnail: MixerThumbnail?
     
     /// The game being played by the channel.
-    public let type: BeamType?
+    public let type: MixerType?
     
     /// The text set by the channel owner that should be used if the stream is shared.
     public var shareText: String?
@@ -108,7 +108,7 @@ public struct BeamChannel {
     public var submail: String?
     
     /// The channel's user object.
-    public let user: BeamUser?
+    public let user: MixerUser?
     
     /// An object containing data about the relationship between an authenticated user and the channel.
     fileprivate let status: [String: JSON]?
@@ -125,13 +125,13 @@ public struct BeamChannel {
     }
     
     /// The roles that the authenticated user has in the channel.
-    public var roles: [BeamGroup]? {
+    public var roles: [MixerGroup]? {
         get {
             if let roles = status?["roles"], let rolesArray = roles.array {
-                var retrievedRoles = [BeamGroup]()
+                var retrievedRoles = [MixerGroup]()
                 
                 for role in rolesArray {
-                    if let roleString = role.string, let group = BeamGroup(rawValue: roleString) {
+                    if let roleString = role.string, let group = MixerGroup(rawValue: roleString) {
                         retrievedRoles.append(group)
                     }
                 }
@@ -164,12 +164,12 @@ public struct BeamChannel {
         interactiveGameId = json["tetrisGameId"].int
         ftl = json["ftl"].int ?? 0
         hasVod = json["hasVod"].bool ?? false
-        createdAt = Date.fromBeam(json["createdAt"].string)
-        updatedAt = Date.fromBeam(json["updatedAt"].string)
+        createdAt = Date.fromMixer(json["createdAt"].string)
+        updatedAt = Date.fromMixer(json["updatedAt"].string)
         subscribers = json["numSubscribers"].int
         
-        thumbnail = BeamThumbnail(json: json["thumbnail"])
-        type = BeamType(json: json["type"])
+        thumbnail = MixerThumbnail(json: json["thumbnail"])
+        type = MixerType(json: json["type"])
         
         if let preferences = json["preferences"].dictionary {
             costreamAllow = preferences["costream:allow"]?.string
@@ -182,7 +182,7 @@ public struct BeamChannel {
             submail = preferences["channel:partner:submail"]?.string
         }
         
-        user = json["user"].dictionary == nil ? nil : BeamUser(json: json["user"])
+        user = json["user"].dictionary == nil ? nil : MixerUser(json: json["user"])
         status = json["status"].dictionary
     }
 }

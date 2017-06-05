@@ -1,9 +1,9 @@
 //
 //  ChatRoutes.swift
-//  Beam
+//  Mixer
 //
 //  Created by Jack Cook on 1/8/16.
-//  Copyright © 2016 MCProHosting. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
 /// Routes that can be used to interact with and retrieve chat data.
@@ -17,7 +17,7 @@ public class ChatRoutes {
      :param: channelId The identifier of the channel with messages that are being deleted.
      :param: completion An optional completion block that fires when the deletion has been completed.
      */
-    public func deleteAllChatMessages(_ channelId: Int, completion: ((_ error: BeamRequestError?) -> Void)?) {
+    public func deleteAllChatMessages(_ channelId: Int, completion: ((_ error: MixerRequestError?) -> Void)?) {
         deleteMessagesByEndpoint("/chats/\(channelId)/message", completion: completion)
     }
     
@@ -28,7 +28,7 @@ public class ChatRoutes {
      :param: messageId The identifier of the message that is being deleted.
      :completion: An optional completion block that fires when the deletion has been completed.
      */
-    public func deleteChatMessage(_ channelId: Int, messageId: String, completion: ((_ error: BeamRequestError?) -> Void)?) {
+    public func deleteChatMessage(_ channelId: Int, messageId: String, completion: ((_ error: MixerRequestError?) -> Void)?) {
         deleteMessagesByEndpoint("/chats/\(channelId)/message/\(messageId)", completion: completion)
     }
     
@@ -38,13 +38,13 @@ public class ChatRoutes {
      :param: endpoint The endpoint being used to delete chat messages.
      :completion: An optional completion block that fires when the deletion has been completed.
      */
-    fileprivate func deleteMessagesByEndpoint(_ endpoint: String, completion: ((_ error: BeamRequestError?) -> Void)?) {
-        guard let _ = BeamSession.sharedSession else {
+    fileprivate func deleteMessagesByEndpoint(_ endpoint: String, completion: ((_ error: MixerRequestError?) -> Void)?) {
+        guard let _ = MixerSession.sharedSession else {
             completion?(.notAuthenticated)
             return
         }
         
-        BeamRequest.request(endpoint, requestType: "DELETE") { (json, error) in
+        MixerRequest.request(endpoint, requestType: "DELETE") { (json, error) in
             completion?(error)
         }
     }
@@ -57,10 +57,10 @@ public class ChatRoutes {
      :param: channelId The id of the channel being connected to.
      :param: completion An optional completion block with retrieved chat details.
      */
-    public func getChatDetailsById(_ channelId: Int, completion: ((_ endpoints: [String]?, _ authKey: String?, _ error: BeamRequestError?) -> Void)?) {
+    public func getChatDetailsById(_ channelId: Int, completion: ((_ endpoints: [String]?, _ authKey: String?, _ error: MixerRequestError?) -> Void)?) {
         // TODO: Create a helper class to store all details retrieved with this method
         
-        BeamRequest.request("/chats/\(channelId)") { (json, error) in
+        MixerRequest.request("/chats/\(channelId)") { (json, error) in
             guard let json = json else {
                 completion?(nil, nil, error)
                 return
@@ -90,7 +90,7 @@ public class ChatRoutes {
      :param: channelId The identifier of the channel with viewers that are being retrieved.
      :param: completion An optional completion block with retrieved viewer data.
      */
-    public func getViewersByChannel(_ channelId: Int, completion: ((_ viewers: [ChannelViewer]?, _ error: BeamRequestError?) -> Void)?) {
+    public func getViewersByChannel(_ channelId: Int, completion: ((_ viewers: [ChannelViewer]?, _ error: MixerRequestError?) -> Void)?) {
         getViewersByEndpoint("/chats/\(channelId)/users", params: [String: String](), completion: completion)
     }
     
@@ -101,7 +101,7 @@ public class ChatRoutes {
      :param: query The query that is being performed to search for viewers.
      :param: completion An optional completion block with retrieved viewer data.
      */
-    public func getViewersByChannelWithQuery(_ channelId: Int, query: String, completion: ((_ viewers: [ChannelViewer]?, _ error: BeamRequestError?) -> Void)?) {
+    public func getViewersByChannelWithQuery(_ channelId: Int, query: String, completion: ((_ viewers: [ChannelViewer]?, _ error: MixerRequestError?) -> Void)?) {
         getViewersByEndpoint("/chats/\(channelId)/users/search", params: ["username": query], completion: completion)
     }
     
@@ -112,8 +112,8 @@ public class ChatRoutes {
      :param: params The parameters of the query being performed.
      :param: completion An optional completion block with retrieved viewer data.
      */
-    fileprivate func getViewersByEndpoint(_ endpoint: String, params: [String: String], completion: ((_ viewers: [ChannelViewer]?, _ error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request(endpoint, requestType: "GET", params: params) { (json, error) in
+    fileprivate func getViewersByEndpoint(_ endpoint: String, params: [String: String], completion: ((_ viewers: [ChannelViewer]?, _ error: MixerRequestError?) -> Void)?) {
+        MixerRequest.request(endpoint, requestType: "GET", params: params) { (json, error) in
             guard let users = json?.array else {
                 completion?(nil, error)
                 return
@@ -125,14 +125,14 @@ public class ChatRoutes {
                 if let username = user["userName"].string,
                     let roles = user["userRoles"].array,
                     let userId = user["userId"].int {
-                        var retrievedRoles = [BeamGroup]()
+                        var retrievedRoles = [MixerGroup]()
                         
                         for role in roles {
                             if let role = role.string {
-                                if let retrievedRole = BeamGroup(rawValue: role) {
+                                if let retrievedRole = MixerGroup(rawValue: role) {
                                     retrievedRoles.append(retrievedRole)
                                 } else {
-                                    retrievedRoles.append(BeamGroup.User)
+                                    retrievedRoles.append(MixerGroup.User)
                                 }
                             }
                         }
@@ -154,7 +154,7 @@ public class ChatRoutes {
      :param: component The message component being used to retrieve the emoticon.
      :returns: The emoticon image.
      */
-    public func getEmoticon(_ component: BeamMessageComponent) -> UIImage? {
+    public func getEmoticon(_ component: MixerMessageComponent) -> UIImage? {
         guard let source = component.source, let pack = component.pack, let coordinates = component.coordinates else {
             return nil
         }
@@ -162,7 +162,7 @@ public class ChatRoutes {
         var imageUrl = ""
         
         if source == "builtin" {
-            imageUrl = "https://beam.pro/_latest/emoticons/\(pack).png"
+            imageUrl = "https://Mixer.pro/_latest/emoticons/\(pack).png"
         } else if source == "external" {
             imageUrl = pack
         } else {
@@ -191,7 +191,7 @@ public class ChatRoutes {
      :returns: The finished spacesuit image.
      */
     public func getSpaceSuit(_ userId: Int) -> UIImage? {
-        let imageUrl = "https://beam.pro/api/v1/users/\(userId)/avatar?w=64&h=64"
+        let imageUrl = "https://mixer.com/api/v1/users/\(userId)/avatar?w=64&h=64"
         
         guard let url = URL(string: imageUrl) else {
             return nil
@@ -229,7 +229,7 @@ public struct ChannelViewer {
     public var username: String
     
     /// The roles held by the viewer.
-    public var roles: [BeamGroup]
+    public var roles: [MixerGroup]
     
     /// The identifier of the viewer.
     public var userId: Int

@@ -1,5 +1,5 @@
 //
-//  BeamTeam.swift
+//  MixerTeam.swift
 //  Pods
 //
 //  Created by Jack Cook on 7/13/16.
@@ -9,7 +9,7 @@
 import SwiftyJSON
 
 /// A team object.
-public struct BeamTeam {
+public struct MixerTeam {
     
     /// The team's identifier.
     public let id: Int
@@ -74,8 +74,8 @@ public struct BeamTeam {
         }
         
         totalViewersCurrent = json["totalViewersCurrent"].int ?? 0
-        createdAt = Date.fromBeam(json["createdAt"].string)
-        updatedAt = Date.fromBeam(json["updatedAt"].string)
+        createdAt = Date.fromMixer(json["createdAt"].string)
+        updatedAt = Date.fromMixer(json["updatedAt"].string)
         
         if let social = json["social"].dictionary {
             twitter = social["twitter"]?.string

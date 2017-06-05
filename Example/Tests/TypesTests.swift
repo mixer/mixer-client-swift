@@ -1,12 +1,12 @@
 //
 //  TypesTests.swift
-//  BeamAPI
+//  MixerAPI
 //
 //  Created by Jack Cook on 7/15/16.
-//  Copyright © 2016 CocoaPods. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
-import BeamAPI
+import MixerAPI
 import XCTest
 
 class TypesTests: XCTestCase {
@@ -17,7 +17,7 @@ class TypesTests: XCTestCase {
     func testTypeWithId() {
         let expectation = self.expectation(description: "tests retrieving a type by id")
         
-        BeamClient.sharedClient.types.getTypeWithId(typeId) { (type, error) in
+        MixerClient.sharedClient.types.getTypeWithId(typeId) { (type, error) in
             XCTAssertNotNil(type)
             XCTAssertNil(error)
             expectation.fulfill()
@@ -29,7 +29,7 @@ class TypesTests: XCTestCase {
     func testTypes() {
         let expectation = self.expectation(description: "tests retrieving types")
         
-        BeamClient.sharedClient.types.getTypes { (types, error) in
+        MixerClient.sharedClient.types.getTypes { (types, error) in
             XCTAssertNotNil(types)
             XCTAssertNil(error)
             expectation.fulfill()
@@ -41,7 +41,7 @@ class TypesTests: XCTestCase {
     func testTypesByQuery() {
         let expectation = self.expectation(description: "tests searching for types")
         
-        BeamClient.sharedClient.types.getTypesByQuery(query) { (types, error) in
+        MixerClient.sharedClient.types.getTypesByQuery(query) { (types, error) in
             XCTAssertNotNil(types)
             XCTAssertNil(error)
             expectation.fulfill()

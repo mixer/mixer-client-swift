@@ -15,13 +15,13 @@ public class ConstellationTeamOwnerChangedPacket: ConstellationLivePacket {
     public let teamId: Int
     
     /// The new owner of the team.
-    public let owner: BeamUser
+    public let owner: MixerUser
     
     /// Initializes a team owner changed packet with JSON data.
     override init?(data: [String: JSON]) {
         if let channel = data["channel"]?.string, let payload = data["payload"] {
             self.teamId = Int(channel.components(separatedBy: ":")[1])!
-            self.owner = BeamUser(json: payload)
+            self.owner = MixerUser(json: payload)
             
             super.init(data: data)
         } else {

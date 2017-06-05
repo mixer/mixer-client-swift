@@ -1,9 +1,9 @@
 //
 //  ChatMessagePacket.swift
-//  Beam API
+//  Mixer API
 //
 //  Created by Jack Cook on 5/26/15.
-//  Copyright (c) 2016 Beam Interactive, Inc. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
 import SwiftyJSON
@@ -12,20 +12,20 @@ import SwiftyJSON
 public class ChatMessagePacket: ChatPacket, ChatSendable {
     
     /// A message object. Used when the packet is being received.
-    public var message: BeamMessage?
+    public var message: MixerMessage?
     
     /// A string of text being sent to the chat servers as a message. Used when the packet is being sent.
     public var messageText: String?
     
     /// Initializes a chat message packet with JSON data.
     override init?(data: [String: JSON]) {
-        self.message = BeamMessage(json: JSON(data))
+        self.message = MixerMessage(json: JSON(data))
         super.init(data: data)
     }
     
     /// Initializes a chat message packet with JSON data.
     init?(data: JSON) {
-        self.message = BeamMessage(json: data)
+        self.message = MixerMessage(json: data)
         super.init(data: ["data": data])
     }
     

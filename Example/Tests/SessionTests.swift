@@ -1,12 +1,12 @@
 //
 //  SessionTests.swift
-//  BeamAPI
+//  MixerAPI
 //
 //  Created by Jack Cook on 1/30/16.
-//  Copyright © 2016 CocoaPods. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
-import BeamAPI
+import MixerAPI
 import XCTest
 
 class SessionTests: XCTestCase {
@@ -41,13 +41,13 @@ class SessionTests: XCTestCase {
     override func tearDown() {
         super.tearDown()
         
-        BeamSession.logout(nil)
+        MixerSession.logout(nil)
     }
     
     func testAuthenticate() {
         let expectation = self.expectation(description: "tests authenticating")
         
-        BeamSession.authenticate(username, password: password) { (user, error) in
+        MixerSession.authenticate(username, password: password) { (user, error) in
             XCTAssertNil(user)
             XCTAssert(error == .invalidCredentials)
             expectation.fulfill()
@@ -59,7 +59,7 @@ class SessionTests: XCTestCase {
     func testAuthenticateWithCode() {
         let expectation = self.expectation(description: "tests authenticating with 2fa")
         
-        BeamSession.authenticate(username, password: password, code: code) { (user, error) in
+        MixerSession.authenticate(username, password: password, code: code) { (user, error) in
             XCTAssertNil(user)
             XCTAssert(error == .invalidCredentials)
             expectation.fulfill()
@@ -71,7 +71,7 @@ class SessionTests: XCTestCase {
     func testLogout() {
         let expectation = self.expectation(description: "tests logging out")
         
-        BeamSession.logout { (error) in
+        MixerSession.logout { (error) in
             expectation.fulfill()
         }
         
@@ -81,7 +81,7 @@ class SessionTests: XCTestCase {
     func testRegisterTakenUsername() {
         let expectation = self.expectation(description: "tests the registration endpoint for the taken username error")
         
-        BeamSession.registerAccount(takenUsername, password: password, email: email) { (user, error) in
+        MixerSession.registerAccount(takenUsername, password: password, email: email) { (user, error) in
             XCTAssert(error == .takenUsername)
             expectation.fulfill()
         }
@@ -92,7 +92,7 @@ class SessionTests: XCTestCase {
     func testRegisterWeakPassword() {
         let expectation = self.expectation(description: "tests the registration endpoint for the weak password error")
         
-        BeamSession.registerAccount(username, password: weakPassword, email: email) { (user, error) in
+        MixerSession.registerAccount(username, password: weakPassword, email: email) { (user, error) in
             XCTAssert(error == .weakPassword)
             expectation.fulfill()
         }
@@ -103,7 +103,7 @@ class SessionTests: XCTestCase {
     func testRegisterInvalidEmail() {
         let expectation = self.expectation(description: "tests the registration endpoint for the invalid email error")
         
-        BeamSession.registerAccount(username, password: password, email: invalidEmail) { (user, error) in
+        MixerSession.registerAccount(username, password: password, email: invalidEmail) { (user, error) in
             XCTAssert(error == .invalidEmail)
             expectation.fulfill()
         }
@@ -114,7 +114,7 @@ class SessionTests: XCTestCase {
     func testRegisterTakenEmail() {
         let expectation = self.expectation(description: "tests the registration endpoint for the taken email error")
         
-        BeamSession.registerAccount(username, password: password, email: takenEmail) { (user, error) in
+        MixerSession.registerAccount(username, password: password, email: takenEmail) { (user, error) in
             XCTAssert(error == .takenEmail)
             expectation.fulfill()
         }

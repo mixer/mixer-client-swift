@@ -1,9 +1,9 @@
 //
 //  ChannelsRoutes.swift
-//  Beam
+//  Mixer
 //
 //  Created by Jack Cook on 1/8/16.
-//  Copyright © 2016 MCProHosting. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
 import SwiftyJSON
@@ -24,15 +24,15 @@ public class ChannelsRoutes {
      :param: channelId The id of the channel being followed.
      :param: completion An optional completion block that fires when the follow has been completed.
      */
-    public func followChannel(_ channelId: Int, completion: ((_ error: BeamRequestError?) -> Void)?) {
-        guard let session = BeamSession.sharedSession else {
+    public func followChannel(_ channelId: Int, completion: ((_ error: MixerRequestError?) -> Void)?) {
+        guard let session = MixerSession.sharedSession else {
             completion?(.notAuthenticated)
             return
         }
         
         let body = ["user": String(session.user.id)] as AnyObject
         
-        BeamRequest.request("/channels/\(channelId)/follow", requestType: "PUT", body: body) { (json, error) in
+        MixerRequest.request("/channels/\(channelId)/follow", requestType: "PUT", body: body) { (json, error) in
             completion?(error)
         }
     }
@@ -43,15 +43,15 @@ public class ChannelsRoutes {
      :param: channelId The id of the channel being unfollowed.
      :param: completion An optional completion block that fires when the unfollow has been completed.
      */
-    public func unfollowChannel(_ channelId: Int, completion: ((_ error: BeamRequestError?) -> Void)?) {
-        guard let session = BeamSession.sharedSession else {
+    public func unfollowChannel(_ channelId: Int, completion: ((_ error: MixerRequestError?) -> Void)?) {
+        guard let session = MixerSession.sharedSession else {
             completion?(.notAuthenticated)
             return
         }
         
         let body = ["user": String(session.user.id)] as AnyObject
         
-        BeamRequest.request("/channels/\(channelId)/follow", requestType: "DELETE", body: body) { (json, error) in
+        MixerRequest.request("/channels/\(channelId)/follow", requestType: "DELETE", body: body) { (json, error) in
             completion?(error)
         }
     }
@@ -63,7 +63,7 @@ public class ChannelsRoutes {
      :param: userId The id of the user who is being banned.
      :param: completion An optional completion block that fires when the ban has been completed.
      */
-    public func banUser(_ channelId: Int, userId: Int, completion: ((_ error: BeamRequestError?) -> Void)?) {
+    public func banUser(_ channelId: Int, userId: Int, completion: ((_ error: MixerRequestError?) -> Void)?) {
         let body = ["add": ["Banned"]]
         
         updateUserRoles(channelId, userId: userId, requestBody: body as AnyObject, completion: completion)
@@ -76,7 +76,7 @@ public class ChannelsRoutes {
      :param: userId The id of the user who is being unbanned.
      :param: completion An optional completion block that fires when the unban has been completed.
      */
-    public func unbanUser(_ channelId: Int, userId: Int, completion: ((_ error: BeamRequestError?) -> Void)?) {
+    public func unbanUser(_ channelId: Int, userId: Int, completion: ((_ error: MixerRequestError?) -> Void)?) {
         let body = ["remove": ["Banned"]]
         
         updateUserRoles(channelId, userId: userId, requestBody: body as AnyObject, completion: completion)
@@ -89,13 +89,13 @@ public class ChannelsRoutes {
      :param: userId The id of the user whose roles are being updated.
      :param: completion An optional completion block that fires when the update has been completed.
      */
-    public func updateUserRoles(_ channelId: Int, userId: Int, requestBody: AnyObject, completion: ((_ error: BeamRequestError?) -> Void)?) {
-        guard let _ = BeamSession.sharedSession else {
+    public func updateUserRoles(_ channelId: Int, userId: Int, requestBody: AnyObject, completion: ((_ error: MixerRequestError?) -> Void)?) {
+        guard let _ = MixerSession.sharedSession else {
             completion?(.notAuthenticated)
             return
         }
         
-        BeamRequest.request("/channels/\(channelId)/users/\(userId)", requestType: "PATCH", body: requestBody) { (json, error) in
+        MixerRequest.request("/channels/\(channelId)/users/\(userId)", requestType: "PATCH", body: requestBody) { (json, error) in
             completion?(error)
         }
     }
@@ -106,15 +106,15 @@ public class ChannelsRoutes {
      :param: channelId The id of the channel being hosted.
      :param: completion An optional completion block with response data.
      */
-    public func hostChannel(_ channelId: Int, completion: ((_ error: BeamRequestError?) -> Void)?) {
-        guard let id = BeamSession.sharedSession?.user.channel?.id else {
+    public func hostChannel(_ channelId: Int, completion: ((_ error: MixerRequestError?) -> Void)?) {
+        guard let id = MixerSession.sharedSession?.user.channel?.id else {
             completion?(.notAuthenticated)
             return
         }
         
         let body = ["id": channelId] as AnyObject
         
-        BeamRequest.request("/channels/\(id)/hostee", requestType: "PUT", body: body) { (json, error) in
+        MixerRequest.request("/channels/\(id)/hostee", requestType: "PUT", body: body) { (json, error) in
             completion?(error)
         }
     }
@@ -124,13 +124,13 @@ public class ChannelsRoutes {
      
      :param: completion An optional completion block with response data.
      */
-    public func stopHosting(_ completion: ((_ error: BeamRequestError?) -> Void)?) {
-        guard let id = BeamSession.sharedSession?.user.channel?.id else {
+    public func stopHosting(_ completion: ((_ error: MixerRequestError?) -> Void)?) {
+        guard let id = MixerSession.sharedSession?.user.channel?.id else {
             completion?(.notAuthenticated)
             return
         }
         
-        BeamRequest.request("/channels/\(id)/hostee", requestType: "DELETE") { (json, error) in
+        MixerRequest.request("/channels/\(id)/hostee", requestType: "DELETE") { (json, error) in
             completion?(error)
         }
     }
@@ -143,7 +143,7 @@ public class ChannelsRoutes {
      :param: id The identifier of the channel being retrieved.
      :param: completion An optional completion block with retrieved channel data.
      */
-    public func getChannelWithId(_ id: Int, completion: ((_ channel: BeamChannel?, _ error: BeamRequestError?) -> Void)?) {
+    public func getChannelWithId(_ id: Int, completion: ((_ channel: MixerChannel?, _ error: MixerRequestError?) -> Void)?) {
         getChannelWithEndpoint("/channels/\(id)", completion: completion)
     }
     
@@ -153,7 +153,7 @@ public class ChannelsRoutes {
      :param: token The token of the channel being retrieved.
      :param: completion An optional completion block with retrieved channel data.
      */
-    public func getChannelWithToken(_ token: String, completion: ((_ channel: BeamChannel?, _ error: BeamRequestError?) -> Void)?) {
+    public func getChannelWithToken(_ token: String, completion: ((_ channel: MixerChannel?, _ error: MixerRequestError?) -> Void)?) {
         getChannelWithEndpoint("/channels/\(token)", completion: completion)
     }
     
@@ -163,14 +163,14 @@ public class ChannelsRoutes {
      :param: endpoint The endpoint that the channel is being retrieved from.
      :param: completion An optional completion block with retrieved channel data.
      */
-    fileprivate func getChannelWithEndpoint(_ endpoint: String, completion: ((_ channel: BeamChannel?, _ error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request(endpoint) { (json, error) in
+    fileprivate func getChannelWithEndpoint(_ endpoint: String, completion: ((_ channel: MixerChannel?, _ error: MixerRequestError?) -> Void)?) {
+        MixerRequest.request(endpoint) { (json, error) in
             guard let json = json else {
                 completion?(nil, error)
                 return
             }
             
-            let channel = BeamChannel(json: json)
+            let channel = MixerChannel(json: json)
             completion?(channel, error)
         }
     }
@@ -182,7 +182,7 @@ public class ChannelsRoutes {
      :param: page The page of channels to be requested.
      :param: completion An optional completion block with the retrieved channels' data.
      */
-    public func getChannels(_ requestType: ChannelsRequestType = .all, page: Int = 0, completion: ((_ channels: [BeamChannel]?, _ error: BeamRequestError?) -> Void)?) {
+    public func getChannels(_ requestType: ChannelsRequestType = .all, page: Int = 0, completion: ((_ channels: [MixerChannel]?, _ error: MixerRequestError?) -> Void)?) {
         var params = [
             "order": "viewersCurrent:desc",
             "where": "suspended.eq.0,online.eq.1",
@@ -210,7 +210,7 @@ public class ChannelsRoutes {
      :param: query The query being used to search for channels.
      :param: completion An optional completion block with the retrieved channels' data.
      */
-    public func getChannelsByQuery(_ query: String, completion: ((_ channels: [BeamChannel]?, _ error: BeamRequestError?) -> Void)?) {
+    public func getChannelsByQuery(_ query: String, completion: ((_ channels: [MixerChannel]?, _ error: MixerRequestError?) -> Void)?) {
         getChannelsWithParameters([
             "scope": "all",
             "order": "viewersTotal:desc",
@@ -226,17 +226,17 @@ public class ChannelsRoutes {
      :param: params Parameters to be applied to the request.
      :param: completion An optional completion block with the retrieved channels' data.
      */
-    fileprivate func getChannelsWithParameters(_ params: [String: String], completion: ((_ channels: [BeamChannel]?, _ error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request("/channels", requestType: "GET", params: params) { (json, error) in
+    fileprivate func getChannelsWithParameters(_ params: [String: String], completion: ((_ channels: [MixerChannel]?, _ error: MixerRequestError?) -> Void)?) {
+        MixerRequest.request("/channels", requestType: "GET", params: params) { (json, error) in
             guard let channels = json?.array else {
                 completion?(nil, error)
                 return
             }
             
-            var retrievedChannels = [BeamChannel]()
+            var retrievedChannels = [MixerChannel]()
             
             for channel in channels {
-                let retrievedChannel = BeamChannel(json: channel)
+                let retrievedChannel = MixerChannel(json: channel)
                 retrievedChannels.append(retrievedChannel)
             }
             
@@ -252,8 +252,8 @@ public class ChannelsRoutes {
      :param: id The id of the channel followers are being retrieved from.
      :param: completion An optional completion block with the retrieved emoticons' data.
      */
-    public func getEmoticonsOfChannel(_ id: Int, completion: ((_ spritesheetUrl: URL?, _ emoticons: [BeamEmoticon]?, _ error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request("/channels/\(id)/emoticons") { (json, error) in
+    public func getEmoticonsOfChannel(_ id: Int, completion: ((_ spritesheetUrl: URL?, _ emoticons: [MixerEmoticon]?, _ error: MixerRequestError?) -> Void)?) {
+        MixerRequest.request("/channels/\(id)/emoticons") { (json, error) in
             guard let json = json else {
                 completion?(nil, nil, error)
                 return
@@ -265,13 +265,13 @@ public class ChannelsRoutes {
                 spritesheet = URL(string: spritesheetUrl)
             }
             
-            var retrievedEmoticons: [BeamEmoticon]?
+            var retrievedEmoticons: [MixerEmoticon]?
             
             if let emoticons = json["emoticons"].dictionary {
-                retrievedEmoticons = [BeamEmoticon]()
+                retrievedEmoticons = [MixerEmoticon]()
                 
                 for (name, data) in emoticons {
-                    let retrievedEmoticon = BeamEmoticon(name: name, json: data)
+                    let retrievedEmoticon = MixerEmoticon(name: name, json: data)
                     retrievedEmoticons?.append(retrievedEmoticon)
                 }
             }
@@ -287,8 +287,8 @@ public class ChannelsRoutes {
      :param: page The page in the range [0, ∞] of followers being requested. Defaults to 0.
      :param: completion An optional copmletion block with the retrieved followers' data.
      */
-    public func getFollowersOfChannel(_ id: Int, page: Int = 0, completion: ((_ users: [BeamUser]?, _ error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request("/channels/\(id)/follow", params: [
+    public func getFollowersOfChannel(_ id: Int, page: Int = 0, completion: ((_ users: [MixerUser]?, _ error: MixerRequestError?) -> Void)?) {
+        MixerRequest.request("/channels/\(id)/follow", params: [
             "page": "\(page)",
             "noCount": "1",
         ]) { (json, error) in
@@ -297,10 +297,10 @@ public class ChannelsRoutes {
                 return
             }
             
-            var retrievedUsers = [BeamUser]()
+            var retrievedUsers = [MixerUser]()
             
             for user in users {
-                let retrievedUser = BeamUser(json: user)
+                let retrievedUser = MixerUser(json: user)
                 retrievedUsers.append(retrievedUser)
             }
             
@@ -314,17 +314,17 @@ public class ChannelsRoutes {
      :param: channelId The id of the channel recordings are being retrieved from.
      :param: completion An optional completion block with the retrieved recordings' data.
      */
-    public func getRecordingsOfChannel(_ id: Int, completion: ((_ recordings: [BeamRecording]?, _ error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request("/channels/\(id)/recordings", params: ["order": "createdAt:DESC"]) { (json, error) in
+    public func getRecordingsOfChannel(_ id: Int, completion: ((_ recordings: [MixerRecording]?, _ error: MixerRequestError?) -> Void)?) {
+        MixerRequest.request("/channels/\(id)/recordings", params: ["order": "createdAt:DESC"]) { (json, error) in
             guard let recordings = json?.array else {
                 completion?(nil, error)
                 return
             }
             
-            var retrievedRecordings = [BeamRecording]()
+            var retrievedRecordings = [MixerRecording]()
             
             for recording in recordings {
-                let retrievedRecording = BeamRecording(json: recording)
+                let retrievedRecording = MixerRecording(json: recording)
                 retrievedRecordings.append(retrievedRecording)
             }
             
@@ -335,21 +335,21 @@ public class ChannelsRoutes {
     // MARK: Retrieving Emoticons
     
     /**
-     Retrieves all default Beam emoticon packs. Will eventually be removed by a new emoticon endpoint.
+     Retrieves all default Mixer emoticon packs. Will eventually be removed by a new emoticon endpoint.
      
      :param: completion An optional completion block with the retrieved emoticon packs' data.
      */
-    public func getDefaultEmoticons(_ completion: ((_ packs: [BeamEmoticonPack]?, _ error: BeamRequestError?) -> Void)?) {
-        BeamRequest.dataRequest("https://beam.pro/_latest/emoticons/manifest.json") { (data, error) in
+    public func getDefaultEmoticons(_ completion: ((_ packs: [MixerEmoticonPack]?, _ error: MixerRequestError?) -> Void)?) {
+        MixerRequest.dataRequest("https://mixer.com/_latest/emoticons/manifest.json") { (data, error) in
             guard let data = data, let packs = JSON(data: data).dictionary else {
                 completion?(nil, error)
                 return
             }
             
-            var retrievedPacks = [BeamEmoticonPack]()
+            var retrievedPacks = [MixerEmoticonPack]()
             
             for (slug, retrievedPack) in packs {
-                let pack = BeamEmoticonPack(slug: slug, json: retrievedPack)
+                let pack = MixerEmoticonPack(slug: slug, json: retrievedPack)
                 retrievedPacks.append(pack)
             }
             
@@ -365,19 +365,19 @@ public class ChannelsRoutes {
      :param: channelId The id of the channel being modified.
      :param: body The request body, containing the channel data to update.
      */
-    public func updateData(_ channelId: Int, body: AnyObject, completion: ((_ channel: BeamChannel?, _ error: BeamRequestError?) -> Void)?) {
-        guard let _ = BeamSession.sharedSession else {
+    public func updateData(_ channelId: Int, body: AnyObject, completion: ((_ channel: MixerChannel?, _ error: MixerRequestError?) -> Void)?) {
+        guard let _ = MixerSession.sharedSession else {
             completion?(nil, .notAuthenticated)
             return
         }
         
-        BeamRequest.request("/channels/\(channelId)", requestType: "PUT", body: body) { (json, error) in
+        MixerRequest.request("/channels/\(channelId)", requestType: "PUT", body: body) { (json, error) in
             guard let json = json else {
                 completion?(nil, error)
                 return
             }
             
-            let channel = BeamChannel(json: json)
+            let channel = MixerChannel(json: json)
             completion?(channel, error)
         }
     }

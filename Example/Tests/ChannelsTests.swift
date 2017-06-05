@@ -1,12 +1,12 @@
 //
 //  ChannelTests.swift
-//  BeamAPI
+//  MixerAPI
 //
 //  Created by Jack Cook on 1/30/16.
-//  Copyright © 2016 CocoaPods. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
-import BeamAPI
+import MixerAPI
 import XCTest
 
 class ChannelsTests: XCTestCase {
@@ -19,7 +19,7 @@ class ChannelsTests: XCTestCase {
     func testFollowChannel() {
         let expectation = self.expectation(description: "tests the follow channel endpoint")
         
-        BeamClient.sharedClient.channels.followChannel(channelId) { (error) in
+        MixerClient.sharedClient.channels.followChannel(channelId) { (error) in
             XCTAssert(error == .notAuthenticated)
             expectation.fulfill()
         }
@@ -30,7 +30,7 @@ class ChannelsTests: XCTestCase {
     func testUnfollowChannel() {
         let expectation = self.expectation(description: "tests the unfollow channel endpoint")
         
-        BeamClient.sharedClient.channels.unfollowChannel(channelId) { (error) in
+        MixerClient.sharedClient.channels.unfollowChannel(channelId) { (error) in
             XCTAssert(error == .notAuthenticated)
             expectation.fulfill()
         }
@@ -41,7 +41,7 @@ class ChannelsTests: XCTestCase {
     func testBanUser() {
         let expectation = self.expectation(description: "tests banning a user from chat")
         
-        BeamClient.sharedClient.channels.banUser(channelId, userId: userId) { (error) in
+        MixerClient.sharedClient.channels.banUser(channelId, userId: userId) { (error) in
             XCTAssert(error == .notAuthenticated)
             expectation.fulfill()
         }
@@ -52,7 +52,7 @@ class ChannelsTests: XCTestCase {
     func testUnbanUser() {
         let expectation = self.expectation(description: "tests unbanning a user from chat")
         
-        BeamClient.sharedClient.channels.unbanUser(channelId, userId: userId) { (error) in
+        MixerClient.sharedClient.channels.unbanUser(channelId, userId: userId) { (error) in
             XCTAssert(error == .notAuthenticated)
             expectation.fulfill()
         }
@@ -63,7 +63,7 @@ class ChannelsTests: XCTestCase {
     func testHostChannel() {
         let expectation = self.expectation(description: "tests hosting a channel")
         
-        BeamClient.sharedClient.channels.hostChannel(channelId) { (error) in
+        MixerClient.sharedClient.channels.hostChannel(channelId) { (error) in
             XCTAssert(error == .notAuthenticated)
             expectation.fulfill()
         }
@@ -74,7 +74,7 @@ class ChannelsTests: XCTestCase {
     func testStopHosting() {
         let expectation = self.expectation(description: "tests stopping hosting")
         
-        BeamClient.sharedClient.channels.stopHosting { (error) in
+        MixerClient.sharedClient.channels.stopHosting { (error) in
             XCTAssert(error == .notAuthenticated)
             expectation.fulfill()
         }
@@ -85,7 +85,7 @@ class ChannelsTests: XCTestCase {
     func testChannelWithId() {
         let expectation = self.expectation(description: "tests retrieving a channel by id")
         
-        BeamClient.sharedClient.channels.getChannelWithId(channelId) { (channel, error) in
+        MixerClient.sharedClient.channels.getChannelWithId(channelId) { (channel, error) in
             XCTAssertNotNil(channel)
             XCTAssertNil(error)
             expectation.fulfill()
@@ -97,7 +97,7 @@ class ChannelsTests: XCTestCase {
     func testChannelWithToken() {
         let expectation = self.expectation(description: "tests retrieving a channel by token")
         
-        BeamClient.sharedClient.channels.getChannelWithToken(channelToken) { (channel, error) in
+        MixerClient.sharedClient.channels.getChannelWithToken(channelToken) { (channel, error) in
             XCTAssertNotNil(channel)
             XCTAssertNil(error)
             expectation.fulfill()
@@ -112,7 +112,7 @@ class ChannelsTests: XCTestCase {
         var i = 0
         
         for req in [ChannelsRoutes.ChannelsRequestType.all, .interactive, .rising, .fresh] {
-            BeamClient.sharedClient.channels.getChannels(req) { (channels, error) in
+            MixerClient.sharedClient.channels.getChannels(req) { (channels, error) in
                 XCTAssertNotNil(channels)
                 XCTAssertNil(error)
                 
@@ -130,7 +130,7 @@ class ChannelsTests: XCTestCase {
     func testChannelsByQuery() {
         let expectation = self.expectation(description: "tests searching for channels")
         
-        BeamClient.sharedClient.channels.getChannelsByQuery(query) { (channels, error) in
+        MixerClient.sharedClient.channels.getChannelsByQuery(query) { (channels, error) in
             XCTAssertNotNil(channels)
             XCTAssertNil(error)
             expectation.fulfill()
@@ -142,7 +142,7 @@ class ChannelsTests: XCTestCase {
     func testFollowersOfChannel() {
         let expectation = self.expectation(description: "tests retrieving a channel's followers")
         
-        BeamClient.sharedClient.channels.getFollowersOfChannel(channelId) { (users, error) in
+        MixerClient.sharedClient.channels.getFollowersOfChannel(channelId) { (users, error) in
             XCTAssertNotNil(users)
             XCTAssertNil(error)
             expectation.fulfill()
@@ -154,7 +154,7 @@ class ChannelsTests: XCTestCase {
     func testEmoticonsOfChannel() {
         let expectation = self.expectation(description: "tests retrieving a channel's emoticons")
         
-        BeamClient.sharedClient.channels.getEmoticonsOfChannel(channelId) { (spritesheetUrl, emoticons, error) in
+        MixerClient.sharedClient.channels.getEmoticonsOfChannel(channelId) { (spritesheetUrl, emoticons, error) in
             XCTAssertNotNil(spritesheetUrl)
             XCTAssertNotNil(emoticons)
             XCTAssertNil(error)
@@ -167,7 +167,7 @@ class ChannelsTests: XCTestCase {
     func testRecordingsOfChannel() {
         let expectation = self.expectation(description: "tests retrieving recordings from a channel")
         
-        BeamClient.sharedClient.channels.getRecordingsOfChannel(channelId) { (recordings, error) in
+        MixerClient.sharedClient.channels.getRecordingsOfChannel(channelId) { (recordings, error) in
             XCTAssertNotNil(recordings)
             XCTAssertNil(error)
             expectation.fulfill()
@@ -177,9 +177,9 @@ class ChannelsTests: XCTestCase {
     }
     
     func testDefaultEmoticons() {
-        let expectation = self.expectation(description: "tests retrieving the default Beam emoticons")
+        let expectation = self.expectation(description: "tests retrieving the default Mixer emoticons")
         
-        BeamClient.sharedClient.channels.getDefaultEmoticons { (packs, error) in
+        MixerClient.sharedClient.channels.getDefaultEmoticons { (packs, error) in
             XCTAssertNotNil(packs)
             XCTAssertNil(error)
             expectation.fulfill()
@@ -191,7 +191,7 @@ class ChannelsTests: XCTestCase {
     func testUpdateData() {
         let expectation = self.expectation(description: "tests updating chnanel data")
         
-        BeamClient.sharedClient.channels.updateData(channelId, body: [] as AnyObject) { (channel, error) in
+        MixerClient.sharedClient.channels.updateData(channelId, body: [] as AnyObject) { (channel, error) in
             XCTAssertNil(channel)
             XCTAssert(error == .notAuthenticated)
             expectation.fulfill()

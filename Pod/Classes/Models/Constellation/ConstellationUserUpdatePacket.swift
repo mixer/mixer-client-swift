@@ -15,13 +15,13 @@ public class ConstellationUserUpdatePacket: ConstellationLivePacket {
     public let userId: Int
     
     /// The user who was updated.
-    public let user: BeamUser
+    public let user: MixerUser
     
     /// Initializes a user update packet with JSON data.
     override init?(data: [String: JSON]) {
         if let channel = data["channel"]?.string, let payload = data["payload"] {
             self.userId = Int(channel.components(separatedBy: ":")[1])!
-            self.user = BeamUser(json: payload)
+            self.user = MixerUser(json: payload)
             
             super.init(data: data)
         } else {

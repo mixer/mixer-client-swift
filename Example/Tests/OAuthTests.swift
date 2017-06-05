@@ -1,12 +1,12 @@
 //
 //  OAuthTests.swift
-//  BeamAPI
+//  MixerAPI
 //
 //  Created by Jack Cook on 7/14/16.
-//  Copyright © 2016 CocoaPods. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
-import BeamAPI
+import MixerAPI
 import XCTest
 
 class OAuthTests: XCTestCase {
@@ -14,12 +14,12 @@ class OAuthTests: XCTestCase {
     override func tearDown() {
         super.tearDown()
         
-        BeamSession.logout(nil)
+        MixerSession.logout(nil)
     }
     
     func testAuthorizationURL() {
-        XCTAssertNotNil(BeamClient.sharedClient.oauth.getAuthorizationURL(.Twitter))
-        XCTAssertNotNil(BeamClient.sharedClient.oauth.getAuthorizationURL(.Discord))
+        XCTAssertNotNil(MixerClient.sharedClient.oauth.getAuthorizationURL(.Twitter))
+        XCTAssertNotNil(MixerClient.sharedClient.oauth.getAuthorizationURL(.Discord))
     }
     
     func testLoginWithProvider() {
@@ -28,7 +28,7 @@ class OAuthTests: XCTestCase {
         var i = 0
         
         for provider in [OAuthRoutes.OAuthProvider.Twitter, .Discord] {
-            BeamClient.sharedClient.oauth.loginWithProvider(provider, cookie: "") { (user, error) in
+            MixerClient.sharedClient.oauth.loginWithProvider(provider, cookie: "") { (user, error) in
                 XCTAssertNil(user)
                 XCTAssert(error == .invalidCredentials)
                 

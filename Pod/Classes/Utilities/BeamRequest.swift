@@ -1,22 +1,22 @@
 //
-//  BeamRequest.swift
-//  Beam API
+//  MixerRequest.swift
+//  Mixer API
 //
 //  Created by Jack Cook on 3/15/15.
-//  Copyright (c) 2016 Beam Interactive, Inc. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
 import Foundation
 import SwiftyJSON
 
-/// The most low-level class used to make requests to the Beam servers.
-public class BeamRequest {
+/// The most low-level class used to make requests to the Mixer servers.
+public class MixerRequest {
     
-    /// A delegate for the BeamRequest class.
-    public static var delegate: BeamRequestDelegate?
+    /// A delegate for the MixerRequest class.
+    public static var delegate: MixerRequestDelegate?
     
     /// Requests to be executed as soon as a JWT is retrieved.
-    static var pendingRequests = [BeamRequestParameters]()
+    static var pendingRequests = [MixerRequestParameters]()
     
     /// True if a JWT is currently being requested.
     static var requestingJWT = false {
@@ -26,7 +26,7 @@ public class BeamRequest {
                     dataRequest(parameters)
                 }
                 
-                pendingRequests = [BeamRequestParameters]()
+                pendingRequests = [MixerRequestParameters]()
             }
         }
     }
@@ -35,7 +35,7 @@ public class BeamRequest {
     public static var version = 0.1
     
     /**
-     Makes a request to Beam's servers.
+     Makes a request to Mixer's servers.
      
      :param: endpoint The endpoint of the request being made.
      :param: requestType The type of request to be made.
@@ -44,8 +44,8 @@ public class BeamRequest {
      :param: body The request body.
      :param: completion An optional completion block with retrieved JSON data.
      */
-    public class func request(_ endpoint: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: AnyObject? = nil, options: BeamRequestOptions = [], completion: ((_ json: JSON?, _ error: BeamRequestError?) -> Void)?) {
-        BeamRequest.dataRequest("https://beam.pro/api/v1\(endpoint)", requestType: requestType, headers: headers, params: params, body: body, options: options) { (data, error) in
+    public class func request(_ endpoint: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: AnyObject? = nil, options: MixerRequestOptions = [], completion: ((_ json: JSON?, _ error: MixerRequestError?) -> Void)?) {
+        MixerRequest.dataRequest("https://mixer.com/api/v1\(endpoint)", requestType: requestType, headers: headers, params: params, body: body, options: options) { (data, error) in
             guard let data = data else {
                 completion?(nil, error)
                 return
@@ -57,13 +57,13 @@ public class BeamRequest {
     }
     
     /**
-     Retrieves an image from Beam's servers.
+     Retrieves an image from Mixer's servers.
      
      :param: url The URL of the image being retrieved.
      :param: completion An optional completion block with the retrieved image.
      */
-    public class func imageRequest(_ url: String, completion: ((_ image: UIImage?, _ error: BeamRequestError?) -> Void)?) {
-        BeamRequest.dataRequest(url) { (data, error) in
+    public class func imageRequest(_ url: String, completion: ((_ image: UIImage?, _ error: MixerRequestError?) -> Void)?) {
+        MixerRequest.dataRequest(url) { (data, error) in
             guard let data = data, let image = UIImage(data: data) else {
                 completion?(nil, error)
                 return
@@ -74,16 +74,16 @@ public class BeamRequest {
     }
     
     /**
-     Uses a BeamRequestParameters struct to execute a data request.
+     Uses a MixerRequestParameters struct to execute a data request.
      
      :param: parameters The parameters to be passed.
      */
-    class func dataRequest(_ parameters: BeamRequestParameters) {
+    class func dataRequest(_ parameters: MixerRequestParameters) {
         dataRequest(parameters.baseURL, requestType: parameters.requestType, headers: parameters.headers, params: parameters.params, body: parameters.body, options: parameters.options, completion: parameters.completion)
     }
     
     /**
-     Retrieves data from Beam's servers.
+     Retrieves data from Mixer's servers.
      
      :param: url The URL of the data being retrieved.
      :param: requestType The type of the request being made.
@@ -93,7 +93,7 @@ public class BeamRequest {
      :param: options Any special operations that should be performed for this request.
      :param: completion An optional completion block with retrieved data.
      */
-    public class func dataRequest(_ baseURL: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: AnyObject? = nil, options: BeamRequestOptions = [], csrfToken: String? = nil, completion: ((_ data: Data?, _ error: BeamRequestError?) -> Void)?) {
+    public class func dataRequest(_ baseURL: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: AnyObject? = nil, options: MixerRequestOptions = [], csrfToken: String? = nil, completion: ((_ data: Data?, _ error: MixerRequestError?) -> Void)?) {
         let sessionConfig = URLSessionConfiguration.ephemeral
         let session = URLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
         
@@ -120,7 +120,7 @@ public class BeamRequest {
         }
         
         if options.contains(.cookieAuth) {
-            let storedCookies = BeamUserDefaults.standard.object(forKey: "Cookies") as! [[HTTPCookiePropertyKey: Any]]
+            let storedCookies = MixerUserDefaults.standard.object(forKey: "Cookies") as! [[HTTPCookiePropertyKey: Any]]
             var cookies = [HTTPCookie]()
             
             for properties in storedCookies {
@@ -135,7 +135,7 @@ public class BeamRequest {
                 request.addValue(val, forHTTPHeaderField: header)
             }
         } else if !options.contains(.noAuth) {
-            if let jwt = BeamUserDefaults.standard.string(forKey: "JWT") {
+            if let jwt = MixerUserDefaults.standard.string(forKey: "JWT") {
                 request.addValue("JWT \(jwt)", forHTTPHeaderField: "Authorization")
             }
         }
@@ -151,7 +151,7 @@ public class BeamRequest {
             }
             
             guard !requestingJWT || options.contains(.storeJWT) else {
-                let parameters = BeamRequestParameters(baseURL: baseURL, requestType: requestType, headers: headers, params: params, body: body, options: options, completion: completion)
+                let parameters = MixerRequestParameters(baseURL: baseURL, requestType: requestType, headers: headers, params: params, body: body, options: options, completion: completion)
                 pendingRequests.append(parameters)
                 
                 return
@@ -167,17 +167,17 @@ public class BeamRequest {
                     }
                 }
                 
-                BeamUserDefaults.standard.set(storedCookies, forKey: "Cookies")
+                MixerUserDefaults.standard.set(storedCookies, forKey: "Cookies")
             }
             
             if options.contains(.storeJWT) {
                 if let jwt = response.allHeaderFields["x-jwt"] {
-                    BeamUserDefaults.standard.set(jwt, forKey: "JWT")
+                    MixerUserDefaults.standard.set(jwt, forKey: "JWT")
                 }
             }
             
             let json = JSON(data: data)
-            var requestError: BeamRequestError = .unknown(data: json)
+            var requestError: MixerRequestError = .unknown(data: json)
             
             if let error = error {
                 switch error._code {
@@ -225,13 +225,13 @@ public class BeamRequest {
                     if json["message"] == "Invalid token" {
                         requestingJWT = true
                         
-                        if BeamUserDefaults.standard.object(forKey: "Cookies") != nil {
-                            BeamClient.sharedClient.jwt.generateJWTGrant { (error) in
+                        if MixerUserDefaults.standard.object(forKey: "Cookies") != nil {
+                            MixerClient.sharedClient.jwt.generateJWTGrant { (error) in
                                 requestingJWT = false
                                 
                                 guard error == nil else {
                                     if error == .invalidCredentials {
-                                        BeamSession.logout(nil)
+                                        MixerSession.logout(nil)
                                         dataRequest(baseURL, requestType: requestType, headers: headers, params: params, body: body, options: options, completion: completion)
                                     } else {
                                         completion?(data, .invalidCredentials)

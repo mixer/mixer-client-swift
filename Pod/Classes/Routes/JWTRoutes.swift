@@ -16,8 +16,8 @@ public class JWTRoutes {
      
      :param: completion An optional completion block with retrieved JWT data.
      */
-    public func generateJWTGrant(_ completion: ((_ error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request("/jwt/authorize", requestType: "POST", options: [.cookieAuth, .storeJWT]) { (json, error) in
+    public func generateJWTGrant(_ completion: ((_ error: MixerRequestError?) -> Void)?) {
+        MixerRequest.request("/jwt/authorize", requestType: "POST", options: [.cookieAuth, .storeJWT]) { (json, error) in
             completion?(error)
         }
     }

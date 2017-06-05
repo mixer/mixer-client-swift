@@ -15,13 +15,13 @@ public class ConstellationUserNotifyPacket: ConstellationLivePacket {
     public let userId: Int
     
     /// The notification being sent.
-    public let notification: BeamNotification
+    public let notification: MixerNotification
     
     /// Initializes a user notify packet with JSON data.
     override init?(data: [String: JSON]) {
         if let channel = data["channel"]?.string, let payload = data["payload"] {
             self.userId = Int(channel.components(separatedBy: ":")[1])!
-            self.notification = BeamNotification(json: payload)
+            self.notification = MixerNotification(json: payload)
             
             super.init(data: data)
         } else {

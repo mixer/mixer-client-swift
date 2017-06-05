@@ -1,15 +1,15 @@
 //
-//  BeamAchievement.swift
-//  Beam API
+//  MixerAchievement.swift
+//  Mixer API
 //
 //  Created by Jack Cook on 4/25/15.
-//  Copyright (c) 2016 Beam Interactive, Inc. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
 import SwiftyJSON
 
 /// An achievement object.
-public struct BeamAchievement {
+public struct MixerAchievement {
     
     /// The achievement's slug/identifier.
     public let slug: String?

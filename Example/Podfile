@@ -1,7 +1,7 @@
 source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 
-target 'BeamAPI_Tests' do
+target 'MixerAPI_Tests' do
   inherit! :search_paths
-  pod "BeamAPI", :path => "../"  
+  pod "MixerAPI", :path => "../"  
 end

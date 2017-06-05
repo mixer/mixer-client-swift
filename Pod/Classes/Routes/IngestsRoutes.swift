@@ -16,17 +16,17 @@ public class IngestsRoutes {
      
      :param: completion An optional completion block with retrieved ingest data.
      */
-    public func getIngests(_ completion: ((_ ingests: [BeamIngest]?, _ error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request("/ingests") { (json, error) in
+    public func getIngests(_ completion: ((_ ingests: [MixerIngest]?, _ error: MixerRequestError?) -> Void)?) {
+        MixerRequest.request("/ingests") { (json, error) in
             guard let ingests = json?.array else {
                 completion?(nil, error)
                 return
             }
             
-            var retrievedIngests = [BeamIngest]()
+            var retrievedIngests = [MixerIngest]()
             
             for ingest in ingests {
-                let retrievedIngest = BeamIngest(json: ingest)
+                let retrievedIngest = MixerIngest(json: ingest)
                 retrievedIngests.append(retrievedIngest)
             }
             

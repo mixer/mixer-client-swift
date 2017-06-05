@@ -1,12 +1,12 @@
 //
 //  ConstellationClientTests.swift
-//  BeamAPI
+//  MixerAPI
 //
 //  Created by Jack Cook on 8/10/16.
-//  Copyright © 2016 CocoaPods. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
-import BeamAPI
+import MixerAPI
 import XCTest
 
 class ConstellationClientTests: XCTestCase, ConstellationClientDelegate {

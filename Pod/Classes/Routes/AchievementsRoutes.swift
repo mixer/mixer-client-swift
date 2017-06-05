@@ -1,9 +1,9 @@
 //
 //  AchievementsRoutes.swift
-//  Beam
+//  Mixer
 //
 //  Created by Jack Cook on 1/9/16.
-//  Copyright © 2016 MCProHosting. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
 /// Routes that can be used to interact with and retrieve achievement data.
@@ -16,17 +16,17 @@ public class AchievementsRoutes {
      
      :param: completion An optional completion block with retrieved achievement data.
      */
-    public func getAchievements(_ completion: ((_ achievements: [BeamAchievement]?, _ error: BeamRequestError?) -> Void)?) {
-        BeamRequest.request("/achievements") { (json, error) in
+    public func getAchievements(_ completion: ((_ achievements: [MixerAchievement]?, _ error: MixerRequestError?) -> Void)?) {
+        MixerRequest.request("/achievements") { (json, error) in
             guard let achievements = json?.array else {
                 completion?(nil, error)
                 return
             }
             
-            var retrievedAchievements = [BeamAchievement]()
+            var retrievedAchievements = [MixerAchievement]()
             
             for achievement in achievements {
-                let retrievedAchievement = BeamAchievement(json: achievement)
+                let retrievedAchievement = MixerAchievement(json: achievement)
                 retrievedAchievements.append(retrievedAchievement)
             }
             

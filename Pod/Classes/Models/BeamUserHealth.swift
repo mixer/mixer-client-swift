@@ -1,5 +1,5 @@
 //
-//  BeamUserHealth.swift
+//  MixerUserHealth.swift
 //  Pods
 //
 //  Created by Jack Cook on 3/8/17.
@@ -9,7 +9,7 @@
 import SwiftyJSON
 
 /// Statistics about the user's health.
-public struct BeamUserHealth {
+public struct MixerUserHealth {
     
     /// Time until the user needs to eat.
     public let eat: Int

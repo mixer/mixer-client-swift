@@ -17,7 +17,7 @@
                BlueprintIdentifier = "607FACCF1AFB9204008FA782"
                BuildableName = "BeamAPI_Example.app"
                BlueprintName = "BeamAPI_Example"
-               ReferencedContainer = "container:BeamAPI.xcodeproj">
+               ReferencedContainer = "container:MixerAPI.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "607FACE41AFB9204008FA782"
-               BuildableName = "BeamAPI_Tests.xctest"
-               BlueprintName = "BeamAPI_Tests"
-               ReferencedContainer = "container:BeamAPI.xcodeproj">
+               BuildableName = "MixerAPI_Tests.xctest"
+               BlueprintName = "MixerAPI_Tests"
+               ReferencedContainer = "container:MixerAPI.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -47,9 +47,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "607FACE41AFB9204008FA782"
-               BuildableName = "BeamAPI_Tests.xctest"
-               BlueprintName = "BeamAPI_Tests"
-               ReferencedContainer = "container:BeamAPI.xcodeproj">
+               BuildableName = "MixerAPI_Tests.xctest"
+               BlueprintName = "MixerAPI_Tests"
+               ReferencedContainer = "container:MixerAPI.xcodeproj">
             </BuildableReference>
             <SkippedTests>
                <Test
@@ -64,7 +64,7 @@
             BlueprintIdentifier = "607FACCF1AFB9204008FA782"
             BuildableName = "BeamAPI_Example.app"
             BlueprintName = "BeamAPI_Example"
-            ReferencedContainer = "container:BeamAPI.xcodeproj">
+            ReferencedContainer = "container:MixerAPI.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -87,7 +87,7 @@
             BlueprintIdentifier = "607FACCF1AFB9204008FA782"
             BuildableName = "BeamAPI_Example.app"
             BlueprintName = "BeamAPI_Example"
-            ReferencedContainer = "container:BeamAPI.xcodeproj">
+            ReferencedContainer = "container:MixerAPI.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -106,7 +106,7 @@
             BlueprintIdentifier = "607FACCF1AFB9204008FA782"
             BuildableName = "BeamAPI_Example.app"
             BlueprintName = "BeamAPI_Example"
-            ReferencedContainer = "container:BeamAPI.xcodeproj">
+            ReferencedContainer = "container:MixerAPI.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

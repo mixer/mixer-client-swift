@@ -15,13 +15,13 @@ public class ConstellationUserTeamInvitedPacket: ConstellationLivePacket {
     public let userId: Int
     
     /// The team that the user was invited to.
-    public let team: BeamTeam
+    public let team: MixerTeam
     
     /// Initializes a user team invited packet with JSON data.
     override init?(data: [String: JSON]) {
         if let channel = data["channel"]?.string, let payload = data["payload"] {
             self.userId = Int(channel.components(separatedBy: ":")[1])!
-            self.team = BeamTeam(json: payload)
+            self.team = MixerTeam(json: payload)
             
             super.init(data: data)
         } else {

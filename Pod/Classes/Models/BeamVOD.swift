@@ -1,5 +1,5 @@
 //
-//  BeamVOD.swift
+//  MixerVOD.swift
 //  Pods
 //
 //  Created by Jack Cook on 6/12/16.
@@ -8,7 +8,7 @@
 
 import SwiftyJSON
 
-public struct BeamVOD {
+public struct MixerVOD {
     
     public let id: Int
     public let baseUrl: String?
@@ -37,8 +37,8 @@ public struct BeamVOD {
         id = json["id"].int ?? 0
         baseUrl = json["baseUrl"].string
         format = json["format"].string ?? "unknown"
-        createdAt = Date.fromBeam(json["createdAt"].string)
-        updatedAt = Date.fromBeam(json["updatedAt"].string)
+        createdAt = Date.fromMixer(json["createdAt"].string)
+        updatedAt = Date.fromMixer(json["updatedAt"].string)
         recordingId = json["recordingId"].int ?? 0
     }
 }

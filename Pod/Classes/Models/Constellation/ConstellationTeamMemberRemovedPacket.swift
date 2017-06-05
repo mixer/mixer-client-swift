@@ -15,13 +15,13 @@ public class ConstellationTeamMemberRemovedPacket: ConstellationLivePacket {
     public let teamId: Int
     
     /// The user who was removed from the team.
-    public let user: BeamUser
+    public let user: MixerUser
     
     /// Initializes a team member removed packet with JSON data.
     override init?(data: [String: JSON]) {
         if let channel = data["channel"]?.string, let payload = data["payload"] {
             self.teamId = Int(channel.components(separatedBy: ":")[1])!
-            self.user = BeamUser(json: payload)
+            self.user = MixerUser(json: payload)
             
             super.init(data: data)
         } else {

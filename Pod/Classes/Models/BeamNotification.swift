@@ -1,5 +1,5 @@
 //
-//  BeamNotification.swift
+//  MixerNotification.swift
 //  Pods
 //
 //  Created by Jack Cook on 8/9/16.
@@ -9,7 +9,7 @@
 import SwiftyJSON
 
 /// A notification object.
-public struct BeamNotification {
+public struct MixerNotification {
     
     /// The payload, containing the notification's data.
     public let payload: [String: Any]?
@@ -29,7 +29,7 @@ public struct BeamNotification {
     /// Used to initialize a notification given JSON data.
     init(json: JSON) {
         payload = json["payload"].dictionaryObject as? [String: AnyObject]
-        sentAt = Date.fromBeam(json["sentAt"].string)
+        sentAt = Date.fromMixer(json["sentAt"].string)
         type = json["type"].string ?? "unknown"
         userId = json["userId"].int ?? 0
         id = json["id"].string

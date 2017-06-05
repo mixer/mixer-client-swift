@@ -1,18 +1,18 @@
 //
-//  BeamClient.swift
-//  Beam API
+//  MixerClient.swift
+//  Mixer API
 //
 //  Created by Jack Cook on 3/15/15.
-//  Copyright (c) 2016 Beam Interactive, Inc. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
 /// The main class of the API client.
-public class BeamClient {
+public class MixerClient {
     
     /// The client's shared instance.
-    public class var sharedClient: BeamClient {
+    public class var sharedClient: MixerClient {
         struct Static {
-            static let instance = BeamClient()
+            static let instance = MixerClient()
         }
         return Static.instance
     }

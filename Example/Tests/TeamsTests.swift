@@ -1,12 +1,12 @@
 //
 //  TeamsTests.swift
-//  BeamAPI
+//  MixerAPI
 //
 //  Created by Jack Cook on 7/13/16.
-//  Copyright © 2016 CocoaPods. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
-import BeamAPI
+import MixerAPI
 import XCTest
 
 class TeamsTests: XCTestCase {
@@ -17,7 +17,7 @@ class TeamsTests: XCTestCase {
     func testTeamWithId() {
         let expectation = self.expectation(description: "tests retrieving a team by id")
         
-        BeamClient.sharedClient.teams.getTeamWithId(teamId) { (team, error) in
+        MixerClient.sharedClient.teams.getTeamWithId(teamId) { (team, error) in
             XCTAssertNotNil(team)
             XCTAssertNil(error)
             expectation.fulfill()
@@ -29,7 +29,7 @@ class TeamsTests: XCTestCase {
     func testTeamWithToken() {
         let expectation = self.expectation(description: "tests retrieving a team by token")
         
-        BeamClient.sharedClient.teams.getTeamWithToken(teamToken) { (team, error) in
+        MixerClient.sharedClient.teams.getTeamWithToken(teamToken) { (team, error) in
             XCTAssertNotNil(team)
             XCTAssertNil(error)
             expectation.fulfill()
@@ -41,7 +41,7 @@ class TeamsTests: XCTestCase {
     func testTeams() {
         let expectation = self.expectation(description: "tests the teams endpoint")
         
-        BeamClient.sharedClient.teams.getTeams { (teams, error) in
+        MixerClient.sharedClient.teams.getTeams { (teams, error) in
             XCTAssertNotNil(teams)
             XCTAssertNil(error)
             expectation.fulfill()
@@ -53,7 +53,7 @@ class TeamsTests: XCTestCase {
     func testMembersOfTeam() {
         let expectation = self.expectation(description: "tests retrieving the members of a stream team")
         
-        BeamClient.sharedClient.teams.getMembersOfTeam(teamId) { (users, error) in
+        MixerClient.sharedClient.teams.getMembersOfTeam(teamId) { (users, error) in
             XCTAssertNotNil(users)
             XCTAssertNil(error)
             expectation.fulfill()

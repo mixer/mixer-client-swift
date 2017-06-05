@@ -1,18 +1,18 @@
 //
-//  BeamMessageComponent.swift
-//  Beam API
+//  MixerMessageComponent.swift
+//  Mixer API
 //
 //  Created by Jack Cook on 7/5/15.
-//  Copyright (c) 2016 Beam Interactive, Inc. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
 import SwiftyJSON
 
 /// A chat message component object.
-public struct BeamMessageComponent {
+public struct MixerMessageComponent {
     
     /// The type of message component.
-    public var type: BeamMessageComponentType?
+    public var type: MixerMessageComponentType?
     
     /// The text that can be appended to the chat message in place of less rich content.
     public var text: String?
@@ -65,7 +65,7 @@ public struct BeamMessageComponent {
             default:
                 self.type = .Unknown
                 text = json["text"].string
-                print("Error beam message component: \(json)")
+                print("Error Mixer message component: \(json)")
             }
         }
     }
