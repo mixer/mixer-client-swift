@@ -191,7 +191,7 @@ public class ChatRoutes {
      :returns: The finished spacesuit image.
      */
     public func getSpaceSuit(_ userId: Int) -> UIImage? {
-        let imageUrl = "https://mixer.com/api/v1/users/\(userId)/avatar?w=64&h=64"
+        let imageUrl = "https://beam.pro/api/v1/users/\(userId)/avatar?w=64&h=64"
         
         guard let url = URL(string: imageUrl) else {
             return nil

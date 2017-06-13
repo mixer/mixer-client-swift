@@ -340,7 +340,7 @@ public class ChannelsRoutes {
      :param: completion An optional completion block with the retrieved emoticon packs' data.
      */
     public func getDefaultEmoticons(_ completion: ((_ packs: [MixerEmoticonPack]?, _ error: MixerRequestError?) -> Void)?) {
-        MixerRequest.dataRequest("https://mixer.com/_latest/emoticons/manifest.json") { (data, error) in
+        MixerRequest.dataRequest("https://beam.pro/_latest/emoticons/manifest.json") { (data, error) in
             guard let data = data, let packs = JSON(data: data).dictionary else {
                 completion?(nil, error)
                 return

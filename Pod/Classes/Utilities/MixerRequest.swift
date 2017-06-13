@@ -45,7 +45,7 @@ public class MixerRequest {
      :param: completion An optional completion block with retrieved JSON data.
      */
     public class func request(_ endpoint: String, requestType: String = "GET", headers: [String: String] = [String: String](), params: [String: String] = [String: String](), body: AnyObject? = nil, options: MixerRequestOptions = [], completion: ((_ json: JSON?, _ error: MixerRequestError?) -> Void)?) {
-        MixerRequest.dataRequest("https://mixer.com/api/v1\(endpoint)", requestType: requestType, headers: headers, params: params, body: body, options: options) { (data, error) in
+        MixerRequest.dataRequest("https://beam.pro/api/v1\(endpoint)", requestType: requestType, headers: headers, params: params, body: body, options: options) { (data, error) in
             guard let data = data else {
                 completion?(nil, error)
                 return
