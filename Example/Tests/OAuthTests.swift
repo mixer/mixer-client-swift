@@ -18,8 +18,8 @@ class OAuthTests: XCTestCase {
     }
     
     func testAuthorizationURL() {
-        XCTAssertNotNil(MixerClient.sharedClient.oauth.getAuthorizationURL(.Twitter))
-        XCTAssertNotNil(MixerClient.sharedClient.oauth.getAuthorizationURL(.Discord))
+        XCTAssertNotNil(MixerClient.sharedClient.oauth.getAuthorizationURL(.twitter))
+        XCTAssertNotNil(MixerClient.sharedClient.oauth.getAuthorizationURL(.discord))
     }
     
     func testLoginWithProvider() {
@@ -27,7 +27,7 @@ class OAuthTests: XCTestCase {
         
         var i = 0
         
-        for provider in [OAuthRoutes.OAuthProvider.Twitter, .Discord] {
+        for provider in [OAuthRoutes.OAuthProvider.twitter, .discord] {
             MixerClient.sharedClient.oauth.loginWithProvider(provider, cookie: "") { (user, error) in
                 XCTAssertNil(user)
                 XCTAssert(error == .invalidCredentials)

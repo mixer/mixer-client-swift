@@ -60,7 +60,7 @@ public class ChatRoutes {
     public func getChatDetailsById(_ channelId: Int, completion: ((_ endpoints: [String]?, _ authKey: String?, _ error: MixerRequestError?) -> Void)?) {
         // TODO: Create a helper class to store all details retrieved with this method
         
-        MixerRequest.request("/chats/\(channelId)") { (json, error) in
+        MixerRequest.request("/chats/\(channelId)", options: [.cookieAuth]) { (json, error) in
             guard let json = json else {
                 completion?(nil, nil, error)
                 return
@@ -132,7 +132,7 @@ public class ChatRoutes {
                                 if let retrievedRole = MixerGroup(rawValue: role) {
                                     retrievedRoles.append(retrievedRole)
                                 } else {
-                                    retrievedRoles.append(MixerGroup.User)
+                                    retrievedRoles.append(MixerGroup.user)
                                 }
                             }
                         }
@@ -162,7 +162,7 @@ public class ChatRoutes {
         var imageUrl = ""
         
         if source == "builtin" {
-            imageUrl = "https://Mixer.pro/_latest/emoticons/\(pack).png"
+            imageUrl = "https://mixer.com/_latest/emoticons/\(pack).png"
         } else if source == "external" {
             imageUrl = pack
         } else {

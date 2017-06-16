@@ -11,7 +11,7 @@ public class OAuthRoutes {
     
     /// The provider being used for authentication.
     public enum OAuthProvider: String {
-        case Twitter = "twitter", Discord = "discord"
+        case twitter = "twitter", discord = "discord"
     }
     
     // MARK: Creating OAuth Flows
@@ -23,7 +23,7 @@ public class OAuthRoutes {
      :returns: The URL used to begin the OAuth flow, to be opened in a web browser.
      */
     public func getAuthorizationURL(_ provider: OAuthProvider) -> URL {
-        return URL(string: "https://Mixer.pro/api/v1/oauth/\(provider.rawValue)/check")!
+        return URL(string: "https://mixer.com/api/v1/oauth/\(provider.rawValue)/check")!
     }
     
     /**
@@ -35,7 +35,7 @@ public class OAuthRoutes {
     public func loginWithProvider(_ provider: OAuthProvider, cookie: String, completion: ((_ user: MixerUser?, _ error: MixerRequestError?) -> Void)?) {
         let headers = ["Cookie": cookie]
         
-        MixerRequest.request("/oauth/\(provider.rawValue)/login", requestType: "POST", headers: headers) { (json, error) in
+        MixerRequest.request("/oauth/\(provider.rawValue)/login", requestType: "POST", headers: headers, options: [.noAuth, .storeCookies]) { (json, error) in
             guard let json = json , error == nil else {
                 completion?(nil, error)
                 return

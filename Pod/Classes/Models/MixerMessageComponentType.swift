@@ -8,11 +8,11 @@
 
 /// The type of a chat message component.
 public enum MixerMessageComponentType: String {
-    case Emoticon = "emoticon"
-    case Link = "link"
-    case Me = "me"
-    case SpaceSuit = "inaspacesuit"
-    case Tag = "tag"
-    case Text = "text"
-    case Unknown
+    case emoticon = "emoticon"
+    case link = "link"
+    case me = "me"
+    case spaceSuit = "inaspacesuit"
+    case tag = "tag"
+    case text = "text"
+    case unknown
 }

@@ -76,7 +76,7 @@ public struct MixerUser {
         experience = json["experience"].int ?? 0
         level = json["level"].int ?? 0
         sparks = json["sparks"].int ?? 0
-        avatarUrl = json["avatarUrl"].string ?? "https://Mixer.pro/_latest/img/app/avatars/default.jpg"
+        avatarUrl = json["avatarUrl"].string ?? "https://mixer.com/_latest/img/app/avatars/default.jpg"
         bio = json["bio"].string
         
         groups = [MixerGroup]()

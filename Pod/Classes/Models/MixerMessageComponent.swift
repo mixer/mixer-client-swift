@@ -37,7 +37,7 @@ public struct MixerMessageComponent {
         if let type = json["type"].string {
             switch type {
             case "emoticon":
-                self.type = .Emoticon
+                self.type = .emoticon
                 text = json["text"].string
                 
                 source = json["source"].string
@@ -49,21 +49,21 @@ public struct MixerMessageComponent {
                     coordinates = CGPoint(x: x, y: y)
                 }
             case "inaspacesuit":
-                self.type = .SpaceSuit
+                self.type = .spaceSuit
                 userId = json["userId"].int
             case "link":
-                self.type = .Link
+                self.type = .link
                 text = json["text"].string
             case "tag":
-                self.type = .Tag
+                self.type = .tag
                 text = json["text"].string
                 userId = json["id"].int
                 username = json["username"].string
             case "text":
-                self.type = me ? .Me : .Text
+                self.type = me ? .me : .text
                 text = json["data"].string
             default:
-                self.type = .Unknown
+                self.type = .unknown
                 text = json["text"].string
                 print("Error Mixer message component: \(json)")
             }
