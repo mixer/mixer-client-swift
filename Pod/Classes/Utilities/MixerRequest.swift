@@ -119,8 +119,7 @@ public class MixerRequest {
             request.addValue(val, forHTTPHeaderField: header)
         }
         
-        if options.contains(.cookieAuth) {
-            let storedCookies = MixerUserDefaults.standard.object(forKey: "Cookies") as! [[HTTPCookiePropertyKey: Any]]
+        if options.contains(.cookieAuth), let storedCookies = MixerUserDefaults.standard.object(forKey: "Cookies") as? [[HTTPCookiePropertyKey: Any]] {
             var cookies = [HTTPCookie]()
             
             for properties in storedCookies {
