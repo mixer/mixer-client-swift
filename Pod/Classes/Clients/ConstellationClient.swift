@@ -37,7 +37,7 @@ public class ConstellationClient: WebSocketDelegate {
     public func connect(_ delegate: ConstellationClientDelegate) {
         self.delegate = delegate
         
-        socket = WebSocket(url: URL(string: "wss://constellation.beam.pro")!)
+        socket = WebSocket(url: URL(string: "wss://constellation.mixer.com")!)
         socket?.delegate = self
         socket?.headers["User-Agent"] = "IOSApp/\(MixerRequest.version) (iOS; \(MixerRequest.deviceName()))"
         socket?.connect()
