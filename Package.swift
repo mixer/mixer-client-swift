@@ -9,12 +9,12 @@
 import PackageDescription
 
 let package = Package(
-    name: "BeamAPI",
+    name: "MixerAPI",
     targets: [],
     dependencies: [
         .Package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git",
-                 majorVersion: 2),
+                 majorVersion: 3),
         .Package(url: "https://github.com/daltoniam/Starscream.git",
-                 majorVersion: 1)
+                 majorVersion: 2)
     ]
 )
