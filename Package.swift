@@ -12,7 +12,7 @@ let package = Package(
     name: "MixerAPI",
     targets: [],
     dependencies: [
-        .package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", from: "4.0.0"),
+        .package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", from: "3.1.0"),
         .Package(url: "https://github.com/daltoniam/Starscream.git", from: "2.0.0")
     ]
 )
