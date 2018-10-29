@@ -6,7 +6,7 @@
 //  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 
-import UIKit
+// import UIKit
 
 /// The group/role held by a given user.
 public enum MixerGroup: String {
@@ -46,6 +46,7 @@ public enum MixerGroup: String {
  :param: groups The user's held groups.
  :returns: The color that should be given to the user.
  */
+/*
 public func chatColorForGroups(_ groups: [MixerGroup]) -> UIColor {
     if groups.contains(.owner) {
         return UIColor(red: 1, green: 1, blue: 1, alpha: 1)
@@ -72,7 +73,7 @@ public func chatColorForGroups(_ groups: [MixerGroup]) -> UIColor {
     }
     
     return UIColor(red: 55/255, green: 170/255, blue: 213/255, alpha: 1)
-}
+}*/
 
 /**
  Returns the highest group held by a user.
