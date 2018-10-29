@@ -12,8 +12,8 @@ let package = Package(
     name: "MixerAPI",
     targets: [],
     dependencies: [
-        .Package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", from: "3.1.0"),
-        .Package(url: "https://github.com/daltoniam/Starscream.git", from: "2.0.0")
+        .Package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", majorVersion: 3),
+        .Package(url: "https://github.com/daltoniam/Starscream.git", majorVersion: 2)
     ]
 )
 
