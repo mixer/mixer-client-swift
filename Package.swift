@@ -13,8 +13,10 @@ let package = Package(
     targets: [],
     dependencies: [
         .Package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git",
-                 majorVersion: 3),
+                 "3.1"),
         .Package(url: "https://github.com/daltoniam/Starscream.git",
                  majorVersion: 2)
     ]
 )
+
+    
